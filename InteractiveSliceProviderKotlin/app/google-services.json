@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1067076784568",
+    "firebase_url": "https://interactive-sliceprovider.firebaseio.com",
+    "project_id": "interactive-sliceprovider",
+    "storage_bucket": "interactive-sliceprovider.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067076784568:android:c5b254e66bf2d57c",
+        "android_client_info": {
+          "package_name": "com.example.android.interactivesliceprovider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1067076784568-e62682vfum296dhfu7aedeuc18uc9vfh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBBhpSJm_Zx469bBeRxpZHcbBpRQoTPLY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
