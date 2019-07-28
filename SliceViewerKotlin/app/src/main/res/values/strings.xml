@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+ * Copyright (C) 2018 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+
+<resources>
+    <string name="app_name">Slice Viewer Sample</string>
+    <string name="single_slice_viewer_activity">Slice Viewer</string>
+    <string name="example_activity">Example Activity</string>
+    <string name="remove_slice_content_desc">Remove Slice from list of Slices.</string>
+    <string name="uri_input_hint">Enter Slice URIs.</string>
+    <string name="uri_label">URI</string>
+    <string name="slice_label">Slice</string>
+    <string name="slice_mode_title">Mode</string>
+    <string name="shortcut_mode">Shortcut</string>
+    <string name="small_mode">Small</string>
+    <string name="large_mode">Large</string>
+
+</resources>
