@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2018 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">Rounded Multiline Bg</string>
+
+    <!-- Without the quotes at the begining and end Android strips the whitespace and also starts
+    the annotation at the wrong position. -->
+    <string name="ltr">"this is <annotation key="rounded">a regular</annotation> paragraph."</string>
+    <string name="ltr_multi">"this contains <annotation key="rounded">a\nline break</annotation> and continues."</string>
+    <string name="ltr_long">"this is <annotation key="rounded">a paragraph \nthat would cover more than\ntwo</annotation> lines."</string>
+    <string name="rtl"> هذا هو "<annotation key="rounded">الحق في</annotation>" الفقرة اليسرى </string>
+    <string name="rtl_multi"> هذا هو"<annotation key="rounded">حق\n لفقرة</annotation>" اليسار </string>
+    <string name="lang1">"ဟ <annotation key="rounded">ယ်လို\nဟယ်လို</annotation> ယ်လို"</string>
+    <string name="lang2">"អ <annotation key="rounded">៊ីតាលី\nអ៊ីតា</annotation> លី""</string>
+    <string name="lang3">"नमस्ते <annotation key="rounded">दुनिया\nनमस्ते</annotation> दुनिया"</string>
+    <string name="lang4">"สวัสดี <annotation key="rounded">ชาวโลก\nสวัสดีชาวโ</annotation> ลก"</string>
+
+</resources>
