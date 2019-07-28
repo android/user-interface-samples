@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  Copyright 2017 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet_font_query"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:behavior_peekHeight="120dp"
+    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    app:cardElevation="8dp">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/download_font_inputs_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/family_name_input_area"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/bottom_sheet_top_margin"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_large">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/auto_complete_family_name_input"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_height="wrap_content">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/auto_complete_family_name"
+                        android:completionThreshold="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/family_name"
+                        android:singleLine="true" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.v4.widget.Space
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/button_request"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/request" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/width_input_area"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginEnd="@dimen/margin_large">
+
+                <TextView
+                    android:id="@+id/width_seekbar_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
+                    android:text="@string/width"
+                    android:textColor="@color/accent"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:id="@+id/width_seekbar_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seek_bar_width"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/textview_width"
+                        android:layout_height="wrap_content"
+                        android:layout_width="80dp"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_marginLeft="@dimen/margin_small"
+                        android:textSize="16sp"
+                        android:gravity="end" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/weight_input_area"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginEnd="@dimen/margin_large">
+
+                <TextView
+                    android:id="@+id/weight_seekbar_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
+                    android:text="@string/weight"
+                    android:textColor="@color/accent"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:id="@+id/weight_seekbar_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seek_bar_weight"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/textview_weight"
+                        android:layout_height="wrap_content"
+                        android:layout_width="80dp"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_marginLeft="@dimen/margin_small"
+                        android:textSize="16sp"
+                        android:gravity="end" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/italic_input_area"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginEnd="@dimen/margin_large">
+
+                <TextView
+                    android:id="@+id/italic_seekbar_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_small"
+                    android:text="@string/italic"
+                    android:textColor="@color/accent"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:id="@+id/italic_seekbar_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:id="@+id/seek_bar_italic"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/textview_italic"
+                        android:layout_height="wrap_content"
+                        android:layout_width="80dp"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:layout_marginLeft="@dimen/margin_small"
+                        android:textSize="16sp"
+                        android:gravity="end" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/checkbox_best_effort"
+                android:text="@string/best_effort"
+                android:checked="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginEnd="@dimen/margin_large" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.v7.widget.CardView>

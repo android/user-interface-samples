@@ -1,0 +1,20 @@
+
+# GOOGLE SAMPLE PACKAGING DATA
+#
+# This file is used by Google as part of our samples packaging process.
+# End users may safely ignore this file. It has no relevance to other systems.
+---
+status:       DRAFTED
+technologies: [Android]
+categories:   [UI, Android O Preview]
+languages:    [Kotlin]
+solutions:    [Mobile]
+github:       android-DownloadableFonts
+level:        INTERMEDIATE
+icon:         screenshots/icon-web.png
+apiRefs:
+    - android:android.provider.FontRequest
+    - android:android.support.v4.provider.FontRequest
+    - android:android.provider.FontsContractCompat
+    - android:android.support.v4.provider.FontsContractCompat
+license: apache2
