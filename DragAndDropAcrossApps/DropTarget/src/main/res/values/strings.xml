@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+     Copyright 2015 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+
+    <string name="image_target_prompt">Drop image here.\nThe app will request permission from the source app before displaying the image.</string>
+
+    <string name="intro_message">This sample demonstrates drag and drop functionality and is the \'target\' app for this sample. It shows how data can be received when dragged from another app.\nOpen the \'DragSource\' sample app next to this one and try dragging an image into the space below.</string>
+
+    <string name="release_checkbox_text">Release permissions immediately after a drop</string>
+
+    <string name="release_checkbox_note">Releasing permissions will prevent the image from being properly restored after the activity has been resized.</string>
+</resources>
