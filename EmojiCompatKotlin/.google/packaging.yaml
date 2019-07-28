@@ -8,7 +8,7 @@ technologies: [Android]
 categories:   [UI, Android O Preview]
 languages:    [Kotlin]
 solutions:    [Mobile]
-github:       android-EmojiCompat
+github:       android/user-interface
 level:        INTERMEDIATE
 icon:         screenshots/icon-web.png
 apiRefs:
