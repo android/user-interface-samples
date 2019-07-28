@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2018 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <!--App title-->
+    <string name="title">Preferences Sample</string>
+
+    <!--Fragment titles-->
+    <string name="preferences">Preferences</string>
+    <string name="leanback_preferences">Leanback Preferences</string>
+    <string name="car_preferences">Car Preferences</string>
+
+    <!--This section is for basic attributes -->
+    <string name="basic_preferences">Basic attributes</string>
+
+    <string name="title_basic_preference">Preference</string>
+    <string name="summary_basic_preference">Simple preference with no special attributes</string>
+
+    <string name="title_stylish_preference"><b>Very</b> <i>stylish</i> <u>preference</u></string>
+    <string name="summary_stylish_preference">Define style tags such as &lt;b&gt; in a string resource to customize a preference\'s text</string>
+
+    <string name="title_icon_preference">Icon preference</string>
+    <string name="summary_icon_preference">Define a drawable to display it at the start of the preference</string>
+
+    <string name="title_single_line_title_preference">Single line title preference - no matter how long the title is it will never wrap to multiple lines</string>
+    <string name="summary_single_line_title_preference">This title will be ellipsized instead of wrapping to another line</string>
+
+    <!--This section is for preferences that contain a widget in their layout -->
+    <string name="widgets">Widgets</string>
+
+    <string name="title_checkbox_preference">Checkbox preference</string>
+    <string name="summary_checkbox_preference">Tap anywhere in this preference to toggle state</string>
+
+    <string name="title_switch_preference">Switch preference</string>
+    <string name="summary_switch_preference">Tap anywhere in this preference to toggle state</string>
+
+    <string name="title_dropdown_preference">Dropdown preference</string>
+
+    <string name="title_seekbar_preference">Seekbar preference</string>
+
+    <!--This section is for preferences that launch a dialog to edit the preference -->
+    <string name="dialogs">Dialogs</string>
+
+    <string name="title_edittext_preference">EditText preference</string>
+    <string name="dialog_title_edittext_preference">This title can be changed!</string>
+
+    <string name="title_list_preference">List preference</string>
+    <string name="dialog_title_list_preference">Choose one option!</string>
+
+    <string name="title_multi_list_preference">Multi-select list preference</string>
+    <string name="summary_multi_list_preference">Shows a dialog with multiple choice options</string>
+    <string name="dialog_title_multi_list_preference">Choose some options!</string>
+
+    <!--This section is for advanced attributes-->
+    <string name="advanced_attributes">Advanced attributes</string>
+
+    <string name="title_expandable_preference">Expandable preference group</string>
+    <string name="summary_expandable_preference">This group shows one item and collapses the rest into the advanced button below</string>
+
+    <string name="title_intent_preference">Intent preference</string>
+    <string name="summary_intent_preference">Launches an intent when pressed</string>
+
+    <string name="title_parent_preference">Parent preference</string>
+    <string name="summary_parent_preference">Toggling this preference will change the enabled state of the preference below</string>
+
+    <string name="title_child_preference">Child preference</string>
+    <string name="summary_child_preference">The enabled state of this preference is controlled by the preference above</string>
+
+    <string name="title_toggle_summary_preference">Variable summary preference</string>
+    <string name="summary_on_toggle_summary_preference">On! :) - the summary of this preference changes depending on its state</string>
+    <string name="summary_off_toggle_summary_preference">Off! :( - the summary of this preference changes depending on its state</string>
+
+    <string name="title_copyable_preference">Copyable preference</string>
+    <string name="summary_copyable_preference">Long press on this preference to copy its summary</string>
+</resources>

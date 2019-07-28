@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2018 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        app:key="advanced"
+        app:title="@string/advanced_attributes"
+        app:initialExpandedChildrenCount="1">
+
+        <Preference
+            app:key="expandable"
+            app:title="@string/title_expandable_preference"
+            app:summary="@string/summary_expandable_preference"/>
+
+        <Preference
+            app:title="@string/title_intent_preference"
+            app:summary="@string/summary_intent_preference">
+
+            <intent android:action="android.intent.action.VIEW"
+                    android:data="http://www.android.com"/>
+
+        </Preference>
+
+        <SwitchPreferenceCompat
+            app:key="parent"
+            app:title="@string/title_parent_preference"
+            app:summary="@string/summary_parent_preference"/>
+
+        <SwitchPreferenceCompat
+            app:key="child"
+            app:dependency="parent"
+            app:title="@string/title_child_preference"
+            app:summary="@string/summary_child_preference"/>
+
+        <SwitchPreferenceCompat
+            app:key="toggle_summary"
+            app:title="@string/title_toggle_summary_preference"
+            app:summaryOn="@string/summary_on_toggle_summary_preference"
+            app:summaryOff="@string/summary_off_toggle_summary_preference"/>
+
+        <Preference
+            app:key="copyable"
+            app:title="@string/title_copyable_preference"
+            app:summary="@string/summary_copyable_preference"
+            app:selectable="false"
+            app:enableCopying="true"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>
