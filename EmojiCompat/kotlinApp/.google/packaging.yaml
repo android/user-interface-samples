@@ -1,0 +1,23 @@
+# GOOGLE SAMPLE PACKAGING DATA
+#
+# This file is used by Google as part of our samples packaging process.
+# End users may safely ignore this file. It has no relevance to other systems.
+---
+status:       PUBLISHED
+technologies: [Android]
+categories:   [UI, Android O Preview]
+languages:    [Kotlin]
+solutions:    [Mobile]
+github:       android-EmojiCompat
+level:        INTERMEDIATE
+icon:         screenshots/icon-web.png
+apiRefs:
+    - android:android.support.text.emoji.EmojiCompat
+    - android:android.support.text.emoji.bundled.BundledEmojiCompatConfig
+    - android:android.support.text.emoji.FontRequestEmojiCompatConfig
+    - android:android.support.v4.provider.FontRequest
+    - android:android.support.text.emoji.widget.EmojiAppCompatTextView
+    - android:android.support.text.emoji.widget.EmojiAppCompatEditText
+    - android:android.support.text.emoji.widget.EmojiAppCompatButton
+    - android:android.support.text.emoji.widget.EmojiTextViewHelper
+license: apache2
