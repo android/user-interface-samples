@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2013 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<resources>
+
+    <string name="intro">This sample illustrates how links can be added to a TextView.
+    \nThis can be done either automatically by setting the <i>autoLink</i> property
+    or explicitly.</string>
+    <string name="link_text_auto"><b>text_auto_linkify: Various kinds
+      of data that will be auto-linked.</b>
+      In this text are some things that are actionable.  For instance,
+      you can click on http://www.google.com and it will launch the
+      web browser.  You can click on google.com too.  If you
+      click on (415) 555-1212 it should dial the phone.  Or just write
+      foobar@example.com for an e-mail link.  If you have a URI like
+      http://www.example.com/lala/foobar@example.com you should get the
+      full link not the e-mail address.  Or you can put a location
+      like 1600 Amphitheatre Parkway, Mountain View, CA 94043.  To summarize:
+      https://www.google.com, or 650-253-0000, somebody@example.com,
+      or 9606 North MoPac Expressway, Suite 400, Austin, TX 78759.</string>
+    <string name="link_text_manual"><![CDATA[<b>text_html_resource:
+      Explicit links using &lt;a&gt; markup.</b>
+      This has markup for a <a href="http://www.google.com">link</a> specified
+      via an &lt;a&gt; tag.  Use a \"tel:\" URL
+      to <a href="tel:4155551212">dial a phone number</a>.]]></string>
+
+</resources>
