@@ -20,7 +20,7 @@
 # Values: {DRAFT | PUBLISHED | INTERNAL | DEPRECATED | SUPERCEDED}
 status:       PUBLISHED
 technologies: [Android]
-categories:   [Chrome OS]
+categories:   [User Interface]
 languages:    [Java]
 solutions:    [Chrome OS]
 # May be omitted if unpublished
