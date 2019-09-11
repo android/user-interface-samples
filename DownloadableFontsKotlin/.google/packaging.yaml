@@ -6,7 +6,7 @@
 ---
 status:       DRAFTED
 technologies: [Android]
-categories:   [UI, Android O Preview]
+categories:   [User Interface]
 languages:    [Kotlin]
 solutions:    [Mobile]
 github:       android-DownloadableFonts
