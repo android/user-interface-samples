@@ -1,0 +1,18 @@
+
+# GOOGLE SAMPLE PACKAGING DATA
+#
+# This file is used by Google as part of our samples packaging process.
+# End users may safely ignore this file. It has no relevance to other systems.
+---
+status:       PUBLISHED
+technologies: [Android]
+categories:   [User Interface]
+languages:    [Java]
+solutions:    [Mobile]
+github:       android/user-interface
+level:        INTERMEDIATE
+icon:         screenshots/big_icon.png
+apiRefs:
+    - android:android.app.Activity
+    - android:android.content.Intent.FLAG_ACTIVITY_NEW_DOCUMENT
+license: apache2
