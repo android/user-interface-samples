@@ -28,7 +28,7 @@ Pre-requisites
 
 - Android SDK 28
 - Android Build Tools v28.0.3
-- Android Support Repository
+- Androidx Repository
 
 Screenshots
 -------------

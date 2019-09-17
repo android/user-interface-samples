@@ -16,12 +16,13 @@
 package com.example.android.advancedimmersivemode;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.android.common.logger.Log;
 
@@ -49,14 +50,14 @@ public class AdvancedImmersiveModeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle state) {
         final View flagsView = inflater.inflate(R.layout.fragment_flags, container, false);
-        mLowProfileCheckBox = (CheckBox) flagsView.findViewById(R.id.flag_enable_lowprof);
-        mHideNavCheckbox = (CheckBox) flagsView.findViewById(R.id.flag_hide_navbar);
-        mHideStatusBarCheckBox = (CheckBox) flagsView.findViewById(R.id.flag_hide_statbar);
-        mImmersiveModeCheckBox = (CheckBox) flagsView.findViewById(R.id.flag_enable_immersive);
+        mLowProfileCheckBox = flagsView.findViewById(R.id.flag_enable_lowprof);
+        mHideNavCheckbox = flagsView.findViewById(R.id.flag_hide_navbar);
+        mHideStatusBarCheckBox = flagsView.findViewById(R.id.flag_hide_statbar);
+        mImmersiveModeCheckBox = flagsView.findViewById(R.id.flag_enable_immersive);
         mImmersiveModeStickyCheckBox =
-                (CheckBox) flagsView.findViewById(R.id.flag_enable_immersive_sticky);
+                flagsView.findViewById(R.id.flag_enable_immersive_sticky);
 
-        Button toggleFlagsButton = (Button) flagsView.findViewById(R.id.btn_changeFlags);
+        Button toggleFlagsButton = flagsView.findViewById(R.id.btn_changeFlags);
         toggleFlagsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,7 +65,7 @@ public class AdvancedImmersiveModeFragment extends Fragment {
             }
         });
 
-        Button presetsImmersiveModeButton = (Button) flagsView.findViewById(R.id.btn_immersive);
+        Button presetsImmersiveModeButton = flagsView.findViewById(R.id.btn_immersive);
         presetsImmersiveModeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +98,7 @@ public class AdvancedImmersiveModeFragment extends Fragment {
         });
 
 
-        Button presetsLeanbackModeButton = (Button) flagsView.findViewById(R.id.btn_leanback);
+        Button presetsLeanbackModeButton = flagsView.findViewById(R.id.btn_leanback);
         presetsLeanbackModeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
