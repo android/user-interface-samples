@@ -22,8 +22,8 @@ import android.text.SpannedString
 import android.text.style.LeadingMarginSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StyleSpan
-import androidx.text.buildSpannedString
-import androidx.text.inSpans
+import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
 import com.android.example.text.styling.parser.Element
 import com.android.example.text.styling.parser.Parser
 import com.android.example.text.styling.renderer.spans.BulletPointSpan

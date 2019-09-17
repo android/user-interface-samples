@@ -26,7 +26,7 @@ import androidx.annotation.VisibleForTesting
 import android.text.Layout
 import android.text.Spanned
 import android.text.style.LeadingMarginSpan
-import androidx.graphics.withTranslation
+import androidx.core.graphics.withTranslation
 
 /**
  * Creating a bullet span with bigger bullets than [android.text.style.BulletSpan]
