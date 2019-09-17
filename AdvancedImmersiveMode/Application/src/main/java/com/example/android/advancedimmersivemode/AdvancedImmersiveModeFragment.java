@@ -33,13 +33,12 @@ import com.example.android.common.logger.Log;
  */
 public class AdvancedImmersiveModeFragment extends Fragment {
 
-    public static final String TAG = "AdvancedImmersiveModeFragment";
+    private static final String TAG = "AdvancedImmersiveModeFragment";
     public CheckBox mHideNavCheckbox;
     public CheckBox mHideStatusBarCheckBox;
     public CheckBox mImmersiveModeCheckBox;
-    public CheckBox mImmersiveModeStickyCheckBox;
-    public CheckBox mLowProfileCheckBox;
-
+    private CheckBox mImmersiveModeStickyCheckBox;
+    private CheckBox mLowProfileCheckBox;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

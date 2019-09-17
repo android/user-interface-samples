@@ -22,7 +22,7 @@ package com.example.android.common.logger;
  */
 public class MessageOnlyLogFilter implements LogNode {
 
-    LogNode mNext;
+    private LogNode mNext;
 
     /**
      * Takes the "next" LogNode as a parameter, to simplify chaining.
