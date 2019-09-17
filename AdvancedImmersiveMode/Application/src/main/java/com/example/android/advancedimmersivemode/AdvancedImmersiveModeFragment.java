@@ -172,7 +172,7 @@ public class AdvancedImmersiveModeFragment extends Fragment {
         // one to find from within a fragment, since there's a handy helper method to pull it, and
         // we don't have to bother with picking a view somewhere deeper in the hierarchy and calling
         // "findViewById" on it.
-        View decorView = getActivity().getWindow().getDecorView();
+        View decorView = requireActivity().getWindow().getDecorView();
         int uiOptions = decorView.getSystemUiVisibility();
         int newUiOptions = uiOptions;
         // END_INCLUDE (get_current_ui_flags)

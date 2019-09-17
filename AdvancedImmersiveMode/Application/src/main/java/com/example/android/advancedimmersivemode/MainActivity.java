@@ -31,6 +31,8 @@ import com.example.android.common.logger.LogFragment;
 import com.example.android.common.logger.LogWrapper;
 import com.example.android.common.logger.MessageOnlyLogFilter;
 
+import java.util.Objects;
+
 /**
  * A simple launcher activity containing a summary sample description, sample log and a custom
  * {@link Fragment} which can display a view.
@@ -103,8 +105,8 @@ public class MainActivity extends SampleActivityBase {
         logWrapper.setNext(msgFilter);
 
         // On screen logging via a fragment with a TextView.
-        LogFragment logFragment = (LogFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.log_fragment);
+        LogFragment logFragment = Objects.requireNonNull((LogFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.log_fragment));
         msgFilter.setNext(logFragment.getLogView());
 
         Log.i(TAG, "Ready");
