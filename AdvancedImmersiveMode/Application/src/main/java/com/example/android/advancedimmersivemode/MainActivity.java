@@ -1,18 +1,18 @@
 /*
-* Copyright 2013 The Android Open Source Project
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright 2013 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 
 package com.example.android.advancedimmersivemode;
@@ -42,7 +42,7 @@ import java.util.Objects;
  */
 public class MainActivity extends SampleActivityBase {
 
-    public static final String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
 
     // Whether the Log Fragment is currently shown
     private boolean mLogShown;
@@ -77,22 +77,23 @@ public class MainActivity extends SampleActivityBase {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.menu_toggle_log:
-                mLogShown = !mLogShown;
-                ViewAnimator output = findViewById(R.id.sample_output);
-                if (mLogShown) {
-                    output.setDisplayedChild(1);
-                } else {
-                    output.setDisplayedChild(0);
-                }
-                supportInvalidateOptionsMenu();
-                return true;
+        if (item.getItemId() == R.id.menu_toggle_log) {
+            mLogShown = !mLogShown;
+            ViewAnimator output = findViewById(R.id.sample_output);
+            if (mLogShown) {
+                output.setDisplayedChild(1);
+            } else {
+                output.setDisplayedChild(0);
+            }
+            invalidateOptionsMenu();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    /** Create a chain of targets that will receive log data */
+    /**
+     * Create a chain of targets that will receive log data
+     */
     @Override
     public void initializeLogging() {
         // Wraps Android's native log framework.
