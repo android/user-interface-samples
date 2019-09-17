@@ -29,6 +29,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
