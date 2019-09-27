@@ -351,7 +351,7 @@ public final class MockDatabase {
 
             Person participant1 =
                     new Person.Builder()
-                            .setName("Famous Fryer")
+                            .setName("Famous Frank")
                             .setKey("9876543210")
                             .setUri("tel:9876543210")
                             .setIcon(
@@ -360,7 +360,7 @@ public final class MockDatabase {
 
             Person participant2 =
                     new Person.Builder()
-                            .setName("Wendy Wonda")
+                            .setName("Wendy Weather")
                             .setKey("2233221122")
                             .setUri("tel:2233221122")
                             .setIcon(IconCompat.createWithResource(context, R.drawable.wendy_wonda))

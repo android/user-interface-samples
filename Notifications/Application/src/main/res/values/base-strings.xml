@@ -16,7 +16,7 @@
 -->
 
 <resources>
-    <string name="app_name">WearNotifications</string>
+    <string name="app_name">Notifications</string>
     <string name="intro_message">
         <![CDATA[
         

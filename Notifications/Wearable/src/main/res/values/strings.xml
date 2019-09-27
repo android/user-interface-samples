@@ -15,7 +15,7 @@
   ~ limitations under the License.
   -->
 <resources>
-    <string name="app_name">Wear Notifications</string>
+    <string name="app_name">Notifications</string>
 
     <string name="reply_label">Reply</string>
     <string name="reply_name">Me</string>
