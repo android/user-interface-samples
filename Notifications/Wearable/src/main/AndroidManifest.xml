@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2016 Google Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.example.android.wearable.wear.wearnotifications"
+          android:versionCode="1"
+          android:versionName="1.0">
+
+    <uses-feature android:name="android.hardware.type.watch"/>
+    <!-- Required for Always-on. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application android:allowBackup="true"
+                 android:icon="@mipmap/ic_launcher"
+                 android:label="@string/app_name"
+                 android:supportsRtl="true"
+                 android:theme="@android:style/Theme.Material">
+
+        <!-- Let's Play Store know this app is standalone. -->
+        <meta-data android:name="com.google.android.wearable.standalone" android:value="true"/>
+
+        <!--
+        Important Note: Usually, you will want to disable bridging if you have a local/native
+        Wear app creating Notifications. In our case, we don't, as our sample shows both
+        Notifications launched from a Phone app (that needed to be bridged) and a Wear app.
+
+        To disable, create a meta-data tag here:
+
+        meta-data
+            name: com.google.android.wearable.notificationBridgeMode
+            value: NO_BRIDGING
+        -->
+
+        <!--If you want your app to run on pre-22, then set required to false -->
+        <uses-library android:name="com.google.android.wearable" android:required="false" />
+
+        <activity android:name=".StandaloneMainActivity"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <activity
+            android:name=".handlers.BigTextMainActivity"
+            android:label="@string/title_activity_big_text_main"
+            android:taskAffinity="">
+        </activity>
+
+        <activity
+            android:name=".handlers.BigPictureSocialMainActivity"
+            android:label="@string/title_activity_big_picture_main"
+            android:taskAffinity="">
+        </activity>
+
+
+        <activity
+            android:name=".handlers.InboxMainActivity"
+            android:label="@string/title_activity_inbox_main"
+            android:taskAffinity="">
+        </activity>
+
+        <activity
+            android:name=".handlers.MessagingMainActivity"
+            android:label="@string/title_activity_messaging_main"
+            android:taskAffinity="">
+        </activity>
+
+        <service
+            android:name=".handlers.BigTextIntentService"
+            android:exported="false">
+        </service>
+
+        <service
+            android:name=".handlers.MessagingIntentService"
+            android:exported="false">
+        </service>
+
+        <service
+            android:name=".handlers.BigPictureSocialIntentService"
+            android:exported="false">
+        </service>
+    </application>
+</manifest>

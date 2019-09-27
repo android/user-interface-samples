@@ -1,0 +1,26 @@
+
+# GOOGLE SAMPLE PACKAGING DATA
+#
+# This file is used by Google as part of our samples packaging process.
+# End users may safely ignore this file. It has no relevance to other systems.
+---
+status:       PUBLISHED
+technologies: [Android]
+categories:   [Notification, User Interface]
+languages:    [Java]
+solutions:    [Mobile]
+github:       android/user-interface
+level:        INTERMEDIATE
+icon:         screenshots/icon-web.png
+apiRefs:
+    - android:android.app.Notification
+    - android:android.support.v4.app.NotificationCompat.BigPictureStyle
+    - android:android.support.v4.app.NotificationCompat.BigTextStyle
+    - android:android.support.v4.app.NotificationCompat.InboxStyle
+    - android:android.support.v4.app.NotificationCompat.MessagingStyle
+    - android:android.support.v4.app.NotificationManagerCompat
+    - android:android.support.v4.app.RemoteInput
+    - android:android.support.v4.app.TaskStackBuilder
+    - android:android.support.v7.app.AppCompatActivity
+    - android:android.support.v7.app.NotificationCompat
+license: apache2
