@@ -11,7 +11,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime:2.0.0"
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
     implementation "androidx.lifecycle:lifecycle-common:2.0.0"
-    implementation "androidx.slice:slice-view:1.0.0"
+    implementation "androidx.slice:slice-view:1.1.0-alpha01"
     implementation "androidx.slice:slice-builders-ktx:1.0.0-alpha6"
     implementation "androidx.appcompat:appcompat:1.0.0"
     implementation "androidx.cardview:cardview:1.0.0"
