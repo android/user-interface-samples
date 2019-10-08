@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2019 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+
+    <string name="more_action">More</string>
+    <string name="title_home">Home</string>
+    <string name="title_preferences">Preferences</string>
+    <string name="title_settings">Settings</string>
+    <string name="welcome">Welcome to the Dark Theme code sample</string>
+    <string name="save">Save</string>
+    <string name="offline">Offline mode</string>
+    <string name="your_name">Your name</string>
+    <string name="developer">Developer</string>
+    <string name="designer">Designer</string>
+    <string name="preferences">Select your preferences</string>
+    <string name="preferences_explanation">Disclaimer: This screen will only be dark when Dark Mode is forced in the OS settings in Android Q and above.</string>
+
+</resources>

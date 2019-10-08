@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2019 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="52dp"
+    android:height="52dp"
+    android:viewportWidth="24.0"
+    android:viewportHeight="24.0"
+    android:tint="?attr/colorPrimary">
+    <!-- Use the android:tint attribute to tint the vectors -->
+    <!-- For the tint to work on API 19 and below, remember to use app:srcCompat in the view widget
+            and vectorDrawables.useSupportLibrary = true in your build.gradle file -->
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M10,2c-1.82,0 -3.53,0.5 -5,1.35C7.99,5.08 10,8.3 10,12s-2.01,6.92 -5,8.65C6.47,21.5 8.18,22 10,22c5.52,0 10,-4.48 10,-10S15.52,2 10,2z" />
+</vector>
