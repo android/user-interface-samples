@@ -6,7 +6,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.5.1'
     }
 }
 
@@ -20,10 +20,10 @@ repositories {
 dependencies {
 
 
-    implementation 'com.google.android.material:material:1.1.0-alpha05'
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
-    implementation 'androidx.preference:preference:1.1.0-alpha04'
+    implementation 'com.google.android.material:material:1.1.0-beta01'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
+    implementation 'androidx.preference:preference:1.1.0'
 
 
 
