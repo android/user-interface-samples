@@ -27,14 +27,12 @@
     android:layout_width="match_parent"
     android:padding="@dimen/margin_medium"
     android:forceDarkAllowed="true"
-    android:background="#FFFFFF"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_small"
-        android:textColor="#212121"
         android:text="@string/preferences_explanation"/>
 
     <TextView
@@ -42,7 +40,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium"
-        android:textColor="#212121"
         android:text="@string/preferences"/>
 
     <EditText
@@ -52,8 +49,6 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:layout_margin="@dimen/margin_small"
-        android:textColor="#212121"
-        android:textColorHint="#44212121"
         android:hint="@string/your_name" />
 
     <RadioGroup
@@ -66,7 +61,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#212121"
             android:text="@string/developer" />
 
         <RadioButton
@@ -74,7 +68,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#212121"
             android:text="@string/designer" />
     </RadioGroup>
 
@@ -83,7 +76,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_small"
-        android:textColor="#212121"
         android:text="@string/offline" />
 
     <Button
