@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2019 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.android.bubbles">
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Bubbles"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <!--
+            Our main entry point.
+        -->
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTop">
+            <!--
+                This activity is the one that's shown on the launcher.
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!--
+                This is used as the content URI of notifications. It navigates directly to the specified chat screen.
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="android.example.com"
+                    android:pathPattern="/chat/*"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+
+        <!--
+            The dummy voice-call screen.
+            This Activity can be launched from inside an expanded Bubble. Since this Activity is launched as a new task,
+            it is opened as a full Activity, rather than stacked inside the expanded Bubble.
+        -->
+        <activity
+            android:name=".VoiceCallActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.Bubbles.Voice" />
+
+        <!--
+            This Activity is the expanded Bubble. For that, this Activity has to have several attributes.
+            - allowEmbedded="true": The expanded Bubble is embedded in the System UI.
+            - resizeableActivity="true": The expanded Bubble is resized by the System UI.
+            - documentLaunchMode="always": We show multiple bubbles in this sample. There will be multiple instances of
+                                           this Activity.
+        -->
+        <activity
+            android:name=".BubbleActivity"
+            android:allowEmbedded="true"
+            android:documentLaunchMode="always"
+            android:resizeableActivity="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="android.example.com"
+                    android:pathPattern="/chat/*"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+
+    </application>
+
+</manifest>
