@@ -45,7 +45,8 @@ class NotificationHelper(private val context: Context) {
         private const val REQUEST_BUBBLE = 2
     }
 
-    private val notificationManager = context.getSystemService(NotificationManager::class.java)
+    private val notificationManager =
+        context.getSystemService(NotificationManager::class.java) ?: throw IllegalStateException()
 
     fun setUpNotificationChannels() {
         if (notificationManager.getNotificationChannel(CHANNEL_NEW_MESSAGES) == null) {
@@ -82,15 +83,14 @@ class NotificationHelper(private val context: Context) {
                     // The height of the expanded bubble.
                     .setDesiredHeight(context.resources.getDimensionPixelSize(R.dimen.bubble_height))
                     // The icon of the bubble.
-                    // TODO: The icon is not displayed in Android Q Beta 2.
                     .setIcon(icon)
                     .apply {
-                        // When the bubble is explicitly opened by the user, we can show the bubble automatically
-                        // in the expanded state. This works only when the app is in the foreground.
-                        // TODO: This does not yet work in Android Q Beta 2.
+                        // When the bubble is explicitly opened by the user, we can show the bubble
+                        // automatically in the expanded state. This works only when the app is in
+                        // the foreground.
                         if (fromUser) {
                             setAutoExpandBubble(true)
-                            setSuppressInitialNotification(true)
+                            setSuppressNotification(true)
                         }
                     }
                     // The Intent to be used for the expanded bubble.
@@ -107,16 +107,16 @@ class NotificationHelper(private val context: Context) {
                     )
                     .build()
             )
-            // The user can turn off the bubble in system settings. In that case, this notification is shown as a
-            // normal notification instead of a bubble. Make sure that this notification works as a normal notification
-            // as well.
+            // The user can turn off the bubble in system settings. In that case, this notification
+            // is shown as a normal notification instead of a bubble. Make sure that this
+            // notification works as a normal notification as well.
             .setContentTitle(chat.contact.name)
             .setSmallIcon(R.drawable.ic_message)
             .setCategory(Notification.CATEGORY_MESSAGE)
             .addPerson(person)
             .setShowWhen(true)
-            // The content Intent is used when the user clicks on the "Open Content" icon button on the expanded bubble,
-            // as well as when the fall-back notification is clicked.
+            // The content Intent is used when the user clicks on the "Open Content" icon button on
+            // the expanded bubble, as well as when the fall-back notification is clicked.
             .setContentIntent(
                 PendingIntent.getActivity(
                     context,
@@ -132,7 +132,8 @@ class NotificationHelper(private val context: Context) {
             // This is a Bubble explicitly opened by the user.
             builder.setContentText(context.getString(R.string.chat_with_contact, chat.contact.name))
         } else {
-            // Let's add some more content to the notification in case it falls back to a normal notification.
+            // Let's add some more content to the notification in case it falls back to a normal
+            // notification.
             val lastOutgoingId = chat.messages.last { !it.isIncoming }.id
             val newMessages = chat.messages.filter { message ->
                 message.id > lastOutgoingId
@@ -142,7 +143,12 @@ class NotificationHelper(private val context: Context) {
                 .setStyle(
                     if (lastMessage.photo != null) {
                         Notification.BigPictureStyle()
-                            .bigPicture(BitmapFactory.decodeResource(context.resources, lastMessage.photo))
+                            .bigPicture(
+                                BitmapFactory.decodeResource(
+                                    context.resources,
+                                    lastMessage.photo
+                                )
+                            )
                             .bigLargeIcon(icon)
                             .setSummaryText(lastMessage.text)
                     } else {

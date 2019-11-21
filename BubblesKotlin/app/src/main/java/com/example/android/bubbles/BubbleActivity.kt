@@ -19,7 +19,8 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.transaction
+import androidx.fragment.app.commit
+import androidx.fragment.app.commitNow
 import com.example.android.bubbles.ui.chat.ChatFragment
 import com.example.android.bubbles.ui.photo.PhotoFragment
 
@@ -31,9 +32,9 @@ class BubbleActivity : AppCompatActivity(), NavigationController {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.bubble_activity)
-        val id = intent.data.lastPathSegment.toLongOrNull() ?: return
+        val id = intent.data?.lastPathSegment?.toLongOrNull() ?: return
         if (savedInstanceState == null) {
-            supportFragmentManager.transaction(now = true) {
+            supportFragmentManager.commitNow {
                 replace(R.id.container, ChatFragment.newInstance(id, false))
             }
         }
@@ -44,15 +45,19 @@ class BubbleActivity : AppCompatActivity(), NavigationController {
     }
 
     override fun openPhoto(photo: Int) {
-        // In an expanded Bubble, you can navigate between Fragments just like you would normally do in a normal
-        // Activity. Just make sure you don't block onBackPressed().
-        supportFragmentManager.transaction {
+        // In an expanded Bubble, you can navigate between Fragments just like you would normally
+        // do in a normal Activity. Just make sure you don't block onBackPressed().
+        supportFragmentManager.commit {
             addToBackStack(null)
             replace(R.id.container, PhotoFragment.newInstance(photo))
         }
     }
 
-    override fun updateAppBar(showContact: Boolean, hidden: Boolean, body: (name: TextView, icon: ImageView) -> Unit) {
+    override fun updateAppBar(
+        showContact: Boolean,
+        hidden: Boolean,
+        body: (name: TextView, icon: ImageView) -> Unit
+    ) {
         // The expanded bubble does not have an app bar. Ignore.
     }
 }
