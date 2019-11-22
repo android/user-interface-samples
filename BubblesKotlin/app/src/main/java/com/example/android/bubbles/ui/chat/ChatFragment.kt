@@ -45,7 +45,8 @@ import com.example.android.bubbles.VoiceCallActivity
 import com.example.android.bubbles.getNavigationController
 
 /**
- * The chat screen. This is used in the full app (MainActivity) as well as in the expanded Bubble (BubbleActivity).
+ * The chat screen. This is used in the full app (MainActivity) as well as in the expanded Bubble
+ * (BubbleActivity).
  */
 class ChatFragment : Fragment() {
 
@@ -67,10 +68,15 @@ class ChatFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        enterTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_bottom)
+        enterTransition =
+            TransitionInflater.from(context).inflateTransition(R.transition.slide_bottom)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.chat_fragment, container, false)
     }
 
@@ -190,9 +196,9 @@ class ChatFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.chat, menu)
-        menu?.findItem(R.id.action_show_as_bubble)?.let { item ->
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.chat, menu)
+        menu.findItem(R.id.action_show_as_bubble)?.let { item ->
             viewModel.showAsBubbleVisible.observe(viewLifecycleOwner, Observer {
                 item.isVisible = it
             })
@@ -200,8 +206,8 @@ class ChatFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             R.id.action_show_as_bubble -> {
                 viewModel.showAsBubble()
                 fragmentManager?.popBackStack()

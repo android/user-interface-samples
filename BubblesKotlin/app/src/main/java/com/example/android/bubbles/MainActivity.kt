@@ -26,7 +26,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.transaction
+import androidx.fragment.app.commit
+import androidx.fragment.app.commitNow
 import com.example.android.bubbles.ui.chat.ChatFragment
 import com.example.android.bubbles.ui.main.MainFragment
 import com.example.android.bubbles.ui.photo.PhotoFragment
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationController {
         name = findViewById(R.id.name)
         icon = findViewById(R.id.icon)
         if (savedInstanceState == null) {
-            supportFragmentManager.transaction(now = true) {
+            supportFragmentManager.commitNow {
                 replace(R.id.container, MainFragment())
             }
             intent?.let(::handleIntent)
@@ -71,14 +72,18 @@ class MainActivity : AppCompatActivity(), NavigationController {
 
     private fun handleIntent(intent: Intent) {
         if (intent.action == Intent.ACTION_VIEW) {
-            val id = intent.data.lastPathSegment.toLongOrNull()
+            val id = intent.data?.lastPathSegment?.toLongOrNull()
             if (id != null) {
                 openChat(id)
             }
         }
     }
 
-    override fun updateAppBar(showContact: Boolean, hidden: Boolean, body: (name: TextView, icon: ImageView) -> Unit) {
+    override fun updateAppBar(
+        showContact: Boolean,
+        hidden: Boolean,
+        body: (name: TextView, icon: ImageView) -> Unit
+    ) {
         if (hidden) {
             appBar.visibility = View.GONE
         } else {
@@ -99,14 +104,14 @@ class MainActivity : AppCompatActivity(), NavigationController {
 
     override fun openChat(id: Long) {
         supportFragmentManager.popBackStack(FRAGMENT_CHAT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        supportFragmentManager.transaction {
+        supportFragmentManager.commit {
             addToBackStack(FRAGMENT_CHAT)
             replace(R.id.container, ChatFragment.newInstance(id, true))
         }
     }
 
     override fun openPhoto(photo: Int) {
-        supportFragmentManager.transaction {
+        supportFragmentManager.commit {
             addToBackStack(null)
             replace(R.id.container, PhotoFragment.newInstance(photo))
         }
