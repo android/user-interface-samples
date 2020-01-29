@@ -24,7 +24,7 @@ Depending on the position of the text, we need to draw four different drawables 
 * Text fits on 2 lines: we need drawables for the start and end of the text
 * Text spans multiple lines: we need drawables for the start, middle and end of the text
 
-<img src="../screenshots/lines.png" width="30%" />
+<img src="../TextRoundedBackgroundKotlin/screenshots/lines.png" width="30%" />
 
 The four drawables that need to be drawn depending on the position of the text:
 
