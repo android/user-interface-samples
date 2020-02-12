@@ -80,10 +80,26 @@ class NotificationHelper(private val context: Context) {
             // A notification can be shown as a bubble by calling setBubbleMetadata()
             .setBubbleMetadata(
                 Notification.BubbleMetadata.Builder()
+                    .createIntentBubble(
+                        // The Intent to be used for the expanded bubble.
+                        PendingIntent.getActivity(
+                            context,
+                            REQUEST_BUBBLE,
+                            // Launch BubbleActivity as the expanded bubble.
+                            Intent(context, BubbleActivity::class.java)
+                                .setAction(Intent.ACTION_VIEW)
+                                .setData(
+                                    Uri.parse(
+                                        "https://android.example.com/chat/${chat.contact.id}"
+                                    )
+                                ),
+                            PendingIntent.FLAG_UPDATE_CURRENT
+                        ),
+                        // The icon of the bubble.
+                        icon
+                    )
                     // The height of the expanded bubble.
                     .setDesiredHeight(context.resources.getDimensionPixelSize(R.dimen.bubble_height))
-                    // The icon of the bubble.
-                    .setIcon(icon)
                     .apply {
                         // When the bubble is explicitly opened by the user, we can show the bubble
                         // automatically in the expanded state. This works only when the app is in
@@ -93,18 +109,6 @@ class NotificationHelper(private val context: Context) {
                             setSuppressNotification(true)
                         }
                     }
-                    // The Intent to be used for the expanded bubble.
-                    .setIntent(
-                        PendingIntent.getActivity(
-                            context,
-                            REQUEST_BUBBLE,
-                            // Launch BubbleActivity as the expanded bubble.
-                            Intent(context, BubbleActivity::class.java)
-                                .setAction(Intent.ACTION_VIEW)
-                                .setData(Uri.parse("https://android.example.com/chat/${chat.contact.id}")),
-                            PendingIntent.FLAG_UPDATE_CURRENT
-                        )
-                    )
                     .build()
             )
             // The user can turn off the bubble in system settings. In that case, this notification
@@ -130,7 +134,17 @@ class NotificationHelper(private val context: Context) {
 
         if (fromUser) {
             // This is a Bubble explicitly opened by the user.
-            builder.setContentText(context.getString(R.string.chat_with_contact, chat.contact.name))
+            builder
+                .setStyle(
+                    Notification.MessagingStyle(person)
+                        .addMessage(
+                            context.getString(R.string.chat_with_contact, chat.contact.name),
+                            System.currentTimeMillis(),
+                            person
+                        )
+                        .setGroupConversation(false)
+                )
+                .setContentText(context.getString(R.string.chat_with_contact, chat.contact.name))
         } else {
             // Let's add some more content to the notification in case it falls back to a normal
             // notification.
@@ -138,28 +152,15 @@ class NotificationHelper(private val context: Context) {
             val newMessages = chat.messages.filter { message ->
                 message.id > lastOutgoingId
             }
-            val lastMessage = newMessages.last()
             builder
                 .setStyle(
-                    if (lastMessage.photo != null) {
-                        Notification.BigPictureStyle()
-                            .bigPicture(
-                                BitmapFactory.decodeResource(
-                                    context.resources,
-                                    lastMessage.photo
-                                )
-                            )
-                            .bigLargeIcon(icon)
-                            .setSummaryText(lastMessage.text)
-                    } else {
-                        Notification.MessagingStyle(person)
-                            .apply {
-                                for (message in newMessages) {
-                                    addMessage(message.text, message.timestamp, person)
-                                }
+                    Notification.MessagingStyle(person)
+                        .apply {
+                            for (message in newMessages) {
+                                addMessage(message.text, message.timestamp, person)
                             }
-                            .setGroupConversation(false)
-                    }
+                        }
+                        .setGroupConversation(false)
                 )
                 .setContentText(newMessages.joinToString("\n") { it.text })
                 .setWhen(newMessages.last().timestamp)
