@@ -33,8 +33,7 @@
         android:layout_height="64dp"
         android:layout_gravity="center_vertical"
         android:layout_margin="@dimen/spacing_small"
-        android:contentDescription="@string/description_icon"
-        tools:src="@drawable/cat" />
+        android:contentDescription="@string/description_icon" />
 
     <TextView
         android:id="@+id/name"

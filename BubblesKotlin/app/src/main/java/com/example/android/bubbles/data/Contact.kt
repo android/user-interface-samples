@@ -15,28 +15,27 @@
 
 package com.example.android.bubbles.data
 
-import androidx.annotation.DrawableRes
+import android.net.Uri
 import com.example.android.bubbles.R
 
 abstract class Contact(
     val id: Long,
     val name: String,
-    @DrawableRes
-    val icon: Int
+    val icon: String
 ) {
 
     companion object {
         val CONTACTS = listOf(
-            object : Contact(1L, "Cat", R.drawable.cat) {
+            object : Contact(1L, "Cat", "cat.jpg") {
                 override fun reply(text: String) = buildReply().apply { this.text = "Meow" }
             },
-            object : Contact(2L, "Dog", R.drawable.dog) {
+            object : Contact(2L, "Dog", "dog.jpg") {
                 override fun reply(text: String) = buildReply().apply { this.text = "Woof woof!!" }
             },
-            object : Contact(3L, "Parrot", R.drawable.parrot) {
+            object : Contact(3L, "Parrot", "parrot.jpg") {
                 override fun reply(text: String) = buildReply().apply { this.text = text }
             },
-            object : Contact(4L, "Sheep", R.drawable.sheep) {
+            object : Contact(4L, "Sheep", "sheep.jpg") {
                 override fun reply(text: String) = buildReply().apply {
                     this.text = "Look at me!"
                     photo = R.drawable.sheep_full
@@ -44,6 +43,9 @@ abstract class Contact(
             }
         )
     }
+
+    val iconUri: Uri
+        get() = Uri.parse("content://com.example.android.bubbles/icon/$id")
 
     fun buildReply() = Message.Builder().apply {
         sender = this@Contact.id
@@ -68,7 +70,7 @@ abstract class Contact(
     override fun hashCode(): Int {
         var result = id.hashCode()
         result = 31 * result + name.hashCode()
-        result = 31 * result + icon
+        result = 31 * result + icon.hashCode()
         return result
     }
 }

@@ -15,6 +15,7 @@
 
 package com.example.android.bubbles.ui.main
 
+import android.graphics.drawable.Icon
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -22,8 +23,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.example.android.bubbles.R
 import com.example.android.bubbles.data.Contact
 
@@ -49,7 +48,7 @@ class ContactAdapter(
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val contact: Contact = getItem(position)
-        Glide.with(holder.icon).load(contact.icon).apply(RequestOptions.circleCropTransform()).into(holder.icon)
+        holder.icon.setImageIcon(Icon.createWithAdaptiveBitmapContentUri(contact.iconUri))
         holder.name.text = contact.name
     }
 }

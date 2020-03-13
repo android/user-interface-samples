@@ -21,8 +21,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.bubbles.R
@@ -38,14 +38,18 @@ class MainFragment : Fragment() {
         exitTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_top)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val navigationController = getNavigationController()
         navigationController.updateAppBar(false)
-        val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        val viewModel: MainViewModel by viewModels()
 
         val contactAdapter = ContactAdapter { id ->
             navigationController.openChat(id)

@@ -20,8 +20,11 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Person
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Icon
 import android.net.Uri
@@ -48,6 +51,9 @@ class NotificationHelper(private val context: Context) {
     private val notificationManager =
         context.getSystemService(NotificationManager::class.java) ?: throw IllegalStateException()
 
+    private val shortcutManager =
+        context.getSystemService(ShortcutManager::class.java) ?: throw IllegalStateException()
+
     fun setUpNotificationChannels() {
         if (notificationManager.getNotificationChannel(CHANNEL_NEW_MESSAGES) == null) {
             notificationManager.createNotificationChannel(
@@ -61,16 +67,45 @@ class NotificationHelper(private val context: Context) {
                 }
             )
         }
+        updateShortcuts()
+    }
+
+    @WorkerThread
+    fun updateShortcuts() {
+        val shortcuts = Contact.CONTACTS.map { contact ->
+            val icon = Icon.createWithAdaptiveBitmap(
+                context.resources.assets.open(contact.icon).use { input ->
+                    BitmapFactory.decodeStream(input)
+                }
+            )
+            ShortcutInfo.Builder(context, contact.id.toString())
+                .setActivity(ComponentName(context, MainActivity::class.java))
+                .setShortLabel(contact.name)
+                .setIcon(icon)
+                .setIntent(
+                    Intent(context, MainActivity::class.java)
+                        .setAction(Intent.ACTION_VIEW)
+                        .setData(
+                            Uri.parse(
+                                "https://android.example.com/chat/${contact.id}"
+                            )
+                        )
+                )
+                .setPerson(
+                    Person.Builder()
+                        .setName(contact.name)
+                        .setIcon(icon)
+                        .build()
+                )
+                .build()
+        }
+        shortcutManager.addDynamicShortcuts(shortcuts)
     }
 
     @WorkerThread
     fun showNotification(chat: Chat, fromUser: Boolean) {
-        val icon = Icon.createWithAdaptiveBitmap(
-            BitmapFactory.decodeResource(
-                context.resources,
-                chat.contact.icon
-            )
-        )
+        Icon.createWithAdaptiveBitmapContentUri("content://")
+        val icon = Icon.createWithAdaptiveBitmapContentUri(chat.contact.iconUri)
         val person = Person.Builder()
             .setName(chat.contact.name)
             .setIcon(icon)
@@ -117,6 +152,7 @@ class NotificationHelper(private val context: Context) {
             .setContentTitle(chat.contact.name)
             .setSmallIcon(R.drawable.ic_message)
             .setCategory(Notification.CATEGORY_MESSAGE)
+            .setShortcutId(chat.contact.id.toString())
             .addPerson(person)
             .setShowWhen(true)
             // The content Intent is used when the user clicks on the "Open Content" icon button on
