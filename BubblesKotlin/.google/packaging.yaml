@@ -12,9 +12,4 @@ solutions:    [Mobile]
 github:       android/user-interface-samples
 level:        INTERMEDIATE
 icon:         screenshots/icon-web.png
-apiRefs:
-    - android:android.provider.FontRequest
-    - android:android.support.v4.provider.FontRequest
-    - android:android.provider.FontsContractCompat
-    - android:android.support.v4.provider.FontsContractCompat
 license: apache2
