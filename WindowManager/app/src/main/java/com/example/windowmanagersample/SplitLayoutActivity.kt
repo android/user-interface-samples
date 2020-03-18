@@ -22,7 +22,6 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.core.util.Consumer
 import androidx.core.view.doOnLayout
-import androidx.window.DeviceState
 import androidx.window.DisplayFeature
 import androidx.window.WindowLayoutInfo
 import androidx.window.WindowManager
@@ -169,13 +168,7 @@ class SplitLayoutActivity : BaseSampleActivity() {
 
     inner class LayoutStateChangeCallback : Consumer<WindowLayoutInfo> {
         override fun accept(newLayoutInfo: WindowLayoutInfo) {
-            binding.splitLayout.updateWindowLayout(newLayoutInfo)
-        }
-    }
-
-    inner class DeviceStateChangeCallback : Consumer<DeviceState> {
-        override fun accept(newDeviceState: DeviceState) {
-//            binding.splitLayout.updateWindowLayout(newDeviceState)
+            updateWindowLayout(newLayoutInfo)
         }
     }
 }
