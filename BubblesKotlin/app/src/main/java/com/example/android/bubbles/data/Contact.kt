@@ -15,7 +15,6 @@
 
 package com.example.android.bubbles.data
 
-import android.net.Uri
 import androidx.core.net.toUri
 import com.example.android.bubbles.R
 
