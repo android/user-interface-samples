@@ -77,9 +77,7 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val id = arguments?.getLong(ARG_ID)
         if (id == null) {
-            if (isAdded) {
-                parentFragmentManager.popBackStack()
-            }
+            parentFragmentManager.popBackStack()
             return
         }
         val navigationController = getNavigationController()
@@ -105,9 +103,7 @@ class ChatFragment : Fragment() {
         viewModel.contact.observe(viewLifecycleOwner, Observer { contact ->
             if (contact == null) {
                 Toast.makeText(view.context, "Contact not found", Toast.LENGTH_SHORT).show()
-                if (isAdded) {
-                    parentFragmentManager.popBackStack()
-                }
+                parentFragmentManager.popBackStack()
             } else {
                 navigationController.updateAppBar { name, icon ->
                     name.text = contact.name

@@ -16,6 +16,7 @@
 package com.example.android.bubbles.data
 
 import android.net.Uri
+import androidx.core.net.toUri
 import com.example.android.bubbles.R
 
 abstract class Contact(
@@ -45,7 +46,10 @@ abstract class Contact(
     }
 
     val iconUri: Uri
-        get() = Uri.parse("content://com.example.android.bubbles/icon/$id")
+        get() = "content://com.example.android.bubbles/icon/$id".toUri()
+
+    val shortcutId: String
+        get() = "contact_$id"
 
     fun buildReply() = Message.Builder().apply {
         sender = this@Contact.id
