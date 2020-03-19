@@ -45,11 +45,9 @@ abstract class Contact(
         )
     }
 
-    val iconUri: Uri
-        get() = "content://com.example.android.bubbles/icon/$id".toUri()
+    val iconUri = "content://com.example.android.bubbles/icon/$id".toUri()
 
-    val shortcutId: String
-        get() = "contact_$id"
+    val shortcutId = "contact_$id"
 
     fun buildReply() = Message.Builder().apply {
         sender = this@Contact.id
