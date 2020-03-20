@@ -18,9 +18,6 @@ package com.example.windowmanagersample
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.windowmanagersample.BaseSampleActivity.Companion.BACKEND_TYPE_DEVICE_DEFAULT
 import com.example.windowmanagersample.BaseSampleActivity.Companion.BACKEND_TYPE_EXTRA
@@ -59,8 +56,10 @@ class WindowDemosActivity : AppCompatActivity() {
         binding.presentationActivityButton.setOnClickListener { showPresentation() }
 
         if (savedInstanceState != null) {
-            selectedBackend = savedInstanceState.getInt(BACKEND_TYPE_EXTRA,
-                BACKEND_TYPE_DEVICE_DEFAULT)
+            selectedBackend = savedInstanceState.getInt(
+                BACKEND_TYPE_EXTRA,
+                BACKEND_TYPE_DEVICE_DEFAULT
+            )
         }
         when (selectedBackend) {
             BACKEND_TYPE_DEVICE_DEFAULT ->

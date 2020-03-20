@@ -25,7 +25,6 @@ import android.util.Log
 import android.view.Display
 import android.view.Display.DEFAULT_DISPLAY
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.util.Consumer
 import androidx.window.DeviceState
@@ -52,8 +51,10 @@ class PresentationActivity : BaseSampleActivity() {
         setContentView(view)
 
         windowManager = WindowManager(this, getTestBackend())
-        windowManager.registerDeviceStateChangeCallback(mainThreadExecutor,
-            deviceStateChangeCallback)
+        windowManager.registerDeviceStateChangeCallback(
+            mainThreadExecutor,
+            deviceStateChangeCallback
+        )
 
         updateCurrentState(windowManager.deviceState)
     }
@@ -101,7 +102,8 @@ class PresentationActivity : BaseSampleActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
                 presentation!!.window?.attributes?.flags =
                     presentation!!.window?.attributes?.flags?.or(
-                        android.R.attr.showWhenLocked or android.R.attr.turnScreenOn)
+                        android.R.attr.showWhenLocked or android.R.attr.turnScreenOn
+                    )
             }
             presentation!!.show()
             break

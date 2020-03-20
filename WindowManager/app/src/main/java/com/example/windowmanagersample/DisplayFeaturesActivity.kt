@@ -23,12 +23,15 @@ import android.util.Log
 import android.view.View
 import androidx.core.util.Consumer
 import androidx.core.view.doOnLayout
-import androidx.window.*
+import androidx.window.DeviceState
+import androidx.window.DisplayFeature
+import androidx.window.WindowLayoutInfo
+import androidx.window.WindowManager
 import com.example.windowmanagersample.backend.MidScreenFoldBackend
 import com.example.windowmanagersample.databinding.ActivityDisplayFeaturesBinding
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
+import kotlin.collections.ArrayList
 
 /** Demo activity that shows all display features and current device state on the screen. */
 class DisplayFeaturesActivity : BaseSampleActivity() {
@@ -57,8 +60,10 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         stateLog.clear()
         stateLog.append(getString(R.string.stateUpdateLog)).append("\n")
 
-        windowManager.registerDeviceStateChangeCallback(mainThreadExecutor,
-            deviceStateChangeCallback)
+        windowManager.registerDeviceStateChangeCallback(
+            mainThreadExecutor,
+            deviceStateChangeCallback
+        )
 
         window.decorView.doOnLayout {
             updateStateAndFeatureViews()
@@ -108,7 +113,10 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
 
         // Add views that represent display features
         for (displayFeature in windowLayoutInfo.displayFeatures) {
-            val lp = getLayoutParamsForFeatureInFrameLayout(displayFeature, binding.featureContainerLayout) ?: continue
+            val lp = getLayoutParamsForFeatureInFrameLayout(
+                displayFeature,
+                binding.featureContainerLayout
+            ) ?: continue
 
             // Make sure that zero-wide and zero-high features are still shown
             if (lp.width == 0) {

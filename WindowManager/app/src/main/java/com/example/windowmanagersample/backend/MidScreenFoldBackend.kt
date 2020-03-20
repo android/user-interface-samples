@@ -22,12 +22,8 @@ import android.content.ContextWrapper
 import android.graphics.Point
 import android.graphics.Rect
 import androidx.core.util.Consumer
-import androidx.window.DeviceState
-import androidx.window.DisplayFeature
+import androidx.window.*
 import androidx.window.DisplayFeature.TYPE_FOLD
-import androidx.window.WindowBackend
-import androidx.window.WindowLayoutInfo
-import androidx.window.WindowManager
 import java.util.concurrent.Executor
 
 /**
@@ -46,13 +42,14 @@ class MidScreenFoldBackend : WindowBackend {
 
     private var windowLayoutInfoCallback: Consumer<WindowLayoutInfo>? = null
     private var deviceStateCallback: Consumer<DeviceState>? = null
-    
+
     override fun getDeviceState() = deviceState
 
     override fun getWindowLayoutInfo(context: Context): WindowLayoutInfo {
         val activity = getActivityFromContext(context) ?: throw IllegalArgumentException(
             "Used non-visual Context used with WindowManager. Please use an Activity or a " +
-                    "ContextWrapper around an Activity instead.")
+                    "ContextWrapper around an Activity instead."
+        )
         val displaySize = Point(activity.window.decorView.width, activity.window.decorView.height)
         val featureRect = if (displaySize.x >= displaySize.y) { // Landscape
             Rect(displaySize.x / 2, 0, displaySize.x / 2, displaySize.y)

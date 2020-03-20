@@ -47,14 +47,20 @@ class SplitLayoutActivity : BaseSampleActivity() {
     }
 
     private fun updateWindowLayout(windowLayoutInfo: WindowLayoutInfo) {
-        val splitPositions = splitViewPositions(binding.contentLayout.root, binding.controlLayout.root, windowLayoutInfo)
+        val splitPositions = splitViewPositions(
+            binding.contentLayout.root,
+            binding.controlLayout.root,
+            windowLayoutInfo
+        )
 
         if (splitPositions != null) {
             val startPosition = splitPositions[0]
-            val startWidthSpec = View.MeasureSpec.makeMeasureSpec(startPosition.width(),
+            val startWidthSpec = View.MeasureSpec.makeMeasureSpec(
+                startPosition.width(),
                 View.MeasureSpec.EXACTLY
             )
-            val startHeightSpec = View.MeasureSpec.makeMeasureSpec(startPosition.height(),
+            val startHeightSpec = View.MeasureSpec.makeMeasureSpec(
+                startPosition.height(),
                 View.MeasureSpec.EXACTLY
             )
             binding.contentLayout.root.measure(startWidthSpec, startHeightSpec)
@@ -64,10 +70,12 @@ class SplitLayoutActivity : BaseSampleActivity() {
             )
 
             val endPosition = splitPositions[1]
-            val endWidthSpec = View.MeasureSpec.makeMeasureSpec(endPosition.width(),
+            val endWidthSpec = View.MeasureSpec.makeMeasureSpec(
+                endPosition.width(),
                 View.MeasureSpec.EXACTLY
             )
-            val endHeightSpec = View.MeasureSpec.makeMeasureSpec(endPosition.height(),
+            val endHeightSpec = View.MeasureSpec.makeMeasureSpec(
+                endPosition.height(),
                 View.MeasureSpec.EXACTLY
             )
             binding.controlLayout.root.measure(endWidthSpec, endHeightSpec)
@@ -82,14 +90,19 @@ class SplitLayoutActivity : BaseSampleActivity() {
      * Get the position of the split for this view.
      * @return A rect that defines of split, or {@code null} if there is no split.
      */
-    private fun splitViewPositions(startView: View?, endView: View?, windowLayoutInfo: WindowLayoutInfo): Array<Rect>? {
+    private fun splitViewPositions(
+        startView: View?,
+        endView: View?,
+        windowLayoutInfo: WindowLayoutInfo
+    ): Array<Rect>? {
         if (startView == null || endView == null) {
             return null
         }
 
         // Calculate the area for view's content with padding
         val paddedWidth = binding.root.width - binding.root.paddingLeft - binding.root.paddingRight
-        val paddedHeight = binding.root.height - binding.root.paddingTop - binding.root.paddingBottom
+        val paddedHeight =
+            binding.root.height - binding.root.paddingTop - binding.root.paddingBottom
 
         for (feature in windowLayoutInfo.displayFeatures) {
             // Only a hinge or a fold can split the area in two
