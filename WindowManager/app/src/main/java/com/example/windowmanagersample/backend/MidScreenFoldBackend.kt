@@ -84,8 +84,11 @@ class MidScreenFoldBackend : WindowBackend {
         return null
     }
 
-    fun setDeviceStateToHalfOpened() {
-        deviceState = DeviceState.Builder().setPosture(DeviceState.POSTURE_HALF_OPENED).build()
+    fun toggleDeviceHalfOpenedState() {
+        val posture = if (deviceState.posture == DeviceState.POSTURE_OPENED)
+            DeviceState.POSTURE_HALF_OPENED else
+            DeviceState.POSTURE_OPENED
+        deviceState = DeviceState.Builder().setPosture(posture).build()
         deviceStateCallback?.accept(deviceState)
     }
 

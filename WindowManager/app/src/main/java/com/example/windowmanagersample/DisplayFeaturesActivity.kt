@@ -21,14 +21,10 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.TextView
 import androidx.core.util.Consumer
 import androidx.core.view.doOnLayout
-import androidx.window.DeviceState
-import androidx.window.DisplayFeature
-import androidx.window.WindowLayoutInfo
-import androidx.window.WindowManager
+import androidx.window.*
+import com.example.windowmanagersample.backend.MidScreenFoldBackend
 import com.example.windowmanagersample.databinding.ActivityDisplayFeaturesBinding
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -47,13 +43,16 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
 
     private lateinit var binding: ActivityDisplayFeaturesBinding
 
+    private var windowBackend: MidScreenFoldBackend? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDisplayFeaturesBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        windowManager = WindowManager(this, getTestBackend())
+        windowBackend = getTestBackend()
+        windowManager = WindowManager(this, windowBackend)
 
         stateLog.clear()
         stateLog.append(getString(R.string.stateUpdateLog)).append("\n")
@@ -64,6 +63,8 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         window.decorView.doOnLayout {
             updateStateAndFeatureViews()
         }
+
+        binding.legendTextView.setOnClickListener { windowBackend?.toggleDeviceHalfOpenedState() }
     }
 
     override fun onAttachedToWindow() {

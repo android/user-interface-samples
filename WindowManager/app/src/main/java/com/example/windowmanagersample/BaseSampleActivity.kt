@@ -20,7 +20,6 @@ import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.window.WindowBackend
 import com.example.windowmanagersample.backend.MidScreenFoldBackend
 import java.util.concurrent.Executor
 
@@ -42,7 +41,7 @@ open class BaseSampleActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     val mainThreadExecutor = Executor { r: Runnable -> handler.post(r) }
 
-    fun getTestBackend(): WindowBackend? {
+    fun getTestBackend(): MidScreenFoldBackend? {
         return when (intent.getIntExtra(BACKEND_TYPE_EXTRA, BACKEND_TYPE_DEVICE_DEFAULT)) {
             BACKEND_TYPE_MID_SCREEN_FOLD -> MidScreenFoldBackend()
             else -> null

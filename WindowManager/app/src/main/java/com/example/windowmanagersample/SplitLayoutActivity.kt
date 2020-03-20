@@ -47,7 +47,7 @@ class SplitLayoutActivity : BaseSampleActivity() {
     }
 
     private fun updateWindowLayout(windowLayoutInfo: WindowLayoutInfo) {
-        val splitPositions = splitViewPositions(binding.contentLayout.root, binding.controlLayout.root)
+        val splitPositions = splitViewPositions(binding.contentLayout.root, binding.controlLayout.root, windowLayoutInfo)
 
         if (splitPositions != null) {
             val startPosition = splitPositions[0]
@@ -82,7 +82,7 @@ class SplitLayoutActivity : BaseSampleActivity() {
      * Get the position of the split for this view.
      * @return A rect that defines of split, or {@code null} if there is no split.
      */
-    private fun splitViewPositions(startView: View?, endView: View?): Array<Rect>? {
+    private fun splitViewPositions(startView: View?, endView: View?, windowLayoutInfo: WindowLayoutInfo): Array<Rect>? {
         if (startView == null || endView == null) {
             return null
         }
@@ -91,7 +91,7 @@ class SplitLayoutActivity : BaseSampleActivity() {
         val paddedWidth = binding.root.width - binding.root.paddingLeft - binding.root.paddingRight
         val paddedHeight = binding.root.height - binding.root.paddingTop - binding.root.paddingBottom
 
-        for (feature in windowManager.windowLayoutInfo.displayFeatures) {
+        for (feature in windowLayoutInfo.displayFeatures) {
             // Only a hinge or a fold can split the area in two
             if (feature.type != DisplayFeature.TYPE_FOLD && feature.type != DisplayFeature.TYPE_HINGE) {
                 continue
