@@ -37,7 +37,6 @@ import kotlin.collections.ArrayList
 class DisplayFeaturesActivity : BaseSampleActivity() {
 
     private lateinit var windowManager: WindowManager
-    private lateinit var windowLayoutInfo: WindowLayoutInfo
     private val stateLog: StringBuilder = StringBuilder()
 
     private val displayFeatureViews = ArrayList<View>()
@@ -74,7 +73,6 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        windowLayoutInfo = windowManager.windowLayoutInfo
         windowManager.registerLayoutChangeCallback(mainThreadExecutor, layoutStateChangeCallback)
     }
 
@@ -85,7 +83,6 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        windowLayoutInfo = windowManager.windowLayoutInfo
     }
 
     /**
@@ -109,10 +106,10 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
 
         stateStringBuilder.append(getString(R.string.windowLayout))
             .append(": ")
-            .append(windowLayoutInfo)
+            .append(windowManager.windowLayoutInfo)
 
         // Add views that represent display features
-        for (displayFeature in windowLayoutInfo.displayFeatures) {
+        for (displayFeature in windowManager.windowLayoutInfo.displayFeatures) {
             val lp = getLayoutParamsForFeatureInFrameLayout(
                 displayFeature,
                 binding.featureContainerLayout
