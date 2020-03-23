@@ -53,8 +53,6 @@ class WindowDemosActivity : AppCompatActivity() {
 
         binding.splitLayoutActivityButton.setOnClickListener { showSplitLayout() }
 
-        binding.presentationActivityButton.setOnClickListener { showPresentation() }
-
         if (savedInstanceState != null) {
             selectedBackend = savedInstanceState.getInt(
                 BACKEND_TYPE_EXTRA,
@@ -82,12 +80,6 @@ class WindowDemosActivity : AppCompatActivity() {
 
     fun showSplitLayout() {
         val intent = Intent(this, SplitLayoutActivity::class.java)
-        intent.putExtra(BACKEND_TYPE_EXTRA, selectedBackend)
-        startActivity(intent)
-    }
-
-    fun showPresentation() {
-        val intent = Intent(this, PresentationActivity::class.java)
         intent.putExtra(BACKEND_TYPE_EXTRA, selectedBackend)
         startActivity(intent)
     }

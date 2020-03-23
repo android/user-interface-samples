@@ -17,8 +17,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PresentationActivity"
-            android:label="@string/presentation" />
         <activity
             android:name=".DisplayFeaturesActivity"
             android:label="@string/display_features" />
