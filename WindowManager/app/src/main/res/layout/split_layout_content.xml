@@ -27,7 +27,7 @@
     tools:context="SplitLayoutActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/content_image_iew"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/green_droid"
