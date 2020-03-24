@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">WindowSamples</string>
-    <string name="currentState">Current state</string>
+    <string name="current_state">Current state</string>
     <string name="stateUpdateLog">State update log</string>
     <string name="deviceState">Device state</string>
     <string name="windowLayout">Window layout</string>
@@ -25,4 +25,5 @@
     <string name="show_all_display_features_description">Show all display features of the device on the screen</string>
     <string name="split_layout_demo_description">Demo of a layout that splits the content to sides of a fold or a hinge. If not present or minimal size requirements are not meant, it behave like a FrameLayout.</string>
     <string name="presentation_demo_description">Demo of using Presentation API to show content on secondary display.</string>
+    <string name="deviceStateToggleButton">Toggle Device State</string>
 </resources>
