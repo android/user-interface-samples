@@ -86,10 +86,6 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         windowManager.unregisterLayoutChangeCallback(layoutStateChangeCallback)
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-    }
-
     /**
      * Update the device state and display feature positions. Needs to be called after window
      * layout, so that view position in the window could be evaluated correctly.

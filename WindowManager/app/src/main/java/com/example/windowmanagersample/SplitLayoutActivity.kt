@@ -27,7 +27,7 @@ import androidx.window.WindowLayoutInfo
 import androidx.window.WindowManager
 import com.example.windowmanagersample.databinding.ActivitySplitLayoutBinding
 
-/** Demo of [SplitLayout]. */
+/** Demo of an Activity splitting views across a [DeviceFeature]. */
 class SplitLayoutActivity : BaseSampleActivity() {
 
     private lateinit var windowManager: WindowManager

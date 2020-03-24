@@ -79,6 +79,7 @@
         android:layout_height="20dp"
         android:layout_marginStart="5dp"
         android:foreground="@color/colorFeatureFold"
+        android:contentDescription="@string/fold_legend_color"
         app:layout_constraintBottom_toTopOf="@id/hinge_legend_color"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -97,6 +98,7 @@
         android:layout_height="20dp"
         android:foreground="@color/colorFeatureHinge"
         android:layout_marginStart="5dp"
+        android:contentDescription="@string/hinge_legend_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/unknown_legend_color" />
 
@@ -116,6 +118,7 @@
         android:layout_height="20dp"
         android:foreground="@color/colorFeatureFold"
         android:layout_marginStart="5dp"
+        android:contentDescription="@string/unknown_legend_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 

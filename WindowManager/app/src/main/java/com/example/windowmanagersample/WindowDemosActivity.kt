@@ -72,13 +72,13 @@ class WindowDemosActivity : AppCompatActivity() {
         outState.putInt(BACKEND_TYPE_EXTRA, selectedBackend)
     }
 
-    fun showDisplayFeatures() {
+    private fun showDisplayFeatures() {
         val intent = Intent(this, DisplayFeaturesActivity::class.java)
         intent.putExtra(BACKEND_TYPE_EXTRA, selectedBackend)
         startActivity(intent)
     }
 
-    fun showSplitLayout() {
+    private fun showSplitLayout() {
         val intent = Intent(this, SplitLayoutActivity::class.java)
         intent.putExtra(BACKEND_TYPE_EXTRA, selectedBackend)
         startActivity(intent)
