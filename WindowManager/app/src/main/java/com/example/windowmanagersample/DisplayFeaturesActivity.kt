@@ -56,6 +56,13 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         windowBackend = getTestBackend()
         windowManager = WindowManager(this, windowBackend)
 
+        if (windowBackend != null) {
+            binding.deviceStateToggleButton.visibility = View.VISIBLE
+            binding.deviceStateToggleButton.setOnClickListener {
+                windowBackend?.toggleDeviceHalfOpenedState()
+            }
+        }
+
         stateLog.clear()
         stateLog.append(getString(R.string.stateUpdateLog)).append("\n")
 
@@ -67,8 +74,6 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         window.decorView.doOnLayout {
             updateStateAndFeatureViews()
         }
-
-        binding.legendTextView.setOnClickListener { windowBackend?.toggleDeviceHalfOpenedState() }
     }
 
     override fun onAttachedToWindow() {

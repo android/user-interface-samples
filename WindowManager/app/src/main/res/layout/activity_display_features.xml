@@ -60,6 +60,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginBottom="5dp"
         android:text="@string/deviceStateToggleButton"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/legend_text_view"/>
 
