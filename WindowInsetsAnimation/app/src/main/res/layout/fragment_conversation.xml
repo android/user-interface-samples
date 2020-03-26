@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2020 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ConversationFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        style="@style/Widget.MaterialComponents.Toolbar.Surface"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        app:menu="@menu/menu_main"
+        app:title="@string/toolbar_title" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/conversation_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingVertical="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:reverseLayout="true"
+        tools:itemCount="20"
+        tools:listitem="@layout/message_bubble" />
+
+    <LinearLayout
+        android:id="@+id/message_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+        android:elevation="4dp"
+        android:padding="8dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/message_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/message_hint" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
