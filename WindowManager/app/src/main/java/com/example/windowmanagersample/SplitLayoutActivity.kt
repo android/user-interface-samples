@@ -93,13 +93,10 @@ class SplitLayoutActivity : BaseSampleActivity() {
      * @return A rect that defines of split, or {@code null} if there is no split.
      */
     private fun splitViewPositions(
-        startView: View?,
-        endView: View?,
+        startView: View,
+        endView: View,
         windowLayoutInfo: WindowLayoutInfo
     ): Array<Rect>? {
-        if (startView == null || endView == null) {
-            return null
-        }
 
         // Calculate the area for view's content with padding
         val paddedWidth = binding.root.width - binding.root.paddingLeft - binding.root.paddingRight
@@ -112,7 +109,7 @@ class SplitLayoutActivity : BaseSampleActivity() {
                 continue
             }
 
-            val splitRect = getFeaturePositionInViewRect(feature, binding.root) ?: continue
+            val splitRect = getFeatureBoundsInWindow(feature, binding.root) ?: continue
 
             if (feature.bounds.left == 0) { // Horizontal layout
                 val topRect = Rect(

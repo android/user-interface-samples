@@ -45,9 +45,9 @@ class WindowDemosActivity : AppCompatActivity() {
 
         binding.backendRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.deviceDefaultRadioButton ->
+                R.id.device_default_radio_button ->
                     selectedBackend = BACKEND_TYPE_DEVICE_DEFAULT
-                R.id.midFoldRadioButton ->
+                R.id.mid_fold_radio_button ->
                     selectedBackend = BACKEND_TYPE_MID_SCREEN_FOLD
             }
         }
@@ -63,9 +63,9 @@ class WindowDemosActivity : AppCompatActivity() {
         }
         when (selectedBackend) {
             BACKEND_TYPE_DEVICE_DEFAULT ->
-                binding.backendRadioGroup.check(R.id.deviceDefaultRadioButton)
+                binding.backendRadioGroup.check(R.id.device_default_radio_button)
             BACKEND_TYPE_MID_SCREEN_FOLD ->
-                binding.backendRadioGroup.check(R.id.midFoldRadioButton)
+                binding.backendRadioGroup.check(R.id.mid_fold_radio_button)
         }
     }
 

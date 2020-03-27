@@ -26,8 +26,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp" >
+        android:layout_marginHorizontal="8dp" >
 
         <TextView
             android:id="@+id/hardware_select_text_view"
@@ -52,13 +51,13 @@
             app:layout_constraintTop_toBottomOf="@+id/hardware_select_text_view">
 
             <RadioButton
-                android:id="@+id/deviceDefaultRadioButton"
+                android:id="@+id/device_default_radio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/device_default" />
 
             <RadioButton
-                android:id="@+id/midFoldRadioButton"
+                android:id="@+id/mid_fold_radio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/middle_fold" />

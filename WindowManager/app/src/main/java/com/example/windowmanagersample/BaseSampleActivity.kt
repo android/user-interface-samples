@@ -31,8 +31,7 @@ import java.util.concurrent.Executor
  * default backend provided on the device and a test backend (e.g. if the device doesn't provide
  * any).
  */
-@SuppressLint("Registered")
-open class BaseSampleActivity : AppCompatActivity() {
+abstract class BaseSampleActivity : AppCompatActivity() {
     companion object {
         const val BACKEND_TYPE_EXTRA = "backend_type"
 

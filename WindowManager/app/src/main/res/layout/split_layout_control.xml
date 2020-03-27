@@ -25,12 +25,12 @@
     android:layout_height="match_parent"
     android:minWidth="250dp"
     android:minHeight="200dp"
-    android:background="@color/colorSplitControlsBackground"
+    android:background="@color/color_split_controls_background"
     tools:context="SplitLayoutActivity">
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/play_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@android:drawable/ic_media_play"
@@ -41,25 +41,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/previous_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="32dp"
         android:background="@android:drawable/ic_media_previous"
-        app:layout_constraintEnd_toStartOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button" />
+        app:layout_constraintEnd_toStartOf="@+id/play_button"
+        app:layout_constraintTop_toTopOf="@+id/play_button" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/next_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="32dp"
         android:background="@android:drawable/ic_media_next"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button" />
+        app:layout_constraintStart_toEndOf="@+id/play_button"
+        app:layout_constraintTop_toTopOf="@+id/play_button" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/gallery_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginBottom="16dp"
@@ -69,7 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/share_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginBottom="16dp"
@@ -79,7 +79,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/text_view"
+        android:id="@+id/content_title_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"

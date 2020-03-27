@@ -18,7 +18,6 @@
 
 package com.example.windowmanagersample
 
-import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
@@ -35,7 +34,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-/** Demo activity that shows all display features and current device state on the screen. */
+/**
+ * Demo activity that shows all display features and current device state on the screen.
+ * Updates as new layout information or device state changes occur
+ */
 class DisplayFeaturesActivity : BaseSampleActivity() {
 
     private lateinit var windowManager: WindowManager
@@ -52,8 +54,7 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDisplayFeaturesBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         windowBackend = getTestBackend()
         windowManager = WindowManager(this, windowBackend)
@@ -66,7 +67,7 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         }
 
         stateLog.clear()
-        stateLog.append(getString(R.string.stateUpdateLog)).append("\n")
+        stateLog.append(getString(R.string.state_update_log)).append("\n")
 
         windowManager.registerDeviceStateChangeCallback(
             mainThreadExecutor,
@@ -102,18 +103,18 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         // Update the UI with the current state
         val stateStringBuilder = StringBuilder()
         // Update the current state string
-        stateStringBuilder.append(getString(R.string.deviceState))
+        stateStringBuilder.append(getString(R.string.device_state))
             .append(": ")
             .append(windowManager.deviceState)
             .append("\n")
 
-        stateStringBuilder.append(getString(R.string.windowLayout))
+        stateStringBuilder.append(getString(R.string.window_layout))
             .append(": ")
             .append(windowManager.windowLayoutInfo)
 
         // Add views that represent display features
         for (displayFeature in windowManager.windowLayoutInfo.displayFeatures) {
-            val lp = getLayoutParamsForFeatureInFrameLayout(
+            val lp = getLayoutParamsForFeature(
                 displayFeature,
                 binding.featureContainerLayout
             ) ?: continue
@@ -128,9 +129,9 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
 
             val featureView = View(this)
             val color = when (displayFeature.type) {
-                DisplayFeature.TYPE_FOLD -> getColor(R.color.colorFeatureFold)
-                DisplayFeature.TYPE_HINGE -> getColor(R.color.colorFeatureHinge)
-                else -> getColor(R.color.colorFeatureUnknown)
+                DisplayFeature.TYPE_FOLD -> getColor(R.color.color_feature_fold)
+                DisplayFeature.TYPE_HINGE -> getColor(R.color.color_feature_hinge)
+                else -> getColor(R.color.color_feature_unknown)
             }
             featureView.foreground = ColorDrawable(color)
 

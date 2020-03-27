@@ -20,6 +20,8 @@ package com.example.windowmanagersample
 
 import android.graphics.Rect
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.widget.FrameLayout
 import androidx.window.DisplayFeature
 
@@ -27,7 +29,7 @@ import androidx.window.DisplayFeature
  * Get the bounds of the display feature translated to the View's coordinate space and current
  * position in the window. This will also include view padding in the calculations.
  */
-fun getFeaturePositionInViewRect(
+fun getFeatureBoundsInWindow(
     displayFeature: DisplayFeature,
     view: View,
     includePadding: Boolean = true
@@ -68,11 +70,11 @@ fun getFeaturePositionInViewRect(
  * Get the layout params for placing a rectangle indicating a display feature inside a
  * [FrameLayout].
  */
-fun getLayoutParamsForFeatureInFrameLayout(displayFeature: DisplayFeature, view: FrameLayout):
-        FrameLayout.LayoutParams? {
-    val featureRectInView = getFeaturePositionInViewRect(displayFeature, view) ?: return null
+fun getLayoutParamsForFeature(displayFeature: DisplayFeature, viewGroup: ViewGroup):
+        MarginLayoutParams? {
+    val featureRectInView = getFeatureBoundsInWindow(displayFeature, viewGroup) ?: return null
 
-    val lp = FrameLayout.LayoutParams(featureRectInView.width(), featureRectInView.height())
+    val lp = MarginLayoutParams(featureRectInView.width(), featureRectInView.height())
     lp.leftMargin = featureRectInView.left
     lp.topMargin = featureRectInView.top
 

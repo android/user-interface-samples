@@ -29,7 +29,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".WindowDemosActivity"
             android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize"
-            android:label="@string/windowManagerDemos">
+            android:label="@string/window_manager_demos">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
