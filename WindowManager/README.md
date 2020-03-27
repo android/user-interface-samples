@@ -34,7 +34,7 @@ when, based on their specific hardware.
 We also have two callbacks to be alerted of new `DeviceState` changes as well
 as `WindowLayoutInfo` changes.
 
-```
+``` java
 //DeviceState changes
 windowManager.registerDeviceStateChangeCallback(
     mainThreadExecutor /* Executor */,
