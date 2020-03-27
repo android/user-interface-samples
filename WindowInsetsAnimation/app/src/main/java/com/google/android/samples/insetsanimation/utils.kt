@@ -83,7 +83,6 @@ fun ViewGroup.restoreClipChildren() {
     setTag(R.id.viewgroup_clip_children, null)
 }
 
-
 /**
  * Simple linear interpolation function.
  */

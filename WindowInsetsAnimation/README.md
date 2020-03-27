@@ -23,13 +23,10 @@ In terms of implementation, this is done using the new [`WindowInsetsAnimationCo
 
 ## Caveats + Known issues
 
-Since this sample is built against a pre-release version of Android R, there are a number of known issues:
+Since this sample is built against a pre-release version of Android, there are a number of known issues:
 
-* This sample is built against Android R Developer Preview 2 (DP2), and will not work on earlier versions, and possibly not future versions.
-* Ideally this sample would use [nested scrolling APIs](https://developer.android.com/reference/kotlin/androidx/core/view/NestedScrollingParent3) to detect scrolls, but it is currently incompatible with the `WindowInsetsAnimation` APIs.
-* After swiping the IME away, the system can sometimes remain in a state where it thinks the IME is open. Pressing back fixes this.
-* When swiping the IME in sometimes the IME is not drawn.
-* The IME snaps into it's final position, after scrolling part of the way and releasing.
+* This sample is built against Android R Developer Preview 3 (DP3), and will not work on earlier versions.
+* Ideally this sample would use [nested scrolling APIs](https://developer.android.com/reference/kotlin/androidx/core/view/NestedScrollingParent3) to detect scrolls, but it is _currently_ incompatible with the `WindowInsetsAnimation` APIs.
 
 ## Getting Started
 
