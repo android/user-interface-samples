@@ -18,7 +18,6 @@
 
 package com.example.windowmanagersample
 
-import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
