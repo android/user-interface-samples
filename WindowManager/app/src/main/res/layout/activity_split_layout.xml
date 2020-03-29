@@ -25,11 +25,17 @@
     android:padding="8dp"
     tools:context="com.example.windowmanagersample.SplitLayoutActivity">
 
-    <include
-        android:id="@+id/content_layout"
-        layout="@layout/split_layout_content" />
-    <include
-        android:id="@+id/control_layout"
-        layout="@layout/split_layout_control" />
+    <com.example.windowmanagersample.SplitLayout
+        android:id="@+id/split_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+        <include
+            android:id="@+id/content_layout"
+            layout="@layout/split_layout_content" />
+        <include
+            android:id="@+id/control_layout"
+            layout="@layout/split_layout_control" />
+    </com.example.windowmanagersample.SplitLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
