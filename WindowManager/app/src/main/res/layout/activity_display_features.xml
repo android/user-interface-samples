@@ -29,9 +29,7 @@
     <FrameLayout
         android:id="@+id/feature_container_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp" />
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/state_update_log"
@@ -58,8 +56,8 @@
         android:id="@+id/device_state_toggle_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/device_state_toggle_button"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/legend"
-        android:layout_marginHorizontal="5dp"
+        android:layout_marginHorizontal="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/fold_color_text_view"/>
 
@@ -78,7 +76,7 @@
         android:id="@+id/fold_legend_color"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="8dp"
         android:foreground="@color/color_feature_fold"
         android:contentDescription="@string/fold_legend_color"
         app:layout_constraintBottom_toTopOf="@id/hinge_legend_color"
@@ -88,7 +86,7 @@
         android:id="@+id/fold_color_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="8dp"
         android:text="@string/fold"
         app:layout_constraintBottom_toTopOf="@id/hinge_color_text_view"
         app:layout_constraintStart_toEndOf="@id/fold_legend_color" />
@@ -98,7 +96,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:foreground="@color/color_feature_hinge"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="8dp"
         android:contentDescription="@string/hinge_legend_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/unknown_legend_color" />
@@ -107,7 +105,7 @@
         android:id="@+id/hinge_color_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="8dp"
         android:drawableStart="@color/color_feature_hinge"
         android:text="@string/hinge"
         app:layout_constraintBottom_toTopOf="@id/unknown_color_text_view"
@@ -118,7 +116,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:foreground="@color/color_feature_fold"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="8dp"
         android:contentDescription="@string/unknown_legend_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
@@ -127,7 +125,7 @@
         android:id="@+id/unknown_color_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="8dp"
         android:text="@string/unknown"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/unknown_legend_color" />
