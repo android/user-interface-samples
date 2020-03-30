@@ -28,6 +28,8 @@ import android.widget.FrameLayout
 import androidx.window.DisplayFeature.TYPE_FOLD
 import androidx.window.DisplayFeature.TYPE_HINGE
 import androidx.window.WindowLayoutInfo
+import com.example.windowmanagersample.databinding.SplitLayoutContentBinding
+import com.example.windowmanagersample.databinding.SplitLayoutControlBinding
 
 /**
  * An example of split-layout for two views, separated by a display feature that goes across the
@@ -40,18 +42,27 @@ class SplitLayout : FrameLayout {
     private var lastWidthMeasureSpec: Int = 0
     private var lastHeightMeasureSpec: Int = 0
 
-    private lateinit var contentView: View
-    private lateinit var controlView: View
+    private var contentBinding: SplitLayoutContentBinding
+    private var controlBinding: SplitLayoutControlBinding
 
-    constructor(context: Context) : super(context)
+    constructor(context: Context) : super(context) {
+        contentBinding = SplitLayoutContentBinding.bind(this)
+        controlBinding = SplitLayoutControlBinding.bind(this)
+    }
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        contentBinding = SplitLayoutContentBinding.bind(this)
+        controlBinding = SplitLayoutControlBinding.bind(this)
+    }
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
-    )
+    ) {
+        contentBinding = SplitLayoutContentBinding.bind(this)
+        controlBinding = SplitLayoutControlBinding.bind(this)
+    }
 
     fun updateWindowLayout(windowLayoutInfo: WindowLayoutInfo) {
         this.windowLayoutInfo = windowLayoutInfo
@@ -60,9 +71,6 @@ class SplitLayout : FrameLayout {
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         if (windowLayoutInfo == null) return
-
-        contentView = findViewById(R.id.content_layout)
-        controlView = findViewById(R.id.control_layout)
 
         val splitPositions = splitViewPositions(contentView, controlView)
 
