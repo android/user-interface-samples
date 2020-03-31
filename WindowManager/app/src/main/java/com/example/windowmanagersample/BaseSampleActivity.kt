@@ -41,6 +41,13 @@ abstract class BaseSampleActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     val mainThreadExecutor = Executor { r: Runnable -> handler.post(r) }
 
+    /**
+     * Method to get our test backend if we are not using the device default
+     * Returning the specific Class and not the [WindowBackend] Interface to save
+     * on casting code later to access specific testing methods.
+     *
+     * @return [MidScreenFoldBackend]
+     */
     fun getTestBackend(): MidScreenFoldBackend? {
         return when (intent.getIntExtra(BACKEND_TYPE_EXTRA, BACKEND_TYPE_DEVICE_DEFAULT)) {
             BACKEND_TYPE_MID_SCREEN_FOLD -> MidScreenFoldBackend()

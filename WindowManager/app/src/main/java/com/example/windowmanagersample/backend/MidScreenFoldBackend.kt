@@ -83,6 +83,11 @@ class MidScreenFoldBackend : WindowBackend {
         return null
     }
 
+    /**
+     * Toggle [DeviceState] between [DeviceState.POSTURE_OPENED] and
+     * [DeviceState.POSTURE_HALF_OPENED].
+     * Specific to the type of device we are emulating in this [WindowBackend] implementation
+     */
     fun toggleDeviceHalfOpenedState() {
         val posture = if (deviceState.posture == DeviceState.POSTURE_OPENED)
             DeviceState.POSTURE_HALF_OPENED else

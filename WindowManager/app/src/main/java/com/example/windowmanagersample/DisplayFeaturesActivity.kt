@@ -20,7 +20,6 @@ package com.example.windowmanagersample
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.util.Consumer
 import androidx.core.view.doOnLayout
@@ -32,7 +31,6 @@ import com.example.windowmanagersample.backend.MidScreenFoldBackend
 import com.example.windowmanagersample.databinding.ActivityDisplayFeaturesBinding
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * Demo activity that shows all display features and current device state on the screen.
@@ -43,7 +41,6 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
     private lateinit var windowManager: WindowManager
     private val stateLog: StringBuilder = StringBuilder()
 
-    private val displayFeatureViews = ArrayList<View>()
     private val deviceStateChangeCallback = DeviceStateChangeCallback()
     private val layoutStateChangeCallback = LayoutStateChangeCallback()
 
@@ -59,6 +56,8 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         windowBackend = getTestBackend()
         windowManager = WindowManager(this, windowBackend)
 
+        //if our windowBackend isn't null, we're using the test implementation so enable our
+        // DeviceState toggle
         if (windowBackend != null) {
             binding.deviceStateToggleButton.visibility = View.VISIBLE
             binding.deviceStateToggleButton.setOnClickListener {
@@ -95,10 +94,7 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
      */
     internal fun updateStateAndFeatureViews() {
         // Cleanup previously added feature views
-        for (featureView in displayFeatureViews) {
-            binding.featureContainerLayout.removeView(featureView)
-        }
-        displayFeatureViews.clear()
+        binding.featureContainerLayout.removeAllViews()
 
         // Update the UI with the current state
         val stateStringBuilder = StringBuilder()
@@ -137,8 +133,6 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
 
             binding.featureContainerLayout.addView(featureView, lp)
             featureView.id = View.generateViewId()
-
-            displayFeatureViews.add(featureView)
         }
         binding.currentState.text = stateStringBuilder.toString()
     }
@@ -165,7 +159,6 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
 
     inner class DeviceStateChangeCallback : Consumer<DeviceState> {
         override fun accept(newDeviceState: DeviceState) {
-            Log.i("SampleTest", "New Device State: $newDeviceState")
             updateStateLog(newDeviceState)
             updateStateAndFeatureViews()
         }
@@ -173,7 +166,6 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
 
     inner class LayoutStateChangeCallback : Consumer<WindowLayoutInfo> {
         override fun accept(newLayoutInfo: WindowLayoutInfo) {
-            Log.i("SampleTest", "New Layout Info: $newLayoutInfo")
             updateStateLog(newLayoutInfo)
             updateStateAndFeatureViews()
         }

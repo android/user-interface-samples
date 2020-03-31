@@ -39,9 +39,6 @@ import com.example.windowmanagersample.databinding.SplitLayoutControlBinding
 class SplitLayout : FrameLayout {
     private var windowLayoutInfo: WindowLayoutInfo? = null
 
-    private var lastWidthMeasureSpec: Int = 0
-    private var lastHeightMeasureSpec: Int = 0
-
     private lateinit var contentBinding: SplitLayoutContentBinding
     private lateinit var controlBinding: SplitLayoutControlBinding
 
@@ -145,16 +142,9 @@ class SplitLayout : FrameLayout {
             }
         }
 
-        // We have tried to fit the children and measured them previously. Since they didn't fit,
-        // we need to measure again to update the stored values.
-        measure(lastWidthMeasureSpec, lastHeightMeasureSpec)
+        // We have tried to fit the children and measured them previously.
+        // Since they didn't fit, there is no split that is possible with theses views
         return null
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        lastWidthMeasureSpec = widthMeasureSpec
-        lastHeightMeasureSpec = heightMeasureSpec
     }
 
     /**

@@ -54,6 +54,8 @@ fun getFeatureBoundsInWindow(
 
     val featureRectInView = Rect(displayFeature.bounds)
     val intersects = featureRectInView.intersect(viewRect)
+
+    //Checks to see if the display feature overlaps with our view at all
     if ((featureRectInView.width() == 0 && featureRectInView.height() == 0) ||
         !intersects
     ) {
