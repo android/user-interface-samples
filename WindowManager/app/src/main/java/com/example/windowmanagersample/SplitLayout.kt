@@ -42,44 +42,41 @@ class SplitLayout : FrameLayout {
     private var lastWidthMeasureSpec: Int = 0
     private var lastHeightMeasureSpec: Int = 0
 
-    private var contentBinding: SplitLayoutContentBinding
-    private var controlBinding: SplitLayoutControlBinding
+    private lateinit var contentBinding: SplitLayoutContentBinding
+    private lateinit var controlBinding: SplitLayoutControlBinding
 
-    constructor(context: Context) : super(context) {
-        contentBinding = SplitLayoutContentBinding.bind(this)
-        controlBinding = SplitLayoutControlBinding.bind(this)
-    }
+    constructor(context: Context) : super(context)
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        contentBinding = SplitLayoutContentBinding.bind(this)
-        controlBinding = SplitLayoutControlBinding.bind(this)
-    }
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
         context,
         attrs,
         defStyleAttr
-    ) {
-        contentBinding = SplitLayoutContentBinding.bind(this)
-        controlBinding = SplitLayoutControlBinding.bind(this)
-    }
+    )
 
     fun updateWindowLayout(windowLayoutInfo: WindowLayoutInfo) {
         this.windowLayoutInfo = windowLayoutInfo
         requestLayout()
     }
 
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        contentBinding = SplitLayoutContentBinding.bind(findViewById(R.id.content_layout))
+        controlBinding = SplitLayoutControlBinding.bind(findViewById(R.id.control_layout))
+    }
+
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         if (windowLayoutInfo == null) return
 
-        val splitPositions = splitViewPositions(contentView, controlView)
+        val splitPositions = splitViewPositions(contentBinding.root, controlBinding.root)
 
         if (splitPositions != null) {
             val startPosition = splitPositions[0]
             val startWidthSpec = MeasureSpec.makeMeasureSpec(startPosition.width(), EXACTLY)
             val startHeightSpec = MeasureSpec.makeMeasureSpec(startPosition.height(), EXACTLY)
-            contentView.measure(startWidthSpec, startHeightSpec)
-            contentView.layout(
+            contentBinding.root.measure(startWidthSpec, startHeightSpec)
+            contentBinding.root.layout(
                 startPosition.left, startPosition.top, startPosition.right,
                 startPosition.bottom
             )
@@ -87,8 +84,8 @@ class SplitLayout : FrameLayout {
             val endPosition = splitPositions[1]
             val endWidthSpec = MeasureSpec.makeMeasureSpec(endPosition.width(), EXACTLY)
             val endHeightSpec = MeasureSpec.makeMeasureSpec(endPosition.height(), EXACTLY)
-            controlView.measure(endWidthSpec, endHeightSpec)
-            controlView.layout(
+            controlBinding.root.measure(endWidthSpec, endHeightSpec)
+            controlBinding.root.layout(
                 endPosition.left, endPosition.top, endPosition.right,
                 endPosition.bottom
             )
