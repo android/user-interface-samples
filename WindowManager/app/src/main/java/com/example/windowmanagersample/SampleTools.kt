@@ -81,10 +81,10 @@ fun getLayoutParamsForFeature(displayFeature: DisplayFeature, viewGroup: ViewGro
     lp.topMargin = featureRectInView.top
 
     // Make sure that zero-wide and zero-high features are still shown
-    if (lp.width == 0) {
+    if (featureRectInView.left == featureRectInView.right) {
         lp.width = 1
     }
-    if (lp.height == 0) {
+    if (featureRectInView.top == featureRectInView.bottom) {
         lp.height = 1
     }
 
