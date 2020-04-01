@@ -115,14 +115,6 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
                 binding.featureContainerLayout
             ) ?: continue
 
-            // Make sure that zero-wide and zero-high features are still shown
-            if (lp.width == 0) {
-                lp.width = 1
-            }
-            if (lp.height == 0) {
-                lp.height = 1
-            }
-
             val featureView = View(this)
             val color = when (displayFeature.type) {
                 DisplayFeature.TYPE_FOLD -> getColor(R.color.color_feature_fold)
