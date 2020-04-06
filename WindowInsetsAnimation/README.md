@@ -13,7 +13,7 @@ The app displays a fake instant-message style conversation, and has two key piec
 
 When the IME is displayed due to a implicit event (such as the `EditText` being focused), the UI will react as the IME animates in by moving any relevant views in unison. This creates the effect of the IME pushing the app's UI up. You can see this in the demo above on the right. 
 
-In terms of implementation, this is done using the new [`WindowInsetsAnimation.Callback`](https://developer.android.com/reference/android/view/WindowInsetsAnimation.Callback), which allows views to be notified when an insets animation is taking place. In this sample, we have provided an implementation called [`TranslateViewInsetsAnimationListener`](./app/src/main/java/com/google/android/samples/insetsanimation/TranslateViewInsetsAnimationListener.kt) which automatically moves the host view between it's position before and after the IME visibility change. This is used on both the text field and scrolling views, allowing them both to move in unison with the IME.
+In terms of implementation, this is done using the new [`WindowInsetsAnimation.Callback`](https://developer.android.com/reference/android/view/WindowInsetsAnimation.Callback), which allows views to be notified when an insets animation is taking place. In this sample, we have provided an implementation called [`TranslateDeferringInsetsAnimationCallback`](./app/src/main/java/com/google/android/samples/insetsanimation/TranslateDeferringInsetsAnimationCallback.kt) which automatically moves the host view between it's position before and after the IME visibility change. This is used on both the text field and scrolling views, allowing them both to move in unison with the IME.
 
 ### #2: Controlling the IME
 

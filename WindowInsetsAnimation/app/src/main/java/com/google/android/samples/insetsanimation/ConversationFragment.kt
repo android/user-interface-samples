@@ -21,7 +21,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
-import android.view.WindowInsets.Type
 import androidx.fragment.app.Fragment
 import com.google.android.samples.insetsanimation.databinding.FragmentConversationBinding
 
@@ -42,44 +41,68 @@ class ConversationFragment : Fragment() {
         // Set our conversation adapter on the RecyclerView
         binding.conversationRecyclerview.adapter = ConversationAdapter()
 
-        // Since our Activity has declared window.setDecorFitsSystemWindows(false), we need to
-        // handle any WindowInsets. This OnApplyWindowInsetsListener will update our root views
-        // padding to match the combination of the systemBars() and ime() insets.
-        // This combination matches the behavior of the old 'system window insets'.
-        binding.root.setOnApplyWindowInsetsListener { rootView, windowInsets ->
-            val barsIme = windowInsets.getInsets(Type.systemBars() or Type.ime())
-            rootView.setPadding(barsIme.left, barsIme.top, barsIme.right, barsIme.bottom)
+        // There are three steps to WindowInsetsAnimations:
 
-            // We return the new WindowInsets.CONSUMED to stop the insets being dispatched any
-            // further into the view hierarchy. This replaces the deprecated
-            // WindowInsets.consumeSystemWindowInsets() and related functions.
-            WindowInsets.CONSUMED
-        }
+        /**
+         * 1) Since our Activity has declared `window.setDecorFitsSystemWindows(false)`, we need to
+         * handle any [WindowInsets] as appropriate.
+         *
+         * Our [RootViewDeferringInsetsCallback] will update our attached view's padding to match the
+         * combination of the [WindowInsets.Type.systemBars], and selectively apply the
+         * [WindowInsets.Type.ime] insets, depending on any ongoing WindowInsetAnimations
+         * (see that class for more information).
+         */
+        val deferringInsetsListener = RootViewDeferringInsetsCallback(
+            persistentInsetTypes = WindowInsets.Type.systemBars(),
+            deferredInsetTypes = WindowInsets.Type.ime()
+        )
+        // RootViewDeferringInsetsCallback is both an WindowInsetsAnimation.Callback and an
+        // OnApplyWindowInsetsListener, so needs to be set as so.
+        binding.root.setWindowInsetsAnimationCallback(deferringInsetsListener)
+        binding.root.setOnApplyWindowInsetsListener(deferringInsetsListener)
 
-        // There are two steps to WindowInsetsAnimations:
-
-        // 1) The first step is reacting to any animations which run. This can be system driven,
-        // such as the user focusing on an EditText and on-screen keyboard (IME) coming on screen,
-        // or app driven (more on that in step 2).
-        //
-        // To react to animations, we set an WindowInsetsAnimation.Callback on any views which we
-        // wish to react to inset animations. In this example, we want our EditText holder view,
-        // and the conversation RecyclerView to react.
-        //
-        // We use our TranslateViewInsetsAnimationListener class, bundled in this sample,
-        // which will automatically move each view as the IME animates.
+        /**
+         * 2) The second step is reacting to any animations which run. This can be system driven,
+         * such as the user focusing on an EditText and on-screen keyboard (IME) coming on screen,
+         * or app driven (more on that in step 3).
+         *
+         * To react to animations, we set an [android.view.WindowInsetsAnimation.Callback] on any
+         * views which we wish to react to inset animations. In this example, we want our
+         * EditText holder view, and the conversation RecyclerView to react.
+         *
+         * We use our [TranslateDeferringInsetsAnimationCallback] class, bundled in this sample,
+         * which will automatically move each view as the IME animates.
+         *
+         * Note about [TranslateDeferringInsetsAnimationCallback], it relies on the behavior of
+         * [RootViewDeferringInsetsCallback] on the layout's root view.
+         */
         binding.messageHolder.setWindowInsetsAnimationCallback(
-            TranslateViewInsetsAnimationListener(binding.messageHolder, Type.ime())
+            TranslateDeferringInsetsAnimationCallback(
+                view = binding.messageHolder,
+                persistentInsetTypes = WindowInsets.Type.systemBars(),
+                deferredInsetTypes = WindowInsets.Type.ime()
+            )
         )
         binding.conversationRecyclerview.setWindowInsetsAnimationCallback(
-            TranslateViewInsetsAnimationListener(binding.conversationRecyclerview, Type.ime())
+            TranslateDeferringInsetsAnimationCallback(
+                view = binding.conversationRecyclerview,
+                persistentInsetTypes = WindowInsets.Type.systemBars(),
+                deferredInsetTypes = WindowInsets.Type.ime()
+            )
         )
 
-        // 2) The second step is when the app wants to control and drive an inset animation.
-        // This is an optional step, but suits many types of input UIs. The example scenario we
-        // use in this sample is that the user can drag open the IME, by over-scrolling the
-        // conversation RecyclerView. To enable this, we use our ImeTouchListener class, which is a
-        // View.OnTouchListener which handles this automatically.
+        /**
+         * 3) The third step is when the app wants to control and drive an inset animation.
+         * This is an optional step, but suits many types of input UIs. The example scenario we
+         * use in this sample is that the user can drag open the IME, by over-scrolling the
+         * conversation RecyclerView. To enable this, we use our
+         * [InsetsAnimationOverscrollingTouchListener] class, which is a
+         * [android.view.View.OnTouchListener] which handles this automatically.
+         *
+         * Internally [InsetsAnimationOverscrollingTouchListener] uses a bundled class
+         * called [SimpleImeAnimationController], which simplifies much of the mechanics for
+         * controlling the IME.
+         */
         binding.conversationRecyclerview
             .setOnTouchListener(InsetsAnimationOverscrollingTouchListener())
     }

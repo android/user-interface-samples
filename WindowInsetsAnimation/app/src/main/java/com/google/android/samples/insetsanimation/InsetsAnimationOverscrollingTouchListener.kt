@@ -33,7 +33,7 @@ import kotlin.math.roundToInt
  * Once in control, the listener will inset the IME in/off screen based on the user's scroll
  * position, using [SimpleImeAnimationController.updateInsetBy].
  */
-internal class InsetsAnimationOverscrollingTouchListener() : View.OnTouchListener {
+class InsetsAnimationOverscrollingTouchListener : View.OnTouchListener {
     private var isHandling = false
     private var lastTouchX = 0f
     private var lastTouchY = 0f

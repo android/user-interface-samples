@@ -18,20 +18,6 @@ package com.google.android.samples.insetsanimation
 
 import android.graphics.Rect
 import android.view.View
-import android.view.ViewGroup
-import android.view.ViewParent
-import kotlin.IllegalArgumentException
-
-/**
- * Function which calls the given lambda [f] on each of this view's ancestors.
- */
-inline fun View.forEachAncestor(f: (ViewParent) -> Unit) {
-    var parent = parent
-    while (parent != null) {
-        f(parent)
-        parent = parent.parent
-    }
-}
 
 private val tmpIntArr = IntArray(2)
 
@@ -47,45 +33,4 @@ fun View.copyBoundsInWindow(rect: Rect) {
         throw IllegalArgumentException("Can not copy bounds as view is not laid out" +
                 " or attached to window")
     }
-}
-
-/**
- * Stores the current [ViewGroup.getClipToPadding] value in a tag.
- */
-fun ViewGroup.storeClipToPadding() = setTag(R.id.viewgroup_clip_padding, clipToPadding)
-
-/**
- * Restores the [ViewGroup.getClipToPadding] value previously stored by [storeClipChildren].
- */
-fun ViewGroup.restoreClipToPadding() {
-    val stored = getTag(R.id.viewgroup_clip_padding)
-    if (stored is Boolean) {
-        clipToPadding = stored
-    }
-    // Clear the stored value
-    setTag(R.id.viewgroup_clip_padding, null)
-}
-
-/**
- * Stores the current [ViewGroup.getClipChildren] value in a tag.
- */
-fun ViewGroup.storeClipChildren() = setTag(R.id.viewgroup_clip_children, clipChildren)
-
-/**
- * Restores the [ViewGroup.getClipChildren] value previously stored by [storeClipChildren].
- */
-fun ViewGroup.restoreClipChildren() {
-    val stored = getTag(R.id.viewgroup_clip_children)
-    if (stored is Boolean) {
-        clipChildren = stored
-    }
-    // Clear the stored value
-    setTag(R.id.viewgroup_clip_children, null)
-}
-
-/**
- * Simple linear interpolation function.
- */
-fun lerp(startValue: Int, endValue: Int, fraction: Float): Float {
-    return startValue + (endValue - startValue) * fraction
 }

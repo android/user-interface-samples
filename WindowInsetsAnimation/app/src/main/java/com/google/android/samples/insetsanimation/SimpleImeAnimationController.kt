@@ -31,12 +31,13 @@ import kotlin.math.roundToInt
 
 /**
  * A wrapper around the new [WindowInsetsAnimationController] APIs in Android 11, to simplify
- * the usage for common use-cases. See [InsetsAnimationOverscrollingTouchListener] for an example
- * of how to use this.
+ * the implementation of common use-cases around the IME.
+ *
+ * See [InsetsAnimationOverscrollingTouchListener] for an example of how to use this class.
  *
  * @see InsetsAnimationOverscrollingTouchListener
  */
-class SimpleImeAnimationController {
+internal class SimpleImeAnimationController {
     private var insetsAnimationController: WindowInsetsAnimationController? = null
     private var pendingRequestCancellationSignal: CancellationSignal? = null
 
