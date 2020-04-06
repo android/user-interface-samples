@@ -17,7 +17,7 @@
 
 <resources>
     <!-- Theme to use for the app -->
-    <style name="Theme.Chat" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Theme.Chat" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:navigationBarColor">?attr/colorSurface</item>
         <item name="android:windowLightNavigationBar">true</item>
     </style>
