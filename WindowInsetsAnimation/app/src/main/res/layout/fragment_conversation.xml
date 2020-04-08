@@ -15,7 +15,8 @@
   ~ limitations under the License.
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.samples.insetsanimation.InsetsAnimationLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -71,4 +72,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</com.google.android.samples.insetsanimation.InsetsAnimationLinearLayout>

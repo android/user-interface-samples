@@ -24,6 +24,10 @@ import android.view.WindowInsets
 import androidx.fragment.app.Fragment
 import com.google.android.samples.insetsanimation.databinding.FragmentConversationBinding
 
+/**
+ * The main entry point for the sample. See [onViewCreated] for more information on how
+ * the sample works.
+ */
 class ConversationFragment : Fragment() {
     private var _binding: FragmentConversationBinding? = null
     private val binding: FragmentConversationBinding get() = _binding!!
@@ -47,8 +51,8 @@ class ConversationFragment : Fragment() {
          * 1) Since our Activity has declared `window.setDecorFitsSystemWindows(false)`, we need to
          * handle any [WindowInsets] as appropriate.
          *
-         * Our [RootViewDeferringInsetsCallback] will update our attached view's padding to match the
-         * combination of the [WindowInsets.Type.systemBars], and selectively apply the
+         * Our [RootViewDeferringInsetsCallback] will update our attached view's padding to match
+         * the combination of the [WindowInsets.Type.systemBars], and selectively apply the
          * [WindowInsets.Type.ime] insets, depending on any ongoing WindowInsetAnimations
          * (see that class for more information).
          */
@@ -95,16 +99,18 @@ class ConversationFragment : Fragment() {
          * 3) The third step is when the app wants to control and drive an inset animation.
          * This is an optional step, but suits many types of input UIs. The example scenario we
          * use in this sample is that the user can drag open the IME, by over-scrolling the
-         * conversation RecyclerView. To enable this, we use our
-         * [InsetsAnimationOverscrollingTouchListener] class, which is a
-         * [android.view.View.OnTouchListener] which handles this automatically.
+         * conversation RecyclerView. To enable this, we use a [InsetsAnimationLinearLayout] as a
+         * root view in our layout which handles this automatically for scrolling views,
+         * through nested scrolling.
          *
-         * Internally [InsetsAnimationOverscrollingTouchListener] uses a bundled class
-         * called [SimpleImeAnimationController], which simplifies much of the mechanics for
-         * controlling the IME.
+         * Alternatively, this sample also contains [InsetsAnimationTouchListener],
+         * which is a [android.view.View.OnTouchListener] which does similar for non-scrolling
+         * views, detecting raw drag events rather than scroll events to open/close the IME.
+         *
+         * Internally, both [InsetsAnimationLinearLayout] & [InsetsAnimationTouchListener] use a
+         * class bundled in this sample called [SimpleImeAnimationController], which simplifies
+         * much of the mechanics for controlling a [WindowInsetsAnimation].
          */
-        binding.conversationRecyclerview
-            .setOnTouchListener(InsetsAnimationOverscrollingTouchListener())
     }
 
     override fun onDestroyView() {

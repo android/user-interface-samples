@@ -21,19 +21,40 @@ import android.view.MotionEvent
 import android.view.VelocityTracker
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.WindowInsets.Type
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
 /**
- * A [View.OnTouchListener] which we can set on a scrolling view, to control the IME inset
- * and visibility. When set on a scrolling view (such as a [RecyclerView]), it will track scrolling
- * gestures, and trigger a request to control the IME insets via
- * [SimpleImeAnimationController.startControlRequest] once the user is over-scrolling the view.
+ * A [View.OnTouchListener] which can be set on a scrolling view, to control the IME inset
+ * and visibility. When set on a view, it will track drag gestures and trigger a request to
+ * control the IME insets via [SimpleImeAnimationController.startControlRequest] once the
+ * user is dragging the view.
  *
  * Once in control, the listener will inset the IME in/off screen based on the user's scroll
- * position, using [SimpleImeAnimationController.updateInsetBy].
+ * position, using [SimpleImeAnimationController.insetBy].
+ *
+ * This class should not be used in conjunction with scrolling views, such as
+ * [androidx.recyclerview.widget.RecyclerView]. For these views, prefer to use
+ * [InsetsAnimationLinearLayout] which uses the much richer nested scrolling APIs to detect and
+ * consume scrolling, overscrolling, and flinging interactions.
+ *
+ * The class supports both animating the IME onto screen (from not visible), and animating it
+ * off-screen (from visible). This can be customize through the [scrollImeOnScreenWhenNotVisible]
+ * and [scrollImeOffScreenWhenVisible] constructor parameters.
+ *
+ * This class is not actually used in the sample, but is left here as an example of how to
+ * implement a [View.OnTouchListener] with [SimpleImeAnimationController].
+ *
+ * @param scrollImeOffScreenWhenVisible Whether the IME should be scrolled off screen (from being
+ * visible), by an downwards scroll. Defaults to `true`.
+ * @param scrollImeOnScreenWhenNotVisible Whether the IME should be scrolled on screen (from not
+ * being visible), by an downwards scroll. Defaults to `true`.
  */
-class InsetsAnimationOverscrollingTouchListener : View.OnTouchListener {
+class InsetsAnimationTouchListener(
+    private val scrollImeOffScreenWhenVisible: Boolean = true,
+    private val scrollImeOnScreenWhenNotVisible: Boolean = true
+) : View.OnTouchListener {
     private var isHandling = false
     private var lastTouchX = 0f
     private var lastTouchY = 0f
@@ -90,9 +111,11 @@ class InsetsAnimationOverscrollingTouchListener : View.OnTouchListener {
                     if (simpleController.isInsetAnimationInProgress()) {
                         // If we currently have control, we can update the IME insets to 'scroll'
                         // the IME in
-                        simpleController.updateInsetBy(dy.roundToInt())
-                    } else if (!simpleController.isInsetAnimationRequestPending() && dy < 0 &&
-                        v.canScrollVertically(-1) && !simpleController.isImeShownAtStart) {
+                        simpleController.insetBy(dy.roundToInt())
+                    } else if (
+                        !simpleController.isInsetAnimationRequestPending() &&
+                        shouldStartRequest(dy, v.rootWindowInsets.isVisible(Type.ime()))
+                    ) {
                         // If we don't currently have control (and a request isn't pending),
                         // the IME is not shown, the user is scrolling up, and the view can't
                         // scroll up any more (i.e. over-scrolling), we can start to control
@@ -116,7 +139,7 @@ class InsetsAnimationOverscrollingTouchListener : View.OnTouchListener {
 
                 // If we received a ACTION_UP event, end any current WindowInsetsAnimation passing
                 // in the calculated Y velocity
-                simpleController.finish(velocityY)
+                simpleController.animateToFinish(velocityY)
 
                 // Reset our touch handling state
                 reset()
@@ -145,5 +168,20 @@ class InsetsAnimationOverscrollingTouchListener : View.OnTouchListener {
 
         velocityTracker?.recycle()
         velocityTracker = null
+    }
+
+    /**
+     * Returns true if the given [dy], [IME visibility][imeVisible], and constructor options
+     * support a IME animation request.
+     */
+    private fun shouldStartRequest(dy: Float, imeVisible: Boolean) = when {
+        // If the user is scroll up, return true if scrollImeOnScreenWhenNotVisible is true, and
+        // the IME is not currently visible
+        dy < 0 -> !imeVisible && scrollImeOnScreenWhenNotVisible
+        // If the user is scroll down, start the request if scrollImeOffScreenWhenVisible is true,
+        // and the IME is currently visible
+        dy > 0 -> imeVisible && scrollImeOffScreenWhenVisible
+        // Otherwise, return false
+        else -> false
     }
 }
