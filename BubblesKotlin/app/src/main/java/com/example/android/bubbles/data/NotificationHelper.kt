@@ -86,6 +86,8 @@ class NotificationHelper(private val context: Context) {
                 .setActivity(ComponentName(context, MainActivity::class.java))
                 .setShortLabel(contact.name)
                 .setIcon(icon)
+                .setLongLived(true)
+                .setCategories(setOf(ShortcutInfo.SHORTCUT_CATEGORY_CONVERSATION))
                 .setIntent(
                     Intent(context, MainActivity::class.java)
                         .setAction(Intent.ACTION_VIEW)
