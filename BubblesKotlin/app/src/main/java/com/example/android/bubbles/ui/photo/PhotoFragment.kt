@@ -46,14 +46,20 @@ class PhotoFragment : Fragment() {
         enterTransition = Fade()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.photo_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val photoResId = arguments?.getInt(ARG_PHOTO)
         if (photoResId == null) {
-            fragmentManager?.popBackStack()
+            if (isAdded) {
+                parentFragmentManager.popBackStack()
+            }
             return
         }
         getNavigationController().updateAppBar(hidden = true)

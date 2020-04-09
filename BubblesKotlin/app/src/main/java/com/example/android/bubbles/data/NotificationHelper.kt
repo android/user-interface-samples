@@ -20,12 +20,17 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Person
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Icon
 import android.net.Uri
 import androidx.annotation.WorkerThread
+import androidx.core.content.getSystemService
+import androidx.core.net.toUri
 import com.example.android.bubbles.BubbleActivity
 import com.example.android.bubbles.MainActivity
 import com.example.android.bubbles.R
@@ -45,8 +50,11 @@ class NotificationHelper(private val context: Context) {
         private const val REQUEST_BUBBLE = 2
     }
 
-    private val notificationManager =
-        context.getSystemService(NotificationManager::class.java) ?: throw IllegalStateException()
+    private val notificationManager: NotificationManager =
+        context.getSystemService() ?: throw IllegalStateException()
+
+    private val shortcutManager: ShortcutManager =
+        context.getSystemService() ?: throw IllegalStateException()
 
     fun setUpNotificationChannels() {
         if (notificationManager.getNotificationChannel(CHANNEL_NEW_MESSAGES) == null) {
@@ -61,21 +69,53 @@ class NotificationHelper(private val context: Context) {
                 }
             )
         }
+        updateShortcuts()
+    }
+
+    @WorkerThread
+    fun updateShortcuts() {
+        val shortcuts = Contact.CONTACTS.map { contact ->
+            val icon = Icon.createWithAdaptiveBitmap(
+                context.resources.assets.open(contact.icon).use { input ->
+                    BitmapFactory.decodeStream(input)
+                }
+            )
+            // Create a dynamic shortcut for each of the contacts.
+            // The same shortcut ID will be used when we show a bubble notification.
+            ShortcutInfo.Builder(context, contact.shortcutId)
+                .setActivity(ComponentName(context, MainActivity::class.java))
+                .setShortLabel(contact.name)
+                .setIcon(icon)
+                .setLongLived(true)
+                .setCategories(setOf(ShortcutInfo.SHORTCUT_CATEGORY_CONVERSATION))
+                .setIntent(
+                    Intent(context, MainActivity::class.java)
+                        .setAction(Intent.ACTION_VIEW)
+                        .setData(
+                            Uri.parse(
+                                "https://android.example.com/chat/${contact.id}"
+                            )
+                        )
+                )
+                .setPerson(
+                    Person.Builder()
+                        .setName(contact.name)
+                        .setIcon(icon)
+                        .build()
+                )
+                .build()
+        }
+        shortcutManager.addDynamicShortcuts(shortcuts)
     }
 
     @WorkerThread
     fun showNotification(chat: Chat, fromUser: Boolean) {
-        val icon = Icon.createWithAdaptiveBitmap(
-            BitmapFactory.decodeResource(
-                context.resources,
-                chat.contact.icon
-            )
-        )
+        val icon = Icon.createWithAdaptiveBitmapContentUri(chat.contact.iconUri)
         val person = Person.Builder()
             .setName(chat.contact.name)
             .setIcon(icon)
             .build()
-        val contentUri = Uri.parse("https://android.example.com/chat/${chat.contact.id}")
+        val contentUri = "https://android.example.com/chat/${chat.contact.id}".toUri()
         val builder = Notification.Builder(context, CHANNEL_NEW_MESSAGES)
             // A notification can be shown as a bubble by calling setBubbleMetadata()
             .setBubbleMetadata(
@@ -88,11 +128,7 @@ class NotificationHelper(private val context: Context) {
                             // Launch BubbleActivity as the expanded bubble.
                             Intent(context, BubbleActivity::class.java)
                                 .setAction(Intent.ACTION_VIEW)
-                                .setData(
-                                    Uri.parse(
-                                        "https://android.example.com/chat/${chat.contact.id}"
-                                    )
-                                ),
+                                .setData(contentUri),
                             PendingIntent.FLAG_UPDATE_CURRENT
                         ),
                         // The icon of the bubble.
@@ -117,6 +153,7 @@ class NotificationHelper(private val context: Context) {
             .setContentTitle(chat.contact.name)
             .setSmallIcon(R.drawable.ic_message)
             .setCategory(Notification.CATEGORY_MESSAGE)
+            .setShortcutId(chat.contact.shortcutId)
             .addPerson(person)
             .setShowWhen(true)
             // The content Intent is used when the user clicks on the "Open Content" icon button on

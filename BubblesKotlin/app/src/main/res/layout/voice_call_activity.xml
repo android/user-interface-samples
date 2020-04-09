@@ -34,8 +34,7 @@
         android:layout_height="@dimen/icon_size"
         android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/spacing_medium"
-        android:contentDescription="@string/description_icon"
-        tools:src="@drawable/cat" />
+        android:contentDescription="@string/description_icon" />
 
     <TextView
         android:id="@+id/name"
