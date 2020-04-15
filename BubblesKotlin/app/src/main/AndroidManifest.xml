@@ -41,7 +41,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <!--
-                This is used as the content URI of notifications. It navigates directly to the specified chat screen.
+                This is used as the content URI of notifications. It navigates directly to the
+                specified chat screen.
             -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -51,12 +52,23 @@
                     android:pathPattern="/chat/*"
                     android:scheme="https" />
             </intent-filter>
+            <!--
+            -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
 
         <!--
             The dummy voice-call screen.
-            This Activity can be launched from inside an expanded Bubble. Since this Activity is launched as a new task,
-            it is opened as a full Activity, rather than stacked inside the expanded Bubble.
+            This Activity can be launched from inside an expanded Bubble. Since this Activity is
+            launched as a new task, it is opened as a full Activity, rather than stacked inside
+            the expanded Bubble.
         -->
         <activity
             android:name=".VoiceCallActivity"
@@ -64,11 +76,12 @@
             android:theme="@style/Theme.Bubbles.Voice" />
 
         <!--
-            This Activity is the expanded Bubble. For that, this Activity has to have several attributes.
+            This Activity is the expanded Bubble. For that, this Activity has to have several
+            attributes.
             - allowEmbedded="true": The expanded Bubble is embedded in the System UI.
             - resizeableActivity="true": The expanded Bubble is resized by the System UI.
-            - documentLaunchMode="always": We show multiple bubbles in this sample. There will be multiple instances of
-                                           this Activity.
+            - documentLaunchMode="always": We show multiple bubbles in this sample. There will be
+                                           multiple instances of this Activity.
         -->
         <activity
             android:name=".BubbleActivity"

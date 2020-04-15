@@ -25,7 +25,7 @@ import androidx.fragment.app.Fragment
  */
 interface NavigationController {
 
-    fun openChat(id: Long)
+    fun openChat(id: Long, prepopulateText: String?)
 
     fun openPhoto(@DrawableRes photo: Int)
 

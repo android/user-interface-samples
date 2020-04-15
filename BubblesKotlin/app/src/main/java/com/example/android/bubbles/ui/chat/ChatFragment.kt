@@ -18,6 +18,7 @@ package com.example.android.bubbles.ui.chat
 import android.content.Intent
 import android.graphics.drawable.Icon
 import android.os.Bundle
+import android.text.Editable
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.Menu
@@ -47,13 +48,16 @@ class ChatFragment : Fragment() {
     companion object {
         private const val ARG_ID = "id"
         private const val ARG_FOREGROUND = "foreground"
+        private const val ARG_PREPOPULATE_TEXT = "prepopulate_text"
 
-        fun newInstance(id: Long, foreground: Boolean) = ChatFragment().apply {
-            arguments = Bundle().apply {
-                putLong(ARG_ID, id)
-                putBoolean(ARG_FOREGROUND, foreground)
+        fun newInstance(id: Long, prepopulateText: String?, foreground: Boolean) =
+            ChatFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(ARG_ID, id)
+                    putString(ARG_PREPOPULATE_TEXT, prepopulateText)
+                    putBoolean(ARG_FOREGROUND, foreground)
+                }
             }
-        }
     }
 
     private val viewModel: ChatViewModel by viewModels()
@@ -80,6 +84,7 @@ class ChatFragment : Fragment() {
             parentFragmentManager.popBackStack()
             return
         }
+        val prepopulateText = arguments?.getString(ARG_PREPOPULATE_TEXT)
         val navigationController = getNavigationController()
 
         viewModel.setChatId(id)
@@ -117,6 +122,10 @@ class ChatFragment : Fragment() {
             messageAdapter.submitList(it)
             linearLayoutManager.scrollToPosition(it.size - 1)
         })
+
+        if (prepopulateText != null) {
+            input.setText(prepopulateText)
+        }
 
         voiceCall.setOnClickListener {
             voiceCall()

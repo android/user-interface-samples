@@ -35,12 +35,12 @@ class BubbleActivity : AppCompatActivity(), NavigationController {
         val id = intent.data?.lastPathSegment?.toLongOrNull() ?: return
         if (savedInstanceState == null) {
             supportFragmentManager.commitNow {
-                replace(R.id.container, ChatFragment.newInstance(id, false))
+                replace(R.id.container, ChatFragment.newInstance(id, null, false))
             }
         }
     }
 
-    override fun openChat(id: Long) {
+    override fun openChat(id: Long, prepopulateText: String?) {
         throw UnsupportedOperationException("BubbleActivity always shows a single chat thread.")
     }
 
