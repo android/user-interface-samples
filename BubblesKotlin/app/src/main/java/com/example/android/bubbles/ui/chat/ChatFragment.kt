@@ -50,12 +50,12 @@ class ChatFragment : Fragment() {
         private const val ARG_FOREGROUND = "foreground"
         private const val ARG_PREPOPULATE_TEXT = "prepopulate_text"
 
-        fun newInstance(id: Long, prepopulateText: String?, foreground: Boolean) =
+        fun newInstance(id: Long, foreground: Boolean, prepopulateText: String? = null) =
             ChatFragment().apply {
                 arguments = Bundle().apply {
                     putLong(ARG_ID, id)
-                    putString(ARG_PREPOPULATE_TEXT, prepopulateText)
                     putBoolean(ARG_FOREGROUND, foreground)
+                    putString(ARG_PREPOPULATE_TEXT, prepopulateText)
                 }
             }
     }

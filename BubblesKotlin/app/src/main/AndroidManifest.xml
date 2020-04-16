@@ -53,6 +53,8 @@
                     android:scheme="https" />
             </intent-filter>
             <!--
+                This opens the chat screen with the message field filled with the passed text.
+                This is necessary for making our dynamic shortcuts appear in Direct Share.
             -->
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />

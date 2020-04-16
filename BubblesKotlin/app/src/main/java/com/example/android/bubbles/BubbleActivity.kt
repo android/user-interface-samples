@@ -35,7 +35,7 @@ class BubbleActivity : AppCompatActivity(), NavigationController {
         val id = intent.data?.lastPathSegment?.toLongOrNull() ?: return
         if (savedInstanceState == null) {
             supportFragmentManager.commitNow {
-                replace(R.id.container, ChatFragment.newInstance(id, null, false))
+                replace(R.id.container, ChatFragment.newInstance(id, false))
             }
         }
     }

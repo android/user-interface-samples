@@ -107,13 +107,13 @@ class NotificationHelper(private val context: Context) {
                 )
                 .build()
         }
-        // If we can't show all of our contacts as shortcuts, we move the important element to the
-        // front and truncate the list.
+        // Move the important contact to the front of the shortcut list.
+        if (importantContact != null) {
+            shortcuts = shortcuts.sortedByDescending { it.id == importantContact.shortcutId }
+        }
+        // Truncate the list if we can't show all of our contacts.
         val maxCount = shortcutManager.maxShortcutCountPerActivity
         if (shortcuts.size > maxCount) {
-            if (importantContact != null) {
-                shortcuts = shortcuts.sortedByDescending { it.id == importantContact.shortcutId }
-            }
             shortcuts = shortcuts.take(maxCount)
         }
         shortcutManager.addDynamicShortcuts(shortcuts)
@@ -166,6 +166,8 @@ class NotificationHelper(private val context: Context) {
             .setSmallIcon(R.drawable.ic_message)
             .setCategory(Notification.CATEGORY_MESSAGE)
             .setShortcutId(chat.contact.shortcutId)
+            // This ID helps the intelligence services of the device to correlate this notification
+            // with the corresponding dynamic shortcut.
             .setLocusId(LocusId(chat.contact.shortcutId))
             .addPerson(person)
             .setShowWhen(true)

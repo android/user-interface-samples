@@ -15,8 +15,14 @@
   limitations under the License.
 -->
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--
+        This is the target for Direct Share.
+    -->
     <share-target android:targetClass="com.example.android.bubbles.MainActivity">
         <data android:mimeType="text/plain" />
+        <!--
+            This category is used for dynamic shortcuts.
+        -->
         <category android:name="com.example.android.bubbles.category.TEXT_SHARE_TARGET" />
     </share-target>
 </shortcuts>

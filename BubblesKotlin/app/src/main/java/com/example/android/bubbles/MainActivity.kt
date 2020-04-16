@@ -73,12 +73,14 @@ class MainActivity : AppCompatActivity(), NavigationController {
 
     private fun handleIntent(intent: Intent) {
         when (intent.action) {
+            // Invoked when a dynamic shortcut is clicked.
             Intent.ACTION_VIEW -> {
                 val id = intent.data?.lastPathSegment?.toLongOrNull()
                 if (id != null) {
                     openChat(id, null)
                 }
             }
+            // Invoked when a text is shared through Direct Share.
             Intent.ACTION_SEND -> {
                 val shortcutId = intent.getStringExtra(Intent.EXTRA_SHORTCUT_ID)
                 val text = intent.getStringExtra(Intent.EXTRA_TEXT)
@@ -117,7 +119,7 @@ class MainActivity : AppCompatActivity(), NavigationController {
         supportFragmentManager.popBackStack(FRAGMENT_CHAT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager.commit {
             addToBackStack(FRAGMENT_CHAT)
-            replace(R.id.container, ChatFragment.newInstance(id, prepopulateText, true))
+            replace(R.id.container, ChatFragment.newInstance(id, true, prepopulateText))
         }
     }
 
