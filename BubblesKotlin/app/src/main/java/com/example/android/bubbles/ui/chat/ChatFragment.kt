@@ -16,9 +16,9 @@
 package com.example.android.bubbles.ui.chat
 
 import android.content.Intent
+import android.content.LocusId
 import android.graphics.drawable.Icon
 import android.os.Bundle
-import android.text.Editable
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.Menu
@@ -110,6 +110,7 @@ class ChatFragment : Fragment() {
                 Toast.makeText(view.context, "Contact not found", Toast.LENGTH_SHORT).show()
                 parentFragmentManager.popBackStack()
             } else {
+                requireActivity().setLocusContext(LocusId(contact.shortcutId), null)
                 navigationController.updateAppBar { name, icon ->
                     name.text = contact.name
                     icon.setImageIcon(Icon.createWithAdaptiveBitmapContentUri(contact.iconUri))
