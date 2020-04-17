@@ -40,7 +40,7 @@ class BubbleActivity : AppCompatActivity(), NavigationController {
         }
     }
 
-    override fun openChat(id: Long) {
+    override fun openChat(id: Long, prepopulateText: String?) {
         throw UnsupportedOperationException("BubbleActivity always shows a single chat thread.")
     }
 

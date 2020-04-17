@@ -16,6 +16,7 @@
 package com.example.android.bubbles.ui.chat
 
 import android.content.Intent
+import android.content.LocusId
 import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.transition.TransitionInflater
@@ -47,13 +48,16 @@ class ChatFragment : Fragment() {
     companion object {
         private const val ARG_ID = "id"
         private const val ARG_FOREGROUND = "foreground"
+        private const val ARG_PREPOPULATE_TEXT = "prepopulate_text"
 
-        fun newInstance(id: Long, foreground: Boolean) = ChatFragment().apply {
-            arguments = Bundle().apply {
-                putLong(ARG_ID, id)
-                putBoolean(ARG_FOREGROUND, foreground)
+        fun newInstance(id: Long, foreground: Boolean, prepopulateText: String? = null) =
+            ChatFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(ARG_ID, id)
+                    putBoolean(ARG_FOREGROUND, foreground)
+                    putString(ARG_PREPOPULATE_TEXT, prepopulateText)
+                }
             }
-        }
     }
 
     private val viewModel: ChatViewModel by viewModels()
@@ -80,6 +84,7 @@ class ChatFragment : Fragment() {
             parentFragmentManager.popBackStack()
             return
         }
+        val prepopulateText = arguments?.getString(ARG_PREPOPULATE_TEXT)
         val navigationController = getNavigationController()
 
         viewModel.setChatId(id)
@@ -105,6 +110,7 @@ class ChatFragment : Fragment() {
                 Toast.makeText(view.context, "Contact not found", Toast.LENGTH_SHORT).show()
                 parentFragmentManager.popBackStack()
             } else {
+                requireActivity().setLocusContext(LocusId(contact.shortcutId), null)
                 navigationController.updateAppBar { name, icon ->
                     name.text = contact.name
                     icon.setImageIcon(Icon.createWithAdaptiveBitmapContentUri(contact.iconUri))
@@ -117,6 +123,10 @@ class ChatFragment : Fragment() {
             messageAdapter.submitList(it)
             linearLayoutManager.scrollToPosition(it.size - 1)
         })
+
+        if (prepopulateText != null) {
+            input.setText(prepopulateText)
+        }
 
         voiceCall.setOnClickListener {
             voiceCall()

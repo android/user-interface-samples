@@ -28,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
+import com.example.android.bubbles.data.Contact
 import com.example.android.bubbles.ui.chat.ChatFragment
 import com.example.android.bubbles.ui.main.MainFragment
 import com.example.android.bubbles.ui.photo.PhotoFragment
@@ -71,10 +72,22 @@ class MainActivity : AppCompatActivity(), NavigationController {
     }
 
     private fun handleIntent(intent: Intent) {
-        if (intent.action == Intent.ACTION_VIEW) {
-            val id = intent.data?.lastPathSegment?.toLongOrNull()
-            if (id != null) {
-                openChat(id)
+        when (intent.action) {
+            // Invoked when a dynamic shortcut is clicked.
+            Intent.ACTION_VIEW -> {
+                val id = intent.data?.lastPathSegment?.toLongOrNull()
+                if (id != null) {
+                    openChat(id, null)
+                }
+            }
+            // Invoked when a text is shared through Direct Share.
+            Intent.ACTION_SEND -> {
+                val shortcutId = intent.getStringExtra(Intent.EXTRA_SHORTCUT_ID)
+                val text = intent.getStringExtra(Intent.EXTRA_TEXT)
+                val contact = Contact.CONTACTS.find { it.shortcutId == shortcutId }
+                if (contact != null) {
+                    openChat(contact.id, text)
+                }
             }
         }
     }
@@ -102,11 +115,11 @@ class MainActivity : AppCompatActivity(), NavigationController {
         body(name, icon)
     }
 
-    override fun openChat(id: Long) {
+    override fun openChat(id: Long, prepopulateText: String?) {
         supportFragmentManager.popBackStack(FRAGMENT_CHAT, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         supportFragmentManager.commit {
             addToBackStack(FRAGMENT_CHAT)
-            replace(R.id.container, ChatFragment.newInstance(id, true))
+            replace(R.id.container, ChatFragment.newInstance(id, true, prepopulateText))
         }
     }
 

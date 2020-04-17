@@ -52,7 +52,7 @@ class MainFragment : Fragment() {
         val viewModel: MainViewModel by viewModels()
 
         val contactAdapter = ContactAdapter { id ->
-            navigationController.openChat(id)
+            navigationController.openChat(id, null)
         }
         viewModel.contacts.observe(viewLifecycleOwner, Observer { contacts ->
             contactAdapter.submitList(contacts)
