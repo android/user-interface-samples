@@ -15,10 +15,6 @@
   ~ limitations under the License.
 -->
 
-<resources>
-    <!-- Theme to use for the app -->
-    <style name="Theme.Chat" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:navigationBarColor">?attr/colorSurface</item>
-        <item name="android:windowLightNavigationBar">true</item>
-    </style>
-</resources>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:alpha="0.05" android:color="?attr/colorOnSurface" />
+</selector>
