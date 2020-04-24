@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
             android:layout_marginVertical="8dp"
-            android:text="@string/message_from"
+            android:text="@string/message_to"
             android:textAppearance="?attr/textAppearanceBody2" />
 
     </com.google.android.material.card.MaterialCardView>
