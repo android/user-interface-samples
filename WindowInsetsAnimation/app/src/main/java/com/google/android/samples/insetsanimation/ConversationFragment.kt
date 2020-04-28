@@ -21,6 +21,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
+import android.view.WindowInsetsAnimation
 import androidx.fragment.app.Fragment
 import com.google.android.samples.insetsanimation.databinding.FragmentConversationBinding
 
@@ -84,7 +85,10 @@ class ConversationFragment : Fragment() {
             TranslateDeferringInsetsAnimationCallback(
                 view = binding.messageHolder,
                 persistentInsetTypes = WindowInsets.Type.systemBars(),
-                deferredInsetTypes = WindowInsets.Type.ime()
+                deferredInsetTypes = WindowInsets.Type.ime(),
+                // We explicitly allow dispatch to continue down to binding.messageHolder's
+                // child views, so that step 2.5 below receives the call
+                dispatchMode = WindowInsetsAnimation.Callback.DISPATCH_MODE_CONTINUE_ON_SUBTREE
             )
         )
         binding.conversationRecyclerview.setWindowInsetsAnimationCallback(
@@ -93,6 +97,23 @@ class ConversationFragment : Fragment() {
                 persistentInsetTypes = WindowInsets.Type.systemBars(),
                 deferredInsetTypes = WindowInsets.Type.ime()
             )
+        )
+
+        /**
+         * 2.5) We also want to make sure that our EditText is focused once the IME
+         * is animated in, to enable it to accept input. Similarly, if the IME is animated
+         * off screen and the EditText is focused, we should clear that focus.
+         *
+         * The bundled [ControlFocusInsetsAnimationCallback] callback will automatically request
+         * and clear focus for us.
+         *
+         * Since `binding.messageEdittext` is a child of `binding.messageHolder`, this
+         * [WindowInsetsAnimation.Callback] will only work if the ancestor view's callback uses the
+         * [WindowInsetsAnimation.Callback.DISPATCH_MODE_CONTINUE_ON_SUBTREE] dispatch mode, which
+         * we have done above.
+         */
+        binding.messageEdittext.setWindowInsetsAnimationCallback(
+            ControlFocusInsetsAnimationCallback(binding.messageEdittext)
         )
 
         /**
