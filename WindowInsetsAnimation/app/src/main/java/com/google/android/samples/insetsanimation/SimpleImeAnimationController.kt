@@ -119,6 +119,19 @@ internal class SimpleImeAnimationController {
     }
 
     /**
+     * Start a control request to the [view]s [android.view.WindowInsetsController], similar to
+     * [startControlRequest], but immediately fling to a finish using [velocityY] once ready.
+     *
+     * This function is useful for fire-and-forget operations to animate the IME.
+     *
+     * @param view The view which is triggering this request
+     * @param velocityY the velocity of the touch gesture which caused this call
+     */
+    fun startAndFling(view: View, velocityY: Float) = startControlRequest(view) {
+        animateToFinish(velocityY)
+    }
+
+    /**
      * Update the inset position of the IME by the given [dy] value. This value will be coerced
      * into the hidden and shown inset values.
      *
@@ -263,14 +276,15 @@ internal class SimpleImeAnimationController {
         val hidden = controller.hiddenStateInsets.bottom
 
         when {
+            // If we have a velocity, we can use it's direction to determine
+            // the visibility. Upwards == visible
+            velocityY != null -> animateImeToVisibility(
+                visible = velocityY > 0,
+                velocityY = velocityY
+            )
             // The current inset matches either the shown/hidden inset, finish() immediately
             current == shown -> controller.finish(true)
             current == hidden -> controller.finish(false)
-            velocityY != null -> {
-                // If we have a velocity, we can use it's direction to determine
-                // the visibility. Upwards == visible
-                animateImeToVisibility(velocityY > 0, velocityY)
-            }
             else -> {
                 // Otherwise, we'll look at the current position...
                 if (controller.currentFraction >= SCROLL_THRESHOLD) {

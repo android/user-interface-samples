@@ -82,8 +82,7 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
     }
 
     override fun onNestedPreScroll(target: View, dx: Int, dy: Int, consumed: IntArray, type: Int) {
-        if (imeAnimController.isInsetAnimationRequestPending() &&
-            !imeAnimController.isInsetAnimationInProgress()) {
+        if (imeAnimController.isInsetAnimationRequestPending()) {
             // We're waiting for a controller to become ready. Consume and no-op the scroll
             consumed[0] = dx
             consumed[1] = dy
@@ -152,19 +151,50 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
         }
     }
 
-    override fun onNestedPreFling(target: View, velocityX: Float, velocityY: Float): Boolean {
+    override fun onNestedFling(
+        target: View,
+        velocityX: Float,
+        velocityY: Float,
+        consumed: Boolean
+    ): Boolean {
         if (imeAnimController.isInsetAnimationInProgress()) {
+            // If we have an IME animation in progress, from the user scrolling, we can
+            // animate to the end state using the velocity
             imeAnimController.animateToFinish(velocityY)
+            // Indicate that we reacted to the fling
             return true
+        } else {
+            // Otherwise we may need to start a control request and immediately fling
+            // using the velocityY
+            val imeVisible = rootWindowInsets.isVisible(WindowInsets.Type.ime())
+            when {
+                velocityY > 0 && scrollImeOnScreenWhenNotVisible && !imeVisible -> {
+                    // If the fling is in a upwards direction, and the IME is not visible,
+                    // start an control request with an immediate fling
+                    imeAnimController.startAndFling(this, velocityY)
+                    // Indicate that we reacted to the fling
+                    return true
+                }
+                velocityY < 0 && scrollImeOffScreenWhenVisible && imeVisible -> {
+                    // If the fling is in a downwards direction, and the IME is visible,
+                    // start an control request with an immediate fling
+                    imeAnimController.startAndFling(this, velocityY)
+                    // Indicate that we reacted to the fling
+                    return true
+                }
+            }
         }
-        // By default let the view handle the fling
+
+        // Otherwise, return false to indicate that we did not
+        // react to the fling
         return false
     }
 
     override fun onStopNestedScroll(target: View, type: Int) {
         nestedScrollingParentHelper.onStopNestedScroll(target, type)
 
-        if (!imeAnimController.isInsetAnimationFinishing()) {
+        if (imeAnimController.isInsetAnimationInProgress() &&
+            !imeAnimController.isInsetAnimationFinishing()) {
             imeAnimController.animateToFinish()
         }
         reset()

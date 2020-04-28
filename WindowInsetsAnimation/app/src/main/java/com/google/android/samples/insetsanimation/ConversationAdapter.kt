@@ -52,7 +52,7 @@ internal class ConversationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
     companion object {
         const val ITEM_TYPE_MESSAGE_SELF = 0
         const val ITEM_TYPE_MESSAGE_OTHER = 1
-        const val NUMBER_MESSAGES = 20
+        const val NUMBER_MESSAGES = 50
     }
 }
 
