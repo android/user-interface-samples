@@ -23,12 +23,9 @@ In terms of implementation, this is done using the new [`WindowInsetsAnimationCo
 
 A [`View.OnTouchListener`](https://developer.android.com/reference/kotlin/android/view/View.OnTouchListener) implementation, for use with non-scrolling views is also provided as [`InsetsAnimationTouchListener`](./app/src/main/java/com/google/android/samples/insetsanimation/InsetsAnimationTouchListener.kt).
 
-## Caveats + Known issues
+## Caveats
 
-Since this sample is built against a pre-release version of Android, there are a number of known issues:
-
-* This sample is built against Android R Developer Preview 3 (DP3), and will not work on earlier versions.
-* Ideally this sample would use [nested scrolling APIs](https://developer.android.com/reference/kotlin/androidx/core/view/NestedScrollingParent3) to detect scrolls, but it is _currently_ incompatible with the `WindowInsetsAnimation` APIs.
+This sample is built and tested against Android 11 Developer Preview 4 (DP4), and may not work on earlier versions.
 
 ## Getting Started
 
