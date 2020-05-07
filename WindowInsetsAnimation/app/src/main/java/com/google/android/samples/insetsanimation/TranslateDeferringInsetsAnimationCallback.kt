@@ -35,12 +35,15 @@ import android.view.WindowInsetsAnimation
  * layout
  * @param deferredInsetTypes the bitmask of insets types which should be deferred until after
  * any [WindowInsetsAnimation]s have ended
+ * @param dispatchMode The dispatch mode for this callback.
+ * See [WindowInsetsAnimation.Callback.getDispatchMode].
  */
 class TranslateDeferringInsetsAnimationCallback(
     private val view: View,
     val persistentInsetTypes: Int,
-    val deferredInsetTypes: Int
-) : WindowInsetsAnimation.Callback(DISPATCH_MODE_STOP) {
+    val deferredInsetTypes: Int,
+    dispatchMode: Int = DISPATCH_MODE_STOP
+) : WindowInsetsAnimation.Callback(dispatchMode) {
     init {
         require(persistentInsetTypes and deferredInsetTypes == 0) {
             "persistentInsetTypes and deferredInsetTypes can not contain any of " +

@@ -1,7 +1,7 @@
 WindowInsetsAnimation sample
 ============
 
-This sample shows how to react to the on-screen keyboard (IME) changing visibility, and also controlling the IME's visibility. To do this, the sample uses the new [WindowInsetsAnimation](https://developer.android.com/reference/android/view/WindowInsetsAnimation) and [WindowInsetsAnimationController](https://developer.android.com/reference/android/view/WindowInsetsAnimationController) APIs in [Android R](https://developer.android.com/11).
+This sample shows how to react to the on-screen keyboard (IME) changing visibility, and also controlling the IME's visibility. To do this, the sample uses the new [WindowInsetsAnimation](https://developer.android.com/reference/android/view/WindowInsetsAnimation) and [WindowInsetsAnimationController](https://developer.android.com/reference/android/view/WindowInsetsAnimationController) APIs in [Android 11](https://developer.android.com/11).
 
 ![Animation showing app in use](./images/demos.gif)
 
@@ -19,14 +19,13 @@ In terms of implementation, this is done using the new [`WindowInsetsAnimation.C
 
 When the user scrolls up on the conversation list, to the end of the list's content, and keeps scrolling (aka over-scrolling) the sample takes control of the IME and animates it on/off screen as part of the scroll gesture. You can see this in the demo above on the left, as the IME scrolls on and off screen with the conversation.
 
-In terms of implementation, this is done using the new [`WindowInsetsAnimationController`](https://developer.android.com/reference/android/view/WindowInsetsAnimationController) class. An implementation of a [`View.OnTouchListener`]() which uses the view's `WindowInsetsAnimationController`, is provided in this sample ([`InsetsAnimationOverscrollingTouchListener`](./app/src/main/java/com/google/android/samples/insetsanimation/InsetsAnimationOverscrollingTouchListener.kt)).
+In terms of implementation, this is done using the new [`WindowInsetsAnimationController`](https://developer.android.com/reference/android/view/WindowInsetsAnimationController) class in Android 11. A nested scrolling `LinearLayout` which automatically reacts to scrolls by insetting the IME on/off screen is provided in [`InsetsAnimationLinearLayout`](./app/src/main/java/com/google/android/samples/insetsanimation/InsetsAnimationLinearLayout.kt).
 
-## Caveats + Known issues
+A [`View.OnTouchListener`](https://developer.android.com/reference/kotlin/android/view/View.OnTouchListener) implementation, for use with non-scrolling views is also provided as [`InsetsAnimationTouchListener`](./app/src/main/java/com/google/android/samples/insetsanimation/InsetsAnimationTouchListener.kt).
 
-Since this sample is built against a pre-release version of Android, there are a number of known issues:
+## Caveats
 
-* This sample is built against Android R Developer Preview 3 (DP3), and will not work on earlier versions.
-* Ideally this sample would use [nested scrolling APIs](https://developer.android.com/reference/kotlin/androidx/core/view/NestedScrollingParent3) to detect scrolls, but it is _currently_ incompatible with the `WindowInsetsAnimation` APIs.
+This sample is built and tested against Android 11 Developer Preview 4 (DP4), and may not work on earlier versions.
 
 ## Getting Started
 

@@ -33,13 +33,13 @@ import kotlin.math.roundToInt
  * A wrapper around the new [WindowInsetsAnimationController] APIs in Android 11, to simplify
  * the implementation of common use-cases around the IME.
  *
- * See [InsetsAnimationOverscrollingTouchListener] for an example of how to use this class.
- *
- * @see InsetsAnimationOverscrollingTouchListener
+ * See [InsetsAnimationLinearLayout] and [InsetsAnimationTouchListener] for examples of how
+ * to use this class.
  */
 internal class SimpleImeAnimationController {
     private var insetsAnimationController: WindowInsetsAnimationController? = null
     private var pendingRequestCancellationSignal: CancellationSignal? = null
+    private var pendingRequestOnReady: ((WindowInsetsAnimationController) -> Unit)? = null
 
     /* To take control of the an WindowInsetsAnimation, we need to pass in a listener to
        controlWindowInsetsAnimation() in startControlRequest(). The listener created here
@@ -69,16 +69,22 @@ internal class SimpleImeAnimationController {
     /**
      * True if the IME was shown at the start of the current animation.
      */
-    var isImeShownAtStart = false
-        private set
+    private var isImeShownAtStart = false
 
     private var currentSpringAnimation: SpringAnimation? = null
 
     /**
      * Start a control request to the [view]s [android.view.WindowInsetsController]. This should
      * be called once the view is in a position to take control over the position of the IME.
+     *
+     * @param view The view which is triggering this request
+     * @param onRequestReady optional listener which will be called when the request is ready and
+     * the animation can proceed
      */
-    fun startControlRequest(view: View) {
+    fun startControlRequest(
+        view: View,
+        onRequestReady: ((WindowInsetsAnimationController) -> Unit)? = null
+    ) {
         check(!isInsetAnimationInProgress()) {
             "Animation in progress. Can not start a new request to controlWindowInsetsAnimation()"
         }
@@ -88,6 +94,8 @@ internal class SimpleImeAnimationController {
 
         // Create a cancellation signal, which we pass to controlWindowInsetsAnimation() below
         pendingRequestCancellationSignal = CancellationSignal()
+        // Keep reference to the onReady callback
+        pendingRequestOnReady = onRequestReady
 
         // Finally we make a controlWindowInsetsAnimation() request:
         view.windowInsetsController?.controlWindowInsetsAnimation(
@@ -111,18 +119,33 @@ internal class SimpleImeAnimationController {
     }
 
     /**
+     * Start a control request to the [view]s [android.view.WindowInsetsController], similar to
+     * [startControlRequest], but immediately fling to a finish using [velocityY] once ready.
+     *
+     * This function is useful for fire-and-forget operations to animate the IME.
+     *
+     * @param view The view which is triggering this request
+     * @param velocityY the velocity of the touch gesture which caused this call
+     */
+    fun startAndFling(view: View, velocityY: Float) = startControlRequest(view) {
+        animateToFinish(velocityY)
+    }
+
+    /**
      * Update the inset position of the IME by the given [dy] value. This value will be coerced
      * into the hidden and shown inset values.
      *
      * This function should only be called if [isInsetAnimationInProgress] returns true.
+     *
+     * @return the amount of [dy] consumed by the inset animation, in pixels
      */
-    fun updateInsetBy(dy: Int) {
+    fun insetBy(dy: Int): Int {
         val controller = insetsAnimationController
             ?: throw IllegalStateException("Current WindowInsetsAnimationController is null." +
                     "This should only be called if isAnimationInProgress() returns true")
 
         // Call updateInsetTo() with the new inset value
-        updateInsetTo(controller.currentInsets.bottom - dy)
+        return insetTo(controller.currentInsets.bottom - dy)
     }
 
     /**
@@ -130,8 +153,10 @@ internal class SimpleImeAnimationController {
      * coerced into the hidden and shown inset values.
      *
      * This function should only be called if [isInsetAnimationInProgress] returns true.
+     *
+     * @return the distance moved by the inset animation, in pixels
      */
-    fun updateInsetTo(inset: Int) {
+    fun insetTo(inset: Int): Int {
         val controller = insetsAnimationController
             ?: throw IllegalStateException("Current WindowInsetsAnimationController is null." +
                     "This should only be called if isAnimationInProgress() returns true")
@@ -143,6 +168,8 @@ internal class SimpleImeAnimationController {
 
         // We coerce the given inset within the limits of the hidden and shown insets
         val coercedBottom = inset.coerceIn(hiddenBottom, shownBottom)
+
+        val consumedDy = controller.currentInsets.bottom - coercedBottom
 
         // Finally update the insets in the WindowInsetsAnimationController using
         // setInsetsAndAlpha().
@@ -156,6 +183,8 @@ internal class SimpleImeAnimationController {
             // to any WindowInsetsAnimation.Callbacks, but it is not used by the system.
             (coercedBottom - startBottom) / (endBottom - startBottom).toFloat()
         )
+
+        return consumedDy
     }
 
     /**
@@ -163,6 +192,13 @@ internal class SimpleImeAnimationController {
      */
     fun isInsetAnimationInProgress(): Boolean {
         return insetsAnimationController != null
+    }
+
+    /**
+     * Return [true] if an inset animation is currently finishing.
+     */
+    fun isInsetAnimationFinishing(): Boolean {
+        return currentSpringAnimation != null
     }
 
     /**
@@ -187,36 +223,78 @@ internal class SimpleImeAnimationController {
     }
 
     /**
+     * Finish the current [WindowInsetsAnimationController] immediately.
+     */
+    fun finish() {
+        val controller = insetsAnimationController
+
+        if (controller == null) {
+            // If we don't currently have a controller, cancel any pending request and return
+            pendingRequestCancellationSignal?.cancel()
+            return
+        }
+
+        val current = controller.currentInsets.bottom
+        val shown = controller.shownStateInsets.bottom
+        val hidden = controller.hiddenStateInsets.bottom
+
+        when (current) {
+            // The current inset matches either the shown/hidden inset, finish() immediately
+            shown -> controller.finish(true)
+            hidden -> controller.finish(false)
+            else -> {
+                // Otherwise, we'll look at the current position...
+                if (controller.currentFraction >= SCROLL_THRESHOLD) {
+                    // If the IME is past the 'threshold' we snap to the toggled state
+                    controller.finish(!isImeShownAtStart)
+                } else {
+                    // ...otherwise, we snap back to the original visibility
+                    controller.finish(isImeShownAtStart)
+                }
+            }
+        }
+    }
+
+    /**
      * Finish the current [WindowInsetsAnimationController]. We finish the animation,
      * animating to the end state if necessary.
      *
-     * @param velocityY the velocity of the touch gesture which caused this call to [finish].
+     * @param velocityY the velocity of the touch gesture which caused this call to [animateToFinish].
      * Can be `null` if velocity is not available.
      */
-    fun finish(velocityY: Float? = null) {
+    fun animateToFinish(velocityY: Float? = null) {
         val controller = insetsAnimationController
-        if (controller != null) {
-            val current = controller.currentInsets.bottom
-            val shown = controller.shownStateInsets.bottom
-            val hidden = controller.hiddenStateInsets.bottom
 
-            when (current) {
-                // The current inset matches either the shown/hidden inset, finish() immediately
-                shown -> controller.finish(true)
-                hidden -> controller.finish(false)
-                else -> {
-                    // If the current IME animation is part-way complete, we animate it to
-                    // it's final state
-                    val frac = controller.currentFraction
-                    animateImeToVisibility(
-                        if (frac >= SCROLL_THRESHOLD) !isImeShownAtStart else isImeShownAtStart,
-                        velocityY
-                    )
+        if (controller == null) {
+            // If we don't currently have a controller, cancel any pending request and return
+            pendingRequestCancellationSignal?.cancel()
+            return
+        }
+
+        val current = controller.currentInsets.bottom
+        val shown = controller.shownStateInsets.bottom
+        val hidden = controller.hiddenStateInsets.bottom
+
+        when {
+            // If we have a velocity, we can use it's direction to determine
+            // the visibility. Upwards == visible
+            velocityY != null -> animateImeToVisibility(
+                visible = velocityY > 0,
+                velocityY = velocityY
+            )
+            // The current inset matches either the shown/hidden inset, finish() immediately
+            current == shown -> controller.finish(true)
+            current == hidden -> controller.finish(false)
+            else -> {
+                // Otherwise, we'll look at the current position...
+                if (controller.currentFraction >= SCROLL_THRESHOLD) {
+                    // If the IME is past the 'threshold' we animate it to the toggled state
+                    animateImeToVisibility(!isImeShownAtStart)
+                } else {
+                    // ...otherwise, we animate it back to the original visibility
+                    animateImeToVisibility(isImeShownAtStart)
                 }
             }
-        } else {
-            // Otherwise we cancel any pending request CancellationSignal
-            pendingRequestCancellationSignal?.cancel()
         }
     }
 
@@ -225,6 +303,10 @@ internal class SimpleImeAnimationController {
         pendingRequestCancellationSignal = null
         // Store the current WindowInsetsAnimationController
         insetsAnimationController = controller
+
+        // Call any pending callback
+        pendingRequestOnReady?.invoke(controller)
+        pendingRequestOnReady = null
     }
 
     /**
@@ -239,6 +321,8 @@ internal class SimpleImeAnimationController {
 
         currentSpringAnimation?.cancel()
         currentSpringAnimation = null
+
+        pendingRequestOnReady = null
     }
 
     /**
@@ -251,20 +335,18 @@ internal class SimpleImeAnimationController {
      */
     private fun animateImeToVisibility(
         visible: Boolean,
-        velocityY: Float?
+        velocityY: Float? = null
     ) {
         val controller = insetsAnimationController
             ?: throw IllegalStateException("Controller should not be null")
 
-        val end = when {
-            visible -> controller.shownStateInsets.bottom
-            else -> controller.hiddenStateInsets.bottom
-        }
-
-        val animator = springAnimationOf(
-            setter = { updateInsetTo(it.roundToInt()) },
+        currentSpringAnimation = springAnimationOf(
+            setter = { insetTo(it.roundToInt()) },
             getter = { controller.currentInsets.bottom.toFloat() },
-            finalPosition = end.toFloat()
+            finalPosition = when {
+                visible -> controller.shownStateInsets.bottom.toFloat()
+                else -> controller.hiddenStateInsets.bottom.toFloat()
+            }
         ).withSpringForceProperties {
             // Tweak the damping value, to remove any bounciness.
             dampingRatio = SpringForce.DAMPING_RATIO_NO_BOUNCY
@@ -276,21 +358,22 @@ internal class SimpleImeAnimationController {
             if (velocityY != null) {
                 setStartVelocity(velocityY)
             }
-        }
-        animator.addEndListener { _, _, _, _ ->
-            // Once the animation has ended, finish the controller
-            finish()
-        }
-        animator.start()
-        // Keep track of the Spring animation so we can cancel it if needed
-        currentSpringAnimation = animator
+            addEndListener { anim, _, _, _ ->
+                if (anim == currentSpringAnimation) {
+                    currentSpringAnimation = null
+                }
+                // Once the animation has ended, finish the controller
+                finish()
+            }
+        }.also { it.start() }
     }
 }
 
 /**
  * Scroll threshold for determining whether to animating to the end state, or to the start state.
+ * Currently 15% of the total swipe distance distance
  */
-private const val SCROLL_THRESHOLD = 0.2f
+private const val SCROLL_THRESHOLD = 0.15f
 
 /**
  * A LinearInterpolator instance we can re-use across listeners.

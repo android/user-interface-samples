@@ -20,13 +20,13 @@
 
     <item
         android:id="@+id/action_video_call"
-        android:icon="@drawable/ic_videocam_24"
+        android:icon="@drawable/ic_videocam"
         android:title="@string/action_video_call"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_phone_call"
-        android:icon="@drawable/ic_phone_24"
+        android:icon="@drawable/ic_phone"
         android:title="@string/action_phone_call"
         app:showAsAction="ifRoom" />
 

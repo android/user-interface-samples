@@ -17,7 +17,7 @@
 
 <resources>
     <string name="app_name">InsetsChat</string>
-    <string name="toolbar_title">Fun with Insets</string>
+    <string name="toolbar_title">IME Animations</string>
 
     <string name="action_settings">Settings</string>
     <string name="action_phone_call">Phone call</string>

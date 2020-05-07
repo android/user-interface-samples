@@ -15,7 +15,8 @@
   ~ limitations under the License.
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.samples.insetsanimation.InsetsAnimationLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -30,35 +31,49 @@
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="4dp"
-        app:menu="@menu/menu_main"
-        app:title="@string/toolbar_title" />
+        android:elevation="@dimen/spacing_micro"
+        app:menu="@menu/menu_main">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="@dimen/spacing_small"
+            app:srcCompat="@drawable/ic_face" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/toolbar_title"
+            android:textAppearance="?attr/textAppearanceHeadline6" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/conversation_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="0px"
         android:layout_weight="1"
         android:clipToPadding="false"
         android:orientation="vertical"
-        android:paddingVertical="8dp"
+        android:paddingVertical="@dimen/spacing_small"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:reverseLayout="true"
         tools:itemCount="20"
-        tools:listitem="@layout/message_bubble" />
+        tools:listitem="@layout/message_bubble_other" />
 
     <LinearLayout
         android:id="@+id/message_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSurface"
-        android:elevation="4dp"
-        android:padding="8dp">
+        android:elevation="@dimen/spacing_micro"
+        android:padding="@dimen/spacing_small">
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="0px"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_micro"
             android:layout_weight="1">
 
             <EditText
@@ -69,6 +84,17 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <ImageButton
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:padding="@dimen/spacing_medium"
+            app:srcCompat="@drawable/ic_send"
+            app:tint="?attr/colorPrimary" />
+
     </LinearLayout>
 
-</LinearLayout>
+</com.google.android.samples.insetsanimation.InsetsAnimationLinearLayout>
