@@ -15,17 +15,13 @@
   ~ limitations under the License.
 -->
 
-<resources>
-    <!--ShapeAppearanceOverlay for chat bubbles which increase corner size -->
-    <style name="ShapeAppearanceOverlay.ChatBubble.Self" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/spacing_medium</item>
-        <item name="cornerSizeTopRight">2dp</item>
-    </style>
-
-    <style name="ShapeAppearanceOverlay.ChatBubble.Other" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/spacing_medium</item>
-        <item name="cornerSizeTopLeft">2dp</item>
-    </style>
-</resources>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:tint="?attr/colorControlNormal"
+    android:viewportWidth="24.0"
+    android:viewportHeight="24.0">
+    <path
+        android:fillColor="#FF000000"
+        android:pathData="M2.01,21L23,12 2.01,3 2,10l15,2 -15,2z" />
+</vector>

@@ -18,24 +18,25 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginVertical="4dp"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.ChatBubble"
-        app:cardBackgroundColor="@color/color_on_surface_15"
-        app:cardElevation="0dp">
+        android:layout_gravity="end"
+        android:layout_marginHorizontal="@dimen/spacing_small"
+        android:layout_marginVertical="@dimen/spacing_micro"
+        app:cardBackgroundColor="?attr/colorPrimaryVariant"
+        app:cardElevation="0dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.ChatBubble.Self">
 
         <TextView
             android:id="@+id/bubble_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="6dp"
+            android:layout_marginVertical="@dimen/spacing_micro"
             android:text="@string/message_from"
             android:textAppearance="?attr/textAppearanceBody2" />
 

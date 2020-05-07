@@ -32,7 +32,7 @@ internal class ConversationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolde
                 inflater.inflate(R.layout.message_bubble_self, parent, false)
             }
             else -> {
-                inflater.inflate(R.layout.message_bubble, parent, false)
+                inflater.inflate(R.layout.message_bubble_other, parent, false)
             }
         }
         return MessageHolder(view)
