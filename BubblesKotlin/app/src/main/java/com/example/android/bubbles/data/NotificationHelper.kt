@@ -128,24 +128,21 @@ class NotificationHelper(private val context: Context) {
             .setIcon(icon)
             .build()
         val contentUri = "https://android.example.com/chat/${chat.contact.id}".toUri()
+
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            REQUEST_BUBBLE,
+            // Launch BubbleActivity as the expanded bubble.
+            Intent(context, BubbleActivity::class.java)
+                .setAction(Intent.ACTION_VIEW)
+                .setData(contentUri),
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
         val builder = Notification.Builder(context, CHANNEL_NEW_MESSAGES)
             // A notification can be shown as a bubble by calling setBubbleMetadata()
             .setBubbleMetadata(
-                Notification.BubbleMetadata.Builder()
-                    .createIntentBubble(
-                        // The Intent to be used for the expanded bubble.
-                        PendingIntent.getActivity(
-                            context,
-                            REQUEST_BUBBLE,
-                            // Launch BubbleActivity as the expanded bubble.
-                            Intent(context, BubbleActivity::class.java)
-                                .setAction(Intent.ACTION_VIEW)
-                                .setData(contentUri),
-                            PendingIntent.FLAG_UPDATE_CURRENT
-                        ),
-                        // The icon of the bubble.
-                        icon
-                    )
+                Notification.BubbleMetadata.Builder(pendingIntent, icon)
                     // The height of the expanded bubble.
                     .setDesiredHeight(context.resources.getDimensionPixelSize(R.dimen.bubble_height))
                     .apply {
