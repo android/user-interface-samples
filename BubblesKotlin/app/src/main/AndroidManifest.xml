@@ -100,6 +100,9 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name=".ReplyReceiver" />
+
         <provider
             android:name=".AssetFileProvider"
             android:authorities="com.example.android.bubbles"

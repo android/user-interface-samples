@@ -27,6 +27,7 @@ interface ChatRepository {
     fun findContact(id: Long): LiveData<Contact?>
     fun findMessages(id: Long): LiveData<List<Message>>
     fun sendMessage(id: Long, text: String)
+    fun updateNotification(id: Long)
     fun activateChat(id: Long)
     fun deactivateChat(id: Long)
     fun showAsBubble(id: Long)
@@ -115,6 +116,11 @@ class DefaultChatRepository internal constructor(
                 notificationHelper.showNotification(chat, false)
             }
         }
+    }
+
+    override fun updateNotification(id: Long) {
+        val chat = chats.getValue(id)
+        notificationHelper.showNotification(chat, false)
     }
 
     override fun activateChat(id: Long) {

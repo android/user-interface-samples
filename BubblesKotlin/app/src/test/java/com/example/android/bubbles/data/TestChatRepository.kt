@@ -70,6 +70,9 @@ class TestChatRepository(private val chats: Map<Long, Chat>) : ChatRepository {
         chat.addMessage(chat.contact.reply(text))
     }
 
+    override fun updateNotification(id: Long) {
+    }
+
     override fun activateChat(id: Long) {
         activatedId = id
     }

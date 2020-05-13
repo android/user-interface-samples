@@ -20,6 +20,8 @@
     <string name="description_icon">Profile icon</string>
     <string name="description_voice_call">Make a voice call (dummy)</string>
     <string name="description_send">Send</string>
+    <string name="sender_you">You</string>
+    <string name="label_reply">Reply</string>
     <string name="description_photo">Photo</string>
     <string name="hint_input">Type a message…</string>
     <string name="channel_new_messages">New messages</string>

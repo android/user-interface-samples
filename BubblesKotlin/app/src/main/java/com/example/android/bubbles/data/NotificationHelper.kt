@@ -20,6 +20,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Person
+import android.app.RemoteInput
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -35,6 +36,7 @@ import androidx.core.net.toUri
 import com.example.android.bubbles.BubbleActivity
 import com.example.android.bubbles.MainActivity
 import com.example.android.bubbles.R
+import com.example.android.bubbles.ReplyReceiver
 
 /**
  * Handles all operations related to [Notification].
@@ -123,10 +125,8 @@ class NotificationHelper(private val context: Context) {
     fun showNotification(chat: Chat, fromUser: Boolean) {
         updateShortcuts(chat.contact)
         val icon = Icon.createWithAdaptiveBitmapContentUri(chat.contact.iconUri)
-        val person = Person.Builder()
-            .setName(chat.contact.name)
-            .setIcon(icon)
-            .build()
+        val user = Person.Builder().setName(context.getString(R.string.sender_you)).build()
+        val person = Person.Builder().setName(chat.contact.name).setIcon(icon).build()
         val contentUri = "https://android.example.com/chat/${chat.contact.id}".toUri()
 
         val pendingIntent = PendingIntent.getActivity(
@@ -180,40 +180,49 @@ class NotificationHelper(private val context: Context) {
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
             )
-
-        if (fromUser) {
-            // This is a Bubble explicitly opened by the user.
-            builder
-                .setStyle(
-                    Notification.MessagingStyle(person)
-                        .addMessage(
-                            context.getString(R.string.chat_with_contact, chat.contact.name),
-                            System.currentTimeMillis(),
-                            person
+            // Direct Reply
+            .addAction(
+                Notification.Action
+                    .Builder(
+                        Icon.createWithResource(context, R.drawable.ic_send),
+                        context.getString(R.string.label_reply),
+                        PendingIntent.getBroadcast(
+                            context,
+                            REQUEST_CONTENT,
+                            Intent(context, ReplyReceiver::class.java).setData(contentUri),
+                            PendingIntent.FLAG_UPDATE_CURRENT
                         )
-                        .setGroupConversation(false)
-                )
-                .setContentText(context.getString(R.string.chat_with_contact, chat.contact.name))
-        } else {
+                    )
+                    .addRemoteInput(
+                        RemoteInput.Builder(ReplyReceiver.KEY_TEXT_REPLY)
+                            .setLabel(context.getString(R.string.hint_input))
+                            .build()
+                    )
+                    .setAllowGeneratedReplies(true)
+                    .build()
+            )
             // Let's add some more content to the notification in case it falls back to a normal
             // notification.
-            val lastOutgoingId = chat.messages.last { !it.isIncoming }.id
-            val newMessages = chat.messages.filter { message ->
-                message.id > lastOutgoingId
-            }
-            builder
-                .setStyle(
-                    Notification.MessagingStyle(person)
-                        .apply {
-                            for (message in newMessages) {
-                                addMessage(message.text, message.timestamp, person)
+            .setStyle(
+                Notification.MessagingStyle(user)
+                    .apply {
+                        val lastId = chat.messages.last().id
+                        for (message in chat.messages) {
+                            val m = Notification.MessagingStyle.Message(
+                                message.text,
+                                message.timestamp,
+                                if (message.isIncoming) person else null
+                            )
+                            if (message.id < lastId) {
+                                addHistoricMessage(m)
+                            } else {
+                                addMessage(m)
                             }
                         }
-                        .setGroupConversation(false)
-                )
-                .setContentText(newMessages.joinToString("\n") { it.text })
-                .setWhen(newMessages.last().timestamp)
-        }
+                    }
+                    .setGroupConversation(false)
+            )
+            .setWhen(chat.messages.last().timestamp)
 
         notificationManager.notify(chat.contact.id.toInt(), builder.build())
     }
