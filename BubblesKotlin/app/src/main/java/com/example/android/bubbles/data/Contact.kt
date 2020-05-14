@@ -16,7 +16,6 @@
 package com.example.android.bubbles.data
 
 import androidx.core.net.toUri
-import com.example.android.bubbles.R
 
 abstract class Contact(
     val id: Long,
@@ -38,7 +37,8 @@ abstract class Contact(
             object : Contact(4L, "Sheep", "sheep.jpg") {
                 override fun reply(text: String) = buildReply().apply {
                     this.text = "Look at me!"
-                    photo = R.drawable.sheep_full
+                    photo = "content://com.example.android.bubbles/photo/sheep_full.jpg".toUri()
+                    photoMimeType = "image/jpeg"
                 }
             }
         )

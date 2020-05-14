@@ -22,8 +22,8 @@ class Chat(val contact: Contact) {
     private val listeners = mutableListOf<ChatThreadListener>()
 
     private val _messages = mutableListOf(
-        Message(1L, contact.id, "Send me a message", null, System.currentTimeMillis()),
-        Message(2L, contact.id, "I will reply in 5 seconds", null, System.currentTimeMillis())
+        Message(1L, contact.id, "Send me a message", null, null, System.currentTimeMillis()),
+        Message(2L, contact.id, "I will reply in 5 seconds", null, null, System.currentTimeMillis())
     )
     val messages: List<Message>
         get() = _messages

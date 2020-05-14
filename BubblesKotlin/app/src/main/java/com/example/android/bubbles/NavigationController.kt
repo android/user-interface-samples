@@ -15,9 +15,9 @@
 
 package com.example.android.bubbles
 
+import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
 
 /**
@@ -27,7 +27,7 @@ interface NavigationController {
 
     fun openChat(id: Long, prepopulateText: String?)
 
-    fun openPhoto(@DrawableRes photo: Int)
+    fun openPhoto(photo: Uri)
 
     /**
      * Updates the appearance and functionality of the app bar.

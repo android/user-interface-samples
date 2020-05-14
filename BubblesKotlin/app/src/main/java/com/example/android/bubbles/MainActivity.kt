@@ -16,6 +16,7 @@
 package com.example.android.bubbles
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.transition.Transition
 import android.transition.TransitionInflater
@@ -123,7 +124,7 @@ class MainActivity : AppCompatActivity(), NavigationController {
         }
     }
 
-    override fun openPhoto(photo: Int) {
+    override fun openPhoto(photo: Uri) {
         supportFragmentManager.commit {
             addToBackStack(null)
             replace(R.id.container, PhotoFragment.newInstance(photo))

@@ -15,14 +15,14 @@
 
 package com.example.android.bubbles.data
 
-import androidx.annotation.DrawableRes
+import android.net.Uri
 
 data class Message(
     val id: Long,
     val sender: Long,
     val text: String,
-    @DrawableRes
-    val photo: Int?,
+    val photoUri: Uri?,
+    val photoMimeType: String?,
     val timestamp: Long
 ) {
 
@@ -33,8 +33,9 @@ data class Message(
         var id: Long? = null
         var sender: Long? = null
         var text: String? = null
-        var photo: Int? = null
+        var photo: Uri? = null
+        var photoMimeType: String? = null
         var timestamp: Long? = null
-        fun build() = Message(id!!, sender!!, text!!, photo, timestamp!!)
+        fun build() = Message(id!!, sender!!, text!!, photo, photoMimeType, timestamp!!)
     }
 }

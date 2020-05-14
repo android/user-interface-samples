@@ -15,14 +15,15 @@
 
 package com.example.android.bubbles.ui.photo
 
+import android.net.Uri
 import android.os.Bundle
 import android.transition.Fade
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.android.bubbles.R
 import com.example.android.bubbles.getNavigationController
 
@@ -34,9 +35,9 @@ class PhotoFragment : Fragment() {
     companion object {
         private const val ARG_PHOTO = "photo"
 
-        fun newInstance(@DrawableRes photo: Int) = PhotoFragment().apply {
+        fun newInstance(photo: Uri) = PhotoFragment().apply {
             arguments = Bundle().apply {
-                putInt(ARG_PHOTO, photo)
+                putParcelable(ARG_PHOTO, photo)
             }
         }
     }
@@ -55,14 +56,14 @@ class PhotoFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val photoResId = arguments?.getInt(ARG_PHOTO)
-        if (photoResId == null) {
+        val photo = arguments?.getParcelable<Uri>(ARG_PHOTO)
+        if (photo == null) {
             if (isAdded) {
                 parentFragmentManager.popBackStack()
             }
             return
         }
         getNavigationController().updateAppBar(hidden = true)
-        view.findViewById<ImageView>(R.id.photo).setImageResource(photoResId)
+        Glide.with(this).load(photo).into(view.findViewById(R.id.photo))
     }
 }

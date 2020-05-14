@@ -15,6 +15,7 @@
 
 package com.example.android.bubbles.data
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
@@ -60,12 +61,14 @@ class TestChatRepository(private val chats: Map<Long, Chat>) : ChatRepository {
         }
     }
 
-    override fun sendMessage(id: Long, text: String) {
+    override fun sendMessage(id: Long, text: String, photoUri: Uri?, photoMimeType: String?) {
         val chat = chats.getValue(id)
         chat.addMessage(Message.Builder().apply {
             sender = 0L // User
             this.text = text
             timestamp = System.currentTimeMillis()
+            this.photo = photoUri
+            this.photoMimeType = photoMimeType
         })
         chat.addMessage(chat.contact.reply(text))
     }

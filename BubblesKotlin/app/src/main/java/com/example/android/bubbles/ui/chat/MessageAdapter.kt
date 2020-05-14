@@ -17,6 +17,8 @@ package com.example.android.bubbles.ui.chat
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -27,23 +29,30 @@ import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.android.bubbles.R
 import com.example.android.bubbles.data.Message
 
 class MessageAdapter(
     context: Context,
-    private val onPhotoClicked: (photo: Int) -> Unit
+    private val onPhotoClicked: (photo: Uri) -> Unit
 ) : ListAdapter<Message, MessageViewHolder>(DIFF_CALLBACK) {
 
     private val tint = object {
-        val incoming: ColorStateList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.incoming))
+        val incoming: ColorStateList = ColorStateList.valueOf(
+            ContextCompat.getColor(context, R.color.incoming)
+        )
         val outgoing: ColorStateList = ColorStateList.valueOf(
             ContextCompat.getColor(context, R.color.outgoing)
         )
     }
 
     private val padding = object {
-        val vertical: Int = context.resources.getDimensionPixelSize(R.dimen.message_padding_vertical)
+        val vertical: Int = context.resources.getDimensionPixelSize(
+            R.dimen.message_padding_vertical
+        )
 
         val horizontalShort: Int = context.resources.getDimensionPixelSize(
             R.dimen.message_padding_horizontal_short
@@ -54,6 +63,7 @@ class MessageAdapter(
         )
     }
 
+    private val photoSize = context.resources.getDimensionPixelSize(R.dimen.photo_size)
 
     init {
         setHasStableIds(true)
@@ -66,7 +76,7 @@ class MessageAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
         val holder = MessageViewHolder(parent)
         holder.message.setOnClickListener {
-            val photo: Int? = it.getTag(R.id.tag_photo) as Int?
+            val photo = it.getTag(R.id.tag_photo) as Uri?
             if (photo != null) {
                 onPhotoClicked(photo)
             }
@@ -88,13 +98,6 @@ class MessageAdapter(
                 layoutParams = lp.apply {
                     gravity = Gravity.START
                 }
-                if (message.photo != null) {
-                    holder.message.setTag(R.id.tag_photo, message.photo)
-                    setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, message.photo)
-                } else {
-                    holder.message.setTag(R.id.tag_photo, null)
-                    setCompoundDrawables(null, null, null, null)
-                }
             }
         } else {
             holder.message.run {
@@ -108,6 +111,15 @@ class MessageAdapter(
                     gravity = Gravity.END
                 }
             }
+        }
+        if (message.photoUri != null) {
+            holder.message.setTag(R.id.tag_photo, message.photoUri)
+            Glide.with(holder.message)
+                .load(message.photoUri)
+                .into(CompoundBottomTarget(holder.message, photoSize, photoSize))
+        } else {
+            holder.message.setTag(R.id.tag_photo, null)
+            holder.message.setCompoundDrawables(null, null, null, null)
         }
         holder.message.text = message.text
     }
@@ -129,4 +141,30 @@ class MessageViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.message_item, parent, false)
 ) {
     val message: TextView = itemView.findViewById(R.id.message)
+}
+
+/**
+ * Sets a drawable into the specified TextView as its bottom compound drawable.
+ */
+private class CompoundBottomTarget(
+    private val view: TextView,
+    width: Int,
+    height: Int
+) : CustomTarget<Drawable>(width, height) {
+
+    override fun onResourceReady(
+        resource: Drawable,
+        transition: Transition<in Drawable>?
+    ) {
+        view.setCompoundDrawablesWithIntrinsicBounds(null, null, null, resource)
+    }
+
+    override fun onLoadCleared(placeholder: Drawable?) {
+        view.setCompoundDrawablesWithIntrinsicBounds(
+            null,
+            null,
+            null,
+            placeholder
+        )
+    }
 }

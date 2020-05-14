@@ -16,6 +16,7 @@
 package com.example.android.bubbles.ui.chat
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -31,6 +32,11 @@ class ChatViewModel @JvmOverloads constructor(
 ) : AndroidViewModel(application) {
 
     private val chatId = MutableLiveData<Long>()
+
+    private val _photoUri = MutableLiveData<Uri>()
+    val photo: LiveData<Uri> = _photoUri
+
+    private var _photoMimeType: String? = null
 
     /**
      * We want to dismiss a notification when the corresponding chat screen is open. Setting this to `true` dismisses
@@ -69,7 +75,7 @@ class ChatViewModel @JvmOverloads constructor(
     /**
      * Whether the "Show as Bubble" button should be shown.
      */
-    val showAsBubbleVisible: LiveData<Boolean> = object: LiveData<Boolean>() {
+    val showAsBubbleVisible: LiveData<Boolean> = object : LiveData<Boolean>() {
         override fun onActive() {
             // We hide the "Show as Bubble" button if we are not allowed to show the bubble.
             value = repository.canBubble()
@@ -88,14 +94,21 @@ class ChatViewModel @JvmOverloads constructor(
     fun send(text: String) {
         val id = chatId.value
         if (id != null && id != 0L) {
-            repository.sendMessage(id, text)
+            repository.sendMessage(id, text, _photoUri.value, _photoMimeType)
         }
+        _photoUri.value = null
+        _photoMimeType = null
     }
 
     fun showAsBubble() {
         chatId.value?.let { id ->
             repository.showAsBubble(id)
         }
+    }
+
+    fun setPhoto(uri: Uri, mimeType: String) {
+        _photoUri.value = uri
+        _photoMimeType = mimeType
     }
 
     override fun onCleared() {

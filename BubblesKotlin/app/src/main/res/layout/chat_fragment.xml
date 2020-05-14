@@ -17,6 +17,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/chat"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,13 +34,13 @@
         android:paddingBottom="@dimen/spacing_small"
         android:scrollbars="vertical" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/input_bar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
         android:elevation="@dimen/app_bar_elevation"
-        android:orientation="horizontal">
+        android:minHeight="?attr/actionBarSize">
 
         <ImageButton
             android:id="@+id/voice_call"
@@ -48,9 +49,13 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/description_voice_call"
             android:tint="?attr/colorAccent"
+            app:layout_constraintBottom_toBottomOf="@id/input"
+            app:layout_constraintEnd_toStartOf="@id/input"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_voice_call" />
 
-        <EditText
+        <com.example.android.bubbles.ui.chat.ChatEditText
             android:id="@+id/input"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -58,7 +63,23 @@
             android:hint="@string/hint_input"
             android:imeOptions="actionSend"
             android:importantForAutofill="no"
-            android:inputType="textCapSentences" />
+            android:inputType="textCapSentences"
+            app:layout_constraintBottom_toTopOf="@id/photo"
+            app:layout_constraintEnd_toStartOf="@id/send"
+            app:layout_constraintStart_toEndOf="@id/voice_call"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="@dimen/photo_size"
+            android:layout_height="@dimen/photo_size"
+            android:contentDescription="@string/description_photo"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/input"
+            app:layout_constraintTop_toBottomOf="@id/input"
+            tools:src="@drawable/ic_message"
+            tools:visibility="visible" />
 
         <ImageButton
             android:id="@+id/send"
@@ -67,8 +88,12 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/description_send"
             android:tint="?attr/colorAccent"
+            app:layout_constraintBottom_toBottomOf="@id/input"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/input"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_send" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
