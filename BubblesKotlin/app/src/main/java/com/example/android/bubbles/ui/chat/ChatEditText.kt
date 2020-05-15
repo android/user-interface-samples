@@ -15,19 +15,18 @@
 
 package com.example.android.bubbles.ui.chat
 
+import android.content.ClipData
 import android.content.Context
 import android.net.Uri
 import android.util.AttributeSet
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputConnection
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.view.inputmethod.EditorInfoCompat
-import androidx.core.view.inputmethod.InputConnectionCompat
+import androidx.core.widget.RichContentReceiverCompat
 import com.example.android.bubbles.R
 
 typealias OnImageAddedListener = (contentUri: Uri, mimeType: String, label: String) -> Unit
 
-private val SUPPORTED_MIME_TYPES = arrayOf(
+private val SUPPORTED_MIME_TYPES = setOf(
     "image/jpeg",
     "image/png",
     "image/gif"
@@ -44,31 +43,29 @@ class ChatEditText @JvmOverloads constructor(
 
     private var onImageAddedListener: OnImageAddedListener? = null
 
-    override fun onCreateInputConnection(editorInfo: EditorInfo): InputConnection {
-        val inputConnection = super.onCreateInputConnection(editorInfo)
-        EditorInfoCompat.setContentMimeTypes(editorInfo, SUPPORTED_MIME_TYPES)
-        return InputConnectionCompat.createWrapper(
-            inputConnection,
-            editorInfo
-        ) { inputContentInfo, flags, opts ->
-            // Request permission if it's missing.
-            if ((flags and InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION) != 0) {
-                try {
-                    inputContentInfo.requestPermission()
-                } catch (e: Exception) {
-                    return@createWrapper false
+    init {
+        richContentReceiverCompat = object : RichContentReceiverCompat<TextView>() {
+            override fun onReceive(
+                view: TextView,
+                clip: ClipData,
+                source: Int,
+                flags: Int
+            ): Boolean {
+                val mimeType = SUPPORTED_MIME_TYPES.find { clip.description.hasMimeType(it) }
+                return if (mimeType != null && clip.itemCount > 0) {
+                    onImageAddedListener?.invoke(
+                        clip.getItemAt(0).uri,
+                        mimeType,
+                        clip.description.label.toString()
+                    )
+                    true
+                } else {
+                    false
                 }
             }
-            val mimeType = SUPPORTED_MIME_TYPES.find { inputContentInfo.description.hasMimeType(it) }
-            if (mimeType == null) {
-                false
-            } else {
-                onImageAddedListener?.invoke(
-                    inputContentInfo.contentUri,
-                    mimeType,
-                    inputContentInfo.description.label.toString()
-                )
-                true
+
+            override fun getSupportedMimeTypes(): Set<String> {
+                return SUPPORTED_MIME_TYPES
             }
         }
     }
