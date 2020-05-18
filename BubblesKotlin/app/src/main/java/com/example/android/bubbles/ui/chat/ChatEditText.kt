@@ -21,19 +21,21 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.widget.RichContentReceiverCompat
+import androidx.core.widget.TextViewRichContentReceiverCompat
 import com.example.android.bubbles.R
 
 typealias OnImageAddedListener = (contentUri: Uri, mimeType: String, label: String) -> Unit
 
 private val SUPPORTED_MIME_TYPES = setOf(
     "image/jpeg",
+    "image/jpg",
     "image/png",
     "image/gif"
 )
 
 /**
- * A custom EditText with the ability to handle image pasting from a software keyboard.
+ * A custom EditText with the ability to handle copy & paste of texts and images. This also works
+ * with a software keyboard that can insert images.
  */
 class ChatEditText @JvmOverloads constructor(
     context: Context,
@@ -44,9 +46,9 @@ class ChatEditText @JvmOverloads constructor(
     private var onImageAddedListener: OnImageAddedListener? = null
 
     init {
-        richContentReceiverCompat = object : RichContentReceiverCompat<TextView>() {
+        richContentReceiverCompat = object : TextViewRichContentReceiverCompat() {
             override fun onReceive(
-                view: TextView,
+                textView: TextView,
                 clip: ClipData,
                 source: Int,
                 flags: Int
@@ -60,18 +62,19 @@ class ChatEditText @JvmOverloads constructor(
                     )
                     true
                 } else {
-                    false
+                    super.onReceive(textView, clip, source, flags)
                 }
             }
 
             override fun getSupportedMimeTypes(): Set<String> {
-                return SUPPORTED_MIME_TYPES
+                return SUPPORTED_MIME_TYPES + super.getSupportedMimeTypes()
             }
         }
     }
 
     /**
-     * Sets a listener to be called when a new image is selected on a software keyboard.
+     * Sets a listener to be called when a new image is added. This might be coming from copy &
+     * paste or a software keyboard inserting an image.
      */
     fun setOnImageAddedListener(listener: OnImageAddedListener?) {
         onImageAddedListener = listener
