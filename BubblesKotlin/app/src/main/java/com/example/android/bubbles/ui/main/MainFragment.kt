@@ -17,33 +17,26 @@ package com.example.android.bubbles.ui.main
 
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.android.bubbles.R
+import com.example.android.bubbles.databinding.MainFragmentBinding
 import com.example.android.bubbles.getNavigationController
+import com.example.android.bubbles.ui.viewBindings
 
 /**
  * The main chat list screen.
  */
-class MainFragment : Fragment() {
+class MainFragment : Fragment(R.layout.main_fragment) {
+
+    private val binding by viewBindings(MainFragmentBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         exitTransition = TransitionInflater.from(context).inflateTransition(R.transition.slide_top)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,8 +50,7 @@ class MainFragment : Fragment() {
         viewModel.contacts.observe(viewLifecycleOwner, Observer { contacts ->
             contactAdapter.submitList(contacts)
         })
-
-        view.findViewById<RecyclerView>(R.id.contacts).run {
+        binding.contacts.run {
             layoutManager = LinearLayoutManager(view.context)
             setHasFixedSize(true)
             adapter = contactAdapter

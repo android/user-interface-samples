@@ -28,11 +28,10 @@ import com.example.android.bubbles.ui.photo.PhotoFragment
 /**
  * Entry point of the app when it is launched as an expanded Bubble.
  */
-class BubbleActivity : AppCompatActivity(), NavigationController {
+class BubbleActivity : AppCompatActivity(R.layout.bubble_activity), NavigationController {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.bubble_activity)
         val id = intent.data?.lastPathSegment?.toLongOrNull() ?: return
         if (savedInstanceState == null) {
             supportFragmentManager.commitNow {

@@ -20,31 +20,28 @@ import android.content.LocusId
 import android.graphics.drawable.Icon
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.android.bubbles.R
 import com.example.android.bubbles.VoiceCallActivity
+import com.example.android.bubbles.databinding.ChatFragmentBinding
 import com.example.android.bubbles.getNavigationController
+import com.example.android.bubbles.ui.viewBindings
 
 /**
  * The chat screen. This is used in the full app (MainActivity) as well as in the expanded Bubble
  * (BubbleActivity).
  */
-class ChatFragment : Fragment() {
+class ChatFragment : Fragment(R.layout.chat_fragment) {
 
     companion object {
         private const val ARG_ID = "id"
@@ -62,21 +59,13 @@ class ChatFragment : Fragment() {
     }
 
     private val viewModel: ChatViewModel by viewModels()
-    private lateinit var input: ChatEditText
+    private val binding by viewBindings(ChatFragmentBinding::bind)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         enterTransition =
             TransitionInflater.from(context).inflateTransition(R.transition.slide_bottom)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.chat_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -90,24 +79,18 @@ class ChatFragment : Fragment() {
 
         viewModel.setChatId(id)
 
-        val messages: RecyclerView = view.findViewById(R.id.messages)
-        val voiceCall: ImageButton = view.findViewById(R.id.voice_call)
-        input = view.findViewById(R.id.input)
-        val send: ImageButton = view.findViewById(R.id.send)
-        val photo: ImageView = view.findViewById(R.id.photo)
-
         val messageAdapter = MessageAdapter(view.context) { uri ->
             navigationController.openPhoto(uri)
         }
         val linearLayoutManager = LinearLayoutManager(view.context).apply {
             stackFromEnd = true
         }
-        messages.run {
+        binding.messages.run {
             layoutManager = linearLayoutManager
             adapter = messageAdapter
         }
 
-        viewModel.contact.observe(viewLifecycleOwner, Observer { contact ->
+        viewModel.contact.observe(viewLifecycleOwner) { contact ->
             if (contact == null) {
                 Toast.makeText(view.context, "Contact not found", Toast.LENGTH_SHORT).show()
                 parentFragmentManager.popBackStack()
@@ -119,40 +102,40 @@ class ChatFragment : Fragment() {
                     startPostponedEnterTransition()
                 }
             }
-        })
+        }
 
-        viewModel.messages.observe(viewLifecycleOwner, Observer {
-            messageAdapter.submitList(it)
-            linearLayoutManager.scrollToPosition(it.size - 1)
-        })
+        viewModel.messages.observe(viewLifecycleOwner) { messages ->
+            messageAdapter.submitList(messages)
+            linearLayoutManager.scrollToPosition(messages.size - 1)
+        }
 
         if (prepopulateText != null) {
-            input.setText(prepopulateText)
+            binding.input.setText(prepopulateText)
         }
 
-        input.setOnImageAddedListener { contentUri, mimeType, label ->
+        binding.input.setOnImageAddedListener { contentUri, mimeType, label ->
             viewModel.setPhoto(contentUri, mimeType)
-            if (input.text.isNullOrBlank()) {
-                input.setText(label)
+            if (binding.input.text.isNullOrBlank()) {
+                binding.input.setText(label)
             }
         }
 
-        viewModel.photo.observe(viewLifecycleOwner, Observer { uri ->
+        viewModel.photo.observe(viewLifecycleOwner) { uri ->
             if (uri == null) {
-                photo.visibility = View.GONE
+                binding.photo.visibility = View.GONE
             } else {
-                photo.visibility = View.VISIBLE
-                Glide.with(photo).load(uri).into(photo)
+                binding.photo.visibility = View.VISIBLE
+                Glide.with(binding.photo).load(uri).into(binding.photo)
             }
-        })
+        }
 
-        voiceCall.setOnClickListener {
+        binding.voiceCall.setOnClickListener {
             voiceCall()
         }
-        send.setOnClickListener {
+        binding.send.setOnClickListener {
             send()
         }
-        input.setOnEditorActionListener { _, actionId, _ ->
+        binding.input.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 send()
                 true
@@ -183,7 +166,7 @@ class ChatFragment : Fragment() {
     }
 
     private fun send() {
-        input.text?.let { text ->
+        binding.input.text?.let { text ->
             if (text.isNotEmpty()) {
                 viewModel.send(text.toString())
                 text.clear()
@@ -194,9 +177,9 @@ class ChatFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.chat, menu)
         menu.findItem(R.id.action_show_as_bubble)?.let { item ->
-            viewModel.showAsBubbleVisible.observe(viewLifecycleOwner, Observer {
-                item.isVisible = it
-            })
+            viewModel.showAsBubbleVisible.observe(viewLifecycleOwner) { visible ->
+                item.isVisible = visible
+            }
         }
         super.onCreateOptionsMenu(menu, inflater)
     }
