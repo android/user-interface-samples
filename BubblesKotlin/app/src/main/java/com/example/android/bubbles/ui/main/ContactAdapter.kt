@@ -18,13 +18,12 @@ package com.example.android.bubbles.ui.main
 import android.graphics.drawable.Icon
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.bubbles.R
 import com.example.android.bubbles.data.Contact
+import com.example.android.bubbles.databinding.ChatItemBinding
 
 class ContactAdapter(
     private val onChatClicked: (id: Long) -> Unit
@@ -48,8 +47,8 @@ class ContactAdapter(
 
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val contact: Contact = getItem(position)
-        holder.icon.setImageIcon(Icon.createWithAdaptiveBitmapContentUri(contact.iconUri))
-        holder.name.text = contact.name
+        holder.binding.icon.setImageIcon(Icon.createWithAdaptiveBitmapContentUri(contact.iconUri))
+        holder.binding.name.text = contact.name
     }
 }
 
@@ -66,6 +65,5 @@ private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Contact>() {
 class ContactViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.chat_item, parent, false)
 ) {
-    val icon: ImageView = itemView.findViewById(R.id.icon)
-    val name: TextView = itemView.findViewById(R.id.name)
+    val binding: ChatItemBinding = ChatItemBinding.bind(itemView)
 }

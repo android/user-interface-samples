@@ -22,7 +22,6 @@ import android.transition.Transition
 import android.transition.TransitionInflater
 import android.transition.TransitionManager
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -30,33 +29,29 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.fragment.app.commitNow
 import com.example.android.bubbles.data.Contact
+import com.example.android.bubbles.databinding.MainActivityBinding
 import com.example.android.bubbles.ui.chat.ChatFragment
 import com.example.android.bubbles.ui.main.MainFragment
 import com.example.android.bubbles.ui.photo.PhotoFragment
+import com.example.android.bubbles.ui.viewBindings
 
 /**
  * Entry point of the app when it is launched as a full app.
  */
-class MainActivity : AppCompatActivity(), NavigationController {
+class MainActivity : AppCompatActivity(R.layout.main_activity), NavigationController {
 
     companion object {
         private const val FRAGMENT_CHAT = "chat"
     }
 
-    private lateinit var appBar: ViewGroup
-    private lateinit var name: TextView
-    private lateinit var icon: ImageView
+    private val binding by viewBindings(MainActivityBinding::bind)
 
     private lateinit var transition: Transition
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        setSupportActionBar(binding.toolbar)
         transition = TransitionInflater.from(this).inflateTransition(R.transition.app_bar)
-        appBar = findViewById(R.id.app_bar)
-        name = findViewById(R.id.name)
-        icon = findViewById(R.id.icon)
         if (savedInstanceState == null) {
             supportFragmentManager.commitNow {
                 replace(R.id.container, MainFragment())
@@ -99,21 +94,21 @@ class MainActivity : AppCompatActivity(), NavigationController {
         body: (name: TextView, icon: ImageView) -> Unit
     ) {
         if (hidden) {
-            appBar.visibility = View.GONE
+            binding.appBar.visibility = View.GONE
         } else {
-            appBar.visibility = View.VISIBLE
-            TransitionManager.beginDelayedTransition(appBar, transition)
+            binding.appBar.visibility = View.VISIBLE
+            TransitionManager.beginDelayedTransition(binding.appBar, transition)
             if (showContact) {
                 supportActionBar?.setDisplayShowTitleEnabled(false)
-                name.visibility = View.VISIBLE
-                icon.visibility = View.VISIBLE
+                binding.name.visibility = View.VISIBLE
+                binding.icon.visibility = View.VISIBLE
             } else {
                 supportActionBar?.setDisplayShowTitleEnabled(true)
-                name.visibility = View.GONE
-                icon.visibility = View.GONE
+                binding.name.visibility = View.GONE
+                binding.icon.visibility = View.GONE
             }
         }
-        body(name, icon)
+        body(binding.name, binding.icon)
     }
 
     override fun openChat(id: Long, prepopulateText: String?) {
@@ -131,4 +126,3 @@ class MainActivity : AppCompatActivity(), NavigationController {
         }
     }
 }
-

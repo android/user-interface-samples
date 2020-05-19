@@ -20,11 +20,9 @@ import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.switchMap
 import com.example.android.bubbles.data.ChatRepository
-import com.example.android.bubbles.data.Contact
 import com.example.android.bubbles.data.DefaultChatRepository
-import com.example.android.bubbles.data.Message
 
 class ChatViewModel @JvmOverloads constructor(
     application: Application,
@@ -33,18 +31,19 @@ class ChatViewModel @JvmOverloads constructor(
 
     private val chatId = MutableLiveData<Long>()
 
-    private val _photoUri = MutableLiveData<Uri>()
-    val photo: LiveData<Uri> = _photoUri
+    private val _photoUri = MutableLiveData<Uri?>()
+    val photo: LiveData<Uri?> = _photoUri
 
     private var _photoMimeType: String? = null
 
     /**
-     * We want to dismiss a notification when the corresponding chat screen is open. Setting this to `true` dismisses
-     * the current notification and suppresses further notifications.
+     * We want to dismiss a notification when the corresponding chat screen is open. Setting this
+     * to `true` dismisses the current notification and suppresses further notifications.
      *
-     * We do want to keep on showing and updating the notification when the chat screen is opened as an expanded bubble.
-     * [ChatFragment] should set this to false if it is launched in BubbleActivity. Otherwise, the expanding a bubble
-     * would remove the notification and the bubble.
+     * We do want to keep on showing and updating the notification when the chat screen is opened
+     * as an expanded bubble. [ChatFragment] should set this to false if it is launched in
+     * BubbleActivity. Otherwise, the expanding a bubble would remove the notification and the
+     * bubble.
      */
     var foreground = false
         set(value) {
@@ -61,16 +60,12 @@ class ChatViewModel @JvmOverloads constructor(
     /**
      * The contact of this chat.
      */
-    val contact: LiveData<Contact?> = Transformations.switchMap(chatId) { id ->
-        repository.findContact(id)
-    }
+    val contact = chatId.switchMap { id -> repository.findContact(id) }
 
     /**
      * The list of all the messages in this chat.
      */
-    val messages: LiveData<List<Message>> = Transformations.switchMap(chatId) { id ->
-        repository.findMessages(id)
-    }
+    val messages = chatId.switchMap { id -> repository.findMessages(id) }
 
     /**
      * Whether the "Show as Bubble" button should be shown.

@@ -18,19 +18,19 @@ package com.example.android.bubbles.ui.photo
 import android.net.Uri
 import android.os.Bundle
 import android.transition.Fade
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.DrawableRes
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.android.bubbles.R
+import com.example.android.bubbles.databinding.PhotoFragmentBinding
 import com.example.android.bubbles.getNavigationController
+import com.example.android.bubbles.ui.viewBindings
 
 /**
  * Shows the specified [DrawableRes] as a full-screen photo.
  */
-class PhotoFragment : Fragment() {
+class PhotoFragment : Fragment(R.layout.photo_fragment) {
 
     companion object {
         private const val ARG_PHOTO = "photo"
@@ -47,14 +47,6 @@ class PhotoFragment : Fragment() {
         enterTransition = Fade()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.photo_fragment, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val photo = arguments?.getParcelable<Uri>(ARG_PHOTO)
         if (photo == null) {
@@ -64,6 +56,7 @@ class PhotoFragment : Fragment() {
             return
         }
         getNavigationController().updateAppBar(hidden = true)
-        Glide.with(this).load(photo).into(view.findViewById(R.id.photo))
+        val binding by viewBindings(PhotoFragmentBinding::bind)
+        Glide.with(this).load(photo).into(binding.photo)
     }
 }

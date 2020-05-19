@@ -34,6 +34,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.android.bubbles.R
 import com.example.android.bubbles.data.Message
+import com.example.android.bubbles.databinding.MessageItemBinding
 
 class MessageAdapter(
     context: Context,
@@ -75,7 +76,7 @@ class MessageAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
         val holder = MessageViewHolder(parent)
-        holder.message.setOnClickListener {
+        holder.binding.message.setOnClickListener {
             val photo = it.getTag(R.id.tag_photo) as Uri?
             if (photo != null) {
                 onPhotoClicked(photo)
@@ -86,9 +87,9 @@ class MessageAdapter(
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         val message = getItem(position)
-        val lp = holder.message.layoutParams as FrameLayout.LayoutParams
+        val lp = holder.binding.message.layoutParams as FrameLayout.LayoutParams
         if (message.isIncoming) {
-            holder.message.run {
+            holder.binding.message.run {
                 setBackgroundResource(R.drawable.message_incoming)
                 ViewCompat.setBackgroundTintList(this, tint.incoming)
                 setPadding(
@@ -100,7 +101,7 @@ class MessageAdapter(
                 }
             }
         } else {
-            holder.message.run {
+            holder.binding.message.run {
                 setBackgroundResource(R.drawable.message_outgoing)
                 ViewCompat.setBackgroundTintList(this, tint.outgoing)
                 setPadding(
@@ -113,15 +114,15 @@ class MessageAdapter(
             }
         }
         if (message.photoUri != null) {
-            holder.message.setTag(R.id.tag_photo, message.photoUri)
-            Glide.with(holder.message)
+            holder.binding.message.setTag(R.id.tag_photo, message.photoUri)
+            Glide.with(holder.binding.message)
                 .load(message.photoUri)
-                .into(CompoundBottomTarget(holder.message, photoSize, photoSize))
+                .into(CompoundBottomTarget(holder.binding.message, photoSize, photoSize))
         } else {
-            holder.message.setTag(R.id.tag_photo, null)
-            holder.message.setCompoundDrawables(null, null, null, null)
+            holder.binding.message.setTag(R.id.tag_photo, null)
+            holder.binding.message.setCompoundDrawables(null, null, null, null)
         }
-        holder.message.text = message.text
+        holder.binding.message.text = message.text
     }
 }
 
@@ -140,7 +141,7 @@ private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Message>() {
 class MessageViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.message_item, parent, false)
 ) {
-    val message: TextView = itemView.findViewById(R.id.message)
+    val binding: MessageItemBinding = MessageItemBinding.bind(itemView)
 }
 
 /**

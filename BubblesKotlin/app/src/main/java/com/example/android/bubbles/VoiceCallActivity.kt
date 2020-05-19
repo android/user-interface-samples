@@ -16,16 +16,16 @@
 package com.example.android.bubbles
 
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.android.bubbles.databinding.VoiceCallActivityBinding
+import com.example.android.bubbles.ui.viewBindings
 
 /**
  * A dummy voice call screen. It only shows the icon and the name.
  */
-class VoiceCallActivity : AppCompatActivity() {
+class VoiceCallActivity : AppCompatActivity(R.layout.voice_call_activity) {
 
     companion object {
         const val EXTRA_NAME = "name"
@@ -34,16 +34,17 @@ class VoiceCallActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.voice_call_activity)
         val name = intent.getStringExtra(EXTRA_NAME)
         val icon = intent.getIntExtra(EXTRA_ICON, 0)
         if (name == null || icon == 0) {
             finish()
             return
         }
-        val textName: TextView = findViewById(R.id.name)
-        textName.text = name
-        val imageIcon: ImageView = findViewById(R.id.icon)
-        Glide.with(imageIcon).load(icon).apply(RequestOptions.circleCropTransform()).into(imageIcon)
+        val binding: VoiceCallActivityBinding by viewBindings(VoiceCallActivityBinding::bind)
+        binding.name.text = name
+        Glide.with(binding.icon)
+            .load(icon)
+            .apply(RequestOptions.circleCropTransform())
+            .into(binding.icon)
     }
 }
