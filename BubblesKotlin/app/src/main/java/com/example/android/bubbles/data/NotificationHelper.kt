@@ -212,7 +212,11 @@ class NotificationHelper(private val context: Context) {
                                 message.text,
                                 message.timestamp,
                                 if (message.isIncoming) person else null
-                            )
+                            ).apply {
+                                if (message.photoUri != null) {
+                                    setData(message.photoMimeType, message.photoUri)
+                                }
+                            }
                             if (message.id < lastId) {
                                 addHistoricMessage(m)
                             } else {

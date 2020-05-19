@@ -16,6 +16,7 @@
 package com.example.android.bubbles.data
 
 import android.content.Context
+import android.net.Uri
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,7 +27,7 @@ interface ChatRepository {
     fun getContacts(): LiveData<List<Contact>>
     fun findContact(id: Long): LiveData<Contact?>
     fun findMessages(id: Long): LiveData<List<Message>>
-    fun sendMessage(id: Long, text: String)
+    fun sendMessage(id: Long, text: String, photoUri: Uri?, photoMimeType: String?)
     fun updateNotification(id: Long)
     fun activateChat(id: Long)
     fun deactivateChat(id: Long)
@@ -99,12 +100,14 @@ class DefaultChatRepository internal constructor(
     }
 
     @MainThread
-    override fun sendMessage(id: Long, text: String) {
+    override fun sendMessage(id: Long, text: String, photoUri: Uri?, photoMimeType: String?) {
         val chat = chats.getValue(id)
         chat.addMessage(Message.Builder().apply {
             sender = 0L // User
             this.text = text
             timestamp = System.currentTimeMillis()
+            this.photo = photoUri
+            this.photoMimeType = photoMimeType
         })
         executor.execute {
             // The animal is typing...

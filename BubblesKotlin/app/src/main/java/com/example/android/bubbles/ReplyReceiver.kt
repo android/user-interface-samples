@@ -41,7 +41,7 @@ class ReplyReceiver : BroadcastReceiver() {
         val chatId = uri.lastPathSegment?.toLong() ?: return
 
         if (chatId > 0 && !input.isNullOrBlank()) {
-            repository.sendMessage(chatId, input.toString())
+            repository.sendMessage(chatId, input.toString(), null, null)
             // We should update the notification so that the user can see that the reply has been
             // sent.
             repository.updateNotification(chatId)

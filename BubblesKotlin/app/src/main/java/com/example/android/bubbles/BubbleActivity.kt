@@ -15,6 +15,7 @@
 
 package com.example.android.bubbles
 
+import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -44,7 +45,7 @@ class BubbleActivity : AppCompatActivity(), NavigationController {
         throw UnsupportedOperationException("BubbleActivity always shows a single chat thread.")
     }
 
-    override fun openPhoto(photo: Int) {
+    override fun openPhoto(photo: Uri) {
         // In an expanded Bubble, you can navigate between Fragments just like you would normally
         // do in a normal Activity. Just make sure you don't block onBackPressed().
         supportFragmentManager.commit {

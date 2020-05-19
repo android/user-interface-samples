@@ -27,14 +27,15 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.android.bubbles.R
 import com.example.android.bubbles.VoiceCallActivity
 import com.example.android.bubbles.getNavigationController
@@ -61,7 +62,7 @@ class ChatFragment : Fragment() {
     }
 
     private val viewModel: ChatViewModel by viewModels()
-    private lateinit var input: EditText
+    private lateinit var input: ChatEditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,9 +94,10 @@ class ChatFragment : Fragment() {
         val voiceCall: ImageButton = view.findViewById(R.id.voice_call)
         input = view.findViewById(R.id.input)
         val send: ImageButton = view.findViewById(R.id.send)
+        val photo: ImageView = view.findViewById(R.id.photo)
 
-        val messageAdapter = MessageAdapter(view.context) { photo ->
-            navigationController.openPhoto(photo)
+        val messageAdapter = MessageAdapter(view.context) { uri ->
+            navigationController.openPhoto(uri)
         }
         val linearLayoutManager = LinearLayoutManager(view.context).apply {
             stackFromEnd = true
@@ -127,6 +129,22 @@ class ChatFragment : Fragment() {
         if (prepopulateText != null) {
             input.setText(prepopulateText)
         }
+
+        input.setOnImageAddedListener { contentUri, mimeType, label ->
+            viewModel.setPhoto(contentUri, mimeType)
+            if (input.text.isNullOrBlank()) {
+                input.setText(label)
+            }
+        }
+
+        viewModel.photo.observe(viewLifecycleOwner, Observer { uri ->
+            if (uri == null) {
+                photo.visibility = View.GONE
+            } else {
+                photo.visibility = View.VISIBLE
+                Glide.with(photo).load(uri).into(photo)
+            }
+        })
 
         voiceCall.setOnClickListener {
             voiceCall()
@@ -165,10 +183,11 @@ class ChatFragment : Fragment() {
     }
 
     private fun send() {
-        val text = input.text.toString()
-        if (text.isNotEmpty()) {
-            input.text.clear()
-            viewModel.send(text)
+        input.text?.let { text ->
+            if (text.isNotEmpty()) {
+                viewModel.send(text.toString())
+                text.clear()
+            }
         }
     }
 

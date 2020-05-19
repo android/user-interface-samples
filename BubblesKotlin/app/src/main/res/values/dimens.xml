@@ -18,6 +18,7 @@
     <dimen name="spacing_medium">16dp</dimen>
     <dimen name="spacing_small">8dp</dimen>
     <dimen name="icon_size">64dp</dimen>
+    <dimen name="photo_size">128dp</dimen>
     <dimen name="app_bar_elevation">4dp</dimen>
     <dimen name="message_padding_vertical">16dp</dimen>
     <dimen name="message_padding_horizontal_short">16dp</dimen>

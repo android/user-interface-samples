@@ -16,6 +16,8 @@ allprojects {
     repositories {
         google()
         jcenter()
+        // TODO: Remove when appcompat:1.3.0 is out of snapshot
+        maven { url 'https://androidx.dev/snapshots/builds/6482645/artifacts/repository' }
     }
 }
 
