@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 <resources>
-    <string name="app_name">Bubbles</string>
+    <string name="app_name">People</string>
     <string name="show_as_bubble">Show as Bubble</string>
     <string name="description_icon">Profile icon</string>
     <string name="description_voice_call">Make a voice call (dummy)</string>
