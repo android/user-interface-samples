@@ -24,7 +24,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Bubbles"
+        android:theme="@style/Theme.People"
         tools:ignore="GoogleAppIndexingWarning">
 
         <!--
@@ -75,7 +75,7 @@
         <activity
             android:name="com.example.android.people.VoiceCallActivity"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.Bubbles.Voice" />
+            android:theme="@style/Theme.People.Voice" />
 
         <!--
             This Activity is the expanded Bubble. For that, this Activity has to have several
