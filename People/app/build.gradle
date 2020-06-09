@@ -2,11 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 'android-R'
+    compileSdkVersion 30
+
     defaultConfig {
         applicationId 'com.example.android.people'
-        minSdkVersion 'R'
-        targetSdkVersion 'R'
+        minSdkVersion 30
+        targetSdkVersion 30
         versionCode 1
         versionName '1.0'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
