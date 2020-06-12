@@ -7,7 +7,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath 'com.android.tools.build:gradle:4.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -16,8 +16,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        // TODO: Remove when appcompat:1.3.0 is out of snapshot
-        maven { url 'https://androidx.dev/snapshots/builds/6482645/artifacts/repository' }
     }
 }
 
