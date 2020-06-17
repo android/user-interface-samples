@@ -88,7 +88,7 @@ class TestChatRepository(private val chats: Map<Long, Chat>) : ChatRepository {
         bubbleId = id
     }
 
-    override fun canBubble(): Boolean {
+    override fun canBubble(id: Long): Boolean {
         return true
     }
 }

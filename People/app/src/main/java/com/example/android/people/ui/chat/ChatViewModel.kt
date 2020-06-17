@@ -20,6 +20,7 @@ import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import com.example.android.people.data.ChatRepository
 import com.example.android.people.data.DefaultChatRepository
@@ -70,12 +71,7 @@ class ChatViewModel @JvmOverloads constructor(
     /**
      * Whether the "Show as Bubble" button should be shown.
      */
-    val showAsBubbleVisible: LiveData<Boolean> = object : LiveData<Boolean>() {
-        override fun onActive() {
-            // We hide the "Show as Bubble" button if we are not allowed to show the bubble.
-            value = repository.canBubble()
-        }
-    }
+    val showAsBubbleVisible = chatId.map { id -> repository.canBubble(id) }
 
     fun setChatId(id: Long) {
         chatId.value = id

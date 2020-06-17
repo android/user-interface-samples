@@ -235,8 +235,11 @@ class NotificationHelper(private val context: Context) {
         notificationManager.cancel(id.toInt())
     }
 
-    fun canBubble(): Boolean {
-        val channel = notificationManager.getNotificationChannel(CHANNEL_NEW_MESSAGES)
-        return notificationManager.areBubblesAllowed() && channel.canBubble()
+    fun canBubble(contact: Contact): Boolean {
+        val channel = notificationManager.getNotificationChannel(
+            CHANNEL_NEW_MESSAGES,
+            contact.shortcutId
+        )
+        return notificationManager.areBubblesAllowed() || channel?.canBubble() == true
     }
 }
