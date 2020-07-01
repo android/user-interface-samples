@@ -27,11 +27,11 @@ can be collapsed when not being used.
 ### API Guidelines
 
 #### Conversation Requirements
-First fulfill the notification [conversation requirements][2] -- this involves implementing long-lived dynamic or [sharing shortcuts][3] and attaching the shortcut id to your messaging style notification.
+First fulfill the notification [conversation requirements][5] -- this involves implementing long-lived dynamic or [sharing shortcuts][6] and attaching the shortcut id to your messaging style notification.
 
 #### Configure Activity
 
-For your activity to display as a bubble, it must be resizable. You should expect that the bubble activity will be flagged to act like [documentLaunchMode=”always”][4].
+For your activity to display as a bubble, it must be resizable. You should expect that the bubble activity will be flagged to act like [documentLaunchMode=”always”][7].
 
     <activity
         android:name=".bubbles.BubbleActivity"
@@ -41,16 +41,16 @@ For your activity to display as a bubble, it must be resizable. You should expec
 
 #### Create your Bubble Metadata
 
-Define your [BubbleMetadata][5], defining the properties relevant to your bubble (e.g. The activity used in the expanded bubble, size, auto-expanded and etc...) and [set it on your notification][6].
+Define your [BubbleMetadata][8], defining the properties relevant to your bubble (e.g. The activity used in the expanded bubble, size, auto-expanded and etc...) and [set it on your notification][9].
 
-For more information on bubbles, see the [Bubbles][1] developer guide.
+For more information on bubbles, see the [Bubbles][10] developer guide.
 
-[1]: https://developer.android.com/guide/topics/ui/bubbles
-[2]: https://developer.android.com/preview/features/conversations
-[3]: https://developer.android.com/training/sharing/receive#providing-direct-share-targets
-[4]: https://developer.android.com/guide/topics/manifest/activity-element#dlmode
-[5]: https://developer.android.com/reference/androidx/core/app/NotificationCompat.BubbleMetadata.Builder
-[6]: https://developer.android.com/reference/kotlin/androidx/core/app/NotificationCompat.Builder#setBubbleMetadata(androidx.core.app.NotificationCompat.BubbleMetadata)
+[5]: https://developer.android.com/preview/features/conversations
+[6]: https://developer.android.com/training/sharing/receive#providing-direct-share-targets
+[7]: https://developer.android.com/guide/topics/manifest/activity-element#dlmode
+[8]: https://developer.android.com/reference/androidx/core/app/NotificationCompat.BubbleMetadata.Builder
+[9]: https://developer.android.com/reference/kotlin/androidx/core/app/NotificationCompat.Builder#setBubbleMetadata(androidx.core.app.NotificationCompat.BubbleMetadata)
+[10]: https://developer.android.com/preview/features#bubbles_enabled
 
 ## Pre-requisites
 
