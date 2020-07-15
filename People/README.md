@@ -101,7 +101,7 @@ A: Play policy for the shortcut and MessagingStyle APIs are in place, with react
 ### Shortcuts
 
 **Q: What if I have already reached the shortcut [max](https://developer.android.com/reference/android/content/pm/ShortcutManager#getMaxShortcutCountPerActivity()) limit?**\
-A: It’s recommended to use [ShortcutManager#pushDynamicShortcut()](https://developer.android.com/reference/android/content/pm/ShortcutManager#pushDynamicShortcut(android.content.pm.ShortcutInfo)) to publish the shortcut before sending notification.  ShortcutManager#pushDynamicShortcut(), as it works around the max shortcut limit; the lowest ranked shortcut will be deleted to publish this shortcut automatically. See this doc for details.
+A: It’s recommended to use [ShortcutManager#pushDynamicShortcut()](https://developer.android.com/reference/android/content/pm/ShortcutManager#pushDynamicShortcut(android.content.pm.ShortcutInfo)) to publish the shortcut before sending notification, as it works around the max shortcut limit; the lowest ranked shortcut will be deleted to publish this shortcut automatically. See this doc for details.
 
 **Q: Are there any plans to increase the max count of shortcuts?**\
 A: Currently no, due to memory cost of storing shortcuts (especially icon bitmap)
@@ -118,7 +118,7 @@ Long-pressing on an app icon in the launcher will surface relevant static and cu
 The launcher shortcut menu for an app may be composed of:
 1. [Static shortcuts](https://developer.android.com/guide/topics/ui/shortcuts/creating-shortcuts#static) (always displayed, sometimes capped to a max of 3).
 2. Highly [ranked](https://developer.android.com/reference/androidx/core/content/pm/ShortcutInfoCompat.Builder#setRank(int)) dynamic shortcuts, filling in remaining spaces not taken by static shortcuts.
-3. Associated notifications notifications for the app
+3. Associated notifications notifications for the app.
 
 Publishing dynamic shortcuts via ([ShortcutManager#setDynamicShortcuts()](https://developer.android.com/reference/android/content/pm/ShortcutManager.html#setDynamicShortcuts(java.util.List%3Candroid.content.pm.ShortcutInfo%3E)), [#addDynamicShortcuts()](https://developer.android.com/reference/android/content/pm/ShortcutManager.html#addDynamicShortcuts(java.util.List%3Candroid.content.pm.ShortcutInfo%3E)) or [#pushDynamicShortcut()](https://developer.android.com/reference/android/content/pm/ShortcutManager.html#pushDynamicShortcut(android.content.pm.ShortcutInfo))) may make it appear in the list of available shortcuts in the launcher, visible on long-press. Apps should maintain the published shortcuts by removing the dynamic shortcuts which are not intended to be present in the launcher. See question on "How should I maintain my dynamic shortcuts and handle back compat".
 
@@ -171,7 +171,7 @@ A: This will be per conversation, a derived conversation channel will be created
 **Q: How will the derived conversation channel be presented on the settings page?**\
 A: Derivative channels generated per-conversation for Conversation Notifications will appear in a section distinct from other channels in system settings for your app’s notifications.
 
-<img src="screenshots/derivative-channel.png" height="400" alt="Derivate channel"/> 
+<img src="screenshots/derivative-channel.png" height="400" alt="Derivative channel"/> 
 
 Here is a screenshot of the current WIP Notification Settings for an app where a derivative conversation channel was generated.
 
