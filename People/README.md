@@ -110,7 +110,7 @@ A: Currently no, due to memory cost of storing shortcuts (especially icon bitmap
 A: Yes, but if you prefer not having shortcuts appear on launcher you can remove the shortcut with [ShortcutManager#removeDynamicShortcuts()](https://developer.android.com/reference/androidx/core/content/pm/ShortcutManagerCompat#removeDynamicShortcuts(android.content.Context,%20java.util.List%3Cjava.lang.String%3E)) or [#removeAllDynamicShortcuts()](https://developer.android.com/reference/androidx/core/content/pm/ShortcutManagerCompat#removeAllDynamicShortcuts(android.content.Context)) after sending the notification. You can also [rank](https://developer.android.com/reference/androidx/core/content/pm/ShortcutInfoCompat.Builder#setRank(int)) other app shortcuts with higher ranking, so only those dynamic shortcuts appear on launcher. 
 
 **Q: Will my [shortcuts](https://developer.android.com/reference/androidx/core/content/pm/ShortcutInfoCompat.Builder#setRank(int)) be accessible to 3P apps?**
-A: No and they will neither be published to the cloud.
+A: No but with the exception that shortcuts are available to the user's current launcher, as the launcher can be used to show and open them. Shortcuts are also not published to the cloud.
 
 **Q: How do I control my launcher shortcuts?**
 Long-pressing on an app icon in the launcher will surface relevant static and currently published dynamic shortcuts by that app.
