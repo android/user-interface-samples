@@ -97,7 +97,8 @@ A: Still recommend publishing the shortcut since users may want it to surface on
 
 **Q: How does Android prevent abuse of devs taking advantage of the conversation space?**\
 A: Play policy for the shortcut and MessagingStyle APIs are in place, with reactive reinforcement for violations.
-Shortcuts
+
+### Shortcuts
 
 **Q: What if I have already reached the shortcut [max](https://developer.android.com/reference/android/content/pm/ShortcutManager#getMaxShortcutCountPerActivity()) limit?**\
 A: It’s recommended to use [ShortcutManager#pushDynamicShortcut()](https://developer.android.com/reference/android/content/pm/ShortcutManager#pushDynamicShortcut(android.content.pm.ShortcutInfo)) to publish the shortcut before sending notification.  ShortcutManager#pushDynamicShortcut(), as it works around the max shortcut limit; the lowest ranked shortcut will be deleted to publish this shortcut automatically. See this doc for details.
@@ -106,8 +107,7 @@ A: It’s recommended to use [ShortcutManager#pushDynamicShortcut()](https://dev
 A: Currently no, due to memory cost of storing shortcuts (especially icon bitmap)
 
 **Q: Will my shortcuts appear in the long press app launcher context menu?**\
-A: Yes, since conversation shortcuts are also dynamic shortcuts, and top ranked dynamic shortcuts may appear on the launcher. 
-If you prefer not having shortcuts appear on launcher, you can remove the shortcut with [ShortcutManager#removeDynamicShortcuts()](https://developer.android.com/reference/androidx/core/content/pm/ShortcutManagerCompat#removeDynamicShortcuts(android.content.Context,%20java.util.List%3Cjava.lang.String%3E)) or [#removeAllDynamicShortcuts()](https://developer.android.com/reference/androidx/core/content/pm/ShortcutManagerCompat#removeAllDynamicShortcuts(android.content.Context)) after sending the notification. You can also [rank](https://developer.android.com/reference/androidx/core/content/pm/ShortcutInfoCompat.Builder#setRank(int)) other app shortcuts with higher ranking, so only those dynamic shortcuts appear on launcher. 
+A: Yes, but if you prefer not having shortcuts appear on launcher you can remove the shortcut with [ShortcutManager#removeDynamicShortcuts()](https://developer.android.com/reference/androidx/core/content/pm/ShortcutManagerCompat#removeDynamicShortcuts(android.content.Context,%20java.util.List%3Cjava.lang.String%3E)) or [#removeAllDynamicShortcuts()](https://developer.android.com/reference/androidx/core/content/pm/ShortcutManagerCompat#removeAllDynamicShortcuts(android.content.Context)) after sending the notification. You can also [rank](https://developer.android.com/reference/androidx/core/content/pm/ShortcutInfoCompat.Builder#setRank(int)) other app shortcuts with higher ranking, so only those dynamic shortcuts appear on launcher. 
 
 **Q: Will my [shortcuts](https://developer.android.com/reference/androidx/core/content/pm/ShortcutInfoCompat.Builder#setRank(int)) be accessible to 3P apps?**
 A: No and they will neither be published to the cloud.
