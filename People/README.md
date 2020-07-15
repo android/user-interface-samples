@@ -171,7 +171,7 @@ A: This will be per conversation, a derived conversation channel will be created
 **Q: How will the derived conversation channel be presented on the settings page?**\
 A: Derivative channels generated per-conversation for Conversation Notifications will appear in a section distinct from other channels in system settings for your app’s notifications.
 
-<img src="screenshots/derivate-channel.png" height="400" alt="Derivate channel"/> 
+<img src="screenshots/derivative-channel.png" height="400" alt="Derivate channel"/> 
 
 Here is a screenshot of the current WIP Notification Settings for an app where a derivative conversation channel was generated.
 
