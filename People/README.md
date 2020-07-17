@@ -74,15 +74,16 @@ This sample uses the Gradle build system. To build this project, use the
 
 **Q. How can one determine within an activity, that it is in an expanded bubble?**
 
+```
     class BubbleActivity : AppCompatActivity() {
       override fun onCreate(...) {
       ...
       val displayId = windowManager.defaultDisplay.displayId
-      val mIsBubbled = displayId != Display.DEFAULT_DISPLAY
-      Log.i(this.javaClass.name, "Is bubbled: $mIsBubbled")
+      val isBubbled = displayId != Display.DEFAULT_DISPLAY
       ...
      } 
    }
+```
 
 ### Conversation Notifications
 
