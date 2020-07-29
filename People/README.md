@@ -108,7 +108,7 @@ A: It’s recommended to use [ShortcutManager#pushDynamicShortcut()](https://dev
 A: Currently no, due to memory cost of storing shortcuts (especially icon bitmap)
 
 **Q: Will my shortcuts appear in the long press app launcher context menu?**\
-A: Yes, but if you prefer not having shortcuts appear on launcher you can remove the shortcut with [ShortcutManager#removeDynamicShortcuts()](https://developer.android.com/reference/androidx/core/content/pm/ShortcutManagerCompat#removeDynamicShortcuts(android.content.Context,%20java.util.List%3Cjava.lang.String%3E)) or [#removeAllDynamicShortcuts()](https://developer.android.com/reference/androidx/core/content/pm/ShortcutManagerCompat#removeAllDynamicShortcuts(android.content.Context)) after sending the notification. You can also [rank](https://developer.android.com/reference/androidx/core/content/pm/ShortcutInfoCompat.Builder#setRank(int)) other app shortcuts with higher ranking, so only those dynamic shortcuts appear on launcher. 
+A: They can depending on their rank, but if you prefer not having shortcuts appear on launcher you can remove the shortcut with [ShortcutManager#removeDynamicShortcuts()](https://developer.android.com/reference/androidx/core/content/pm/ShortcutManagerCompat#removeDynamicShortcuts(android.content.Context,%20java.util.List%3Cjava.lang.String%3E)) or [#removeAllDynamicShortcuts()](https://developer.android.com/reference/androidx/core/content/pm/ShortcutManagerCompat#removeAllDynamicShortcuts(android.content.Context)) after sending the notification. You can also [rank](https://developer.android.com/reference/androidx/core/content/pm/ShortcutInfoCompat.Builder#setRank(int)) other app shortcuts with higher ranking, so only those dynamic shortcuts appear on launcher. 
 
 **Q: Will my [shortcuts](https://developer.android.com/reference/androidx/core/content/pm/ShortcutInfoCompat.Builder#setRank(int)) be accessible to 3P apps?**
 A: No but with the exception that shortcuts are available to the user's current launcher, as the launcher can be used to show and open them. Shortcuts are also not published to the cloud.
@@ -122,6 +122,47 @@ The launcher shortcut menu for an app may be composed of:
 3. Associated notifications notifications for the app.
 
 Publishing dynamic shortcuts via ([ShortcutManager#setDynamicShortcuts()](https://developer.android.com/reference/android/content/pm/ShortcutManager.html#setDynamicShortcuts(java.util.List%3Candroid.content.pm.ShortcutInfo%3E)), [#addDynamicShortcuts()](https://developer.android.com/reference/android/content/pm/ShortcutManager.html#addDynamicShortcuts(java.util.List%3Candroid.content.pm.ShortcutInfo%3E)) or [#pushDynamicShortcut()](https://developer.android.com/reference/android/content/pm/ShortcutManager.html#pushDynamicShortcut(android.content.pm.ShortcutInfo))) may make it appear in the list of available shortcuts in the launcher, visible on long-press. Apps should maintain the published shortcuts by removing the dynamic shortcuts which are not intended to be present in the launcher. See question on "How should I maintain my dynamic shortcuts and handle back compat".
+
+**Q. How should I maintain my dynamic shortcuts and handle back compat?**\
+It’s important to ensure your list of published dynamic shortcuts, available with [ShortcutManagerCompat#getDynamicShortcuts()](https://developer.android.com/reference/kotlin/androidx/core/content/pm/ShortcutManagerCompat#getdynamicshortcuts), is intentional and maintained. 
+
+There are two main features that use these published dynamic shortcuts, back to Android 7.1:
+The available dynamic shortcuts, in addition to their publishing order and [rank](https://developer.android.com/reference/androidx/core/content/pm/ShortcutInfoCompat.Builder#setRank(int)) may determine what’s presented to users. Active maintenance is required to ensure the list of shortcuts is as you intend. See discussion of the individual features below.
+
+There may be circumstances where you do not want to change the list of dynamic shortcuts but do want to temporarily ensure a shortcut is available to the OS. This might be the case, for example, before posting a Conversation Notification that requires a valid Conversation Shortcut.
+
+To ensure the shortcut is available to the OS temporarily, try the following:
+1. Ensure the shortcut you intended to publish isn’t already cached via [ShortcutManagerCompat#getShortcuts(FLAG_MATCH_CACHED)](https://developer.android.com/reference/kotlin/androidx/core/content/pm/ShortcutManagerCompat#getShortcuts(android.content.Context,%20kotlin.Int)) or published via #getDynamicShortcuts(). If it is, no further action is needed.
+2. Save the list of currently published shortcut IDs via [#getDynamicShortcuts()](https://developer.android.com/reference/kotlin/androidx/core/content/pm/ShortcutManagerCompat#getdynamicshortcuts).
+3. Add the the shortcuts you need to be temporarily available via #setDynamicShortcuts() or related APIs.
+4. Perform the task needed, like posting a Conversation Notification.
+5. Recreate and republish the the dynamic shortcuts from step 2 with [#setDynamicShortcuts()](https://developer.android.com/reference/kotlin/androidx/core/content/pm/ShortcutManagerCompat#setdynamicshortcuts) or related APIs.
+
+### System Sharesheet backcompat
+
+The system Sharesheet shows users a list of deep-linked targets, called Direct Share. Tapping usually opens the associated app directly to the associated conversation.
+
+There are two ways to publish Direct Share targets:
+Via | Introduced
+--- | -------------
+[Sharing Shortcuts](https://developer.android.com/training/sharing/receive#providing-direct-share-targets) | Android 10, API level 29
+[ChooserTargetService](https://developer.android.com/reference/android/service/chooser/ChooserTargetService) (deprecated) | Android 6, API level 23
+
+Dynamically published Sharing Shortcuts will appear in the Android 10 Sharesheet. Dynamic and cached sharing Shortcuts will appear in Android 11. Be sure to manage your list of published dynamic shortcuts so that the list includes intentional sharing suggestions.
+
+To have Conversation Shortcuts appear in the Sharesheet on devices from Android 6-9 you may either:
+* Use the [compat library](https://developer.android.com/training/sharing/receive#androidx-compat-library) to generate a [ChooserTargetService](https://developer.android.com/reference/android/service/chooser/ChooserTargetService) which converts and provides dynamically published Sharing Shortcuts to ChooserTargets.
+* Make your own [ChooserTargetService](https://developer.android.com/reference/android/service/chooser/ChooserTargetService).
+
+### Converting existing pinned shortcuts to Conversation Shortcuts
+
+Your app may already be using shortcuts to show items in the launcher long-press menu. Users can drag these shortcuts to their launcher homescreen. Likewise, your app may expose the ability for users to post a shortcut directly to their launcher from within your app. If done, the shortcut can appear as a stand-alone target in the user’s launcher homescreen. In both cases, when a shortcut appears in a stand-alone fashion in the launcher it becomes pinned.
+
+To support Conversation Notifications and Conversation Shortcuts you may want to convert existing pinned shortcuts to Conversation Shortcuts. 
+
+To ensure shortcuts your users have already placed on their launcher home screen remain active and use the new API you must post an updated Conversation Shortcut with the same id as pinned shortcuts accessible via [ShortcutInfo#getId()](https://developer.android.com/reference/android/content/pm/ShortcutInfo#getId()).
+1. Make all necessary internal updates to support Conversation Shortcuts
+2. For each pinned shortcut: create and publish a new [ShortcutInfo](https://developer.android.com/reference/android/content/pm/ShortcutInfo) with the same id as the pinned shortcut
 
 ### Notification Channels
 
