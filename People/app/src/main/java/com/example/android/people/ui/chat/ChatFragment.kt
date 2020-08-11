@@ -161,7 +161,7 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
         startActivity(
             Intent(requireActivity(), VoiceCallActivity::class.java)
                 .putExtra(VoiceCallActivity.EXTRA_NAME, contact.name)
-                .putExtra(VoiceCallActivity.EXTRA_ICON, contact.icon)
+                .putExtra(VoiceCallActivity.EXTRA_ICON_URI, contact.iconUri)
         )
     }
 
