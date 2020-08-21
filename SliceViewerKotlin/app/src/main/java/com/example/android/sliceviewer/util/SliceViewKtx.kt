@@ -26,6 +26,7 @@ import android.view.View.OnLongClickListener
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.slice.SliceMetadata
+import androidx.slice.SliceViewManager
 import androidx.slice.core.SliceHints
 import androidx.slice.widget.SliceLiveData
 import androidx.slice.widget.SliceView
@@ -62,9 +63,17 @@ fun SliceView.bind(
         scheme.equals("https", true) ||
         scheme.equals("http", true)
     ) {
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        val sliceLiveData = SliceLiveData.fromIntent(context, intent)
+        val sliceLiveData = SliceLiveData.fromUri(context, uri)
         sliceLiveData?.removeObservers(lifecycleOwner)
+        // There's a race condition between binding and pinning the slice if we
+        // don't pin it explicitly.
+        try {
+            SliceViewManager.getInstance(context).pinSlice(uri);
+        } catch (e: SecurityException) {
+            // We can only pin the slice if the viewer app already has been
+            // granted permission.
+            Log.d(SliceViewerActivity.TAG, "No permission yet.");
+        }
         try {
             sliceLiveData?.observe(lifecycleOwner, Observer { updatedSlice ->
                 if (updatedSlice == null) return@Observer
