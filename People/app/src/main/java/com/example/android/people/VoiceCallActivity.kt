@@ -15,7 +15,6 @@
 
 package com.example.android.people
 
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -30,14 +29,14 @@ class VoiceCallActivity : AppCompatActivity(R.layout.voice_call_activity) {
 
     companion object {
         const val EXTRA_NAME = "name"
-        const val EXTRA_ICON_URI = "iconUri"
+        const val EXTRA_ICON = "icon"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val name = intent.getStringExtra(EXTRA_NAME)
-        val icon = intent.getParcelableExtra<Uri>(EXTRA_ICON_URI)
-        if (name == null || icon == null) {
+        val icon = intent.getIntExtra(EXTRA_ICON, 0)
+        if (name == null || icon == 0) {
             finish()
             return
         }
