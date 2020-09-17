@@ -865,7 +865,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // for Android 8 and above
         intent.putExtra("android.provider.extra.APP_PACKAGE", getPackageName());
 
-        
         startActivity(intent);
     }
 }
