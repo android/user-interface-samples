@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -858,9 +859,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void openNotificationSettingsForApp() {
         // Links to this app's notification settings.
         Intent intent = new Intent();
-        intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
-        intent.putExtra("app_package", getPackageName());
-        intent.putExtra("app_uid", getApplicationInfo().uid);
+        intent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+        intent.putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName());
         startActivity(intent);
     }
 }
