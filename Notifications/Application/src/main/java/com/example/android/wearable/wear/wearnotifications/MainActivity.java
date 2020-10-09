@@ -861,6 +861,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
         intent.putExtra("app_package", getPackageName());
         intent.putExtra("app_uid", getApplicationInfo().uid);
+        
+        // for Android 8 and above
+        intent.putExtra("android.provider.extra.APP_PACKAGE", getPackageName());
+
         startActivity(intent);
     }
 }
