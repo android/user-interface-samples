@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     /** Change this to {@code false} when you want to use the downloadable Emoji font. */
-    private static final boolean USE_BUNDLED_EMOJI = false;
+    private static final boolean USE_BUNDLED_EMOJI = true;
 
     // [U+1F469] (WOMAN) + [U+200D] (ZERO WIDTH JOINER) + [U+1F4BB] (PERSONAL COMPUTER)
     private static final String WOMAN_TECHNOLOGIST = "\uD83D\uDC69\u200D\uD83D\uDCBB";
