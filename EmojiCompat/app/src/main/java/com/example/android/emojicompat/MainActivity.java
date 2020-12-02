@@ -18,12 +18,12 @@ package com.example.android.emojicompat;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.text.emoji.EmojiCompat;
-import android.support.text.emoji.FontRequestEmojiCompatConfig;
-import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
-import android.support.v4.provider.FontRequest;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.emoji.text.EmojiCompat;
+import androidx.emoji.text.FontRequestEmojiCompatConfig;
+import androidx.emoji.bundled.BundledEmojiCompatConfig;
+import androidx.core.provider.FontRequest;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -43,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
     // [U+1F469] (WOMAN) + [U+200D] (ZERO WIDTH JOINER) + [U+1F3A4] (MICROPHONE)
     private static final String WOMAN_SINGER = "\uD83D\uDC69\u200D\uD83C\uDFA4";
 
-    static final String EMOJI = WOMAN_TECHNOLOGIST + " " + WOMAN_SINGER;
+    private static final String EMOTIONS = "\uD83D\uDE0D\uD83E\uDD29\n";
+
+    static final String EMOJI = WOMAN_TECHNOLOGIST + " " + WOMAN_SINGER + " " + EMOTIONS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
