@@ -18,16 +18,14 @@ package com.example.windowmanagersample
 
 import android.graphics.Rect
 import android.view.View
-import android.view.ViewGroup
-import android.view.ViewGroup.MarginLayoutParams
 import android.widget.FrameLayout
 import androidx.window.DisplayFeature
 
 /**
- * Get the bounds of the display feature translated to the View's coordinate space and current
+ * Gets the bounds of the display feature translated to the View's coordinate space and current
  * position in the window. This will also include view padding in the calculations.
  */
-fun getFeatureBoundsInWindow(
+fun getFeaturePositionInViewRect(
     displayFeature: DisplayFeature,
     view: View,
     includePadding: Boolean = true
@@ -52,8 +50,6 @@ fun getFeatureBoundsInWindow(
 
     val featureRectInView = Rect(displayFeature.bounds)
     val intersects = featureRectInView.intersect(viewRect)
-
-    // Checks to see if the display feature overlaps with our view at all
     if ((featureRectInView.width() == 0 && featureRectInView.height() == 0) ||
         !intersects
     ) {
@@ -67,24 +63,16 @@ fun getFeatureBoundsInWindow(
 }
 
 /**
- * Get the layout params for placing a rectangle indicating a display feature inside a
+ * Gets the layout params for placing a rectangle indicating a display feature inside a
  * [FrameLayout].
  */
-fun getLayoutParamsForFeature(displayFeature: DisplayFeature, viewGroup: ViewGroup):
-    MarginLayoutParams? {
-        val featureRectInView = getFeatureBoundsInWindow(displayFeature, viewGroup) ?: return null
+fun getLayoutParamsForFeatureInFrameLayout(displayFeature: DisplayFeature, view: FrameLayout):
+        FrameLayout.LayoutParams? {
+    val featureRectInView = getFeaturePositionInViewRect(displayFeature, view) ?: return null
 
-        val lp = MarginLayoutParams(featureRectInView.width(), featureRectInView.height())
-        lp.leftMargin = featureRectInView.left
-        lp.topMargin = featureRectInView.top
+    val lp = FrameLayout.LayoutParams(featureRectInView.width(), featureRectInView.height())
+    lp.leftMargin = featureRectInView.left
+    lp.topMargin = featureRectInView.top
 
-        // Make sure that zero-wide and zero-high features are still shown
-        if (featureRectInView.left == featureRectInView.right) {
-            lp.width = 1
-        }
-        if (featureRectInView.top == featureRectInView.bottom) {
-            lp.height = 1
-        }
-
-        return lp
-    }
+    return lp
+}

@@ -19,7 +19,10 @@ package com.example.windowmanagersample
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import androidx.window.WindowBackend
 import com.example.windowmanagersample.backend.MidScreenFoldBackend
+import com.example.windowmanagersample.backend.MidScreenFoldBackend.FoldAxis.LONG_DIMENSION
+import com.example.windowmanagersample.backend.MidScreenFoldBackend.FoldAxis.SHORT_DIMENSION
 import java.util.concurrent.Executor
 
 /**
@@ -28,27 +31,22 @@ import java.util.concurrent.Executor
  * default backend provided on the device and a test backend (e.g. if the device doesn't provide
  * any).
  */
-abstract class BaseSampleActivity : AppCompatActivity() {
+open class BaseSampleActivity : AppCompatActivity() {
     companion object {
         const val BACKEND_TYPE_EXTRA = "backend_type"
 
         const val BACKEND_TYPE_DEVICE_DEFAULT = 0
-        const val BACKEND_TYPE_MID_SCREEN_FOLD = 1
+        const val BACKEND_TYPE_SHORT_DIMENSION_FOLD = 1
+        const val BACKEND_TYPE_LONG_DIMENSION_FOLD = 2
     }
 
     private val handler = Handler(Looper.getMainLooper())
     val mainThreadExecutor = Executor { r: Runnable -> handler.post(r) }
 
-    /**
-     * Method to get our test backend if we are not using the device default
-     * Returning the specific Class and not the [WindowBackend] Interface to save
-     * on casting code later to access specific testing methods.
-     *
-     * @return [MidScreenFoldBackend]
-     */
-    fun getTestBackend(): MidScreenFoldBackend? {
+    fun getTestBackend(): WindowBackend? {
         return when (intent.getIntExtra(BACKEND_TYPE_EXTRA, BACKEND_TYPE_DEVICE_DEFAULT)) {
-            BACKEND_TYPE_MID_SCREEN_FOLD -> MidScreenFoldBackend()
+            BACKEND_TYPE_SHORT_DIMENSION_FOLD -> MidScreenFoldBackend(SHORT_DIMENSION)
+            BACKEND_TYPE_LONG_DIMENSION_FOLD -> MidScreenFoldBackend(LONG_DIMENSION)
             else -> null
         }
     }
