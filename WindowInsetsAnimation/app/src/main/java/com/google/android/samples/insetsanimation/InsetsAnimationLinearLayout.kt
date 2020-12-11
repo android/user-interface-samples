@@ -22,6 +22,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsAnimation
 import android.widget.LinearLayout
+import androidx.annotation.RequiresApi
 import androidx.core.view.NestedScrollingParent3
 import androidx.core.view.NestedScrollingParentHelper
 import androidx.core.view.ViewCompat
@@ -45,6 +46,7 @@ import androidx.core.view.ViewCompat
  * Note: all of the nested scrolling logic could be extracted to a `CoordinatorLayout.Behavior`
  * if desired.
  */
+@RequiresApi(30)
 class InsetsAnimationLinearLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -111,7 +113,9 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
                 consumed[1] -= imeAnimController.insetBy(-deltaY)
             } else if (scrollImeOffScreenWhenVisible &&
                 !imeAnimController.isInsetAnimationRequestPending() &&
-                rootWindowInsets.isVisible(WindowInsets.Type.ime())) {
+                ViewCompat.getRootWindowInsets(this)
+                    ?.isVisible(WindowInsets.Type.ime()) == true
+            ) {
                 // If we're not in control, the IME is currently open, and,
                 // 'scroll IME away when visible' is enabled, we start a control request
                 startControlRequest()
@@ -139,7 +143,9 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
                 consumed[1] = -imeAnimController.insetBy(-dyUnconsumed)
             } else if (scrollImeOnScreenWhenNotVisible &&
                 !imeAnimController.isInsetAnimationRequestPending() &&
-                !rootWindowInsets.isVisible(WindowInsets.Type.ime())) {
+                ViewCompat.getRootWindowInsets(this)
+                    ?.isVisible(WindowInsets.Type.ime()) == false
+            ) {
                 // If we don't currently have control, the IME is not shown,
                 // the user is scrolling up, and the view can't scroll up any more
                 // (i.e. over-scrolling), we can start to control the IME insets
@@ -166,7 +172,8 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
         } else {
             // Otherwise we may need to start a control request and immediately fling
             // using the velocityY
-            val imeVisible = rootWindowInsets.isVisible(WindowInsets.Type.ime())
+            val imeVisible = ViewCompat.getRootWindowInsets(this)
+                ?.isVisible(WindowInsets.Type.ime()) == true
             when {
                 velocityY > 0 && scrollImeOnScreenWhenNotVisible && !imeVisible -> {
                     // If the fling is in a upwards direction, and the IME is not visible,
@@ -194,7 +201,8 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
         nestedScrollingParentHelper.onStopNestedScroll(target, type)
 
         if (imeAnimController.isInsetAnimationInProgress() &&
-            !imeAnimController.isInsetAnimationFinishing()) {
+            !imeAnimController.isInsetAnimationFinishing()
+        ) {
             imeAnimController.animateToFinish()
         }
         reset()
@@ -204,7 +212,7 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
         super.dispatchWindowInsetsAnimationPrepare(animation)
 
         // We suppressed layout in startControlRequest(), so we need to un-suppress it now
-        suppressLayout(false)
+        suppressLayoutCompat(false)
     }
 
     /**
@@ -213,7 +221,7 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
     private fun startControlRequest() {
         // Suppress layout, so that nothing interrupts or is re-laid out while the IME
         // animation starts. This needs to be done before controlWindowInsetsAnimation()
-        suppressLayout(true)
+        suppressLayoutCompat(true)
 
         // Now record the current location of the nested scrolling view. This allows
         // us to track any changes in the location as the animation prepares and starts
@@ -249,7 +257,7 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
         dropNextY = 0
         startViewLocation.fill(0)
         // Just to make sure we do not suppress layout forever
-        suppressLayout(false)
+        suppressLayoutCompat(false)
     }
 
     /**

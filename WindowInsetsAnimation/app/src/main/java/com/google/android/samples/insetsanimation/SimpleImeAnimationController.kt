@@ -23,6 +23,7 @@ import android.view.WindowInsets
 import android.view.WindowInsetsAnimationControlListener
 import android.view.WindowInsetsAnimationController
 import android.view.animation.LinearInterpolator
+import androidx.annotation.RequiresApi
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import androidx.dynamicanimation.animation.springAnimationOf
@@ -36,6 +37,7 @@ import kotlin.math.roundToInt
  * See [InsetsAnimationLinearLayout] and [InsetsAnimationTouchListener] for examples of how
  * to use this class.
  */
+@RequiresApi(30)
 internal class SimpleImeAnimationController {
     private var insetsAnimationController: WindowInsetsAnimationController? = null
     private var pendingRequestCancellationSignal: CancellationSignal? = null
@@ -141,8 +143,10 @@ internal class SimpleImeAnimationController {
      */
     fun insetBy(dy: Int): Int {
         val controller = insetsAnimationController
-            ?: throw IllegalStateException("Current WindowInsetsAnimationController is null." +
-                    "This should only be called if isAnimationInProgress() returns true")
+            ?: throw IllegalStateException(
+                "Current WindowInsetsAnimationController is null." +
+                        "This should only be called if isAnimationInProgress() returns true"
+            )
 
         // Call updateInsetTo() with the new inset value
         return insetTo(controller.currentInsets.bottom - dy)
@@ -158,8 +162,10 @@ internal class SimpleImeAnimationController {
      */
     fun insetTo(inset: Int): Int {
         val controller = insetsAnimationController
-            ?: throw IllegalStateException("Current WindowInsetsAnimationController is null." +
-                    "This should only be called if isAnimationInProgress() returns true")
+            ?: throw IllegalStateException(
+                "Current WindowInsetsAnimationController is null." +
+                        "This should only be called if isAnimationInProgress() returns true"
+            )
 
         val hiddenBottom = controller.hiddenStateInsets.bottom
         val shownBottom = controller.shownStateInsets.bottom
