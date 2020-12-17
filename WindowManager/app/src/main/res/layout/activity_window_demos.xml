@@ -33,7 +33,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
-            android:text="@string/hardware_config_select"
+            android:text="@string/hardwareConfigSelect"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,19 +53,19 @@
                 android:id="@+id/deviceDefaultRadioButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/device_default" />
+                android:text="@string/deviceDefault" />
 
             <RadioButton
                 android:id="@+id/shortDimensionFoldRadioButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/short_dimension_fold" />
+                android:text="@string/shortDimensionFold" />
 
             <RadioButton
                 android:id="@+id/longDimensionFoldRadioButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/long_dimension_fold" />
+                android:text="@string/longDimensionFold" />
 
         </RadioGroup>
 
@@ -75,7 +75,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="16dp"
             android:gravity="center_vertical"
-            android:text="@string/test_activity"
+            android:text="@string/testActivity"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,7 @@
             android:id="@+id/featuresActivityButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/display_features"
+            android:text="@string/displayFeatures"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/testActivityTitle"
             android:onClick="showDisplayFeatures" />
@@ -96,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@string/show_all_display_features_description"
+            android:text="@string/showAllDisplayFeaturesDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/featuresActivityButton" />
@@ -106,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/split_layout"
+            android:text="@string/splitLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/featuresDescriptionTextView"
             android:onClick="showSplitLayout" />
@@ -116,7 +116,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@string/split_layout_demo_description"
+            android:text="@string/splitLayoutDemoDescription"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

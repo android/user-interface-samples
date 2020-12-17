@@ -25,6 +25,7 @@ import androidx.core.util.Consumer
 import androidx.window.FoldingFeature
 import androidx.window.WindowLayoutInfo
 import androidx.window.WindowManager
+import com.example.windowmanagersample.backend.MidScreenFoldBackend
 import com.example.windowmanagersample.databinding.ActivityDisplayFeaturesBinding
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -46,8 +47,15 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         binding = ActivityDisplayFeaturesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        windowManager = getTestBackend()?.let { backend -> WindowManager(this, backend) }
-            ?: WindowManager(this)
+        windowManager = getTestBackend()?.let { backend ->
+            binding.deviceStateToggleButton.visibility = View.VISIBLE
+            binding.deviceStateToggleButton.setOnClickListener {
+                if (backend is MidScreenFoldBackend) {
+                    backend.toggleDeviceHalfOpenedState(this)
+                }
+            }
+            WindowManager(this, backend)
+        } ?: WindowManager(this)
 
         stateLog.clear()
         stateLog.append(getString(R.string.stateUpdateLog)).append("\n")

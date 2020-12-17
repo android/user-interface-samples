@@ -54,6 +54,10 @@ class MidScreenFoldBackend(private val foldAxis: FoldAxis) : WindowBackend {
         SHORT_DIMENSION
     }
 
+    private var deviceState = FoldingFeature.STATE_FLAT
+    private var windowLayoutInfoCallback: Consumer<WindowLayoutInfo>? = null
+    private var windowLayoutInfoExecutor: Executor? = null
+
     private fun getWindowLayoutInfo(activity: Activity): WindowLayoutInfo {
         val windowSize = activity.calculateWindowSizeExt()
         val featureRect = foldRect(windowSize)
@@ -62,7 +66,7 @@ class MidScreenFoldBackend(private val foldAxis: FoldAxis) : WindowBackend {
             FoldingFeature(
                 featureRect,
                 FoldingFeature.TYPE_FOLD,
-                FoldingFeature.STATE_FLAT
+                deviceState
             )
         val featureList = ArrayList<DisplayFeature>()
         featureList.add(displayFeature)
@@ -92,6 +96,18 @@ class MidScreenFoldBackend(private val foldAxis: FoldAxis) : WindowBackend {
         }
     }
 
+    /**
+     * Toggle [DeviceState] between [DeviceState.POSTURE_OPENED] and
+     * [DeviceState.POSTURE_HALF_OPENED].
+     * Specific to the type of device we are emulating in this [WindowBackend] implementation
+     */
+    fun toggleDeviceHalfOpenedState(activity: Activity) {
+        if (deviceState == FoldingFeature.STATE_FLAT)
+            deviceState = FoldingFeature.STATE_HALF_OPENED else
+            deviceState = FoldingFeature.STATE_FLAT
+        windowLayoutInfoExecutor?.execute { windowLayoutInfoCallback?.accept(getWindowLayoutInfo(activity)) }
+    }
+
     @Deprecated("Use FoldingFeature to get the state of the hinge instead.")
     override fun registerDeviceStateChangeCallback(
         executor: Executor,
@@ -107,9 +123,14 @@ class MidScreenFoldBackend(private val foldAxis: FoldAxis) : WindowBackend {
         executor: Executor,
         callback: Consumer<WindowLayoutInfo>
     ) {
+        windowLayoutInfoCallback = callback
+        windowLayoutInfoExecutor = executor
+
         executor.execute { callback.accept(getWindowLayoutInfo(activity)) }
     }
 
     override fun unregisterLayoutChangeCallback(callback: Consumer<WindowLayoutInfo>) {
+        windowLayoutInfoCallback = null
+        windowLayoutInfoExecutor = null
     }
 }

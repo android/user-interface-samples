@@ -54,6 +54,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://androidx.dev/snapshots/builds/7023528/artifacts/repository' }
+        maven { url 'https://androidx.dev/snapshots/builds/7038806/artifacts/repository' }
     }
 }

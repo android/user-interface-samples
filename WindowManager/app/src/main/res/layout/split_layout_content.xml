@@ -31,7 +31,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/green_droid"
+        android:contentDescription="@string/greenDroid"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_android_green_320dp"
         tools:layout_editor_absoluteX="45dp"

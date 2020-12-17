@@ -32,10 +32,10 @@
         </activity>
         <activity
             android:name=".DisplayFeaturesActivity"
-            android:label="@string/display_features" />
+            android:label="@string/displayFeatures" />
         <activity
             android:name=".SplitLayoutActivity"
-            android:label="@string/split_layout" />
+            android:label="@string/splitLayout" />
     </application>
 
 </manifest>
