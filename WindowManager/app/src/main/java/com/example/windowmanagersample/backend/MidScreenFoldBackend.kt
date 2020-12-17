@@ -92,11 +92,13 @@ class MidScreenFoldBackend(private val foldAxis: FoldAxis) : WindowBackend {
         }
     }
 
+    @Deprecated("Use FoldingFeature to get the state of the hinge instead.")
     override fun registerDeviceStateChangeCallback(
         executor: Executor,
         callback: Consumer<DeviceState>
     ) {}
 
+    @Deprecated("Use FoldingFeature to get the state of the hinge instead.")
     override fun unregisterDeviceStateChangeCallback(callback: Consumer<DeviceState>) {
     }
 
