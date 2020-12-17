@@ -30,7 +30,7 @@ jobs:
         with:
           java-version: 1.8
           
-      - uses: malinskiy/action-android/install-sdk@release/0.0.5
+      - uses: malinskiy/action-android/install-sdk@release/0.1.0
         
       - name: Build project
         run: .github/scripts/gradlew_recursive.sh assembleDebug
