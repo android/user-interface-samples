@@ -23,7 +23,7 @@ buildscript {
         
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:4.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -54,6 +54,5 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven { url 'https://androidx.dev/snapshots/builds/7038806/artifacts/repository' }
     }
 }
