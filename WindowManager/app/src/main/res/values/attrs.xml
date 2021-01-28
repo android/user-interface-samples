@@ -16,14 +16,8 @@
   -->
 
 <resources>
-    <color name="color_primary">#6200EE</color>
-    <color name="color_primary_dark">#3700B3</color>
-    <color name="color_accent">#03DAC5</color>
-
-    <color name="color_feature_fold">#7700FF00</color>
-    <color name="color_feature_hinge">#77FF0000</color>
-    <color name="color_feature_unknown">#77000000</color>
-
-    <color name="color_split_content_background">#3B6BDB4C</color>
-    <color name="color_split_controls_background">#475ABFF3</color>
+    <declare-styleable name="SplitLayout">
+        <attr name="startViewId" format="reference" />
+        <attr name="endViewId" format="reference" />
+    </declare-styleable>
 </resources>
