@@ -19,8 +19,6 @@ package com.example.windowmanagersample
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
-import android.widget.FrameLayout
-import android.widget.TextView
 import androidx.core.util.Consumer
 import androidx.window.FoldingFeature
 import androidx.window.WindowLayoutInfo
@@ -58,7 +56,7 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         } ?: WindowManager(this)
 
         stateLog.clear()
-        stateLog.append(getString(R.string.stateUpdateLog)).append("\n")
+        stateLog.append(getString(R.string.state_update_log)).append("\n")
     }
 
     override fun onStart() {
@@ -72,7 +70,7 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
     }
 
     /** Updates the device state and display feature positions. */
-    internal fun updateCurrentState() {
+    internal fun updateCurrentState(layoutInfo: WindowLayoutInfo?) {
         // Cleanup previously added feature views
         val rootLayout = binding.featureContainerLayout
         for (featureView in displayFeatureViews) {
@@ -83,8 +81,8 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         // Update the UI with the current state
         val stateStringBuilder = StringBuilder()
 
-        stateContainer.lastLayoutInfo?.let { windowLayoutInfo ->
-            stateStringBuilder.append(getString(R.string.windowLayout))
+        layoutInfo?.let { windowLayoutInfo ->
+            stateStringBuilder.append(getString(R.string.window_layout))
                 .append(": ")
                 .append(windowLayoutInfo)
 
@@ -104,9 +102,9 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
                 val featureView = View(this)
                 val foldFeature = displayFeature as? FoldingFeature
                 val color = when (foldFeature?.type) {
-                    FoldingFeature.TYPE_FOLD -> getColor(R.color.colorFeatureFold)
-                    FoldingFeature.TYPE_HINGE -> getColor(R.color.colorFeatureHinge)
-                    else -> getColor(R.color.colorFeatureUnknown)
+                    FoldingFeature.TYPE_FOLD -> getColor(R.color.color_feature_fold)
+                    FoldingFeature.TYPE_HINGE -> getColor(R.color.color_feature_hinge)
+                    else -> getColor(R.color.color_feature_unknown)
                 }
                 featureView.foreground = ColorDrawable(color)
 
@@ -141,7 +139,7 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         override fun accept(newLayoutInfo: WindowLayoutInfo) {
             updateStateLog(newLayoutInfo)
             lastLayoutInfo = newLayoutInfo
-            updateCurrentState()
+            updateCurrentState(lastLayoutInfo)
         }
     }
 }

@@ -28,12 +28,12 @@
         android:layout_marginStart="8dp" >
 
         <TextView
-            android:id="@+id/hardwareSelectTextView"
+            android:id="@+id/hardware_select_text_view"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
-            android:text="@string/hardwareConfigSelect"
+            android:text="@string/hardware_config_select"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -41,86 +41,84 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
-            android:id="@+id/backendRadioGroup"
+            android:id="@+id/backend_radio_group"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hardwareSelectTextView">
+            app:layout_constraintTop_toBottomOf="@+id/hardware_select_text_view">
 
             <RadioButton
-                android:id="@+id/deviceDefaultRadioButton"
+                android:id="@+id/device_default_radio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/deviceDefault" />
+                android:text="@string/device_default" />
 
             <RadioButton
-                android:id="@+id/shortDimensionFoldRadioButton"
+                android:id="@+id/short_dimension_fold_radio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/shortDimensionFold" />
+                android:text="@string/short_dimension_fold" />
 
             <RadioButton
-                android:id="@+id/longDimensionFoldRadioButton"
+                android:id="@+id/long_dimension_fold_radio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/longDimensionFold" />
+                android:text="@string/long_dimension_fold" />
 
         </RadioGroup>
 
         <TextView
-            android:id="@+id/testActivityTitle"
+            android:id="@+id/test_activity_title"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="16dp"
             android:gravity="center_vertical"
-            android:text="@string/testActivity"
+            android:text="@string/test_activity"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backendRadioGroup" />
+            app:layout_constraintTop_toBottomOf="@+id/backend_radio_group" />
 
         <Button
-            android:id="@+id/featuresActivityButton"
+            android:id="@+id/features_activity_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/displayFeatures"
+            android:text="@string/display_features"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/testActivityTitle"
-            android:onClick="showDisplayFeatures" />
+            app:layout_constraintTop_toBottomOf="@+id/test_activity_title" />
 
         <TextView
-            android:id="@+id/featuresDescriptionTextView"
+            android:id="@+id/features_description_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@string/showAllDisplayFeaturesDescription"
+            android:text="@string/show_all_display_features_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/featuresActivityButton" />
+            app:layout_constraintTop_toBottomOf="@+id/features_activity_button" />
 
         <Button
-            android:id="@+id/splitLayoutActivityButton"
+            android:id="@+id/split_layout_activity_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/splitLayout"
+            android:text="@string/split_layout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/featuresDescriptionTextView"
-            android:onClick="showSplitLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/features_description_text_view" />
 
         <TextView
-            android:id="@+id/splitLayoutDescriptionTextView"
+            android:id="@+id/split_layout_description_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@string/splitLayoutDemoDescription"
+            android:text="@string/split_layout_demo_description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/splitLayoutActivityButton" />
+            app:layout_constraintTop_toBottomOf="@+id/split_layout_activity_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -25,25 +25,25 @@
     tools:context="DisplayFeaturesActivity">
 
     <FrameLayout
-        android:id="@+id/featureContainerLayout"
+        android:id="@+id/feature_container_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <TextView
-        android:id="@+id/stateUpdateLog"
+        android:id="@+id/state_update_log"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/stateUpdateLog"
+        android:text="@string/state_update_log"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/foldColorImageView"
-        app:layout_constraintTop_toBottomOf="@id/currentState" />
+        app:layout_constraintStart_toStartOf="@id/fold_color_image_view"
+        app:layout_constraintTop_toBottomOf="@id/current_state" />
 
     <TextView
-        android:id="@+id/currentState"
+        android:id="@+id/current_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/currentState"
+        android:text="@string/current_state"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -51,81 +51,81 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/deviceStateToggleButton"
+        android:id="@+id/device_state_toggle_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/deviceStateToggleButton"
+        android:text="@string/device_state_toggle_button"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/legendTextView"/>
+        app:layout_constraintBottom_toTopOf="@id/legend_text_view"/>
 
     <TextView
-        android:id="@+id/legendTextView"
+        android:id="@+id/legend_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/legend"
         android:layout_marginHorizontal="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/foldColorImageView"/>
+        app:layout_constraintBottom_toTopOf="@id/fold_color_image_view"/>
 
     <ImageView
-        android:id="@+id/foldColorImageView"
+        android:id="@+id/fold_color_image_view"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="8dp"
-        android:foreground="@color/colorFeatureFold"
-        android:contentDescription="@string/foldLegendColor"
-        app:layout_constraintBottom_toTopOf="@id/hingeColorImageView"
+        android:foreground="@color/color_feature_fold"
+        android:contentDescription="@string/fold_legend_color"
+        app:layout_constraintBottom_toTopOf="@id/hinge_color_image_view"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/foldColorTextView"
+        android:id="@+id/fold_color_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/fold"
-        app:layout_constraintBottom_toTopOf="@id/hingeColorTextView"
-        app:layout_constraintStart_toEndOf="@id/hingeColorImageView" />
+        app:layout_constraintBottom_toTopOf="@id/hinge_color_text_view"
+        app:layout_constraintStart_toEndOf="@id/hinge_color_image_view" />
 
     <ImageView
-        android:id="@+id/hingeColorImageView"
+        android:id="@+id/hinge_color_image_view"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:foreground="@color/colorFeatureHinge"
+        android:foreground="@color/color_feature_hinge"
         android:layout_marginStart="8dp"
-        android:contentDescription="@string/hingeLegendColor"
+        android:contentDescription="@string/hinge_legend_color"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/unknownColorImageView" />
+        app:layout_constraintBottom_toTopOf="@id/unknown_color_image_view" />
 
     <TextView
-        android:id="@+id/hingeColorTextView"
+        android:id="@+id/hinge_color_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:drawableStart="@color/colorFeatureHinge"
+        android:drawableStart="@color/color_feature_hinge"
         android:text="@string/hinge"
-        app:layout_constraintBottom_toTopOf="@id/unknownColorTextView"
-        app:layout_constraintStart_toEndOf="@id/hingeColorImageView" />
+        app:layout_constraintBottom_toTopOf="@id/unknown_color_text_view"
+        app:layout_constraintStart_toEndOf="@id/hinge_color_image_view" />
 
     <ImageView
-        android:id="@+id/unknownColorImageView"
+        android:id="@+id/unknown_color_image_view"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:foreground="@color/colorFeatureUnknown"
+        android:foreground="@color/color_feature_unknown"
         android:layout_marginStart="8dp"
-        android:contentDescription="@string/unknownLegendColor"
+        android:contentDescription="@string/unknown_legend_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
-        android:id="@+id/unknownColorTextView"
+        android:id="@+id/unknown_color_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="@string/unknown"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/unknownColorImageView" />
+        app:layout_constraintStart_toEndOf="@id/unknown_color_image_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

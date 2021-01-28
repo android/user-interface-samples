@@ -17,30 +17,30 @@
 
 <resources>
     <string name="app_name">WindowSamples</string>
-    <string name="currentState">Current state</string>
-    <string name="stateUpdateLog">State update log</string>
-    <string name="deviceState">Device state</string>
-    <string name="windowLayout">Window layout</string>
+    <string name="current_state">Current state</string>
+    <string name="state_update_log">State update log</string>
+    <string name="device_state">Device state</string>
+    <string name="window_layout">Window layout</string>
     <string name="hinge">Hinge</string>
     <string name="unknown">Unknown</string>
     <string name="fold">Fold</string>
     <string name="legend">Legend:</string>
-    <string name="contentTitle">Content title</string>
-    <string name="greenDroid">Green droid</string>
-    <string name="displayFeatures">Display features</string>
-    <string name="splitLayout">Split layout</string>
-    <string name="windowManagerDemos">WindowManager Demos</string>
-    <string name="hardwareConfigSelect">Hardware configuration to use</string>
-    <string name="deviceDefault">Device default</string>
-    <string name="shortDimensionFold">Fold in the middle of the window along short
+    <string name="content_title">Content title</string>
+    <string name="green_droid">Green droid</string>
+    <string name="display_features">Display features</string>
+    <string name="split_layout">Split layout</string>
+    <string name="window_manager_demos">WindowManager Demos</string>
+    <string name="hardware_config_select">Hardware configuration to use</string>
+    <string name="device_default">Device default</string>
+    <string name="short_dimension_fold">Fold in the middle of the window along short
         dimension</string>
-    <string name="longDimensionFold">Fold in the middle of the window along long
+    <string name="long_dimension_fold">Fold in the middle of the window along long
         dimension</string>
-    <string name="testActivity">Test activity</string>
-    <string name="showAllDisplayFeaturesDescription">Show all display features of the device on the screen</string>
-    <string name="splitLayoutDemoDescription">Demo of a layout that splits the content to sides of a fold or a hinge. If not present or minimal size requirements are not meant, it behave like a FrameLayout.</string>
-    <string name="deviceStateToggleButton">Toggle Device State</string>
-    <string name="unknownLegendColor">Unknown Legend Color</string>
-    <string name="hingeLegendColor">Hinge Legend Color</string>
-    <string name="foldLegendColor">Fold Legend Color</string>
+    <string name="test_activity">Test activity</string>
+    <string name="show_all_display_features_description">Show all display features of the device on the screen</string>
+    <string name="split_layout_demo_description">Demo of a layout that splits the content to sides of a fold or a hinge. If not present or minimal size requirements are not meant, it behave like a FrameLayout.</string>
+    <string name="device_state_toggle_button">Toggle Device State</string>
+    <string name="unknown_legend_color">Unknown Legend Color</string>
+    <string name="hinge_legend_color">Hinge Legend Color</string>
+    <string name="fold_legend_color">Fold Legend Color</string>
 </resources>

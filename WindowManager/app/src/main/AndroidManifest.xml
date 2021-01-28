@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".WindowDemosActivity"
-            android:label="@string/windowManagerDemos">
+            android:label="@string/window_manager_demos">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,10 +32,10 @@
         </activity>
         <activity
             android:name=".DisplayFeaturesActivity"
-            android:label="@string/displayFeatures" />
+            android:label="@string/display_features" />
         <activity
             android:name=".SplitLayoutActivity"
-            android:label="@string/splitLayout" />
+            android:label="@string/split_layout" />
     </application>
 
 </manifest>

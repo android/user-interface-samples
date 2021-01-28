@@ -190,12 +190,12 @@ class SplitLayout : FrameLayout {
         val heightSpec = MeasureSpec.makeMeasureSpec(rect.height(), AT_MOST)
         childView.measure(widthSpec, heightSpec)
         return childView.measuredWidthAndState and MEASURED_STATE_TOO_SMALL == 0 &&
-                childView.measuredHeightAndState and MEASURED_STATE_TOO_SMALL == 0
+            childView.measuredHeightAndState and MEASURED_STATE_TOO_SMALL == 0
     }
 
     private fun isValidFoldFeature(displayFeature: DisplayFeature): Boolean {
         val feature = displayFeature as? FoldingFeature ?: return false
         return (feature.type == TYPE_FOLD || feature.type == TYPE_HINGE) &&
-                getFeaturePositionInViewRect(feature, this) != null
+            getFeaturePositionInViewRect(feature, this) != null
     }
 }

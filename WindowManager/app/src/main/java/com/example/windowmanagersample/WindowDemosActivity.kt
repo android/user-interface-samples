@@ -18,8 +18,6 @@ package com.example.windowmanagersample
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.windowmanagersample.BaseSampleActivity.Companion.BACKEND_TYPE_DEVICE_DEFAULT
 import com.example.windowmanagersample.BaseSampleActivity.Companion.BACKEND_TYPE_EXTRA
@@ -45,27 +43,31 @@ class WindowDemosActivity : AppCompatActivity() {
         val radioGroup = binding.backendRadioGroup
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             selectedBackend = when (checkedId) {
-                R.id.deviceDefaultRadioButton -> BACKEND_TYPE_DEVICE_DEFAULT
-                R.id.shortDimensionFoldRadioButton -> BACKEND_TYPE_SHORT_DIMENSION_FOLD
-                R.id.longDimensionFoldRadioButton -> BACKEND_TYPE_LONG_DIMENSION_FOLD
+                R.id.device_default_radio_button -> BACKEND_TYPE_DEVICE_DEFAULT
+                R.id.short_dimension_fold_radio_button -> BACKEND_TYPE_SHORT_DIMENSION_FOLD
+                R.id.long_dimension_fold_radio_button -> BACKEND_TYPE_LONG_DIMENSION_FOLD
                 else -> BACKEND_TYPE_DEVICE_DEFAULT
             }
         }
 
         if (savedInstanceState != null) {
-            selectedBackend = savedInstanceState.getInt(
+            selectedBackend = savedInstanceState?.getInt(
                 BACKEND_TYPE_EXTRA,
                 BACKEND_TYPE_DEVICE_DEFAULT
             )
         }
         when (selectedBackend) {
             BACKEND_TYPE_DEVICE_DEFAULT ->
-                radioGroup.check(R.id.deviceDefaultRadioButton)
+                radioGroup.check(R.id.device_default_radio_button)
             BACKEND_TYPE_SHORT_DIMENSION_FOLD ->
-                radioGroup.check(R.id.shortDimensionFoldRadioButton)
+                radioGroup.check(R.id.short_dimension_fold_radio_button)
             BACKEND_TYPE_LONG_DIMENSION_FOLD ->
-                radioGroup.check(R.id.longDimensionFoldRadioButton)
+                radioGroup.check(R.id.long_dimension_fold_radio_button)
         }
+
+        binding.featuresActivityButton.setOnClickListener { showDisplayFeatures() }
+
+        binding.splitLayoutActivityButton.setOnClickListener { showSplitLayout() }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -73,13 +75,13 @@ class WindowDemosActivity : AppCompatActivity() {
         outState.putInt(BACKEND_TYPE_EXTRA, selectedBackend)
     }
 
-    fun showDisplayFeatures(@Suppress("UNUSED_PARAMETER")view: View) {
+    fun showDisplayFeatures() {
         val intent = Intent(this, DisplayFeaturesActivity::class.java)
         intent.putExtra(BACKEND_TYPE_EXTRA, selectedBackend)
         startActivity(intent)
     }
 
-    fun showSplitLayout(@Suppress("UNUSED_PARAMETER")view: View) {
+    fun showSplitLayout() {
         val intent = Intent(this, SplitLayoutActivity::class.java)
         intent.putExtra(BACKEND_TYPE_EXTRA, selectedBackend)
         startActivity(intent)

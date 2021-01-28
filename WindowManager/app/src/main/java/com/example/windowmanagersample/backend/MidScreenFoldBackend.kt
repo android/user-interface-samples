@@ -26,8 +26,8 @@ import androidx.window.DisplayFeature
 import androidx.window.FoldingFeature
 import androidx.window.WindowBackend
 import androidx.window.WindowLayoutInfo
+import androidx.window.WindowManager
 import java.util.concurrent.Executor
-
 
 /**
  * A sample backend that will have a fold in the middle of the screen. The {@link FoldAxis}
@@ -60,7 +60,9 @@ class MidScreenFoldBackend(private val foldAxis: FoldAxis) : WindowBackend {
     private var windowLayoutInfoExecutor: Executor? = null
 
     override fun getWindowLayoutInfo(context: Context): WindowLayoutInfo {
-        val windowSize = (context as Activity).calculateWindowSizeExt()
+        // Use androidx.window.windowMetrics to retrieve current window size
+        val windowMetrics = WindowManager(context).currentWindowMetrics
+        val windowSize = Point(windowMetrics.bounds.width(), windowMetrics.bounds.height())
         val featureRect = foldRect(windowSize)
 
         val displayFeature =
@@ -103,10 +105,12 @@ class MidScreenFoldBackend(private val foldAxis: FoldAxis) : WindowBackend {
      * Specific to the type of device we are emulating in this [WindowBackend] implementation
      */
     fun toggleDeviceHalfOpenedState(activity: Activity) {
-        if (deviceState == FoldingFeature.STATE_FLAT)
-            deviceState = FoldingFeature.STATE_HALF_OPENED else
-            deviceState = FoldingFeature.STATE_FLAT
-        windowLayoutInfoExecutor?.execute { windowLayoutInfoCallback?.accept(getWindowLayoutInfo(activity)) }
+        deviceState = if (deviceState == FoldingFeature.STATE_FLAT)
+            FoldingFeature.STATE_HALF_OPENED else
+            FoldingFeature.STATE_FLAT
+        windowLayoutInfoExecutor?.execute {
+            windowLayoutInfoCallback?.accept(getWindowLayoutInfo(activity))
+        }
     }
 
     /**

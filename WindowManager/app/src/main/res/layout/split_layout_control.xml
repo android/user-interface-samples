@@ -24,7 +24,7 @@
     android:layout_height="match_parent"
     android:minWidth="250dp"
     android:minHeight="200dp"
-    android:background="@color/colorSplitControlsBackground"
+    android:background="@color/color_split_controls_background"
     tools:context="SplitLayoutActivity">
 
 
@@ -84,7 +84,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="@string/contentTitle"
+        android:text="@string/content_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
