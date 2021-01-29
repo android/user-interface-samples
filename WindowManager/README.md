@@ -2,7 +2,7 @@
 Jetpack WindowManager Sample
 ===================================
 
-This sample demonstrates how to use the new Jetpack Window Manager library.
+This sample demonstrates how to use the new Jetpack WindowManager library.
 This library allows an application to support new device form factors as well as
 provide a common API surface for new Window Manager features throughout old and
 new platform versions. The initial release as well as this sample focuses on
@@ -15,42 +15,70 @@ Introduction
 New foldable devices are appearing on the market that provide a set of unique
 hardware features. Optimizing your app for these new devices and form-factors
 allow you to bring a differentiating experience and allow your users to take
-full advantage of whatever device they are on. The Jetpack Window Manager
+full advantage of whatever device they are on. The Jetpack WindowManager
 library allows you to handle all of these devices through a common API as well
 as through different versions of Android.
 
 You can determine what `DisplayFeatures`s are available on the device and their
-`Rect` location. The first version of the library includes support for two types
-of features: `TYPE_FOLD` and `TYPE_HINGE`. For a `TYPE_FOLD`, the bounding
-rectangle is expected to be zero-high or zero-wide indicating that there is no
-inaccessible region but still reporting the position on screen.
-
-Besides `DisplayFeature`s, the app can also determine the `DeviceState` for the
-current configuration of the device. These are defined as different postures:
-`POSTURE_UNKNOWN`, `POSTURE_CLOSED`, `POSTURE_HALF_OPENED`, `POSTURE_OPENED`,
-`POSTURE_FLIPPED`. Each device can decide what subset of postures to report and
-when, based on their specific hardware.
-
-We also have two callbacks to be alerted of new `DeviceState` changes as well
-as `WindowLayoutInfo` changes.
-
+`Rect` location. The alpha02 release introduces a new `DisplayFeature` class with an updated callback contract to notify your application when a `DisplayFeature` changes. You can register/unregister the callback using these methods:
 ``` java
-//DeviceState changes
-windowManager.registerDeviceStateChangeCallback(
-    mainThreadExecutor /* Executor */,
-    callback /* Consumer<DeviceState> */)
+registerLayoutChangeCallback(@NonNull Executor executor, @NonNull Consumer<WindowLayoutInfo> callback)
+unregisterLayoutChangeCallback(@NonNull Consumer<WindowLayoutInfo> callback)
+```
 
-//Layout state changes
-windowManager.registerLayoutChangeCallback(
-    mainThreadExecutor /* Executor */,
-    callback /* Consumer<WindowLayoutInfo> */)
+The `WindowLayoutInfo` contains a list of the instances of `DisplayFeature` that are located within the window.
+
+The `FoldingFeature` class implements the `DisplayFeature` interface, which includes information about these types of features:
 
 ```
-With these you can move your views around the `DisplayFeature`s that are
-available to provide a different UX. You can see an example of this in the
-`SplitLayoutActivity` class.
+TYPE_FOLD
+TYPE_HINGE
+```
 
-This is an initial Alpha release of the library so the API surface may change
+And their possible folding states:
+```
+STATE_FLAT
+STATE_HALF_OPENED
+STATE_FLIPPED
+```
+
+To access the new state you can use the FoldingFeature information returned to the registered callback:
+``` java
+class LayoutStateChangeCallback : Consumer<WindowLayoutInfo> {
+    override fun accept(newLayoutInfo: WindowLayoutInfo) {
+        // TODO
+        // Check newLayoutInfo. getDisplayFeatures()
+        // to see if it is a FoldingFeature and retrieve the information
+    }
+}
+```
+
+You can see an example of this in the `SplitLayoutActivity` class.
+
+WindowMetrics
+-------------
+
+The WindowManager library includes a new WindowMetrics API to get information about your current window state and the maximum window size for the current state of the system.
+
+The API results don’t include information about the system insets such as the status bar or action bar, since those values aren’t available before the first layout pass. These bounds also don’t react to any changes in layout params that might occur when your layout is inflated. If you are looking for specific information for laying out views you should get the width/height from the Configuration object or the DecorView.
+
+To access these APIs, you need to get an instance of the WindowManager object.
+
+``` java
+var windowManager = WindowManager(this /* context */)
+```
+
+From here you now have access to the WindowMetrics APIs and can easily call
+
+``` java
+windowManager.currentWindowMetrics
+windowManager.maximumWindowMetrics
+```
+
+Notes
+-----
+
+This is the second Alpha release of the library so the API surface may still change
 and grow with time. Any feedback is greatly appreciated on things you would
 like to see added or changed!
 
@@ -62,8 +90,8 @@ For more information on the Jetpack Window Manager library, see the
 Pre-requisites
 --------------
 
-- Android SDK 28
-- Android Build Tools v28.0.3
+- Android SDK 30
+- Android Studio 4.1.2
 - Android Support Repository
 
 Getting Started
