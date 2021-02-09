@@ -7,7 +7,6 @@ ext {
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.3"
 
     defaultConfig {
         applicationId "com.example.android.downloadablefonts"
@@ -33,6 +32,6 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
