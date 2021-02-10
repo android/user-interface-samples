@@ -22,7 +22,7 @@ ext {
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "26.0.3"
+
     defaultConfig {
         applicationId "com.example.android.emojicompat"
         minSdkVersion 19

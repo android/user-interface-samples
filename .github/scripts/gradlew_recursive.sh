@@ -21,8 +21,7 @@ set -xe
 GRADLE_OPTS="$GRADLE_OPTS -Xmx5120m"
 GRADLE_OPTS="$GRADLE_OPTS -XX:+HeapDumpOnOutOfMemoryError"
 GRADLE_OPTS="$GRADLE_OPTS -Dorg.gradle.daemon=false"
-GRADLE_OPTS="$GRADLE_OPTS -Dorg.gradle.workers.max=2"
-GRADLE_OPTS="$GRADLE_OPTS -Dkotlin.incremental=false"
+GRADLE_OPTS="$GRADLE_OPTS -Dorg.gradle.parallel=true"
 GRADLE_OPTS="$GRADLE_OPTS -Dkotlin.compiler.execution.strategy=in-process"
 export GRADLE_OPTS
 
