@@ -24,29 +24,28 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsAnimationCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
+import com.google.android.samples.insetsanimation.databinding.FragmentConversationBinding
 
 /**
  * The main entry point for the sample. See [onViewCreated] for more information on how
  * the sample works.
  */
 class ConversationFragment : Fragment() {
+    private var _binding: FragmentConversationBinding? = null
+    private val binding: FragmentConversationBinding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // We don't use view binding because it doesn't work with included -> merge layouts
-        return inflater.inflate(R.layout.fragment_conversation, container, false)
+        _binding = FragmentConversationBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val conversationRv: RecyclerView = view.findViewById(R.id.conversation_recyclerview)
-        val messageHolderView: View = view.findViewById(R.id.message_holder)
-        val messageEditText: View = view.findViewById(R.id.message_edittext)
-
         // Set our conversation adapter on the RecyclerView
-        conversationRv.adapter = ConversationAdapter()
+        binding.conversationRecyclerview.adapter = ConversationAdapter()
 
         // There are three steps to WindowInsetsAnimations:
 
@@ -65,8 +64,8 @@ class ConversationFragment : Fragment() {
         )
         // RootViewDeferringInsetsCallback is both an WindowInsetsAnimation.Callback and an
         // OnApplyWindowInsetsListener, so needs to be set as so.
-        ViewCompat.setWindowInsetsAnimationCallback(view, deferringInsetsListener)
-        ViewCompat.setOnApplyWindowInsetsListener(view, deferringInsetsListener)
+        ViewCompat.setWindowInsetsAnimationCallback(binding.root, deferringInsetsListener)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root, deferringInsetsListener)
 
         /**
          * 2) The second step is reacting to any animations which run. This can be system driven,
@@ -84,9 +83,9 @@ class ConversationFragment : Fragment() {
          * [RootViewDeferringInsetsCallback] on the layout's root view.
          */
         ViewCompat.setWindowInsetsAnimationCallback(
-            messageHolderView,
+            binding.messageHolder,
             TranslateDeferringInsetsAnimationCallback(
-                view = messageHolderView,
+                view = binding.messageHolder,
                 persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
                 deferredInsetTypes = WindowInsetsCompat.Type.ime(),
                 // We explicitly allow dispatch to continue down to binding.messageHolder's
@@ -95,9 +94,9 @@ class ConversationFragment : Fragment() {
             )
         )
         ViewCompat.setWindowInsetsAnimationCallback(
-            conversationRv,
+            binding.conversationRecyclerview,
             TranslateDeferringInsetsAnimationCallback(
-                view = conversationRv,
+                view = binding.conversationRecyclerview,
                 persistentInsetTypes = WindowInsetsCompat.Type.systemBars(),
                 deferredInsetTypes = WindowInsetsCompat.Type.ime()
             )
@@ -116,10 +115,9 @@ class ConversationFragment : Fragment() {
          * [WindowInsetsAnimationCompat.Callback.DISPATCH_MODE_CONTINUE_ON_SUBTREE] dispatch mode, which
          * we have done above.
          */
-
         ViewCompat.setWindowInsetsAnimationCallback(
-            messageEditText,
-            ControlFocusInsetsAnimationCallback(messageEditText)
+            binding.messageEdittext,
+            ControlFocusInsetsAnimationCallback(binding.messageEdittext)
         )
 
         /**
@@ -138,5 +136,10 @@ class ConversationFragment : Fragment() {
          * class bundled in this sample called [SimpleImeAnimationController], which simplifies
          * much of the mechanics for controlling a [WindowInsetsAnimationCompat].
          */
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
