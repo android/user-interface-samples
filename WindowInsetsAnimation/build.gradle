@@ -19,6 +19,7 @@ buildscript {
 
     repositories {
         google()
+        mavenCentral()
         jcenter()
     }
 
@@ -31,9 +32,7 @@ buildscript {
 allprojects {
     repositories {
         google()
+        mavenCentral()
         jcenter()
-
-        // Using an AndroidX snapshot to try out the new WindowInsetsAnimation in AndroidX Core
-        maven { url 'https://androidx.dev/snapshots/builds/7134108/artifacts/repository' }
     }
 }
