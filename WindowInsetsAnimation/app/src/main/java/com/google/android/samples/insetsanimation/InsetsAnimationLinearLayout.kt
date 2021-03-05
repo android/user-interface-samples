@@ -17,6 +17,7 @@
 package com.google.android.samples.insetsanimation
 
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.view.WindowInsets
@@ -29,9 +30,10 @@ import androidx.core.view.ViewCompat
 
 /**
  * A [LinearLayout] which acts as a [nested scroll parent][NestedScrollingParent3] to automatically
- * control the IME inset and visibility. This class tracks scrolling, overscrolling, and
- * flinging gestures on child scrolling views, such as a
- * [androidx.recyclerview.widget.RecyclerView].
+ * control the IME inset and visibility when running on devices with API level 30+.
+ *
+ * This class tracks scrolling, overscrolling, and flinging gestures on child scrolling views,
+ * such as a [androidx.recyclerview.widget.RecyclerView].
  *
  * This class triggers a request to control the IME insets via
  * [SimpleImeAnimationController.startControlRequest] once it detect a scroll in an appropriate direction
@@ -46,7 +48,6 @@ import androidx.core.view.ViewCompat
  * Note: all of the nested scrolling logic could be extracted to a `CoordinatorLayout.Behavior`
  * if desired.
  */
-@RequiresApi(30)
 class InsetsAnimationLinearLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -56,6 +57,7 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
     private val nestedScrollingParentHelper = NestedScrollingParentHelper(this)
     private var currentNestedScrollingChild: View? = null
 
+    @RequiresApi(30)
     private val imeAnimController = SimpleImeAnimationController()
 
     private var dropNextY = 0
@@ -74,8 +76,12 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
     var scrollImeOnScreenWhenNotVisible = true
 
     override fun onStartNestedScroll(child: View, target: View, axes: Int, type: Int): Boolean {
-        // We only want to track vertical scrolls, which are driven from a direct touch event
-        return (axes and ViewCompat.SCROLL_AXIS_VERTICAL) != 0 && type == ViewCompat.TYPE_TOUCH
+        // We only want to track vertical scrolls, which are driven from a direct touch event.
+        // SimpleImeAnimationController (and WindowInsetsAnimationController) only works on
+        // API 30 too.
+        return Build.VERSION.SDK_INT >= 30 &&
+                (axes and ViewCompat.SCROLL_AXIS_VERTICAL) != 0 &&
+                type == ViewCompat.TYPE_TOUCH
     }
 
     override fun onNestedScrollAccepted(child: View, target: View, axes: Int, type: Int) {
@@ -84,6 +90,8 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
     }
 
     override fun onNestedPreScroll(target: View, dx: Int, dy: Int, consumed: IntArray, type: Int) {
+        if (Build.VERSION.SDK_INT < 30) return
+
         if (imeAnimController.isInsetAnimationRequestPending()) {
             // We're waiting for a controller to become ready. Consume and no-op the scroll
             consumed[0] = dx
@@ -135,6 +143,8 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
         type: Int,
         consumed: IntArray
     ) {
+        if (Build.VERSION.SDK_INT < 30) return
+
         if (dyUnconsumed > 0) {
             // If the user is scrolling up, and the scrolling view isn't consuming the scroll...
 
@@ -163,6 +173,8 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
         velocityY: Float,
         consumed: Boolean
     ): Boolean {
+        if (Build.VERSION.SDK_INT < 30) return false
+
         if (imeAnimController.isInsetAnimationInProgress()) {
             // If we have an IME animation in progress, from the user scrolling, we can
             // animate to the end state using the velocity
@@ -198,6 +210,8 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
     }
 
     override fun onStopNestedScroll(target: View, type: Int) {
+        if (Build.VERSION.SDK_INT < 30) return
+
         nestedScrollingParentHelper.onStopNestedScroll(target, type)
 
         if (imeAnimController.isInsetAnimationInProgress() &&
@@ -218,6 +232,7 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
     /**
      * This starts a control request.
      */
+    @RequiresApi(30)
     private fun startControlRequest() {
         // Suppress layout, so that nothing interrupts or is re-laid out while the IME
         // animation starts. This needs to be done before controlWindowInsetsAnimation()
@@ -234,6 +249,7 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
         )
     }
 
+    @RequiresApi(30)
     private fun onControllerReady() {
         val scrollingChild = currentNestedScrollingChild
         if (scrollingChild != null) {
