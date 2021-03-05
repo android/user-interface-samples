@@ -7,7 +7,7 @@ This sample shows how to react to the on-screen keyboard (IME) changing visibili
 
 ## Features
 
-The app displays a fake instant-message style conversation, and has two key pieces of functionality:
+The app displays a mock instant-message style conversation, and has two key pieces of functionality:
 
 ### #1: Reacting to the IME coming on/off screen (API 21+)
 
@@ -16,7 +16,7 @@ When the IME is displayed due to a implicit event (such as the `EditText` being 
 In terms of implementation, this is done using a [`WindowInsetsAnimationCompat.Callback`](https://developer.android.com/reference/androidx/core/view/WindowInsetsAnimationCompat.Callback), which allows views to be notified when an insets animation is taking place. In this sample, we have provided an implementation called [`TranslateDeferringInsetsAnimationCallback`](./app/src/main/java/com/google/android/samples/insetsanimation/TranslateDeferringInsetsAnimationCallback.kt) which automatically moves the host view between it's position before and after the IME visibility change. This is used on both the text field and scrolling views, allowing them both to move in unison with the IME.
 
 #### Graceful degredation
-As this feature relies on new APIs, we graceful degrade the experience as so:
+As this feature relies on new APIs, we gracefully degrade the experience as so:
 
  - When running on devices with API level 30+, this feature perfectly tracks the IME as it enter/exits the screens. 
  - When running on devices with API level 21-29, [`WindowInsetsAnimationCompat`](https://developer.android.com/reference/androidx/core/view/WindowInsetsAnimationCompat) will run an animation which attempts to mimic the system IME animation. This will never be able to perfectly track the IME, but should provide a pleasant experience for users.
@@ -26,7 +26,7 @@ As this feature relies on new APIs, we graceful degrade the experience as so:
 
 When the user scrolls up on the conversation list, to the end of the list's content, and keeps scrolling (aka over-scrolling) the sample takes control of the IME and animates it on/off screen as part of the scroll gesture. You can see this in the demo above on the left, as the IME scrolls on and off screen with the conversation.
 
-In terms of implementation, this is done using a [`WindowInsetsAnimationController`](https://developer.android.com/reference/android/view/WindowInsetsAnimationController) available in Android 11+. A nested scrolling `LinearLayout` which automatically reacts to scrolls by insetting the IME on/off screen is provided in [`InsetsAnimationLinearLayout`](./app/src/main/java/com/google/android/samples/insetsanimation/InsetsAnimationLinearLayout.kt).
+In terms of implementation, this is done using the [`WindowInsetsAnimationController`](https://developer.android.com/reference/android/view/WindowInsetsAnimationController) API available in Android 11+. A nested scrolling `LinearLayout` which automatically reacts to scrolls by insetting the IME on/off screen is provided in [`InsetsAnimationLinearLayout`](./app/src/main/java/com/google/android/samples/insetsanimation/InsetsAnimationLinearLayout.kt).
 
 A [`View.OnTouchListener`](https://developer.android.com/reference/kotlin/android/view/View.OnTouchListener) implementation, for use with non-scrolling views is also provided as [`InsetsAnimationTouchListener`](./app/src/main/java/com/google/android/samples/insetsanimation/InsetsAnimationTouchListener.kt).
 
