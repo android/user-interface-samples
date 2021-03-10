@@ -122,7 +122,7 @@ class NotificationHelper(private val context: Context) {
     }
 
     @WorkerThread
-    fun showNotification(chat: Chat, fromUser: Boolean) {
+    fun showNotification(chat: Chat, fromUser: Boolean, update: Boolean = false) {
         updateShortcuts(chat.contact)
         val icon = Icon.createWithAdaptiveBitmapContentUri(chat.contact.iconUri)
         val user = Person.Builder().setName(context.getString(R.string.sender_you)).build()
@@ -151,6 +151,8 @@ class NotificationHelper(private val context: Context) {
                         // the foreground.
                         if (fromUser) {
                             setAutoExpandBubble(true)
+                        }
+                        if (fromUser || update) {
                             setSuppressNotification(true)
                         }
                     }
@@ -227,11 +229,14 @@ class NotificationHelper(private val context: Context) {
                     .setGroupConversation(false)
             )
             .setWhen(chat.messages.last().timestamp)
-
+            // Don't sound/vibrate if an update to an existing notification.
+            if (update) {
+                builder.setOnlyAlertOnce(true)
+            }
         notificationManager.notify(chat.contact.id.toInt(), builder.build())
     }
 
-    fun dismissNotification(id: Long) {
+    private fun dismissNotification(id: Long) {
         notificationManager.cancel(id.toInt())
     }
 
@@ -241,5 +246,15 @@ class NotificationHelper(private val context: Context) {
             contact.shortcutId
         )
         return notificationManager.areBubblesAllowed() || channel?.canBubble() == true
+    }
+
+    fun updateNotification(chat: Chat, chatId: Long, prepopulatedMsgs: Boolean) {
+        if (!prepopulatedMsgs) {
+            // Update notification bubble metadata to suppress notification so that the unread
+            // message badge icon on the collapsed bubble is removed.
+            showNotification(chat, fromUser = false, update = true)
+        } else {
+            dismissNotification(chatId)
+        }
     }
 }
