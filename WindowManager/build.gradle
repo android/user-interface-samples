@@ -15,7 +15,7 @@
  */
 
 buildscript {
-    ext.kotlin_version = '1.4.21'
+    ext.kotlin_version = '1.4.31'
     ext.ktlint_version = '0.40.0'
     repositories {
         google()
