@@ -17,12 +17,12 @@
 package com.example.android.immersivemode
 
 import android.os.Bundle
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 
 /**
  * Behaviors of immersive mode.
@@ -31,20 +31,16 @@ enum class BehaviorOption(
     val title: String,
     val value: Int
 ) {
-    // Swipe from the edge to show a hidden bar.
-    ShowBarsBySwipe(
-        "BEHAVIOR_SHOW_BARS_BY_SWIPE",
-        WindowInsetsControllerCompat.BEHAVIOR_SHOW_BARS_BY_SWIPE
-    ),
-    // Any interaction on the display to show the navigation bar.
-    ShowBarsByTouch(
-        "BEHAVIOR_SHOW_BARS_BY_TOUCH",
-        WindowInsetsControllerCompat.BEHAVIOR_SHOW_BARS_BY_TOUCH
+    // Swipe from the edge to show a hidden bar. Gesture navigation works regardless of visibility
+    // of the navigation bar.
+    Default(
+        "BEHAVIOR_DEFAULT",
+        WindowInsetsController.BEHAVIOR_DEFAULT
     ),
     // "Sticky immersive mode". Swipe from the edge to temporarily reveal the hidden bar.
     ShowTransientBarsBySwipe(
         "BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE",
-        WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     )
 }
 
@@ -58,17 +54,17 @@ enum class TypeOption(
     // Both the status bar and the navigation bar
     SystemBars(
         "systemBars()",
-        WindowInsetsCompat.Type.systemBars()
+        WindowInsets.Type.systemBars()
     ),
     // The status bar only.
     StatusBar(
         "statusBars()",
-        WindowInsetsCompat.Type.statusBars()
+        WindowInsets.Type.statusBars()
     ),
     // The navigation bar only
     NavigationBar(
         "navigationBars()",
-        WindowInsetsCompat.Type.navigationBars()
+        WindowInsets.Type.navigationBars()
     )
 }
 
@@ -103,7 +99,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun controlWindowInsets(hide: Boolean) {
         // WindowInsetsController can hide or show specified system bars.
-        val insetsController = WindowInsetsControllerCompat(window, window.decorView)
+        val insetsController = window.decorView.windowInsetsController ?: return
         // The behavior of the immersive mode.
         val behavior = BehaviorOption.values()[behaviorSpinner.selectedItemPosition].value
         // The type of system bars to hide or show.
