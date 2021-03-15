@@ -1,17 +1,26 @@
-
 Android ImmersiveMode Sample
-===================================
+============================
 
-One of the features introduced in KitKat is "immersive mode". Immersive mode gives the
-user the ability to show/hide the status bar and navigation bar with a swipe.To try,
-click the "Toggle immersive mode" button, then try swiping the bar in and out!
+"Immersive mode" is intended for apps in which users will be heavily interacting with the screen.
+With this API, apps can hide the status bar, the navigation bar, or both. When users need to bring
+back the system bars, they swipe from any edge where a system bar is hidden.
 
-Pre-requisites
---------------
+"Immersive mode" was originally introduced in Android 4.4 KitKat (API level 19).
+[View.setSystemUiVisibility][1] and other APIs provided ability to toggle visibility of System UI
+windows, such as the status bar and the navigation bar. The API was overhauled in Android 11 (API
+level 30), and apps can now use [WindowInsetsController][2] and other APIs to control the behavior
+and visibility of System UI windows that affect [WindowInsets][3]. Alternatively, apps can use
+[WindowInsetsControllerCompat][4] to implement this feature in a backward-compatible manner.
 
-- Android SDK 28
-- Android Build Tools v28.0.3
-- Android Support Repository
+[1]: https://developer.android.com/reference/android/view/View#setSystemUiVisibility(int)
+[2]: https://developer.android.com/reference/android/view/WindowInsetsController
+[3]: https://developer.android.com/reference/android/view/WindowInsets
+[4]: https://developer.android.com/reference/androidx/core/view/WindowInsetsControllerCompat
+
+Screenshot
+----------
+
+<img src="screenshots/main.png" height="400" alt="Screenshot"/>
 
 Getting Started
 ---------------
