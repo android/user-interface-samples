@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package com.google.android.samples.insetsanimation
 
-import android.graphics.Insets
 import android.os.CancellationSignal
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsetsAnimationControlListener
-import android.view.WindowInsetsAnimationController
 import android.view.animation.LinearInterpolator
+import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsAnimationControlListenerCompat
+import androidx.core.view.WindowInsetsAnimationControllerCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.dynamicanimation.animation.SpringAnimation
 import androidx.dynamicanimation.animation.SpringForce
 import androidx.dynamicanimation.animation.springAnimationOf
@@ -30,39 +33,39 @@ import androidx.dynamicanimation.animation.withSpringForceProperties
 import kotlin.math.roundToInt
 
 /**
- * A wrapper around the new [WindowInsetsAnimationController] APIs in Android 11, to simplify
+ * A wrapper around the [WindowInsetsAnimationControllerCompat] APIs in AndroidX Core, to simplify
  * the implementation of common use-cases around the IME.
  *
  * See [InsetsAnimationLinearLayout] and [InsetsAnimationTouchListener] for examples of how
  * to use this class.
  */
 internal class SimpleImeAnimationController {
-    private var insetsAnimationController: WindowInsetsAnimationController? = null
+    private var insetsAnimationController: WindowInsetsAnimationControllerCompat? = null
     private var pendingRequestCancellationSignal: CancellationSignal? = null
-    private var pendingRequestOnReady: ((WindowInsetsAnimationController) -> Unit)? = null
+    private var pendingRequestOnReady: ((WindowInsetsAnimationControllerCompat) -> Unit)? = null
 
     /* To take control of the an WindowInsetsAnimation, we need to pass in a listener to
        controlWindowInsetsAnimation() in startControlRequest(). The listener created here
        keeps track of the current WindowInsetsAnimationController and resets our state. */
-    private val animationControlListener: WindowInsetsAnimationControlListener by lazy {
-        object : WindowInsetsAnimationControlListener {
+    private val animationControlListener by lazy {
+        object : WindowInsetsAnimationControlListenerCompat {
             /**
              * Once the request is ready, call our [onRequestReady] function
              */
             override fun onReady(
-                controller: WindowInsetsAnimationController,
+                controller: WindowInsetsAnimationControllerCompat,
                 types: Int
             ) = onRequestReady(controller)
 
             /**
              * If the request is finished, we should reset our internal state
              */
-            override fun onFinished(controller: WindowInsetsAnimationController) = reset()
+            override fun onFinished(controller: WindowInsetsAnimationControllerCompat) = reset()
 
             /**
              * If the request is cancelled, we should reset our internal state
              */
-            override fun onCancelled(controller: WindowInsetsAnimationController?) = reset()
+            override fun onCancelled(controller: WindowInsetsAnimationControllerCompat?) = reset()
         }
     }
 
@@ -83,14 +86,15 @@ internal class SimpleImeAnimationController {
      */
     fun startControlRequest(
         view: View,
-        onRequestReady: ((WindowInsetsAnimationController) -> Unit)? = null
+        onRequestReady: ((WindowInsetsAnimationControllerCompat) -> Unit)? = null
     ) {
         check(!isInsetAnimationInProgress()) {
             "Animation in progress. Can not start a new request to controlWindowInsetsAnimation()"
         }
 
         // Keep track of the IME insets, and the IME visibility, at the start of the request
-        isImeShownAtStart = view.rootWindowInsets.isVisible(WindowInsets.Type.ime())
+        isImeShownAtStart = ViewCompat.getRootWindowInsets(view)
+            ?.isVisible(WindowInsetsCompat.Type.ime()) == true
 
         // Create a cancellation signal, which we pass to controlWindowInsetsAnimation() below
         pendingRequestCancellationSignal = CancellationSignal()
@@ -98,9 +102,9 @@ internal class SimpleImeAnimationController {
         pendingRequestOnReady = onRequestReady
 
         // Finally we make a controlWindowInsetsAnimation() request:
-        view.windowInsetsController?.controlWindowInsetsAnimation(
+        ViewCompat.getWindowInsetsController(view)?.controlWindowInsetsAnimation(
             // We're only catering for IME animations in this listener
-            WindowInsets.Type.ime(),
+            WindowInsetsCompat.Type.ime(),
             // Animation duration. This is not used by the system, and is only passed to any
             // WindowInsetsAnimation.Callback set on views. We pass in -1 to indicate that we're
             // not starting a finite animation, and that this is completely controlled by
@@ -141,8 +145,10 @@ internal class SimpleImeAnimationController {
      */
     fun insetBy(dy: Int): Int {
         val controller = insetsAnimationController
-            ?: throw IllegalStateException("Current WindowInsetsAnimationController is null." +
-                    "This should only be called if isAnimationInProgress() returns true")
+            ?: throw IllegalStateException(
+                "Current WindowInsetsAnimationController is null." +
+                        "This should only be called if isAnimationInProgress() returns true"
+            )
 
         // Call updateInsetTo() with the new inset value
         return insetTo(controller.currentInsets.bottom - dy)
@@ -158,8 +164,10 @@ internal class SimpleImeAnimationController {
      */
     fun insetTo(inset: Int): Int {
         val controller = insetsAnimationController
-            ?: throw IllegalStateException("Current WindowInsetsAnimationController is null." +
-                    "This should only be called if isAnimationInProgress() returns true")
+            ?: throw IllegalStateException(
+                "Current WindowInsetsAnimationController is null." +
+                        "This should only be called if isAnimationInProgress() returns true"
+            )
 
         val hiddenBottom = controller.hiddenStateInsets.bottom
         val shownBottom = controller.shownStateInsets.bottom
@@ -188,29 +196,29 @@ internal class SimpleImeAnimationController {
     }
 
     /**
-     * Return [true] if an inset animation is in progress.
+     * Return `true` if an inset animation is in progress.
      */
     fun isInsetAnimationInProgress(): Boolean {
         return insetsAnimationController != null
     }
 
     /**
-     * Return [true] if an inset animation is currently finishing.
+     * Return `true` if an inset animation is currently finishing.
      */
     fun isInsetAnimationFinishing(): Boolean {
         return currentSpringAnimation != null
     }
 
     /**
-     * Return [true] if a request to control an inset animation is in progress.
+     * Return `true` if a request to control an inset animation is in progress.
      */
     fun isInsetAnimationRequestPending(): Boolean {
         return pendingRequestCancellationSignal != null
     }
 
     /**
-     * Cancel the current [WindowInsetsAnimationController]. We immediately finish the animation,
-     * reverting back to the state at the start of the gesture.
+     * Cancel the current [WindowInsetsAnimationControllerCompat]. We immediately finish
+     * the animation, reverting back to the state at the start of the gesture.
      */
     fun cancel() {
         insetsAnimationController?.finish(isImeShownAtStart)
@@ -223,7 +231,7 @@ internal class SimpleImeAnimationController {
     }
 
     /**
-     * Finish the current [WindowInsetsAnimationController] immediately.
+     * Finish the current [WindowInsetsAnimationControllerCompat] immediately.
      */
     fun finish() {
         val controller = insetsAnimationController
@@ -256,7 +264,7 @@ internal class SimpleImeAnimationController {
     }
 
     /**
-     * Finish the current [WindowInsetsAnimationController]. We finish the animation,
+     * Finish the current [WindowInsetsAnimationControllerCompat]. We finish the animation,
      * animating to the end state if necessary.
      *
      * @param velocityY the velocity of the touch gesture which caused this call to [animateToFinish].
@@ -298,7 +306,7 @@ internal class SimpleImeAnimationController {
         }
     }
 
-    private fun onRequestReady(controller: WindowInsetsAnimationController) {
+    private fun onRequestReady(controller: WindowInsetsAnimationControllerCompat) {
         // The request is ready, so clear out the pending cancellation signal
         pendingRequestCancellationSignal = null
         // Store the current WindowInsetsAnimationController
