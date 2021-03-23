@@ -1,7 +1,7 @@
 WindowInsetsAnimation sample
 ============
 
-This sample shows how to react to the on-screen keyboard (IME) changing visibility, and also controlling the IME's visibility. To do this, the sample uses the [WindowInsetsAnimationCompat](https://developer.android.com/reference/androidx/core/view/WindowInsetsAnimationCompat) and [WindowInsetsAnimationController](https://developer.android.com/reference/android/view/WindowInsetsAnimationController) APIs available in [AndroidX Core][androidxcore] and [Android 11](https://developer.android.com/11).
+This sample shows how to react to the on-screen keyboard (IME) changing visibility, and also controlling the IME's visibility. To do this, the sample uses the [WindowInsetsAnimationCompat](https://developer.android.com/reference/androidx/core/view/WindowInsetsAnimationCompat) and [WindowInsetsAnimationControllerCompat][wiac] APIs available in [AndroidX Core][androidxcore] and [Android 11](https://developer.android.com/11).
 
 ![Animation showing app in use](./images/demos.gif)
 
@@ -26,7 +26,7 @@ As this feature relies on new APIs, we gracefully degrade the experience as so:
 
 When the user scrolls up on the conversation list, to the end of the list's content, and keeps scrolling (aka over-scrolling) the sample takes control of the IME and animates it on/off screen as part of the scroll gesture. You can see this in the demo above on the left, as the IME scrolls on and off screen with the conversation.
 
-In terms of implementation, this is done using the [`WindowInsetsAnimationControllerCompat`](https://developer.android.com/reference/androidx/core/view/WindowInsetsAnimationControllerCompat) API available in [AndroidX Core][androidxcore] 1.5.0. A nested scrolling `LinearLayout` which automatically reacts to scrolls by insetting the IME on/off screen is provided in [`InsetsAnimationLinearLayout`](./app/src/main/java/com/google/android/samples/insetsanimation/InsetsAnimationLinearLayout.kt).
+In terms of implementation, this is done using the [`WindowInsetsAnimationControllerCompat`][wiac] API available in [AndroidX Core][androidxcore] 1.5.0. A nested scrolling `LinearLayout` which automatically reacts to scrolls by insetting the IME on/off screen is provided in [`InsetsAnimationLinearLayout`](./app/src/main/java/com/google/android/samples/insetsanimation/InsetsAnimationLinearLayout.kt).
 
 A [`View.OnTouchListener`](https://developer.android.com/reference/kotlin/android/view/View.OnTouchListener) implementation, for use with non-scrolling views is also provided as [`InsetsAnimationTouchListener`](./app/src/main/java/com/google/android/samples/insetsanimation/InsetsAnimationTouchListener.kt).
 
@@ -56,3 +56,4 @@ Patches are encouraged, and may be submitted by forking this project and
 submitting a pull request through GitHub.
 
  [androidxcore]: https://developer.android.com/jetpack/androidx/releases/core
+ [wiac]: https://developer.android.com/reference/androidx/core/view/WindowInsetsAnimationControllerCompat
