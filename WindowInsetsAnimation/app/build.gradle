@@ -43,9 +43,7 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
-    implementation 'androidx.core:core-ktx:1.5.0-beta02'
+    implementation 'androidx.core:core-ktx:1.5.0-beta03'
     implementation 'androidx.dynamicanimation:dynamicanimation-ktx:1.0.0-alpha03'
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
