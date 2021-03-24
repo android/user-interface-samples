@@ -20,8 +20,8 @@
     <color name="color_primary_dark">#3700B3</color>
     <color name="color_accent">#03DAC5</color>
 
-    <color name="color_feature_fold">#7700FF00</color>
-    <color name="color_feature_hinge">#77FF0000</color>
+    <color name="color_feature_not_separating">#7700FF00</color>
+    <color name="color_feature_separating">#77FF0000</color>
     <color name="color_feature_unknown">#77000000</color>
 
     <color name="color_split_content_background">#3B6BDB4C</color>
