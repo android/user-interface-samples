@@ -20,11 +20,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 'android-S'
     defaultConfig {
         applicationId 'com.example.android.immersivemode'
-        minSdkVersion 14
-        targetSdkVersion 30
+        minSdkVersion 'S'
+        targetSdkVersion 'S'
         versionCode 1
         versionName '1.0'
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
