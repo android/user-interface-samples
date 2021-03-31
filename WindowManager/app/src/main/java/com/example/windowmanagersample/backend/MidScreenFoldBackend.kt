@@ -59,7 +59,7 @@ class MidScreenFoldBackend(private val foldAxis: FoldAxis) : WindowBackend {
     private var windowLayoutInfoCallback: Consumer<WindowLayoutInfo>? = null
     private var windowLayoutInfoExecutor: Executor? = null
 
-    override fun getWindowLayoutInfo(context: Context): WindowLayoutInfo {
+    fun getWindowLayoutInfo(context: Context): WindowLayoutInfo {
         // Use androidx.window.windowMetrics to retrieve current window size
         val windowMetrics = WindowManager(context).currentWindowMetrics
         val windowSize = Point(windowMetrics.bounds.width(), windowMetrics.bounds.height())
@@ -111,17 +111,6 @@ class MidScreenFoldBackend(private val foldAxis: FoldAxis) : WindowBackend {
         windowLayoutInfoExecutor?.execute {
             windowLayoutInfoCallback?.accept(getWindowLayoutInfo(activity))
         }
-    }
-
-    /**
-     * Deprecated methods, not implemented in this sample
-     */
-    override fun getDeviceState(): DeviceState {
-        TODO("Not yet implemented")
-    }
-
-    override fun getWindowLayoutInfo(activity: Activity): WindowLayoutInfo {
-        return getWindowLayoutInfo(activity as Context)
     }
 
     @Deprecated("Use FoldingFeature to get the state of the hinge instead.")

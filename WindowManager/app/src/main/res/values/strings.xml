@@ -21,9 +21,9 @@
     <string name="state_update_log">State update log</string>
     <string name="device_state">Device state</string>
     <string name="window_layout">Window layout</string>
-    <string name="hinge">Hinge</string>
+    <string name="separating">Separated</string>
     <string name="unknown">Unknown</string>
-    <string name="fold">Fold</string>
+    <string name="not_separating">Not Separated</string>
     <string name="legend">Legend:</string>
     <string name="content_title">Content title</string>
     <string name="green_droid">Green droid</string>
@@ -42,5 +42,9 @@
     <string name="device_state_toggle_button">Toggle Device State</string>
     <string name="unknown_legend_color">Unknown Legend Color</string>
     <string name="hinge_legend_color">Hinge Legend Color</string>
-    <string name="fold_legend_color">Fold Legend Color</string>
+    <string name="separating_legend_color">Separating Legend Color</string>
+    <string name="screens_are_separated">"Screens are separated"</string>
+    <string name="screens_are_not_separated">"Screen is not separated"</string>
+    <string name="screen_is_horizontal">"Hinge is horizontal"</string>
+    <string name="screen_is_vertical">"Hinge is vertical"</string>
 </resources>

@@ -36,6 +36,7 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
     private val stateLog: StringBuilder = StringBuilder()
 
     private val displayFeatureViews = ArrayList<View>()
+
     // Store most recent values for the device state and window layout
     private val stateContainer = StateContainer()
     private lateinit var binding: ActivityDisplayFeaturesBinding
@@ -84,7 +85,6 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         layoutInfo?.let { windowLayoutInfo ->
             stateStringBuilder.append(getString(R.string.window_layout))
                 .append(": ")
-                .append(windowLayoutInfo)
 
             // Add views that represent display features
             for (displayFeature in windowLayoutInfo.displayFeatures) {
@@ -101,10 +101,28 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
 
                 val featureView = View(this)
                 val foldFeature = displayFeature as? FoldingFeature
-                val color = when (foldFeature?.type) {
-                    FoldingFeature.TYPE_FOLD -> getColor(R.color.color_feature_fold)
-                    FoldingFeature.TYPE_HINGE -> getColor(R.color.color_feature_hinge)
-                    else -> getColor(R.color.color_feature_unknown)
+
+                val color = if (foldFeature != null) {
+                    if (foldFeature.isSeparating) {
+                        stateStringBuilder.append(getString(R.string.screens_are_separated))
+                        getColor(R.color.color_feature_separating)
+                    } else {
+                        stateStringBuilder.append(getString(R.string.screens_are_not_separated))
+                        getColor(R.color.color_feature_not_separating)
+                    }
+                } else {
+                    getColor(R.color.color_feature_unknown)
+                }
+                if (foldFeature != null) {
+                    stateStringBuilder
+                        .append(" - ")
+                        .append(
+                            if (foldFeature.orientation == FoldingFeature.ORIENTATION_HORIZONTAL) {
+                                getString(R.string.screen_is_horizontal)
+                            } else {
+                                getString(R.string.screen_is_vertical)
+                            }
+                        )
                 }
                 featureView.foreground = ColorDrawable(color)
 
@@ -119,10 +137,10 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
     }
 
     /** Adds the current state to the text log of changes on screen. */
-    internal fun updateStateLog(info: Any) {
+    internal fun updateStateLog(layoutInfo: WindowLayoutInfo) {
         stateLog.append(getCurrentTimeString())
             .append(" ")
-            .append(info)
+            .append(layoutInfo)
             .append("\n")
         binding.stateUpdateLog.text = stateLog
     }
