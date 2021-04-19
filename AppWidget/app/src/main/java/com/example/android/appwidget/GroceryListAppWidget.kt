@@ -16,18 +16,16 @@
 
 package com.example.android.appwidget
 
-import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
-import android.content.Intent
 import android.widget.RemoteViews
-import android.widget.RemoteViewsService
 
 /**
  * Implementation of App Widget functionality for the grocery list.
  */
 class GroceryListAppWidget : AppWidgetProvider() {
+
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -46,15 +44,21 @@ class GroceryListAppWidget : AppWidgetProvider() {
     override fun onDisabled(context: Context) {
         // Enter relevant functionality for when the last widget is disabled
     }
+
+    override fun onDeleted(context: Context, appWidgetIds: IntArray) {
+        // When the user deletes the widget, delete the preference associated with it.
+        for (appWidgetId in appWidgetIds) {
+            TodoListSharedPrefsUtil.deleteWidgetLayoutIdPref(context, appWidgetId)
+        }
+    }
 }
 
-@SuppressLint("RemoteViewLayout")
-private fun updateAppWidget(
+internal fun updateAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-    val views = RemoteViews(context.packageName, R.layout.widget_grocery_list)
-    // Instruct the widget manager to update the widget
+    val layoutId = TodoListSharedPrefsUtil.loadWidgetLayoutIdPref(context, appWidgetId)
+    val views = RemoteViews(context.packageName, layoutId)
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
