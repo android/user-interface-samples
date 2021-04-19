@@ -10,7 +10,7 @@ The initial set of new APIs focuses on improving existing RemoteView APIs.
 List of API changes
 ------------
 
-- Widget description
+- **Widget description**
 
   In API level 31, a widget description is shown for each widget in the widget
   picker if `description` attribute is provided for your `appwidget-provider`
@@ -21,7 +21,7 @@ List of API changes
     ... />
   ```
 
-- Preview layout
+- **Preview layout**
 
   The widget preview is displayed from the layout XML if it's provided as
   `previewLayout` attribute for your `appwidget-provider` instead of a
@@ -40,7 +40,7 @@ List of API changes
     title="Image of the widget with description and previewLayout"
     />
 
-- Dynamic coloring
+- **Dynamic coloring**
 
   In API level 31, the colors of your widget will be dynamically determined by the wallpaper colors.
   You should use the system's default theme in order to apply the dynamic coloring (`Theme.DeviceDefault` and
@@ -83,7 +83,8 @@ List of API changes
       alt="screenshot for dynamic coloring on dark theme"
       title="screenshot for dynamic coloring on dark theme" />
 
-- Padding and rounded corners
+- **Padding and rounded corners**
+
   Following system attributes are introduced in API level 31 for widget paddings and
   radius of the background and the views inside the widget to make the rounded corners
   and paddings to make the appearance of the widgets consistent with the System UI in
@@ -139,6 +140,35 @@ List of API changes
   <img src="screenshots/widget_rounded_corners.png"
       alt="screenshot for a widget with rounded corners"
       title="screenshot for a widget with rounded corners" />
+
+- **Deferrable configurability**
+
+  In API level 31, users are able to reconfigure widgets after they are addd to the home screen
+  by long pressing on the widget and clicking the reconfigure button(the button visible at the
+  bottom right corner after long pressing the widget).
+  You need to specify `reconfigurable` value for the `widgetFeatures` attribute.
+
+  ```xml
+  <appwidget-provider
+      android:configure="com.example.android.appwidget.GroceryListWidgetTitleConfigureActivity"
+      android:widgetFeatures="reconfigurable"
+      ... />
+  ```
+
+  <img src="screenshots/widget_reconfigure.png"
+      alt="screenshot for a widget with reconfigure button"
+      title="screenshot for a widget with reconfigure button" />
+
+  By specifying `configuration_optional` for the `widgetFeatures` attribute, you can choose to skip the
+  initial configuration (the Activity specified by `configure` is invoked) when the widget is placed
+  on the home screen.
+
+  ```xml
+  <appwidget-provider
+      android:configure="com.example.android.appwidget.GroceryListWidgetTitleConfigureActivity"
+      android:widgetFeatures="reconfigurable|configuration_optional"
+      ... />
+  ```
 
 Pre-requisites
 --------------

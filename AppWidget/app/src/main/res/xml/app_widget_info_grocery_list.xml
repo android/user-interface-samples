@@ -23,8 +23,14 @@ android:description :
 android:targetCell(Width|Height) :
   Defines the default target size of the widget in cells in the home launcher. If they are defined,
   these attributes will be used instead of existing min(Width|Height) attributes in pre-API 31.
+android:widgetFeatures :
+  Specifying `reconfigurable` allows the widget to be reconfigurable after the widget is placed to the
+  home screen.
+  Specifying `configuration_optional` will skip the configuration Activity is invoked when the
+  widget is placed on the home screen (default values are used in that case).
 -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.example.android.appwidget.GroceryListWidgetConfigureActivity"
     android:description="@string/app_widget_grocery_list_description"
     android:initialKeyguardLayout="@layout/widget_grocery_list"
     android:initialLayout="@layout/widget_grocery_list"
@@ -36,4 +42,5 @@ android:targetCell(Width|Height) :
     android:targetCellWidth="3"
     android:targetCellHeight="2"
     android:updatePeriodMillis="86400000"
-    android:widgetCategory="home_screen" />
+    android:widgetCategory="home_screen"
+    android:widgetFeatures="reconfigurable|configuration_optional" />

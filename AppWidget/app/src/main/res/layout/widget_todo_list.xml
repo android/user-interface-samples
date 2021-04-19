@@ -26,14 +26,14 @@
         android:minHeight="@dimen/widget_element_min_length" >
 
         <TextView
-            android:id="@+id/grocery_list_title"
+            android:id="@+id/todo_list_title"
             style="?android:attr/textAppearanceLarge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
-            android:text="@string/grocery_list"
+            android:text="@string/todo_list"
             android:textColor="?android:attr/textColorPrimary" />
 
         <ImageButton
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/widget_element_min_length"
-        android:text="@string/grocery_list_milk"
+        android:text="@string/todo_list_clean_kitchen"
         android:textColor="?android:attr/textColorPrimary"
         />
 
@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/widget_element_min_length"
-        android:text="@string/grocery_list_eggs"
+        android:text="@string/todo_list_buy_groceries"
         android:textColor="?android:attr/textColorPrimary"
         />
 
@@ -66,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/widget_element_min_length"
-        android:text="@string/grocery_list_tomatoes"
+        android:text="@string/todo_list_build_widgets"
         android:textColor="?android:attr/textColorPrimary"
         />
 </LinearLayout>

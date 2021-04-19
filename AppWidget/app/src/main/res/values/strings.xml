@@ -15,11 +15,16 @@
   -->
 <resources>
     <string name="app_name">AppWidget</string>
-    <string name="add_widget">Add widget</string>
     <string name="grocery_list">Grocery list</string>
     <string name="add_button_grocery_list_content_description">Add button for grocery list</string>
     <string name="app_widget_grocery_list_description">Todo list for groceries</string>
     <string name="grocery_list_milk">Milk</string>
     <string name="grocery_list_eggs">Eggs</string>
     <string name="grocery_list_tomatoes">Tomatoes</string>
+    <string name="select_list_for_widget">Select list for widgets</string>
+    <string name="plus_three_other_items">+3 other items</string>
+    <string name="todo_list">To-do list</string>
+    <string name="todo_list_clean_kitchen">Clean kitchen</string>
+    <string name="todo_list_buy_groceries">Buy groceries</string>
+    <string name="todo_list_build_widgets">Build widgets</string>
 </resources>
