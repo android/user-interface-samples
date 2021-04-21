@@ -16,9 +16,11 @@
 
 package com.example.android.appwidget
 
+import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.content.Intent
 import android.widget.RemoteViews
 
 /**
@@ -53,6 +55,8 @@ class GroceryListAppWidget : AppWidgetProvider() {
     }
 }
 
+private const val REQUEST_CODE_OPEN_ACTIVITY = 1
+
 internal fun updateAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,
@@ -60,5 +64,17 @@ internal fun updateAppWidget(
 ) {
     val layoutId = TodoListSharedPrefsUtil.loadWidgetLayoutIdPref(context, appWidgetId)
     val views = RemoteViews(context.packageName, layoutId)
+    val openIntent = PendingIntent.getActivity(
+        context,
+        REQUEST_CODE_OPEN_ACTIVITY,
+        Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+        },
+        // API level 31 requires specifying either of
+        // PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_MUTABLE
+        PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+    views.setOnClickPendingIntent(R.id.grocery_list_title, openIntent)
+    views.setOnClickPendingIntent(R.id.todo_list_title, openIntent)
     appWidgetManager.updateAppWidget(appWidgetId, views)
 }
