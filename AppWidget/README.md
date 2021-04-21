@@ -170,6 +170,22 @@ List of API changes
       ... />
   ```
 
+- **Transitions**
+  In API level 31, there is a smooth transition from the widget to the app when the user launches the app from the widget.
+
+  You need to specify the id of the background element of the widget with the [android:id/background](https://developer.android.com/reference/android/R.id#background) to enable this smooth transition.
+
+  ```xml
+  <LinearLayout
+    android:id="@android:id/background">
+    ...
+  </LinearLayout>
+  ```
+  <img src="screenshots/widget_smooth_transition.gif"
+      alt="screen record of a smooth transition from the widget to the app"
+      title="screen record of a smooth transition from the widget to the app" />
+
+
 Pre-requisites
 --------------
 
