@@ -171,6 +171,7 @@ List of API changes
   ```
 
 - **Transitions**
+
   In API level 31, there is a smooth transition from the widget to the app when the user launches the app from the widget.
 
   You need to specify the id of the background element of the widget with the [android:id/background](https://developer.android.com/reference/android/R.id#background) to enable this smooth transition.
@@ -184,6 +185,63 @@ List of API changes
   <img src="screenshots/widget_smooth_transition.gif"
       alt="screen record of a smooth transition from the widget to the app"
       title="screen record of a smooth transition from the widget to the app" />
+
+- **Compound buttons**
+
+  In API level 31, therer are three new compound buttons to use in a widget to support stateful behavior.
+
+  <img src="screenshots/widget_items_collection.png" 
+       alt="Screenshot of a widget with compound buttons" 
+       title="Screenshot of a widget with compound buttons" /> 
+
+  The widget itself is still stateless, so you need to store the state and register a listener for the state change events.
+
+  ```kotlin
+  // This code will check the Checkbox
+  remoteViews.setCompoundButtonChecked(R.id.item_checkbox, true)
+  ```
+
+  ```kotlin
+  // This code will check the item_radio_button2 in the item_radio_group RadioGroup
+  remoteViews.setRadioGroupChecked(R.id.item_radio_group, R.id.item_radio_button2))
+  ```
+
+  ```kotlin
+  // Listen for change events.
+  // PendingIntent vs FillInIntent works the same except the intent will be filled with a
+  // boolean at RemoteViews.EXTRA_CHECKED
+  remoteViews.setOnCheckedChangeResponse(
+    R.id.item_switch,
+    RemoteViews.RemoteResponse.fromPendingIntent(onCheckedChangePendingIntent)
+  )
+  remoteViews.setOnCheckedChangeResponse(
+    R.id.item_switch,
+    RemoteViews.RemoteResponse.fromFillInIntent(onCheckedChangeFillInIntent)
+  )
+  ```
+
+- **Simplified RemoteView collections**
+ 
+  When you use a collection of RemoteViews (ListView) you need to declare and write a [RemoteViewService](https://developer.android.com/reference/android/widget/RemoteViewsService) to return 
+  [RemoteViewsFactory](https://developer.android.com/reference/android/widget/RemoteViewsService.RemoteViewsFactory), which complicates the code in AppWidgetProvider and forces the system to bind and start up your service
+  even if the collection has only few items.
+
+  In API level 31, a new API allows you to pass a collection of RemoteViews directly when populating a ListView.
+
+  ```kotlin
+  remoteViews.setRemoteAdapter(
+    R.id.items_list_view, 
+    RemoteViews.RemoteCollectionItems.Builder()
+      .addItem(/* id= */ ID_1, RemoteViews(...))
+      .addItem(/* id= */ ID_2, RemoteViews(...))
+      ...
+      .setViewTypeCount(MAX_NUM_DIFFERENT_REMOTE_VIEWS_LAYOUTS)
+      .build()
+  )
+  ```
+
+  `setViewTypeCount` should be used if you have some RemoteViews items with layouts that are sometimes present and sometimes aren’t.
+  If you just have one item type or you have some headers and then a variable number of items, you can ignore this.
 
 
 Pre-requisites

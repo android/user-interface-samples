@@ -27,4 +27,10 @@
     <string name="todo_list_clean_kitchen">Clean kitchen</string>
     <string name="todo_list_buy_groceries">Buy groceries</string>
     <string name="todo_list_build_widgets">Build widgets</string>
+    <string name="radio_button1">Radio Button 1</string>
+    <string name="radio_button2">Radio Button 2</string>
+    <string name="check_box">Check box</string>
+    <string name="switch_element">Switch</string>
+    <string name="items_widget_description">Widget for collection of items</string>
+    <string name="items_collection">Items collection</string>
 </resources>
