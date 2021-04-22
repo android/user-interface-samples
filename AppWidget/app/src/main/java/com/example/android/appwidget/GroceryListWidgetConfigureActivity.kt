@@ -17,12 +17,10 @@
 package com.example.android.appwidget
 
 import android.appwidget.AppWidgetManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.edit
 import com.example.android.appwidget.databinding.ActivityWidgetConfigureBinding
 
 /**
