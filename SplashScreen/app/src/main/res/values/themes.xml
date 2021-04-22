@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2021 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+<resources>
+
+    <style name="Base.Theme.SplashScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <!--
+        The default theme for activities. This does not have any configuration about the splash
+        screen.
+    -->
+    <style name="Theme.SplashScreen" parent="Base.Theme.SplashScreen">
+        <item name="colorPrimary">@color/lime_500</item>
+        <item name="colorPrimaryVariant">@color/lime_700</item>
+        <item name="colorOnPrimary">@android:color/black</item>
+        <item name="colorSecondary">@color/blue_gray_500</item>
+        <item name="colorSecondaryVariant">@color/blue_gray_700</item>
+        <item name="colorOnSecondary">@android:color/black</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <!--
+        The activity theme with animated icon in the splash screen.
+    -->
+    <style name="Theme.SplashScreen.Animated">
+        <!-- The animated icon to be displayed at the center of the splash screen -->
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_hourglass_animated</item>
+        <!-- The background color for the splash screen -->
+        <item name="android:windowSplashScreenBackground">@color/lime_500</item>
+        <!-- The duration, in milliseconds, of the icon animation of the splash screen -->
+        <item name="android:windowSplashScreenAnimationDuration">1000</item>
+        <!-- The branding image displayed at the bottom of the splash screen -->
+        <item name="android:windowSplashScreenBrandingImage">@drawable/branding_image</item>
+    </style>
+
+</resources>
