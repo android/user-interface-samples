@@ -26,8 +26,8 @@ abstract class MainActivity : AppCompatActivity() {
         val binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        // Suspend drawing the app content until the initial data is ready.
-        suspendDraw()
+        // Suppress drawing the app content until the initial data is ready.
+        suppressDraw()
 
         // Configure edge-to-edge display.
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -75,11 +75,11 @@ abstract class MainActivity : AppCompatActivity() {
         else -> throw RuntimeException("Unknown view ID: $radioButtonId")
     }
 
-    private fun suspendDraw() {
+    private fun suppressDraw() {
         val content: View = findViewById(android.R.id.content)
         // The splash screen is dismissed as soon as the app draws its first frame. If you want to
         // load some small data asynchronously during the splash screen, you can use an
-        // OnPreDrawListener to suspend drawing the app content before the data is ready.
+        // OnPreDrawListener to suppress drawing the app content before the data is ready.
         content.viewTreeObserver.addOnPreDrawListener(
             object : ViewTreeObserver.OnPreDrawListener {
                 override fun onPreDraw(): Boolean {

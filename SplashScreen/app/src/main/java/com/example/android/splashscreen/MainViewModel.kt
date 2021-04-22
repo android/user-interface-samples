@@ -19,6 +19,7 @@ package com.example.android.splashscreen
 import android.app.Application
 import android.app.UiModeManager
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -36,7 +37,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     // SharedPreferences for saving theme settings. Consider using
     // [DataStore][https://developer.android.com/topic/libraries/architecture/datastore] or
     // [Room][https://developer.android.com/training/data-storage/room] in real-life apps.
-    private val prefs = application.getSharedPreferences(PREFS_MAIN, Context.MODE_PRIVATE)
+    private var _prefs: SharedPreferences? = null
 
     /**
      * The current night mode setting saved and persisted by the system.
@@ -55,6 +56,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     init {
         viewModelScope.launch {
             val nightMode = withContext(Dispatchers.IO) {
+                val prefs = application
+                    .getSharedPreferences(PREFS_MAIN, Context.MODE_PRIVATE).also {
+                        _prefs = it
+                    }
                 prefs.getInt(PREF_NIGHT_MODE, UiModeManager.MODE_NIGHT_AUTO)
             }
             _nightMode.value = nightMode
@@ -65,6 +70,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun updateNightMode(nightMode: Int) {
+        val prefs = _prefs ?: return
         val uiModeManager =
             getApplication<Application>().getSystemService(UiModeManager::class.java)
         // Sets and persists the night mode setting for this app. This allows the system to know

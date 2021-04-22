@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
 import android.view.animation.AnticipateInterpolator
+import android.window.SplashScreenView
 import androidx.core.animation.doOnEnd
 
 /**
@@ -37,12 +38,10 @@ class CustomActivity : MainActivity() {
         splashScreen.setOnExitAnimationListener { splashScreenView ->
 
             // The animated vector drawable is already animating at this point. Depending on the
-            // duration of the app launch, the animation might not have finished yet. We can
-            // calculate the remaining duration of the icon animation as follows.
-            val remainingDuration = (
-                    splashScreenView.iconAnimationDurationMillis -
-                            (SystemClock.uptimeMillis() - splashScreenView.iconAnimationStartMillis)
-                    ).coerceAtLeast(0L)
+            // duration of the app launch, the animation might not have finished yet.
+            // Check the extension property to see how to calculate the remaining duration of the
+            // icon animation.
+            val remainingDuration = splashScreenView.iconAnimationRemainingDurationMillis
 
             // The callback gives us a `SplashScreenView` as its parameter. This is the view for the
             // entire splash screen.
@@ -65,3 +64,16 @@ class CustomActivity : MainActivity() {
         }
     }
 }
+
+/**
+ * Calculates the remaining duration of the icon animation based on the total duration
+ * ([SplashScreenView.getIconAnimationDurationMillis]), the start time
+ * ([SplashScreenView.getIconAnimationStartMillis]), and the current time
+ * ([SystemClock.uptimeMillis]).
+ */
+private val SplashScreenView.iconAnimationRemainingDurationMillis: Long
+    get() {
+        return (iconAnimationDurationMillis -
+                (SystemClock.uptimeMillis() - iconAnimationStartMillis)
+                ).coerceAtLeast(0L)
+    }
