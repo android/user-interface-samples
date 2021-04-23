@@ -243,6 +243,37 @@ List of API changes
   `setViewTypeCount` should be used if you have some RemoteViews items with layouts that are sometimes present and sometimes aren’t.
   If you just have one item type or you have some headers and then a variable number of items, you can ignore this.
 
+- **Specifying size at compile time**
+
+  In API level 31, following new attributes are introduced to ensure more reliable sizes for the widget across devices and size permutations.
+
+  - `targetCellWidth/targetCellHeight`
+
+    Defines the default size of the widget measured in cells of the launcher home. If they are defined, those values will be used instead of `minWidth/minHeight` (that are available in API level < 31).
+
+  - `maxResizeWidth/maxResizeHeight`
+
+    Defines the maximum size of the widget in the launcher home.
+
+  It's recommended to use the new attributes above in addition to existing `minWidth/minHeight` and `minResizeWidth/minResizeHeight` attributes.
+
+  ```xml
+  <appwidget-provider
+    android:maxResizeWidth="240dp"
+    android:maxResizeHeight="180dp"
+    android:minWidth="180dp"
+    android:minHeight="110dp"
+    android:minResizeWidth="180dp"
+    android:minResizeHeight="110dp"
+    android:targetCellWidth="3"
+    android:targetCellHeight="2"
+    ... />
+  ```
+
+  <img src="screenshots/widget_resizing.png"
+       alt="Screenshot of a widget being resized"
+       title="Screenshot of a widget being resized" />
+
 
 Pre-requisites
 --------------
