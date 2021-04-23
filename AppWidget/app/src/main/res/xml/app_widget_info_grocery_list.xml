@@ -28,14 +28,25 @@ android:widgetFeatures :
   home screen.
   Specifying `configuration_optional` will skip the configuration Activity is invoked when the
   widget is placed on the home screen (default values are used in that case).
+android:targetCellWidth/targetCellHeight :
+  defines the default size of the widget measured in cells of the launcher home. If they are
+  defined, those values will be used instead of minWidth/minHeight
+  (that are available in API level < 31).
+android:maxResizeWidth/maxResizeHeight :
+  Defines the maximum size of the widget in the launcher home.
+
 -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:configure="com.example.android.appwidget.GroceryListWidgetConfigureActivity"
     android:description="@string/app_widget_grocery_list_description"
     android:initialKeyguardLayout="@layout/widget_grocery_list"
     android:initialLayout="@layout/widget_grocery_list"
+    android:maxResizeWidth="240dp"
+    android:maxResizeHeight="180dp"
     android:minWidth="180dp"
     android:minHeight="110dp"
+    android:minResizeWidth="180dp"
+    android:minResizeHeight="110dp"
     android:previewImage="@drawable/grocery_list_widget_preview"
     android:previewLayout="@layout/widget_grocery_list"
     android:resizeMode="horizontal|vertical"
