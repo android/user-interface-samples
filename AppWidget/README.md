@@ -150,7 +150,7 @@ List of API changes
 
   ```xml
   <appwidget-provider
-      android:configure="com.example.android.appwidget.GroceryListWidgetTitleConfigureActivity"
+      android:configure="com.example.android.appwidget.GroceryListWidgetConfigureActivity"
       android:widgetFeatures="reconfigurable"
       ... />
   ```
@@ -165,7 +165,7 @@ List of API changes
 
   ```xml
   <appwidget-provider
-      android:configure="com.example.android.appwidget.GroceryListWidgetTitleConfigureActivity"
+      android:configure="com.example.android.appwidget.GroceryListWidgetConfigureActivity"
       android:widgetFeatures="reconfigurable|configuration_optional"
       ... />
   ```
@@ -208,8 +208,9 @@ List of API changes
 
   ```kotlin
   // Listen for change events.
-  // PendingIntent vs FillInIntent works the same except the intent will be filled with a
-  // boolean at RemoteViews.EXTRA_CHECKED
+  // RemoteResponse.fromPendingIntent works on an individual item whereas you can set
+  // a PendingIntent template using RemoteViews.setPendingIntentTemplate and
+  // distinguish individual on-click by calling RemoteResponse.fromFillInIntent.
   remoteViews.setOnCheckedChangeResponse(
     R.id.item_switch,
     RemoteViews.RemoteResponse.fromPendingIntent(onCheckedChangePendingIntent)
@@ -219,6 +220,8 @@ List of API changes
     RemoteViews.RemoteResponse.fromFillInIntent(onCheckedChangeFillInIntent)
   )
   ```
+  See the documents for [fromPendingIntent](https://developer.android.com/reference/android/widget/RemoteViews.RemoteResponse#fromPendingIntent(android.app.PendingIntent)) and [fromFillInIntent](https://developer.android.com/reference/android/widget/RemoteViews.RemoteResponse#fromFillInIntent(android.content.Intent)) for more details.
+
 
 - **Simplified RemoteView collections**
  
