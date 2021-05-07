@@ -21,7 +21,6 @@ import android.content.Context
 import android.graphics.Point
 import android.graphics.Rect
 import androidx.core.util.Consumer
-import androidx.window.DeviceState
 import androidx.window.DisplayFeature
 import androidx.window.FoldingFeature
 import androidx.window.WindowBackend
@@ -61,7 +60,7 @@ class MidScreenFoldBackend(private val foldAxis: FoldAxis) : WindowBackend {
 
     fun getWindowLayoutInfo(context: Context): WindowLayoutInfo {
         // Use androidx.window.windowMetrics to retrieve current window size
-        val windowMetrics = WindowManager(context).currentWindowMetrics
+        val windowMetrics = WindowManager(context).getCurrentWindowMetrics()
         val windowSize = Point(windowMetrics.bounds.width(), windowMetrics.bounds.height())
         val featureRect = foldRect(windowSize)
 
@@ -113,16 +112,6 @@ class MidScreenFoldBackend(private val foldAxis: FoldAxis) : WindowBackend {
         }
     }
 
-    @Deprecated("Use FoldingFeature to get the state of the hinge instead.")
-    override fun registerDeviceStateChangeCallback(
-        executor: Executor,
-        callback: Consumer<DeviceState>
-    ) {}
-
-    @Deprecated("Use FoldingFeature to get the state of the hinge instead.")
-    override fun unregisterDeviceStateChangeCallback(callback: Consumer<DeviceState>) {
-    }
-
     override fun registerLayoutChangeCallback(
         activity: Activity,
         executor: Executor,
@@ -132,14 +121,6 @@ class MidScreenFoldBackend(private val foldAxis: FoldAxis) : WindowBackend {
         windowLayoutInfoExecutor = executor
 
         executor.execute { callback.accept(getWindowLayoutInfo(activity)) }
-    }
-
-    override fun registerLayoutChangeCallback(
-        context: Context,
-        executor: Executor,
-        callback: Consumer<WindowLayoutInfo>
-    ) {
-        TODO("Not yet implemented")
     }
 
     override fun unregisterLayoutChangeCallback(callback: Consumer<WindowLayoutInfo>) {
