@@ -277,6 +277,34 @@ List of API changes
        alt="Screenshot of a widget being resized"
        title="Screenshot of a widget being resized" />
 
+- **Flexible layouts**
+
+  In API level 31, you can specify different layouts depending on the size of the widget. Specifycally you can set a Map of `SizeF` and `RemoteView` to the `AppWidgetManager.updateAppWidget` method.
+
+  ```kotlin
+  val viewMapping: MutableMap<SizeF, RemoteViews> = mutableMapOf()
+  // Specify the maximum width and height in dp and a layout, which you want to use for the
+  // specified size
+  val viewMapping = mapOf(
+      SizeF(150f, 110f) to RemoteViews(
+          context.packageName,
+          R.layout.widget_grocery_list
+      ),
+      SizeF(250f, 110f) to RemoteViews(
+          context.packageName,
+          R.layout.widget_grocery_grid
+      ),
+  )
+  appWidgetManager.updateAppWidget(appWidgetId, RemoteViews(viewMapping))
+  ```
+
+  <img src="screenshots/widget_grocery_list.png"
+       alt="Screenshot of grocery list widget"
+       title="Screenshot of grocery list widget" />
+
+  <img src="screenshots/widget_grocery_grid.png"
+       alt="Screenshot of grocery grid widget"
+       title="Screenshot of grocery grid widget" />
 
 Pre-requisites
 --------------
