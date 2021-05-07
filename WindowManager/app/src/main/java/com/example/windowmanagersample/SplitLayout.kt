@@ -191,8 +191,8 @@ class SplitLayout : FrameLayout {
             childView.measuredHeightAndState and MEASURED_STATE_TOO_SMALL == 0
     }
 
-    private fun isValidFoldFeature(displayFeature: DisplayFeature): Boolean {
-        val feature = displayFeature as? FoldingFeature ?: return false
-        return getFeaturePositionInViewRect(feature, this) != null
-    }
+    private fun isValidFoldFeature(displayFeature: DisplayFeature) =
+        (displayFeature as? FoldingFeature)?.let { feature ->
+            getFeaturePositionInViewRect(feature, this) != null
+        } ?: false
 }
