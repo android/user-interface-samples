@@ -24,4 +24,9 @@
         <item name="android:background">?android:attr/colorBackground</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
+
+    <style name="Widget.AppWidget.Checkbox" parent="android:Widget.CompoundButton.CheckBox">
+        <item name="android:minHeight">@dimen/widget_element_min_length</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
 </resources>

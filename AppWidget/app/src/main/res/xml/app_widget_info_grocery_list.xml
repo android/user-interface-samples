@@ -34,14 +34,13 @@ android:targetCellWidth/targetCellHeight :
   (that are available in API level < 31).
 android:maxResizeWidth/maxResizeHeight :
   Defines the maximum size of the widget in the launcher home.
-
 -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:configure="com.example.android.appwidget.GroceryListWidgetConfigureActivity"
     android:description="@string/app_widget_grocery_list_description"
     android:initialKeyguardLayout="@layout/widget_grocery_list"
     android:initialLayout="@layout/widget_grocery_list"
-    android:maxResizeWidth="240dp"
+    android:maxResizeWidth="250dp"
     android:maxResizeHeight="180dp"
     android:minWidth="180dp"
     android:minHeight="110dp"

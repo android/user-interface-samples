@@ -16,11 +16,13 @@
 
 package com.example.android.appwidget
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
+import android.util.SizeF
 import android.widget.RemoteViews
 
 /**
@@ -57,13 +59,12 @@ class GroceryListAppWidget : AppWidgetProvider() {
 
 private const val REQUEST_CODE_OPEN_ACTIVITY = 1
 
+@SuppressLint("RemoteViewLayout")
 internal fun updateAppWidget(
     context: Context,
     appWidgetManager: AppWidgetManager,
     appWidgetId: Int
 ) {
-    val layoutId = TodoListSharedPrefsUtil.loadWidgetLayoutIdPref(context, appWidgetId)
-    val views = RemoteViews(context.packageName, layoutId)
     val openIntent = PendingIntent.getActivity(
         context,
         REQUEST_CODE_OPEN_ACTIVITY,
@@ -74,7 +75,31 @@ internal fun updateAppWidget(
         // PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_MUTABLE
         PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
-    views.setOnClickPendingIntent(R.id.grocery_list_title, openIntent)
-    views.setOnClickPendingIntent(R.id.todo_list_title, openIntent)
-    appWidgetManager.updateAppWidget(appWidgetId, views)
+    val remoteViews =
+        when (val layoutId = TodoListSharedPrefsUtil.loadWidgetLayoutIdPref(context, appWidgetId)) {
+            R.layout.widget_grocery_list -> {
+                // Specify the maximum width and height in dp and a layout, which you want to use for the
+                // specified size
+                val viewMapping = mapOf(
+                    SizeF(150f, 110f) to RemoteViews(
+                        context.packageName,
+                        R.layout.widget_grocery_list
+                    ).apply {
+                        setOnClickPendingIntent(R.id.grocery_list_title, openIntent)
+                    },
+                    SizeF(250f, 110f) to RemoteViews(
+                        context.packageName,
+                        R.layout.widget_grocery_grid
+                    ).apply {
+                        setOnClickPendingIntent(R.id.grocery_list_title, openIntent)
+                    },
+                )
+                RemoteViews(viewMapping)
+            }
+            else ->
+                RemoteViews(context.packageName, layoutId).apply {
+                    setOnClickPendingIntent(R.id.todo_list_title, openIntent)
+                }
+        }
+    appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
 }
