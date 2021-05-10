@@ -310,7 +310,6 @@ Pre-requisites
 --------------
 
 - Android SDK 31
-- Android Studio 4.2
 
 Getting Started
 ---------------
