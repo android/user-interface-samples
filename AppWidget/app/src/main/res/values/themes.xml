@@ -30,10 +30,14 @@
     </style>
 
     <style name="Theme.AppWidget.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault.Light">
-        <item name="appWidgetRadius">8dp</item>
-        <item name="appWidgetPadding">4dp</item>
-        <item name="appWidgetInnerRadius">4dp</item>
+        <!-- Radius of the outer bound of widgets to make the rounded corners -->
+        <item name="appWidgetRadius">16dp</item>
+        <!-- Radius of the inner view's bound of widgets to make the rounded corners -->
+        <item name="appWidgetInnerRadius">8dp</item>
     </style>
 
-    <style name="Theme.AppWidget.AppWidgetContainer" parent="Theme.AppWidget.AppWidgetContainerParent" />
+    <style name="Theme.AppWidget.AppWidgetContainer" parent="Theme.AppWidget.AppWidgetContainerParent">
+        <!-- Apply padding to avoid the content of the widget to collide with the rounded corners" -->
+        <item name="appWidgetPadding">16dp</item>
+    </style>
 </resources>

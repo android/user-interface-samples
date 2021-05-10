@@ -42,7 +42,7 @@ List of API changes
 
 - **Dynamic coloring**
 
-  In API level 31, the colors of your widget will be dynamically determined by the wallpaper colors.
+  In API level 31, the colors of your widget will be dynamically determined by the system colors.
   You should use the system's default theme in order to apply the dynamic coloring (`Theme.DeviceDefault` and
   `Theme.DeviceDefault.DayNight` for v31.
   into account).
@@ -92,7 +92,6 @@ List of API changes
   ```
   system_app_widget_background_radius: The corner radius of the widget background
   system_app_widget_inner_radius: The corner radius of inner containers
-  system_app_widget_internal_padding: The padding of the views inside the widget
   ```
 
   The recommended approach is to define custom attributes to match those system parameters
@@ -110,12 +109,16 @@ List of API changes
   values/themes.xml
 
   <style name="Theme.AppWidget.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
-      <item name="appWidgetRadius">8dp</item>
-      <item name="appWidgetPadding">4dp</item>
-      <item name="appWidgetInnerRadius">4dp</item>
+      <!-- Radius of the outer bound of widgets to make the rounded corners -->
+      <item name="appWidgetRadius">16dp</item>
+      <!-- Radius of the inner view's bound of widgets to make the rounded corners -->
+      <item name="appWidgetInnerRadius">8dp</item>
   </style>
 
-  <style name="Theme.AppWidget.AppWidgetContainer" parent="ThemeOverlay.AppWidget.AppWidgetContainerParent" />
+  <style name="Theme.AppWidget.AppWidgetContainer" parent="ThemeOverlay.AppWidget.AppWidgetContainerParent">
+      <!-- Apply padding to avoid the content of the widget to collide with the rounded corners" -->
+      <item name="appWidgetPadding">16dp</item>
+  </style>
   ```
 
   ```xml
@@ -123,7 +126,6 @@ List of API changes
 
   <style name="Theme.AppWidget.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault.DayNight">
       <item name="appWidgetRadius">@android:dimen/system_app_widget_background_radius</item>
-      <item name="appWidgetPadding">@android:dimen/system_app_widget_internal_padding</item>
       <item name="appWidgetInnerRadius">@android:dimen/system_app_widget_inner_radius</item>
   </style>
   ```
