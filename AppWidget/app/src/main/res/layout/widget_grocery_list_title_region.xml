@@ -13,54 +13,31 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Widget.AppWidget.AppWidget.Container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:theme="@style/Theme.AppWidget.AppWidgetContainer">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/widget_element_min_length" >
+        android:minHeight="@dimen/widget_element_min_length">
 
         <TextView
-            android:id="@+id/todo_list_title"
+            android:id="@+id/grocery_list_title"
             style="?android:attr/textAppearanceLarge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="8dp"
-            android:text="@string/todo_list"
+            android:layout_weight="1"
+            android:text="@string/grocery_list"
             android:textColor="?android:attr/textColorPrimary" />
 
         <ImageButton
             android:layout_width="@dimen/widget_element_min_length"
             android:layout_height="@dimen/widget_element_min_length"
-            android:src="@drawable/ic_add_24"
-            android:contentDescription="@string/add_button_grocery_list_content_description"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
+            android:contentDescription="@string/add_button_grocery_list_content_description"
+            android:src="@drawable/ic_add_24"
             android:tint="?android:attr/colorAccent" />
     </LinearLayout>
-
-    <CheckBox
-        style="@style/Widget.AppWidget.Checkbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/todo_list_clean_kitchen" />
-
-    <CheckBox
-        style="@style/Widget.AppWidget.Checkbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/todo_list_buy_groceries" />
-
-    <CheckBox
-        style="@style/Widget.AppWidget.Checkbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/todo_list_build_widgets" />
-</LinearLayout>
+</merge>
