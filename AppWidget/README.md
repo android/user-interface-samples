@@ -13,7 +13,7 @@ List of API changes
 - **Widget description**
 
   In API level 31, a widget description is shown for each widget in the widget
-  picker if `description` attribute is provided for your `appwidget-provider`
+  picker if [`description`](app/src/main/res/xml/app_widget_info_grocery_list.xml\#L40) attribute is provided for your `appwidget-provider`
 
   ```xml
   <appwidget-provider
@@ -24,7 +24,7 @@ List of API changes
 - **Preview layout**
 
   The widget preview is displayed from the layout XML if it's provided as
-  `previewLayout` attribute for your `appwidget-provider` instead of a
+  [`previewLayout`](app/src/main/res/xml/app_widget_info_grocery_list.xml\#L50) attribute for your `appwidget-provider` instead of a
   static drawable resource using `previewImage` attribute.
   Note that the preview may not reflect the widget after it's actually
   placed (e.g. colors from themes)
@@ -46,27 +46,27 @@ List of API changes
   You should use the system's default theme in order to apply the dynamic coloring (`Theme.DeviceDefault` and
   `Theme.DeviceDefault.DayNight` for v31.
   into account).
-  ```xml
-  values/themes.xml
 
+  [`values/themes.xml`](app/src/main/res/values/themes.xml\#L32)
+  ```xml
   <style name="Theme.AppWidget.AppWidgetContainer"
       parent="@android:style/Theme.DeviceDefault" />
   ```
 
+  [`values-v31/themes.xml`](app/src/main/res/values-v31/themes.xml\#L22)
   ```xml
-  values-v31/themes.xml
-
   <style name="Theme.AppWidget.AppWidgetContainer"
       parent="@android:style/Theme.DeviceDefault.DayNight" />
   ```
 
+  [`values-night-v31/themes.xml`](app/src/main/res/values-night-v31/themes.xml\#L20)
   ```xml
-  values-night-v31/themes.xml
   <!-- Having themes.xml for night-v31 because of the priority order of the resource qualifiers. -->
   <style name="Theme.AppWidget.AppWidgetContainer"
       parent="@android:style/Theme.DeviceDefault.DayNight" />
   ```
 
+  [`layout/widget_grocery_list.xml`](app/src/main/res/layout/widget_grocery_list.xml\#L21)
   ```xml
   layout/widget_layout.xml
 
@@ -97,6 +97,7 @@ List of API changes
   The recommended approach is to define custom attributes to match those system parameters
   below the API level 31 to provide backward compatibility.
 
+  [`values/attrs.xml`](app/src/main/res/values/attrs.xml\#L16)
   ```xml
   <declare-styleable name="AppWidgetAttrs">
       <attr name="appWidgetPadding" format="dimension" />
@@ -105,9 +106,8 @@ List of API changes
   </declare-styleable>
   ```
 
+  [`values/themes.xml`](app/src/main/res/values/themes.xml\#L32)
   ```xml
-  values/themes.xml
-
   <style name="Theme.AppWidget.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
       <!-- Radius of the outer bound of widgets to make the rounded corners -->
       <item name="appWidgetRadius">16dp</item>
@@ -121,20 +121,19 @@ List of API changes
   </style>
   ```
 
+  [`values-v31/themes.xml`](app/src/main/res/values-v31/themes.xml\#L22)
   ```xml
-  values-v31/themes.xml
-
   <style name="Theme.AppWidget.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault.DayNight">
       <item name="appWidgetRadius">@android:dimen/system_app_widget_background_radius</item>
       <item name="appWidgetInnerRadius">@android:dimen/system_app_widget_inner_radius</item>
   </style>
   ```
 
+  [`layout/widget_grocery_list.xml`](app/src/main/res/layout/widget_grocery_list.xml\#L17)
   ```xml
   layout/widget_layout.xml
-
   <LinearLayout
-    android:theme="@style/ThemeOverlay.AppWidget.AppWidgetContainer">
+    style="@style/Widget.AppWidget.AppWidget.Container">
     ...
   </LinearLayout>
   ```
@@ -150,6 +149,7 @@ List of API changes
   bottom right corner after long pressing the widget).
   You need to specify `reconfigurable` value for the `widgetFeatures` attribute.
 
+  [`xml/app_widget_info_grocery_list.xml`](app/src/main/res/xml/app_widget_info_grocery_list.xml\#L39)
   ```xml
   <appwidget-provider
       android:configure="com.example.android.appwidget.GroceryListWidgetConfigureActivity"
@@ -198,16 +198,19 @@ List of API changes
 
   The widget itself is still stateless, so you need to store the state and register a listener for the state change events.
 
+  [`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L122)
   ```kotlin
   // This code will check the Checkbox
   remoteViews.setCompoundButtonChecked(R.id.item_checkbox, true)
   ```
 
+  [`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L125)
   ```kotlin
   // This code will check the item_radio_button2 in the item_radio_group RadioGroup
   remoteViews.setRadioGroupChecked(R.id.item_radio_group, R.id.item_radio_button2))
   ```
 
+  [`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L144)
   ```kotlin
   // Listen for change events.
   // RemoteResponse.fromPendingIntent works on an individual item whereas you can set
@@ -233,6 +236,7 @@ List of API changes
 
   In API level 31, a new API allows you to pass a collection of RemoteViews directly when populating a ListView.
 
+  [`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L51)
   ```kotlin
   remoteViews.setRemoteAdapter(
     R.id.items_list_view, 
@@ -262,6 +266,7 @@ List of API changes
 
   It's recommended to use the new attributes above in addition to existing `minWidth/minHeight` and `minResizeWidth/minResizeHeight` attributes.
 
+  [`xml/app_widget_info_grocery_list.xml`](app/src/main/res/xml/app_widget_info_grocery_list.xml\#L38)
   ```xml
   <appwidget-provider
     android:maxResizeWidth="240dp"
@@ -283,6 +288,7 @@ List of API changes
 
   In API level 31, you can specify different layouts depending on the size of the widget. Specifycally you can set a Map of `SizeF` and `RemoteView` to the `AppWidgetManager.updateAppWidget` method.
 
+  [`GroceryListAppWidget.kt`](app/src/main/java/com/example/android/appwidget/GroceryListAppWidget.kt\#L81)
   ```kotlin
   val viewMapping: MutableMap<SizeF, RemoteViews> = mutableMapOf()
   // Specify the maximum width and height in dp and a layout, which you want to use for the
