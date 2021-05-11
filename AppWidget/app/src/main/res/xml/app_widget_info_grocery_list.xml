@@ -36,7 +36,7 @@ android:maxResizeWidth/maxResizeHeight :
   Defines the maximum size of the widget in the launcher home.
 -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:configure="com.example.android.appwidget.GroceryListWidgetConfigureActivity"
+    android:configure="com.example.android.appwidget.ListWidgetConfigureActivity"
     android:description="@string/app_widget_grocery_list_description"
     android:initialKeyguardLayout="@layout/widget_grocery_list"
     android:initialLayout="@layout/widget_grocery_list"

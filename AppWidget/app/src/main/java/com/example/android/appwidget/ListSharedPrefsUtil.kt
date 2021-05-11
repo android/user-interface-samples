@@ -20,7 +20,7 @@ import android.content.Context
 import androidx.annotation.LayoutRes
 import androidx.core.content.edit
 
-object TodoListSharedPrefsUtil {
+object ListSharedPrefsUtil {
     private const val PREFS_NAME = "com.example.android.appwidget.GroceryListWidget"
     private const val PREF_PREFIX_KEY = "appwidget_"
 

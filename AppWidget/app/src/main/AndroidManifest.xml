@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppWidget">
 
-        <activity android:name=".GroceryListWidgetConfigureActivity"
+        <activity android:name=".ListWidgetConfigureActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -33,7 +33,7 @@
         </activity>
 
         <receiver
-            android:name=".GroceryListAppWidget"
+            android:name=".ListAppWidget"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

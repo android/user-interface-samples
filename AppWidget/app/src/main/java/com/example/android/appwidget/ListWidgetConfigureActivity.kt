@@ -24,9 +24,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.android.appwidget.databinding.ActivityWidgetConfigureBinding
 
 /**
- * The configuration screen for the [GroceryListAppWidget] widget.
+ * The configuration screen for the [ListAppWidget] widget.
  */
-class GroceryListWidgetConfigureActivity : AppCompatActivity() {
+class ListWidgetConfigureActivity : AppCompatActivity() {
 
     var appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID
 
@@ -62,10 +62,10 @@ class GroceryListWidgetConfigureActivity : AppCompatActivity() {
     }
 
     private fun onWidgetContainerClicked(@LayoutRes widgetLayoutResId: Int) {
-        TodoListSharedPrefsUtil.saveWidgetLayoutIdPref(this, appWidgetId, widgetLayoutResId)
+        ListSharedPrefsUtil.saveWidgetLayoutIdPref(this, appWidgetId, widgetLayoutResId)
         // It is the responsibility of the configuration activity to update the app widget
         val appWidgetManager = AppWidgetManager.getInstance(this)
-        updateAppWidget(this, appWidgetManager, appWidgetId)
+        ListAppWidget.updateAppWidget(this, appWidgetManager, appWidgetId)
 
         // Make sure we pass back the original appWidgetId
         val resultValue = Intent()

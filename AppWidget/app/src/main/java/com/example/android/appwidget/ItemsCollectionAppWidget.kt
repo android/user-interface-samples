@@ -61,7 +61,8 @@ class ItemsCollectionAppWidget : AppWidgetProvider() {
     override fun onReceive(context: Context?, intent: Intent?) {
         super.onReceive(context, intent)
         if (BuildCompat.isAtLeastS() &&
-            intent?.extras?.getInt(REQUEST_CODE) == REQUEST_CODE_FROM_COLLECTION_WIDGET) {
+            intent?.extras?.getInt(REQUEST_CODE) == REQUEST_CODE_FROM_COLLECTION_WIDGET
+        ) {
             intent.extras?.let {
                 // The checked state is stored in the Bundle in the Intent
                 val checked = it.getBoolean(

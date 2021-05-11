@@ -42,10 +42,9 @@ List of API changes
 
 - **Dynamic coloring**
 
-  In API level 31, the colors of your widget will be dynamically determined by the system colors.
+  In API level 31, the colors of your widget are dynamically determined by the system colors.
   You should use the system's default theme in order to apply the dynamic coloring (`Theme.DeviceDefault` and
-  `Theme.DeviceDefault.DayNight` for v31.
-  into account).
+  `Theme.DeviceDefault.DayNight` for v31).
 
   [`values/themes.xml`](app/src/main/res/values/themes.xml\#L32)
   ```xml
@@ -68,8 +67,6 @@ List of API changes
 
   [`layout/widget_grocery_list.xml`](app/src/main/res/layout/widget_grocery_list.xml\#L21)
   ```xml
-  layout/widget_layout.xml
-
   <LinearLayout
       android:theme="@style/Theme.AppWidget.AppWidgetContainer">
     ...
@@ -83,11 +80,11 @@ List of API changes
       alt="screenshot for dynamic coloring on dark theme"
       title="screenshot for dynamic coloring on dark theme" />
 
-- **Padding and rounded corners**
+- **Rounded corners**
 
-  Following system attributes are introduced in API level 31 for widget paddings and
+  Following system attributes are introduced in API level 31 for widget
   radius of the background and the views inside the widget to make the rounded corners
-  and paddings to make the appearance of the widgets consistent with the System UI in
+  to make the appearance of the widgets consistent with the System UI in
   Android 12.
   ```
   system_app_widget_background_radius: The corner radius of the widget background
@@ -111,12 +108,15 @@ List of API changes
   <style name="Theme.AppWidget.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
       <!-- Radius of the outer bound of widgets to make the rounded corners -->
       <item name="appWidgetRadius">16dp</item>
-      <!-- Radius of the inner view's bound of widgets to make the rounded corners -->
+      <!--
+      Radius of the inner view's bound of widgets to make the rounded corners.
+      It needs to be 8dp or less than the value of appWidgetRadius
+      -->
       <item name="appWidgetInnerRadius">8dp</item>
   </style>
 
-  <style name="Theme.AppWidget.AppWidgetContainer" parent="ThemeOverlay.AppWidget.AppWidgetContainerParent">
-      <!-- Apply padding to avoid the content of the widget to collide with the rounded corners" -->
+  <style name="Theme.AppWidget.AppWidgetContainer" parent="Theme.AppWidget.AppWidgetContainerParent">
+      <!-- Apply padding to avoid the content of the widget colliding with the rounded corners -->
       <item name="appWidgetPadding">16dp</item>
   </style>
   ```
@@ -144,7 +144,7 @@ List of API changes
 
 - **Deferrable configurability**
 
-  In API level 31, users are able to reconfigure widgets after they are addd to the home screen
+  In API level 31, users are able to reconfigure widgets after they are added to the home screen
   by long pressing on the widget and clicking the reconfigure button(the button visible at the
   bottom right corner after long pressing the widget).
   You need to specify `reconfigurable` value for the `widgetFeatures` attribute.
@@ -152,7 +152,7 @@ List of API changes
   [`xml/app_widget_info_grocery_list.xml`](app/src/main/res/xml/app_widget_info_grocery_list.xml\#L39)
   ```xml
   <appwidget-provider
-      android:configure="com.example.android.appwidget.GroceryListWidgetConfigureActivity"
+      android:configure="com.example.android.appwidget.ListWidgetConfigureActivity"
       android:widgetFeatures="reconfigurable"
       ... />
   ```
@@ -167,7 +167,7 @@ List of API changes
 
   ```xml
   <appwidget-provider
-      android:configure="com.example.android.appwidget.GroceryListWidgetConfigureActivity"
+      android:configure="com.example.android.appwidget.ListWidgetConfigureActivity"
       android:widgetFeatures="reconfigurable|configuration_optional"
       ... />
   ```
@@ -288,7 +288,7 @@ List of API changes
 
   In API level 31, you can specify different layouts depending on the size of the widget. Specifycally you can set a Map of `SizeF` and `RemoteView` to the `AppWidgetManager.updateAppWidget` method.
 
-  [`GroceryListAppWidget.kt`](app/src/main/java/com/example/android/appwidget/GroceryListAppWidget.kt\#L81)
+  [`ListAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ListAppWidget.kt\#L78)
   ```kotlin
   val viewMapping: MutableMap<SizeF, RemoteViews> = mutableMapOf()
   // Specify the maximum width and height in dp and a layout, which you want to use for the
