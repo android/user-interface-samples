@@ -75,7 +75,9 @@ class ListAppWidget : AppWidgetProvider() {
             fun constructRemoteViews(
                 @LayoutRes widgetLayoutId: Int
             ) = RemoteViews(context.packageName, widgetLayoutId).apply {
-                if (widgetLayoutId == R.layout.widget_grocery_list || widgetLayoutId == R.layout.widget_grocery_grid) {
+                if (widgetLayoutId == R.layout.widget_grocery_list ||
+                    widgetLayoutId == R.layout.widget_grocery_grid
+                ) {
                     setTextViewText(
                         R.id.checkbox_list_title,
                         context.resources.getText(R.string.grocery_list)
@@ -96,8 +98,7 @@ class ListAppWidget : AppWidgetProvider() {
                 val viewMapping = mapOf(
                     SizeF(150f, 110f) to constructRemoteViews(
                         R.layout.widget_grocery_list
-                    ),
-                    SizeF(250f, 110f) to constructRemoteViews(
+                    ), SizeF(250f, 110f) to constructRemoteViews(
                         R.layout.widget_grocery_grid
                     )
                 )

@@ -37,25 +37,22 @@
             />
 
         <CheckBox
+            style="@style/Widget.AppWidget.Checkbox.ConfigureActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/grocery_list_milk"
-            android:textColor="?android:attr/textColorPrimary"
-            android:clickable="false" />
+            android:text="@string/grocery_list_milk" />
 
         <CheckBox
+            style="@style/Widget.AppWidget.Checkbox.ConfigureActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/grocery_list_eggs"
-            android:textColor="?android:attr/textColorPrimary"
-            android:clickable="false" />
+            android:text="@string/grocery_list_eggs" />
 
         <CheckBox
+            style="@style/Widget.AppWidget.Checkbox.ConfigureActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/grocery_list_tomatoes"
-            android:textColor="?android:attr/textColorPrimary"
-            android:clickable="false" />
+            android:text="@string/grocery_list_tomatoes" />
 
         <TextView
             style="@style/TextAppearance.AppCompat.Small"
@@ -84,24 +81,21 @@
             />
 
         <CheckBox
+            style="@style/Widget.AppWidget.Checkbox.ConfigureActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/todo_list_clean_kitchen"
-            android:textColor="?android:attr/textColorPrimary"
-            android:clickable="false" />
+            android:text="@string/todo_list_clean_kitchen" />
 
         <CheckBox
+            style="@style/Widget.AppWidget.Checkbox.ConfigureActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/todo_list_buy_groceries"
-            android:textColor="?android:attr/textColorPrimary"
-            android:clickable="false" />
+            android:text="@string/todo_list_buy_groceries" />
 
         <CheckBox
+            style="@style/Widget.AppWidget.Checkbox.ConfigureActivity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/todo_list_build_widgets"
-            android:textColor="?android:attr/textColorPrimary"
-            android:clickable="false" />
+            android:text="@string/todo_list_build_widgets" />
     </LinearLayout>
 </LinearLayout>

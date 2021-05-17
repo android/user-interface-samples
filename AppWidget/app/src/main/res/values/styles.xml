@@ -30,6 +30,12 @@
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
 
+    <!-- Checkbox used in the configure Activity -->
+    <style name="Widget.AppWidget.Checkbox.ConfigureActivity" parent="android:Widget.CompoundButton.CheckBox">
+        <item name="android:clickable">false</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+
     <style name="Widget.AppWidget.RadioButton" parent="android:Widget.CompoundButton.RadioButton">
         <item name="android:buttonTint">?android:attr/colorAccent</item>
         <item name="android:minHeight">@dimen/widget_element_min_length</item>
