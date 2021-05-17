@@ -1,0 +1,40 @@
+<!--
+  ~ Copyright (C) 2021 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">AppWidget</string>
+    <string name="placeholder_main_activity">This is an Activity of the AppWidget sample. Long press the app icon and choose the widget picker to try the widgets in the sample</string>
+    <string name="grocery_list">Grocery list</string>
+    <string name="add_button_grocery_list_content_description">Add button for grocery list</string>
+    <string name="app_widget_grocery_list_description">Todo list for groceries</string>
+    <string name="grocery_list_milk">Milk</string>
+    <string name="grocery_list_eggs">Eggs</string>
+    <string name="grocery_list_tomatoes">Tomatoes</string>
+    <string name="grocery_list_cheese">Cheese</string>
+    <string name="grocery_list_potatoes">Potatoes</string>
+    <string name="grocery_list_broccoli">Broccoli</string>
+    <string name="select_list_for_widget">Select list for widgets</string>
+    <string name="plus_three_other_items">+3 other items</string>
+    <string name="todo_list">To-do list</string>
+    <string name="todo_list_clean_kitchen">Clean kitchen</string>
+    <string name="todo_list_buy_groceries">Buy groceries</string>
+    <string name="todo_list_build_widgets">Build widgets</string>
+    <string name="radio_button1">Radio Button 1</string>
+    <string name="radio_button2">Radio Button 2</string>
+    <string name="check_box">Check box</string>
+    <string name="switch_element">Switch</string>
+    <string name="items_widget_description">Widget for collection of items</string>
+    <string name="items_collection">Items collection</string>
+</resources>

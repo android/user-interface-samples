@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2021 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<!--
+android:previewLayout :
+  The widget preview in the widget picker is displayed from the layout XML instead of a static image
+  (as opposed to android:previewImage in pre-API 31)
+android:description :
+  A widget description is shown in the widget picker
+android:targetCell(Width|Height) :
+  Defines the default target size of the widget in cells in the home launcher. If they are defined,
+  these attributes will be used instead of existing min(Width|Height) attributes in pre-API 31.
+android:widgetFeatures :
+  Specifying `reconfigurable` allows the widget to be reconfigurable after the widget is placed to the
+  home screen.
+  Specifying `configuration_optional` will skip the configuration Activity is invoked when the
+  widget is placed on the home screen (default values are used in that case).
+android:targetCellWidth/targetCellHeight :
+  defines the default size of the widget measured in cells of the launcher home. If they are
+  defined, those values will be used instead of minWidth/minHeight
+  (that are available in API level < 31).
+android:maxResizeWidth/maxResizeHeight :
+  Defines the maximum size of the widget in the launcher home.
+-->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.example.android.appwidget.ListWidgetConfigureActivity"
+    android:description="@string/app_widget_grocery_list_description"
+    android:initialKeyguardLayout="@layout/widget_grocery_list"
+    android:initialLayout="@layout/widget_grocery_list"
+    android:maxResizeWidth="250dp"
+    android:maxResizeHeight="180dp"
+    android:minWidth="180dp"
+    android:minHeight="110dp"
+    android:minResizeWidth="180dp"
+    android:minResizeHeight="110dp"
+    android:previewImage="@drawable/grocery_list_widget_preview"
+    android:previewLayout="@layout/widget_grocery_list"
+    android:resizeMode="horizontal|vertical"
+    android:targetCellWidth="3"
+    android:targetCellHeight="2"
+    android:updatePeriodMillis="86400000"
+    android:widgetCategory="home_screen"
+    android:widgetFeatures="reconfigurable|configuration_optional" />
