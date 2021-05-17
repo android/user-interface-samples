@@ -13,8 +13,11 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+<!--
+Having styles for v21 because specifying android:attr/colorBackground used in the drawables
+requires API level 21
+-->
 <resources>
-
     <style name="Widget.AppWidget.AppWidget.Container" parent="android:Widget">
         <item name="android:padding">?attr/appWidgetPadding</item>
         <item name="android:background">@drawable/app_widget_background</item>

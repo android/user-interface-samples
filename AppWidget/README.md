@@ -198,19 +198,19 @@ List of API changes
 
   The widget itself is still stateless, so you need to store the state and register a listener for the state change events.
 
-  [`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L122)
+  [`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L139)
   ```kotlin
   // This code will check the Checkbox
   remoteViews.setCompoundButtonChecked(R.id.item_checkbox, true)
   ```
 
-  [`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L125)
+  [`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L142)
   ```kotlin
   // This code will check the item_radio_button2 in the item_radio_group RadioGroup
   remoteViews.setRadioGroupChecked(R.id.item_radio_group, R.id.item_radio_button2))
   ```
 
-  [`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L144)
+  [`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L162)
   ```kotlin
   // Listen for change events.
   // RemoteResponse.fromPendingIntent works on an individual item whereas you can set
@@ -288,7 +288,7 @@ List of API changes
 
   In API level 31, you can specify different layouts depending on the size of the widget. Specifycally you can set a Map of `SizeF` and `RemoteView` to the `AppWidgetManager.updateAppWidget` method.
 
-  [`ListAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ListAppWidget.kt\#L78)
+  [`ListAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ListAppWidget.kt\#L94)
   ```kotlin
   val viewMapping: MutableMap<SizeF, RemoteViews> = mutableMapOf()
   // Specify the maximum width and height in dp and a layout, which you want to use for the

@@ -30,6 +30,7 @@ import androidx.core.os.BuildCompat
 import com.example.android.appwidget.ItemsCollectionRemoteViewsFactory.Companion.EXTRA_VIEW_ID
 import com.example.android.appwidget.ItemsCollectionRemoteViewsFactory.Companion.REQUEST_CODE
 import com.example.android.appwidget.ItemsCollectionRemoteViewsFactory.Companion.REQUEST_CODE_FROM_COLLECTION_WIDGET
+import com.example.android.appwidget.ItemsCollectionRemoteViewsFactory.Companion.getRemoteCollectionItems
 
 /**
  * Implementation of App Widget functionality that demonstrates the difference of how the list of
@@ -46,8 +47,7 @@ class ItemsCollectionAppWidget : AppWidgetProvider() {
     ) {
         val remoteViews = RemoteViews(context.packageName, R.layout.widget_items_collection)
         if (BuildCompat.isAtLeastS()) {
-            val collectionItems =
-                ItemsCollectionRemoteViewsFactory.getRemoteCollectionItems(context)
+            val collectionItems = getRemoteCollectionItems(context)
             remoteViews.setRemoteAdapter(R.id.items_list_view, collectionItems)
         } else {
             remoteViews.setRemoteAdapter(
@@ -63,18 +63,15 @@ class ItemsCollectionAppWidget : AppWidgetProvider() {
         if (BuildCompat.isAtLeastS() &&
             intent?.extras?.getInt(REQUEST_CODE) == REQUEST_CODE_FROM_COLLECTION_WIDGET
         ) {
-            intent.extras?.let {
-                // The checked state is stored in the Bundle in the Intent
-                val checked = it.getBoolean(
-                    RemoteViews.EXTRA_CHECKED,
-                    false
-                )
-                Toast.makeText(
-                    context,
-                    "ViewId : ${it.getInt(EXTRA_VIEW_ID)}'s checked status is now : $checked",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            val checked = intent.extras?.getBoolean(
+                RemoteViews.EXTRA_CHECKED,
+                false
+            )
+            Toast.makeText(
+                context,
+                "ViewId : ${intent.extras?.getInt(EXTRA_VIEW_ID)}'s checked status is now : $checked",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 }
@@ -88,6 +85,26 @@ class ItemsCollectionRemoteViewsService : RemoteViewsService() {
 
 class ItemsCollectionRemoteViewsFactory(private val context: Context) :
     RemoteViewsService.RemoteViewsFactory {
+
+    override fun onCreate() {}
+
+    override fun onDataSetChanged() {}
+
+    override fun onDestroy() {}
+
+    override fun getCount(): Int = items.count()
+
+    override fun getViewAt(position: Int): RemoteViews {
+        return constructRemoteViews(context, items[position])
+    }
+
+    override fun getLoadingView(): RemoteViews? = null
+
+    override fun getViewTypeCount(): Int = items.count()
+
+    override fun getItemId(position: Int): Long = position.toLong()
+
+    override fun hasStableIds(): Boolean = true
 
     companion object {
         val items = listOf(
@@ -104,82 +121,63 @@ class ItemsCollectionRemoteViewsFactory(private val context: Context) :
         fun getRemoteCollectionItems(context: Context): RemoteViews.RemoteCollectionItems {
             val builder = RemoteViews.RemoteCollectionItems.Builder()
             items.forEachIndexed { index, layoutId ->
-                builder.addItem(index.toLong(), getRemoteViewsForLayoutId(context, layoutId))
+                builder.addItem(index.toLong(), constructRemoteViews(context, layoutId))
             }
             return builder.setHasStableIds(true).setViewTypeCount(items.count()).build()
         }
 
-        internal fun getRemoteViewsForLayoutId(
+        internal fun constructRemoteViews(
             context: Context,
             @LayoutRes layoutId: Int
         ): RemoteViews {
             val remoteViews = RemoteViews(context.packageName, layoutId)
-            if (BuildCompat.isAtLeastS()) {
-                // Compound buttons in a widget are stateless. You need to change the state and register for
-                // the state change events.
-                when (layoutId) {
-                    R.layout.item_checkboxes -> {
-                        // This code will check the Checkbox
-                        remoteViews.setCompoundButtonChecked(R.id.item_checkbox, true)
-                    }
-                    R.layout.item_radio_buttons -> {
-                        // This code will check the item_radio_button2 in the item_radio_group RadioGroup
-                        remoteViews.setRadioGroupChecked(
-                            R.id.item_radio_group,
-                            R.id.item_radio_button2
+            if (!BuildCompat.isAtLeastS()) {
+                return remoteViews
+            }
+            // Compound buttons in a widget are stateless. You need to change the state and register for
+            // the state change events.
+            when (layoutId) {
+                R.layout.item_checkboxes -> {
+                    // This code will check the Checkbox
+                    remoteViews.setCompoundButtonChecked(R.id.item_checkbox, true)
+                }
+                R.layout.item_radio_buttons -> {
+                    // This code will check the item_radio_button2 in the item_radio_group RadioGroup
+                    remoteViews.setRadioGroupChecked(
+                        R.id.item_radio_group,
+                        R.id.item_radio_button2
+                    )
+                }
+                R.layout.item_switches -> {
+                    val viewId = R.id.item_switch
+                    val onCheckedChangePendingIntent = PendingIntent.getBroadcast(
+                        context,
+                        REQUEST_CODE_FROM_COLLECTION_WIDGET,
+                        Intent(context, ItemsCollectionAppWidget::class.java).apply {
+                            putExtra(EXTRA_VIEW_ID, viewId)
+                            putExtra(REQUEST_CODE, REQUEST_CODE_FROM_COLLECTION_WIDGET)
+                        },
+                        // API level 31 requires specifying either of
+                        // PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_MUTABLE
+                        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+                    )
+                    // Listen for change events.
+                    // RemoteResponse.fromPendingIntent works on an individual item whereas you can set
+                    // a PendingIntent template using RemoteViews.setPendingIntentTemplate and
+                    // distinguish individual on-click by calling RemoteResponse.fromFillInIntent.
+                    // See
+                    // https://developer.android.com/reference/android/widget/RemoteViews.RemoteResponse#fromPendingIntent(android.app.PendingIntent)
+                    // https://developer.android.com/reference/android/widget/RemoteViews.RemoteResponse#fromFillInIntent(android.content.Intent)
+                    // for more details.
+                    remoteViews.setOnCheckedChangeResponse(
+                        viewId,
+                        RemoteViews.RemoteResponse.fromPendingIntent(
+                            onCheckedChangePendingIntent
                         )
-                    }
-                    R.layout.item_switches -> {
-                        val viewId = R.id.item_switch
-                        val onCheckedChangePendingIntent = PendingIntent.getBroadcast(
-                            context,
-                            REQUEST_CODE_FROM_COLLECTION_WIDGET,
-                            Intent(context, ItemsCollectionAppWidget::class.java).apply {
-                                putExtra(EXTRA_VIEW_ID, viewId)
-                                putExtra(REQUEST_CODE, REQUEST_CODE_FROM_COLLECTION_WIDGET)
-                            },
-                            // API level 31 requires specifying either of
-                            // PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_MUTABLE
-                            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
-                        )
-                        // Listen for change events.
-                        // RemoteResponse.fromPendingIntent works on an individual item whereas you can set
-                        // a PendingIntent template using RemoteViews.setPendingIntentTemplate and
-                        // distinguish individual on-click by calling RemoteResponse.fromFillInIntent.
-                        // See
-                        // https://developer.android.com/reference/android/widget/RemoteViews.RemoteResponse#fromPendingIntent(android.app.PendingIntent)
-                        // https://developer.android.com/reference/android/widget/RemoteViews.RemoteResponse#fromFillInIntent(android.content.Intent)
-                        // for more details.
-                        remoteViews.setOnCheckedChangeResponse(
-                            viewId,
-                            RemoteViews.RemoteResponse.fromPendingIntent(
-                                onCheckedChangePendingIntent
-                            )
-                        )
-                    }
+                    )
                 }
             }
             return remoteViews
         }
     }
-
-    override fun onCreate() {}
-
-    override fun onDataSetChanged() {}
-
-    override fun onDestroy() {}
-
-    override fun getCount(): Int = items.count()
-
-    override fun getViewAt(position: Int): RemoteViews {
-        return getRemoteViewsForLayoutId(context, items[position])
-    }
-
-    override fun getLoadingView(): RemoteViews? = null
-
-    override fun getViewTypeCount(): Int = items.count()
-
-    override fun getItemId(position: Int): Long = position.toLong()
-
-    override fun hasStableIds(): Boolean = true
 }

@@ -22,20 +22,16 @@
     android:theme="@style/Theme.AppWidget.AppWidgetContainer">
 
     <RadioButton
+        style="@style/Widget.AppWidget.RadioButton"
         android:id="@+id/item_radio_button1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:buttonTint="?android:attr/colorAccent"
-        android:minHeight="@dimen/widget_element_min_length"
-        android:text="@string/radio_button1"
-        android:textColor="?android:attr/textColorPrimary" />
+        android:text="@string/radio_button1" />
 
     <RadioButton
+        style="@style/Widget.AppWidget.RadioButton"
         android:id="@+id/item_radio_button2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:buttonTint="?android:attr/colorAccent"
-        android:minHeight="@dimen/widget_element_min_length"
-        android:text="@string/radio_button2"
-        android:textColor="?android:attr/textColorPrimary" />
+        android:text="@string/radio_button2" />
 </RadioGroup>

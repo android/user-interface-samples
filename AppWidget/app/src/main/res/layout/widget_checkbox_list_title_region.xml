@@ -21,7 +21,7 @@
         android:minHeight="@dimen/widget_element_min_length">
 
         <TextView
-            android:id="@+id/grocery_list_title"
+            android:id="@+id/checkbox_list_title"
             style="?android:attr/textAppearanceLarge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

@@ -23,7 +23,7 @@
 
     <Switch
         android:id="@+id/item_switch"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/widget_element_min_length"
         android:text="@string/switch_element"

@@ -15,6 +15,7 @@
   -->
 <resources>
     <string name="app_name">AppWidget</string>
+    <string name="placeholder_main_activity">This is an Activity of the AppWidget sample. Long press the app icon and choose the widget picker to try the widgets in the sample</string>
     <string name="grocery_list">Grocery list</string>
     <string name="add_button_grocery_list_content_description">Add button for grocery list</string>
     <string name="app_widget_grocery_list_description">Todo list for groceries</string>

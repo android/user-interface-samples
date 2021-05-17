@@ -20,7 +20,7 @@
     android:orientation="vertical"
     android:theme="@style/Theme.AppWidget.AppWidgetContainer">
 
-    <include layout="@layout/widget_grocery_list_title_region" />
+    <include layout="@layout/widget_checkbox_list_title_region" />
 
     <CheckBox
         style="@style/Widget.AppWidget.Checkbox"

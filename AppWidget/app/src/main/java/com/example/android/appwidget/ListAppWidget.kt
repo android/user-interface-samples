@@ -24,7 +24,6 @@ import android.content.Context
 import android.content.Intent
 import android.util.SizeF
 import android.widget.RemoteViews
-import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 
 /**
@@ -74,10 +73,20 @@ class ListAppWidget : AppWidgetProvider() {
             )
 
             fun constructRemoteViews(
-                @LayoutRes widgetLayoutId: Int,
-                @IdRes titleId: Int
+                @LayoutRes widgetLayoutId: Int
             ) = RemoteViews(context.packageName, widgetLayoutId).apply {
-                setOnClickPendingIntent(titleId, appOpenIntent)
+                if (widgetLayoutId == R.layout.widget_grocery_list || widgetLayoutId == R.layout.widget_grocery_grid) {
+                    setTextViewText(
+                        R.id.checkbox_list_title,
+                        context.resources.getText(R.string.grocery_list)
+                    )
+                } else if (widgetLayoutId == R.layout.widget_todo_list) {
+                    setTextViewText(
+                        R.id.checkbox_list_title,
+                        context.resources.getText(R.string.todo_list)
+                    )
+                }
+                setOnClickPendingIntent(R.id.checkbox_list_title, appOpenIntent)
             }
 
             val layoutId = ListSharedPrefsUtil.loadWidgetLayoutIdPref(context, appWidgetId)
@@ -86,19 +95,16 @@ class ListAppWidget : AppWidgetProvider() {
                 // for the specified size
                 val viewMapping = mapOf(
                     SizeF(150f, 110f) to constructRemoteViews(
-                        R.layout.widget_grocery_list,
-                        R.id.grocery_list_title
+                        R.layout.widget_grocery_list
                     ),
                     SizeF(250f, 110f) to constructRemoteViews(
-                        R.layout.widget_grocery_grid,
-                        R.id.grocery_list_title
+                        R.layout.widget_grocery_grid
                     )
                 )
                 RemoteViews(viewMapping)
             } else {
                 constructRemoteViews(
-                    layoutId,
-                    R.id.todo_list_title
+                    layoutId
                 )
             }
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews)

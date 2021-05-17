@@ -25,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppWidget">
 
-        <activity android:name=".ListWidgetConfigureActivity"
+        <activity
+            android:name=".ListWidgetConfigureActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -41,7 +42,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/app_widget_info_grocery_list" />
+                android:resource="@xml/app_widget_info_checkbox_list" />
         </receiver>
 
         <receiver
@@ -65,7 +66,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

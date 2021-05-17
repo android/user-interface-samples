@@ -20,31 +20,7 @@
     android:orientation="vertical"
     android:theme="@style/Theme.AppWidget.AppWidgetContainer">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="@dimen/widget_element_min_length" >
-
-        <TextView
-            android:id="@+id/todo_list_title"
-            style="?android:attr/textAppearanceLarge"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="8dp"
-            android:text="@string/todo_list"
-            android:textColor="?android:attr/textColorPrimary" />
-
-        <ImageButton
-            android:layout_width="@dimen/widget_element_min_length"
-            android:layout_height="@dimen/widget_element_min_length"
-            android:src="@drawable/ic_add_24"
-            android:contentDescription="@string/add_button_grocery_list_content_description"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:tint="?android:attr/colorAccent" />
-    </LinearLayout>
+    <include layout="@layout/widget_checkbox_list_title_region" />
 
     <CheckBox
         style="@style/Widget.AppWidget.Checkbox"
