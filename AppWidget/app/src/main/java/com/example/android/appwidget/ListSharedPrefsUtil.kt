@@ -17,6 +17,7 @@
 package com.example.android.appwidget
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.annotation.LayoutRes
 import androidx.core.content.edit
 
@@ -29,18 +30,23 @@ object ListSharedPrefsUtil {
         appWidgetId: Int,
         @LayoutRes layoutId: Int
     ) {
-        context.getSharedPreferences(PREFS_NAME, 0).edit {
+        context.getSharedPreferences(name = PREFS_NAME, mode = 0).edit {
             putInt(PREF_PREFIX_KEY + appWidgetId, layoutId)
         }
     }
 
     internal fun loadWidgetLayoutIdPref(context: Context, appWidgetId: Int): Int =
-        context.getSharedPreferences(PREFS_NAME, 0)
+        context.getSharedPreferences(name = PREFS_NAME, mode = 0)
             .getInt(PREF_PREFIX_KEY + appWidgetId, R.layout.widget_grocery_list)
 
     internal fun deleteWidgetLayoutIdPref(context: Context, appWidgetId: Int) {
-        context.getSharedPreferences(PREFS_NAME, 0).edit {
+        context.getSharedPreferences(name = PREFS_NAME, mode = 0).edit {
             remove(PREF_PREFIX_KEY + appWidgetId)
         }
+    }
+
+    // Wrapper for Context.getSharedPreferences to support named arguments
+    private fun Context.getSharedPreferences(name: String, mode: Int): SharedPreferences {
+        return getSharedPreferences(name, mode)
     }
 }
