@@ -3,13 +3,13 @@
 
 This sample demonstrates how to use the new Widgets APIs introduced in API level 31.
 The new set of APIs allows an application to build more engaging and beautiful widgets.
-The initial set of new APIs focuses on improving existing RemoteViews APIs.
+The initial set of new APIs focuses on improving existing [`RemoteViews`](https://developer.android.com/reference/android/widget/RemoteViews) APIs.
 
 ## Improve your app's widget picker experience [(docs)](https://developer.android.com/about/versions/12/features/widgets#improve-widget-picker-experience)
 
 ### Add scalable widget previews to the widget picker [(docs)](https://developer.android.com/about/versions/12/features/widgets#add-scalable-widget-previews)
 
-In Android 12, the widget preview displayed in the widget picker consists of a scalable preview, which you’ll provide as an XML layout set to the widget's default size. Previously, the widget preview was a static drawable resource, in some cases leading to previews not accurately reflecting widgets after they were added to the home screen.
+Starting in Android 12 the widget preview displayed in the widget picker consists of a scalable preview, which you’ll provide as an XML layout set to the widget's default size. Previously, the widget preview was a static drawable resource, in some cases leading to previews not accurately reflecting widgets after they were added to the home screen.
 
 To implement scalable widget previews, use the [`previewLayout`](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo#previewLayout) attribute of the `appwidget-provider` element to provide an XML layout instead:
 
@@ -23,7 +23,7 @@ To implement scalable widget previews, use the [`previewLayout`](https://develop
 
 ### Add a description for your widget [(docs)](https://developer.android.com/about/versions/12/features/widgets#add-widget-description)
 
-In Android 12, you can optionally provide a description for the widget picker to display for your widget.
+In Android 12 you can optionally provide a description for the widget picker to display for your widget.
 
 Provide a description for your widget using the description attribute of `appwidget-provider`:
 
@@ -42,7 +42,7 @@ Provide a description for your widget using the description attribute of `appwid
 
 ## Apply dynamic colors [(docs)](https://developer.android.com/about/versions/12/features/widgets#dynamic-colors)
 
-In Android 12, a widget can use the device theme colors for buttons, backgrounds, and other components. This enables smoother transitions and consistency across different widgets.
+Starting in Android 12 a widget can use the device theme colors for buttons, backgrounds, and other components. This enables smoother transitions and consistency across different widgets.
 
 <img src="screenshots/dynamic_coloring_light_theme.png" width="240px"
     alt="screenshot for dynamic coloring on light theme"
@@ -88,14 +88,14 @@ We recommend creating a custom theme and overriding it when running on devices w
 
 ## Implement rounded corners [(docs)](https://developer.android.com/about/versions/12/features/widgets#rounded-corner)
 
-  Android 12 introduces the following system parameters to set the radii of your widget's rounded corners:
+Android 12 introduces the following system parameters to set the radii of your widget's rounded corners:
 
 * `system_app_widget_background_radius`: The corner radius of the widget background, which will never be larger than 28dp.
 * `system_app_widget_inner_radius`: The corner radius of any view inside the widget. This is exactly 8dp less than the background radius to align nicely when using an 8dp padding.
 
 ### Backward-compatibility with rounded corners [(docs)](https://developer.android.com/about/versions/12/features/widgets#backward-compatibility_with_rounded_corners)
 
-To ensure widget compatibility with previous versions of Android, we recommend defining custom attributes and using a custom theme to override them for Android 12, as shown in the following examples of XML files:
+To ensure widget compatibility with previous versions of Android, we recommend defining custom attributes and using a custom theme to override them for Android 12 or higher, as shown in the following examples of XML files:
 
 [`values/attrs.xml`](app/src/main/res/values/attrs.xml\#L16)
 
@@ -220,7 +220,7 @@ If you’d like your widget to use its default configuration when a user adds it
 
 ## Enable smoother transitions [(docs)](https://developer.android.com/about/versions/12/features/widgets#enable-smoother-transitions)
 
-In Android 12, launchers provide a smoother transition when a user launches your app from a widget.
+Starting in Android 12 launchers provide a smoother transition when a user launches your app from a widget.
 
 To enable this improved transition, use [`android:id/background`](https://developer.android.com/reference/android/R.id#background)  or `android.R.id.background` to identify your background element:
 
@@ -280,15 +280,15 @@ remoteViews.setOnCheckedChangeResponse(
 )
 ```
 
-See the documents for [`fromPendingIntent`](https://developer.android.com/reference/android/widget/RemoteViews.RemoteResponse#fromPendingIntent(android.app.PendingIntent)) and [`fromFillInIntent`](https://developer.android.com/reference/android/widget/RemoteViews.RemoteResponse#fromFillInIntent(android.content.Intent)) for more details.
+See the documentation for [`fromPendingIntent`](https://developer.android.com/reference/android/widget/RemoteViews.RemoteResponse#fromPendingIntent(android.app.PendingIntent)) and [`fromFillInIntent`](https://developer.android.com/reference/android/widget/RemoteViews.RemoteResponse#fromFillInIntent(android.content.Intent)) for more details.
 
 ## Use simplified RemoteViews collections [(docs)](https://developer.android.com/about/versions/12/features/widgets#leverage-simplified-remoteview-collections)
 
-Android 12 adds the `setRemoteAdapter(int viewId, RemoteViews.RemoteCollectionItems items)` method, which lets your app pass along a collection directly when populating a `ListView`. Previously, when using a `ListView`, it was necessary to implement and declare a [`RemoteViewService`](https://developer.android.com/reference/android/widget/RemoteViewsService) to return [RemoteViewsFactory](https://developer.android.com/reference/android/widget/RemoteViewsService.RemoteViewsFactory).
+Android 12 adds the `setRemoteAdapter(int viewId, RemoteViews.RemoteCollectionItems items)` method, which lets your app pass along a collection directly when populating a `ListView`. Previously, when using a `ListView`, it was necessary to implement and declare a [`RemoteViewService`](https://developer.android.com/reference/android/widget/RemoteViewsService) to return [`RemoteViewsFactory`](https://developer.android.com/reference/android/widget/RemoteViewsService.RemoteViewsFactory).
 
 If the collection doesn’t use a constant set of layouts (in other words, if some items are only sometimes present), use `setViewTypeCount` to specify the maximum number of unique layouts the collection can contain.
 
-Here’s an example of how to implement simplified RemoteViews collections.
+Here’s an example of how to implement simplified `RemoteViews` collections.
 
 [`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L51)
 
@@ -306,7 +306,7 @@ remoteViews.setRemoteAdapter(
 
 ## Use improved APIs for widget sizes and layouts [(docs)](https://developer.android.com/about/versions/12/features/widgets#refine-widget-sizes)
 
-Starting in Android 12, you can provide more refined size attributes and more flexible layouts and by doing the following:
+Starting in Android 12 you can provide more refined size attributes and more flexible layouts and by doing the following:
 
 1. [Specify additional widget sizing constraints](#specify-additional-widget-sizing-constraints)
 1. [Provide responsive layouts](#provide-responsive-layouts) or [exact layouts](https://developer.android.com/about/versions/12/features/widgets#provide-exact-layouts)
