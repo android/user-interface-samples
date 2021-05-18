@@ -10,22 +10,22 @@ The initial set of new APIs focuses on improving existing RemoteView APIs.
 List of API changes
 ------------
 
-# [Improve your app's widget picker experience](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#improve-widget-picker-experience)
+# [Improve your app's widget picker experience](https://developer.android.com/about/versions/12/features/widgets#improve-widget-picker-experience)
 
-## [Add scalable widget previews to the widget picker](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#add-scalable-widget-previews)
+## [Add scalable widget previews to the widget picker](https://developer.android.com/about/versions/12/features/widgets#add-scalable-widget-previews)
 
   In Android 12, the widget preview displayed in the widget picker consists of a scalable preview, which you’ll provide as an XML layout set to the widget's default size. Previously, the widget preview was a static drawable resource, in some cases leading to previews not accurately reflecting widgets after they were added to the home screen.
 
-  To implement scalable widget previews, use the [previewLayout](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo?db=dac-team#previewLayout) attribute of the appwidget-provider element to provide an XML layout instead:
+  To implement scalable widget previews, use the [previewLayout](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo#previewLayout) attribute of the appwidget-provider element to provide an XML layout instead:
 
   [`app_widget_info_checkbox_list`](app/src/main/res/xml/app_widget_info_checkbox_list.xml\#L50)
   ```xml
-    <appwidget-provider
-        android:previewLayout="@layout/widget_grocery_list"
-    ... />
+  <appwidget-provider
+      android:previewLayout="@layout/widget_grocery_list"
+      ... />
   ```
 
-## [Add a description for your widget](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#add-widget-description)
+## [Add a description for your widget](https://developer.android.com/about/versions/12/features/widgets#add-widget-description)
 
   In Android 12, you can optionally provide a description for the widget picker to display for your widget. 
 
@@ -34,8 +34,8 @@ List of API changes
   [`app_widget_info_checkbox_list`](app/src/main/res/xml/app_widget_info_checkbox_list.xml\#L40)
   ```xml
   <appwidget-provider
-        android:description="@string/app_widget_grocery_list_description"
-    ... />
+      android:description="@string/app_widget_grocery_list_description"
+      ... />
   ```
    
   <img src="screenshots/widget_preview.png"
@@ -43,7 +43,7 @@ List of API changes
     title="Image of the widget with description and previewLayout"
     />
 
-# [Apply dynamic colors](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#dynamic-colors)
+# [Apply dynamic colors](https://developer.android.com/about/versions/12/features/widgets#dynamic-colors)
 
   In Android 12, a widget can use the device theme colors for buttons, backgrounds, and other components. This enables smoother transitions and consistency across different widgets.
 
@@ -54,9 +54,9 @@ List of API changes
       alt="screenshot for dynamic coloring on dark theme"
       title="screenshot for dynamic coloring on dark theme" />
 
-## [Backward-compatibility with dynamic colors](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#backward-compatibility_with_dynamic_colors)
+## [Backward-compatibility with dynamic colors](https://developer.android.com/about/versions/12/features/widgets#backward-compatibility_with_dynamic_colors)
   
-  We recommend creating a custom theme and overriding it for Android 12. The following examples show how to do this with various types of XML files:
+  We recommend creating a custom theme and overriding it when running on devices with Android 12+. The following examples show how to do this with various types of XML files:
 
   [`values/themes.xml`](app/src/main/res/values/themes.xml\#L32)
   ```xml
@@ -85,14 +85,14 @@ List of API changes
   </LinearLayout>
   ```
 
-# [Implement rounded corners](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#rounded-corner)
+# [Implement rounded corners](https://developer.android.com/about/versions/12/features/widgets#rounded-corner)
 
   Android 12 introduces the following system parameters to set the radii of your widget's rounded corners:
 
   - `system_app_widget_background_radius`: The corner radius of the widget background, which will never be larger than 28dp.
   - `system_app_widget_inner_radius`: The corner radius of any view inside the widget. This is exactly 8dp less than the background radius to align nicely when using an 8dp padding.
 
-## [Backward-compatibility with rounded corners](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#backward-compatibility_with_rounded_corners)
+## [Backward-compatibility with rounded corners](https://developer.android.com/about/versions/12/features/widgets#backward-compatibility_with_rounded_corners)
   To ensure widget compatibility with previous versions of Android, we recommend defining custom attributes and using a custom theme to override them for Android 12, as shown in the following examples of XML files:
 
   [`values/attrs.xml`](app/src/main/res/values/attrs.xml\#L16)
@@ -132,22 +132,22 @@ List of API changes
 
   [`values/styles.xml`](app/src/main/res/values/styles.xml\#L18)
   ```xml
-    <style name="Widget.AppWidget.AppWidget.Container" parent="android:Widget">
-        <item name="android:id">@android:id/background</item>
-        <item name="android:background">?android:attr/colorBackground</item>
-    </style>
+  <style name="Widget.AppWidget.AppWidget.Container" parent="android:Widget">
+      <item name="android:id">@android:id/background</item>
+      <item name="android:background">?android:attr/colorBackground</item>
+  </style>
   ```
 
   [`values-v21/styles.xml`](app/src/main/res/values-v21/styles.xml\#L21)
   ```xml
-    <!--
-     Having styles for v21 because specifying android:attr/colorBackground used in the drawables
-     requires API level 21
-    -->
-    <style name="Widget.AppWidget.AppWidget.Container" parent="android:Widget">
-        <item name="android:padding">?attr/appWidgetPadding</item>
-        <item name="android:background">@drawable/app_widget_background</item>
-    </style>
+  <!--
+   Having styles for v21 because specifying android:attr/colorBackground used in the drawables
+   requires API level 21
+  -->
+  <style name="Widget.AppWidget.AppWidget.Container" parent="android:Widget">
+      <item name="android:padding">?attr/appWidgetPadding</item>
+      <item name="android:background">@drawable/app_widget_background</item>
+  </style>
   ```
 
   [`drawable-v21/app_widget_background.xml`](app/src/main/res/drawable-v21/app_widget_background.xml\#L21)
@@ -173,13 +173,13 @@ List of API changes
       alt="screenshot for a widget with rounded corners"
       title="screenshot for a widget with rounded corners" />
 
-# [Make it easier to personalize widgets](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#personalize-widgets)
+# [Make it easier to personalize widgets](https://developer.android.com/about/versions/12/features/widgets#personalize-widgets)
 
-  If you specify a configuration activity with the [configure](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo?db=dac-team#configure) attribute of [appwidget-provider](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo?db=dac-team), the App Widget host launches that activity immediately after a user adds the widget to their home screen.
+  If you specify a configuration activity with the [configure](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo#configure) attribute of [appwidget-provider](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo), the App Widget host launches that activity immediately after a user adds the widget to their home screen.
 
   Android 12 adds new options to let you provide a better configuration experience for users.
 
-## [Enable users to reconfigure placed widgets](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#reconfigure-widgets)
+## [Enable users to reconfigure placed widgets](https://developer.android.com/about/versions/12/features/widgets#reconfigure-widgets)
 
   To configure widgets that are labeled as reconfigurable, users can long-press the widget. This displays a Reconfigure button, which they can tap to change settings.
 
@@ -197,7 +197,7 @@ List of API changes
       ... />
   ```
   
-## [Use the widget's default configuration](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#use-default)
+## [Use the widget's default configuration](https://developer.android.com/about/versions/12/features/widgets#use-default)
 
   If you’d like your widget to use its default configuration when a user adds it, you can skip the configuration step by specifying both the `configuration_optional` and `reconfigurable` flags in the `widgetFeatures` field.
 
@@ -208,7 +208,7 @@ List of API changes
       ... />
   ```
 
-# [Enable smoother transitions](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#enable-smoother-transitions)
+# [Enable smoother transitions](https://developer.android.com/about/versions/12/features/widgets#enable-smoother-transitions)
 
   In Android 12, launchers provide a smoother transition when a user launches your app from a widget.
 
@@ -225,13 +225,13 @@ List of API changes
       alt="screen record of a smooth transition from the widget to the app"
       title="screen record of a smooth transition from the widget to the app" />
 
-# [Add new compound buttons](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#new-compound-buttons)
+# [Add new compound buttons](https://developer.android.com/about/versions/12/features/widgets#new-compound-buttons)
 
   Android 12 adds new support for stateful behavior using the following existing components:
 
-  - [Checkbox](https://developer.android.com/reference/kotlin/android/widget/CheckBox?db=dac-team)
-  - [Switch](https://developer.android.com/reference/kotlin/android/widget/Switch?db=dac-team)
-  - [RadioButton](https://developer.android.com/reference/kotlin/android/widget/RadioButton?db=dac-team)
+  - [Checkbox](https://developer.android.com/reference/kotlin/android/widget/CheckBox)
+  - [Switch](https://developer.android.com/reference/kotlin/android/widget/Switch)
+  - [RadioButton](https://developer.android.com/reference/kotlin/android/widget/RadioButton)
 
   <img src="screenshots/widget_items_collection.png" 
        alt="Screenshot of a widget with compound buttons" 
@@ -268,7 +268,7 @@ List of API changes
   ```
   See the documents for [fromPendingIntent](https://developer.android.com/reference/android/widget/RemoteViews.RemoteResponse#fromPendingIntent(android.app.PendingIntent)) and [fromFillInIntent](https://developer.android.com/reference/android/widget/RemoteViews.RemoteResponse#fromFillInIntent(android.content.Intent)) for more details.
 
-# [Use simplified RemoteViews collections](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#leverage-simplified-remoteview-collections)
+# [Use simplified RemoteViews collections](https://developer.android.com/about/versions/12/features/widgets#leverage-simplified-remoteview-collections)
 
   Android 12 adds the `setRemoteAdapter(int viewId, RemoteViews.RemoteCollectionItems items)` method, which lets your app pass along a collection directly when populating a ListView. Previously, when using a ListView, it was necessary to implement and declare a [RemoteViewService](https://developer.android.com/reference/android/widget/RemoteViewsService) to return 
   [RemoteViewsFactory](https://developer.android.com/reference/android/widget/RemoteViewsService.RemoteViewsFactory).
@@ -290,22 +290,22 @@ List of API changes
   )
   ```
 
-# [Use improved APIs for widget sizes and layouts](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#refine-widget-sizes)
+# [Use improved APIs for widget sizes and layouts](https://developer.android.com/about/versions/12/features/widgets#refine-widget-sizes)
 
   Starting in Android 12, you can provide more refined size attributes and more flexible layouts and by doing the following:
 
   1. [Specify additional widget sizing constraints](#specify-additional-widget-sizing-constraints)
-  2. [Provide responsive layouts](#provide-responsive-layouts) or [exact layouts](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#provide-exact-layouts)
+  2. [Provide responsive layouts](#provide-responsive-layouts) or [exact layouts](https://developer.android.com/about/versions/12/features/widgets#provide-exact-layouts)
 
-## [Specify additional widget sizing constraints](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#specify-widget-size-constraints)
+## [Specify additional widget sizing constraints](https://developer.android.com/about/versions/12/features/widgets#specify-widget-size-constraints)
 
   Android 12 adds new APIs allowing you to ensure your widget is sized more reliably across different devices with varying screen sizes.
 
-  In addition to the existing [minWidth](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo?db=dac-team#minWidth), [minHeight](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo?db=dac-team#minHeight), [minResizeWidth](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo?db=dac-team#minResizeWidth), and [minResizeHeight](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo?db=dac-team#minResizeHeight) attributes, use the following new appwidget-provider attributes:
+  In addition to the existing [minWidth](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo#minWidth), [minHeight](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo#minHeight), [minResizeWidth](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo#minResizeWidth), and [minResizeHeight](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo#minResizeHeight) attributes, use the following new appwidget-provider attributes:
 
-  - [targetCellWidth](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo?db=dac-team#targetCellWidth) and [targetCellHeight](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo?db=dac-team#targetCellHeight): Defines the target size of the widget in terms of launcher grid cells. If defined, these attributes are used instead of minWidth or minHeight. 
+  - [targetCellWidth](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo#targetCellWidth) and [targetCellHeight](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo#targetCellHeight): Defines the target size of the widget in terms of launcher grid cells. If defined, these attributes are used instead of minWidth or minHeight. 
 
-  - [maxResizeWidth](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo?db=dac-team#maxResizeWidth) and [maxResizeHeight](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo?db=dac-team#maxResizeHeight): Defines the maximum size the launcher allows the user to resize the widget.
+  - [maxResizeWidth](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo#maxResizeWidth) and [maxResizeHeight](https://developer.android.com/reference/android/appwidget/AppWidgetProviderInfo#maxResizeHeight): Defines the maximum size the launcher allows the user to resize the widget.
   
   The following XML describes how to use the sizing attributes.
 
@@ -327,7 +327,7 @@ List of API changes
        alt="Screenshot of a widget being resized"
        title="Screenshot of a widget being resized" />
 
-## [Provide responsive layouts](https://developer.android.com/about/versions/12/features/widgets?db=dac-team#provide-responsive-layouts)
+## [Provide responsive layouts](https://developer.android.com/about/versions/12/features/widgets#provide-responsive-layouts)
 
   If the layout needs to change depending on the size of the widget, we recommend creating a small set of layouts, each valid for a range of sizes. (If this isn’t possible, another option is to provide layouts based on the exact widget size at runtime.)
 
