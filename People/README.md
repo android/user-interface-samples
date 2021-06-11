@@ -78,10 +78,16 @@ This sample uses the Gradle build system. To build this project, use the
     class BubbleActivity : AppCompatActivity() {
       override fun onCreate(...) {
       ...
-      val displayId = this.display.displayId
-      val isBubbled = displayId != Display.DEFAULT_DISPLAY
-      ...
-     } 
+        val isBubbled = if (Build.VERSION.SDK_INT >= 31) {
+          isLaunchedFromBubble()
+        } else {
+          val displayId = if (Build.VERSION.SDK_INT >= 30) {
+            display.displayId
+          } else {
+            windowManager.defaultDisplay.displayId
+          }
+          displayId != Display.DEFAULT_DISPLAY
+        }
    }
 ```
 
