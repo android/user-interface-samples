@@ -17,41 +17,48 @@
 package com.example.windowmanagersample
 
 import android.os.Bundle
-import androidx.core.util.Consumer
-import androidx.window.WindowLayoutInfo
-import androidx.window.WindowManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.window.WindowInfoRepo
+import androidx.window.windowInfoRepository
 import com.example.windowmanagersample.databinding.ActivitySplitLayoutBinding
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 /** Demo of [SplitLayout]. */
-class SplitLayoutActivity : BaseSampleActivity() {
+class SplitLayoutActivity : AppCompatActivity() {
 
-    private lateinit var windowManager: WindowManager
-    private val layoutStateChangeCallback = LayoutStateChangeCallback()
     private lateinit var binding: ActivitySplitLayoutBinding
+    private lateinit var windowInfoRepo: WindowInfoRepo
 
+    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivitySplitLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        windowManager = getTestBackend()?.let { backend -> WindowManager(this, backend) }
-            ?: WindowManager(this)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        windowManager.registerLayoutChangeCallback(mainThreadExecutor, layoutStateChangeCallback)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        windowManager.unregisterLayoutChangeCallback(layoutStateChangeCallback)
-    }
-
-    inner class LayoutStateChangeCallback : Consumer<WindowLayoutInfo> {
-        override fun accept(newLayoutInfo: WindowLayoutInfo) {
-            val splitLayout = binding.splitLayout
-            splitLayout.updateWindowLayout(newLayoutInfo)
+        windowInfoRepo = windowInfoRepository()
+        // Create a new coroutine since repeatOnLifecycle is a suspend function
+        lifecycleScope.launch {
+            // The block passed to repeatOnLifecycle is executed when the lifecycle
+            // is at least STARTED and is cancelled when the lifecycle is STOPPED.
+            // It automatically restarts the block when the lifecycle is STARTED again.
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // Safely collect from windowInfoRepo when the lifecycle is STARTED
+                // and stops collection when the lifecycle is STOPPED
+                windowInfoRepo.windowLayoutInfo()
+                    // Throttle first event 10ms to allow the UI to pickup the posture
+                    .throttleFirst(10)
+                    .collect { newLayoutInfo ->
+                        // New posture information
+                        val splitLayout = binding.splitLayout
+                        splitLayout.updateWindowLayout(newLayoutInfo)
+                    }
+            }
         }
     }
 }
