@@ -20,8 +20,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Consumer;
+import androidx.window.WindowInfoRepo;
 import androidx.window.WindowLayoutInfo;
-import androidx.window.WindowServices;
 import androidx.window.java.WindowInfoRepoJavaAdapter;
 import com.example.windowmanagersample.databinding.ActivitySplitLayoutBinding;
 
@@ -39,7 +39,7 @@ public class SplitLayoutActivity extends AppCompatActivity {
         binding = ActivitySplitLayoutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        windowInfoRepo = new WindowInfoRepoJavaAdapter(WindowServices.windowInfoRepository(this));
+        windowInfoRepo = new WindowInfoRepoJavaAdapter(WindowInfoRepo.create(this));
     }
 
     @Override
