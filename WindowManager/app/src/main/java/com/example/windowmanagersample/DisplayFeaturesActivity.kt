@@ -19,59 +19,66 @@ package com.example.windowmanagersample
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
-import androidx.core.util.Consumer
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.window.FoldingFeature
+import androidx.window.WindowInfoRepo
 import androidx.window.WindowLayoutInfo
-import androidx.window.WindowManager
-import com.example.windowmanagersample.backend.MidScreenFoldBackend
+import androidx.window.windowInfoRepository
 import com.example.windowmanagersample.databinding.ActivityDisplayFeaturesBinding
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 /** Demo activity that shows all display features and current device state on the screen. */
-class DisplayFeaturesActivity : BaseSampleActivity() {
+class DisplayFeaturesActivity : AppCompatActivity() {
 
-    private lateinit var windowManager: WindowManager
     private val stateLog: StringBuilder = StringBuilder()
 
     private val displayFeatureViews = ArrayList<View>()
 
-    // Store most recent values for the device state and window layout
-    private val stateContainer = StateContainer()
     private lateinit var binding: ActivityDisplayFeaturesBinding
+    private lateinit var windowInfoRepo: WindowInfoRepo
 
+    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityDisplayFeaturesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        windowManager = getTestBackend()?.let { backend ->
-            binding.deviceStateToggleButton.visibility = View.VISIBLE
-            binding.deviceStateToggleButton.setOnClickListener {
-                if (backend is MidScreenFoldBackend) {
-                    backend.toggleDeviceHalfOpenedState(this)
-                }
+        windowInfoRepo = windowInfoRepository()
+
+        // Create a new coroutine since repeatOnLifecycle is a suspend function
+        lifecycleScope.launch {
+            // The block passed to repeatOnLifecycle is executed when the lifecycle
+            // is at least STARTED and is cancelled when the lifecycle is STOPPED.
+            // It automatically restarts the block when the lifecycle is STARTED again.
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                // Safely collect from windowInfoRepo when the lifecycle is STARTED
+                // and stops collection when the lifecycle is STOPPED
+                windowInfoRepo.windowLayoutInfo()
+                    // Throttle first event 10ms to allow the UI to pickup the posture
+                    .throttleFirst(10)
+                    .collect { newLayoutInfo ->
+                        // New posture information
+                        updateStateLog(newLayoutInfo)
+                        updateCurrentState(newLayoutInfo)
+                    }
             }
-            WindowManager(this, backend)
-        } ?: WindowManager(this)
+        }
 
         stateLog.clear()
         stateLog.append(getString(R.string.state_update_log)).append("\n")
     }
 
-    override fun onStart() {
-        super.onStart()
-        windowManager.registerLayoutChangeCallback(mainThreadExecutor, stateContainer)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        windowManager.unregisterLayoutChangeCallback(stateContainer)
-    }
-
     /** Updates the device state and display feature positions. */
-    internal fun updateCurrentState(layoutInfo: WindowLayoutInfo?) {
+    private fun updateCurrentState(layoutInfo: WindowLayoutInfo) {
         // Cleanup previously added feature views
         val rootLayout = binding.featureContainerLayout
         for (featureView in displayFeatureViews) {
@@ -82,62 +89,60 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         // Update the UI with the current state
         val stateStringBuilder = StringBuilder()
 
-        layoutInfo?.let { windowLayoutInfo ->
-            stateStringBuilder.append(getString(R.string.window_layout))
-                .append(": ")
+        stateStringBuilder.append(getString(R.string.window_layout))
+            .append(": ")
 
-            // Add views that represent display features
-            for (displayFeature in windowLayoutInfo.displayFeatures) {
-                val lp = getLayoutParamsForFeatureInFrameLayout(displayFeature, rootLayout)
-                    ?: continue
+        // Add views that represent display features
+        for (displayFeature in layoutInfo.displayFeatures) {
+            val lp = getLayoutParamsForFeatureInFrameLayout(displayFeature, rootLayout)
+                ?: continue
 
-                // Make sure that zero-wide and zero-high features are still shown
-                if (lp.width == 0) {
-                    lp.width = 1
-                }
-                if (lp.height == 0) {
-                    lp.height = 1
-                }
-
-                val featureView = View(this)
-                val foldFeature = displayFeature as? FoldingFeature
-
-                val color = if (foldFeature != null) {
-                    if (foldFeature.isSeparating) {
-                        stateStringBuilder.append(getString(R.string.screens_are_separated))
-                        getColor(R.color.color_feature_separating)
-                    } else {
-                        stateStringBuilder.append(getString(R.string.screens_are_not_separated))
-                        getColor(R.color.color_feature_not_separating)
-                    }
-                } else {
-                    getColor(R.color.color_feature_unknown)
-                }
-                if (foldFeature != null) {
-                    stateStringBuilder
-                        .append(" - ")
-                        .append(
-                            if (foldFeature.orientation == FoldingFeature.ORIENTATION_HORIZONTAL) {
-                                getString(R.string.screen_is_horizontal)
-                            } else {
-                                getString(R.string.screen_is_vertical)
-                            }
-                        )
-                }
-                featureView.foreground = ColorDrawable(color)
-
-                rootLayout.addView(featureView, lp)
-                featureView.id = View.generateViewId()
-
-                displayFeatureViews.add(featureView)
+            // Make sure that zero-wide and zero-high features are still shown
+            if (lp.width == 0) {
+                lp.width = 1
             }
+            if (lp.height == 0) {
+                lp.height = 1
+            }
+
+            val featureView = View(this)
+            val foldFeature = displayFeature as? FoldingFeature
+
+            val color = if (foldFeature != null) {
+                if (foldFeature.isSeparating) {
+                    stateStringBuilder.append(getString(R.string.screens_are_separated))
+                    getColor(R.color.color_feature_separating)
+                } else {
+                    stateStringBuilder.append(getString(R.string.screens_are_not_separated))
+                    getColor(R.color.color_feature_not_separating)
+                }
+            } else {
+                getColor(R.color.color_feature_unknown)
+            }
+            if (foldFeature != null) {
+                stateStringBuilder
+                    .append(" - ")
+                    .append(
+                        if (foldFeature.orientation == FoldingFeature.ORIENTATION_HORIZONTAL) {
+                            getString(R.string.screen_is_horizontal)
+                        } else {
+                            getString(R.string.screen_is_vertical)
+                        }
+                    )
+            }
+            featureView.foreground = ColorDrawable(color)
+
+            rootLayout.addView(featureView, lp)
+            featureView.id = View.generateViewId()
+
+            displayFeatureViews.add(featureView)
         }
 
         binding.currentState.text = stateStringBuilder.toString()
     }
 
     /** Adds the current state to the text log of changes on screen. */
-    internal fun updateStateLog(layoutInfo: WindowLayoutInfo) {
+    private fun updateStateLog(layoutInfo: WindowLayoutInfo) {
         stateLog.append(getCurrentTimeString())
             .append(" ")
             .append(layoutInfo)
@@ -149,15 +154,5 @@ class DisplayFeaturesActivity : BaseSampleActivity() {
         val sdf = SimpleDateFormat("HH:mm:ss.SSS", Locale.getDefault())
         val currentDate = sdf.format(Date())
         return currentDate.toString()
-    }
-
-    inner class StateContainer : Consumer<WindowLayoutInfo> {
-        var lastLayoutInfo: WindowLayoutInfo? = null
-
-        override fun accept(newLayoutInfo: WindowLayoutInfo) {
-            updateStateLog(newLayoutInfo)
-            lastLayoutInfo = newLayoutInfo
-            updateCurrentState(lastLayoutInfo)
-        }
     }
 }

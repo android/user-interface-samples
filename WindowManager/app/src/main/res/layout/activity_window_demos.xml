@@ -28,48 +28,6 @@
         android:layout_marginStart="8dp" >
 
         <TextView
-            android:id="@+id/hardware_select_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:text="@string/hardware_config_select"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <RadioGroup
-            android:id="@+id/backend_radio_group"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hardware_select_text_view">
-
-            <RadioButton
-                android:id="@+id/device_default_radio_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/device_default" />
-
-            <RadioButton
-                android:id="@+id/short_dimension_fold_radio_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/short_dimension_fold" />
-
-            <RadioButton
-                android:id="@+id/long_dimension_fold_radio_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/long_dimension_fold" />
-
-        </RadioGroup>
-
-        <TextView
             android:id="@+id/test_activity_title"
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -80,7 +38,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/backend_radio_group" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/features_activity_button"
