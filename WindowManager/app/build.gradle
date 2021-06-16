@@ -49,6 +49,7 @@ dependencies {
 
     def window_version = '1.0.0-alpha07'
     implementation "androidx.window:window:$window_version"
+    implementation "androidx.window:window-java:$window_version"
 
     androidTestImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'
