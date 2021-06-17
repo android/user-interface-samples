@@ -81,7 +81,7 @@ can be:
 [3]: https://developer.android.com/reference/androidx/window/WindowLayoutInfo
 [4]: https://developer.android.com/reference/androidx/window/FoldingFeature
 
-[20]: [https://developer.android.com/reference/androidx/window/FoldingFeature#isSeparating()]
+[20]: https://developer.android.com/reference/androidx/window/FoldingFeature#isSeparating()
 [21]: https://developer.android.com/reference/androidx/window/FoldingFeature#orientation()
 [22]: https://developer.android.com/reference/androidx/window/FoldingFeature#occlusionMode()
 [23]: https://developer.android.com/reference/androidx/window/FoldingFeature#state()
