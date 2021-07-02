@@ -96,9 +96,9 @@ class ListAppWidget : AppWidgetProvider() {
                 // Specify the maximum width and height in dp and a layout, which you want to use
                 // for the specified size
                 val viewMapping = mapOf(
-                    SizeF(150f, 110f) to constructRemoteViews(
+                    SizeF(150f, 150f) to constructRemoteViews(
                         R.layout.widget_grocery_list
-                    ), SizeF(250f, 110f) to constructRemoteViews(
+                    ), SizeF(250f, 150f) to constructRemoteViews(
                         R.layout.widget_grocery_grid
                     )
                 )
