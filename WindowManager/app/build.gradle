@@ -47,8 +47,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01'
 
-    def window_version = '1.0.0-alpha07'
+    def window_version = '1.0.0-alpha08'
     implementation "androidx.window:window:$window_version"
+    implementation "androidx.window:window-java:$window_version"
 
     androidTestImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'
@@ -59,4 +60,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+    androidTestImplementation "androidx.window:window-testing:$window_version"
 }

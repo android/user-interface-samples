@@ -19,80 +19,142 @@ full advantage of whatever device they are on. The Jetpack WindowManager
 library allows you to handle all of these devices through a common API as well
 as through different versions of Android.
 
-You can determine what `DisplayFeatures`s are available on the device and their
-`Rect` location. The alpha02 release introduces a new `DisplayFeature` class with an updated callback contract to notify your application when a `DisplayFeature` changes. You can register/unregister the callback using these methods:
+You can determine what [`DisplayFeature`][0]'s are available on the device
+and their
+[`bounds`][1].
+
+The alpha07 release introduces a new [`WindowInfoRepo`][2] interface that can
+be used to receive `DisplayFeature` changes. You can collect the flow taking
+into consideration the application lifecycle as in:
 ``` java
-registerLayoutChangeCallback(@NonNull Executor executor, @NonNull Consumer<WindowLayoutInfo> callback)
-unregisterLayoutChangeCallback(@NonNull Consumer<WindowLayoutInfo> callback)
-```
+private lateinit var windowInfoRepo: WindowInfoRepo
 
-The `WindowLayoutInfo` contains a list of the instances of `DisplayFeature` that are located within the window.
+override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
 
-The `FoldingFeature` class implements the `DisplayFeature` interface, which includes information about these types of features:
+    windowInfoRepo = windowInfoRepository()
 
-```
-TYPE_FOLD
-TYPE_HINGE
-```
+    // Other initialization
 
-And their possible folding states:
-```
-STATE_FLAT
-STATE_HALF_OPENED
-STATE_FLIPPED
-```
+}
 
-To access the new state you can use the FoldingFeature information returned to the registered callback:
-``` java
-class LayoutStateChangeCallback : Consumer<WindowLayoutInfo> {
-    override fun accept(newLayoutInfo: WindowLayoutInfo) {
-        // TODO
-        // Check newLayoutInfo. getDisplayFeatures()
-        // to see if it is a FoldingFeature and retrieve the information
+override fun onStart() {
+    super.onStart()
+    layoutUpdatesJob = CoroutineScope(Dispatchers.Main).launch {
+        windowInfoRepo.windowLayoutInfo()
+            .collect { newLayoutInfo ->
+                // New posture information
+                updateStateLog(newLayoutInfo)
+                updateCurrentState(newLayoutInfo)
+        }
     }
+}
+
+override fun onStop() {
+    super.onStop()
+    layoutUpdatesJob?.cancel()
 }
 ```
 
-You can see an example of this in the `SplitLayoutActivity` class.
+The [`WindowLayoutInfo`][3] contains a list of the instances of
+`DisplayFeature` that are located within the window.
 
-WindowMetrics
+The [`FoldingFeature`][4] class implements the `DisplayFeature` interface,
+which includes information about the feature's state that can be retrieved
+using the methods:
+
+  * [`isSeparating`][20]
+  * [`orientation`][21]
+  * [`occlusionMode`][22]
+
+You can see an example of this in the `DisplayFeaturesActivity` class.
+It is also access the folding posture if needed using its [`state`][23] that
+can be:
+
+  * [`STATE_FLAT`][24]
+  * [`STATE_HALF_OPENED`][25]
+
+
+[0]: https://developer.android.com/reference/androidx/window/DisplayFeature
+[1]: https://developer.android.com/reference/androidx/window/DisplayFeature#bounds()
+[2]: https://developer.android.com/reference/androidx/window/WindowInfoRepo
+[3]: https://developer.android.com/reference/androidx/window/WindowLayoutInfo
+[4]: https://developer.android.com/reference/androidx/window/FoldingFeature
+
+[20]: https://developer.android.com/reference/androidx/window/FoldingFeature#isSeparating()
+[21]: https://developer.android.com/reference/androidx/window/FoldingFeature#orientation()
+[22]: https://developer.android.com/reference/androidx/window/FoldingFeature#occlusionMode()
+[23]: https://developer.android.com/reference/androidx/window/FoldingFeature#state()
+[24]: https://developer.android.com/reference/androidx/window/FoldingFeature.Companion#STATE_FLAT()
+[25]: https://developer.android.com/reference/androidx/window/FoldingFeature.Companion#STATE_HALF_OPENED()
+
+`WindowInfoRepoJavaAdapter`
+---------------------------
+
+To use this library from Java it is available artifact `window:window-java`
+that makes available the [`WindowInfoRepoJavaAdapter`][30] that allows to
+register/unregister a callback to receive updates on the device's postgure
+from the library as shown in the `SplitLayoutActivity` class included in this
+sample.  
+To create a new `WindowInfoRepoJavaAdapter`, you can use the code:
+
+```java
+WindowInfoRepoJavaAdapter windowInfoRepo = new WindowInfoRepoJavaAdapter(WindowInfoRepo.create(this));
+```
+
+[30]: https://developer.android.com/reference/androidx/window/java/WindowInfoRepoJavaAdapter
+
+`WindowMetrics`
 -------------
 
-The WindowManager library includes a new WindowMetrics API to get information about your current window state and the maximum window size for the current state of the system.
+The WindowManager library includes a new WindowMetrics API to get information
+about your current window state and the maximum window size for the current
+state of the system.
 
-The API results don’t include information about the system insets such as the status bar or action bar, since those values aren’t available before the first layout pass. These bounds also don’t react to any changes in layout params that might occur when your layout is inflated. If you are looking for specific information for laying out views you should get the width/height from the Configuration object or the DecorView.
+The API results don’t include information about the system insets such as the
+status bar or action bar, since those values aren’t available before the first
+layout pass. These bounds also don’t react to any changes in layout params
+that might occur when your layout is inflated. If you are looking for specific
+information for laying out views you should get the width/height from the
+`Configuration` object or the `DecorView`.
 
-To access these APIs, you need to get an instance of the WindowManager object.
+To access these APIs, you can use, when working in Kotlin, a `WindowInfoRepo`:
 
 ``` java
-var windowManager = WindowManager(this /* context */)
+val windowInfoRepo = windowInfoRepository()
 ```
 
 From here you now have access to the WindowMetrics APIs and can easily call
 
 ``` java
-windowManager.currentWindowMetrics
-windowManager.maximumWindowMetrics
+windowInfoRepo.currentWindowMetrics
+windowInfoRepo.maximumWindowMetrics
+```
+
+Or, when working in java, you can use a `WindowInfoRepoJavaAdapter`:
+
+```java
+WindowInfoRepoJavaAdapter windowInfoRepo = new WindowInfoRepoJavaAdapter(WindowInfoRepo.create(this));
+windowInfoRepo.getCurrentWindowMetrics();
+windowInfoRepo.getMaximumWindowMetrics();
 ```
 
 Notes
 -----
 
-This is the second Alpha release of the library so the API surface may still change
-and grow with time. Any feedback is greatly appreciated on things you would
+Any feedback to the library's API surface is greatly appreciated on things you would
 like to see added or changed!
 
 For more information on the Jetpack Window Manager library, see the
-[Jetpack Window Manager release page][1].
+[Jetpack Window Manager release page][99].
 
-[1]: https://developer.android.com/jetpack/androidx/releases/window
+[99]: https://developer.android.com/jetpack/androidx/releases/window
 
 Pre-requisites
 --------------
 
 - Android SDK 30
-- Android Studio 4.1.2
-- Android Support Repository
+- Android Studio 4.2.1
 
 Getting Started
 ---------------
@@ -110,3 +172,25 @@ https://github.com/android/user-interface
 
 Patches are encouraged, and may be submitted by forking this project and
 submitting a pull request through GitHub. Please see CONTRIBUTING.md for more details.
+
+License
+-------
+
+Copyright 2020 Google, Inc.
+
+Licensed to the Apache Software Foundation (ASF) under one or more contributor
+license agreements.  See the NOTICE file distributed with this work for
+additional information regarding copyright ownership.  The ASF licenses this
+file to you under the Apache License, Version 2.0 (the "License"); you may not
+use this file except in compliance with the License.  You may obtain a copy of
+the License at
+
+  https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+License for the specific language governing permissions and limitations under
+the License.
+
+

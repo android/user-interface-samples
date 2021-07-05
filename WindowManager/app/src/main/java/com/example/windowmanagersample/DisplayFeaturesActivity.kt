@@ -62,7 +62,7 @@ class DisplayFeaturesActivity : AppCompatActivity() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 // Safely collect from windowInfoRepo when the lifecycle is STARTED
                 // and stops collection when the lifecycle is STOPPED
-                windowInfoRepo.windowLayoutInfo()
+                windowInfoRepo.windowLayoutInfo
                     // Throttle first event 10ms to allow the UI to pickup the posture
                     .throttleFirst(10)
                     .collect { newLayoutInfo ->

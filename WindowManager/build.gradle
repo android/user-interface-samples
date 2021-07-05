@@ -35,6 +35,11 @@ plugins {
 subprojects {
     apply plugin: 'com.diffplug.spotless'
     spotless {
+        java {
+            target '**/*.java'
+            googleJavaFormat('1.7').aosp()
+            licenseHeaderFile project.rootProject.file('scripts/copyright')
+        }
         kotlin {
             target '**/*.kt'
             ktlint(ktlint_version).userData(['android': 'true'])
