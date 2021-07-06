@@ -22,9 +22,13 @@
     <string name="grocery_list_milk">Milk</string>
     <string name="grocery_list_eggs">Eggs</string>
     <string name="grocery_list_tomatoes">Tomatoes</string>
+    <string name="grocery_list_bacon">Bacon</string>
+    <string name="grocery_list_butter">Butter</string>
     <string name="grocery_list_cheese">Cheese</string>
     <string name="grocery_list_potatoes">Potatoes</string>
     <string name="grocery_list_broccoli">Broccoli</string>
+    <string name="grocery_list_salmon">Salmon</string>
+    <string name="grocery_list_yogurt">Yogurt</string>
     <string name="select_list_for_widget">Select list for widgets</string>
     <string name="plus_three_other_items">+3 other items</string>
     <string name="todo_list">To-do list</string>

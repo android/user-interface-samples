@@ -327,13 +327,13 @@ The following XML describes how to use the sizing attributes.
 ```xml
 <appwidget-provider
   android:maxResizeWidth="240dp"
-  android:maxResizeHeight="180dp"
+  android:maxResizeHeight="220dp"
   android:minWidth="180dp"
-  android:minHeight="110dp"
+  android:minHeight="180dp"
   android:minResizeWidth="180dp"
-  android:minResizeHeight="110dp"
+  android:minResizeHeight="180dp"
   android:targetCellWidth="3"
-  android:targetCellHeight="2"
+  android:targetCellHeight="3"
   ... />
 ```
 
@@ -356,11 +356,11 @@ val viewMapping: MutableMap<SizeF, RemoteViews> = mutableMapOf()
 // Specify the maximum width and height in dp and a layout, which you want to use for the
 // specified size
 val viewMapping = mapOf(
-    SizeF(150f, 110f) to RemoteViews(
+    SizeF(150f, 150f) to RemoteViews(
         context.packageName,
         R.layout.widget_grocery_list
     ),
-    SizeF(250f, 110f) to RemoteViews(
+    SizeF(250f, 150f) to RemoteViews(
         context.packageName,
         R.layout.widget_grocery_grid
     ),

@@ -35,23 +35,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <CheckBox
-                style="@style/Widget.AppWidget.Checkbox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/grocery_list_milk" />
-
-            <CheckBox
-                style="@style/Widget.AppWidget.Checkbox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/grocery_list_eggs" />
-
-            <CheckBox
-                style="@style/Widget.AppWidget.Checkbox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/grocery_list_tomatoes" />
+            <include layout="@layout/widget_grocery_list_left_items" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,6 +62,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/grocery_list_broccoli" />
+
+            <CheckBox
+                style="@style/Widget.AppWidget.Checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/grocery_list_salmon" />
+
+            <CheckBox
+                style="@style/Widget.AppWidget.Checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/grocery_list_yogurt" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
