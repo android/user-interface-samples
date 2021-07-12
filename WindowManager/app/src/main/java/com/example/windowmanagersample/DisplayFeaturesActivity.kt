@@ -31,6 +31,7 @@ import com.example.windowmanagersample.databinding.ActivityDisplayFeaturesBindin
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -55,7 +56,7 @@ class DisplayFeaturesActivity : AppCompatActivity() {
         windowInfoRepo = windowInfoRepository()
 
         // Create a new coroutine since repeatOnLifecycle is a suspend function
-        lifecycleScope.launch {
+        lifecycleScope.launch(Dispatchers.Main) {
             // The block passed to repeatOnLifecycle is executed when the lifecycle
             // is at least STARTED and is cancelled when the lifecycle is STOPPED.
             // It automatically restarts the block when the lifecycle is STARTED again.
@@ -63,10 +64,7 @@ class DisplayFeaturesActivity : AppCompatActivity() {
                 // Safely collect from windowInfoRepo when the lifecycle is STARTED
                 // and stops collection when the lifecycle is STOPPED
                 windowInfoRepo.windowLayoutInfo
-                    // Throttle first event 10ms to allow the UI to pickup the posture
-                    .throttleFirst(10)
                     .collect { newLayoutInfo ->
-                        // New posture information
                         updateStateLog(newLayoutInfo)
                         updateCurrentState(newLayoutInfo)
                     }
@@ -123,7 +121,7 @@ class DisplayFeaturesActivity : AppCompatActivity() {
                 stateStringBuilder
                     .append(" - ")
                     .append(
-                        if (foldFeature.orientation == FoldingFeature.ORIENTATION_HORIZONTAL) {
+                        if (foldFeature.orientation == FoldingFeature.Orientation.HORIZONTAL) {
                             getString(R.string.screen_is_horizontal)
                         } else {
                             getString(R.string.screen_is_vertical)
