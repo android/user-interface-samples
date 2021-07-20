@@ -66,13 +66,15 @@ fun getFeaturePositionInViewRect(
  * Gets the layout params for placing a rectangle indicating a display feature inside a
  * [FrameLayout].
  */
-fun getLayoutParamsForFeatureInFrameLayout(displayFeature: DisplayFeature, view: FrameLayout):
-    FrameLayout.LayoutParams? {
-        val featureRectInView = getFeaturePositionInViewRect(displayFeature, view) ?: return null
+fun getLayoutParamsForFeatureInFrameLayout(
+    displayFeature: DisplayFeature,
+    view: FrameLayout
+): FrameLayout.LayoutParams? {
+    val featureRectInView = getFeaturePositionInViewRect(displayFeature, view) ?: return null
 
-        val lp = FrameLayout.LayoutParams(featureRectInView.width(), featureRectInView.height())
-        lp.leftMargin = featureRectInView.left
-        lp.topMargin = featureRectInView.top
+    val lp = FrameLayout.LayoutParams(featureRectInView.width(), featureRectInView.height())
+    lp.leftMargin = featureRectInView.left
+    lp.topMargin = featureRectInView.top
 
-        return lp
-    }
+    return lp
+}

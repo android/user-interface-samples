@@ -34,9 +34,18 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+
+        // Allow usage of Kotlin's @OptIn.
+        freeCompilerArgs += '-Xopt-in=kotlin.RequiresOptIn'
     }
     buildFeatures {
         viewBinding = true
+    }
+
+    // Workaround for https://issuetracker.google.com/161465530
+    packagingOptions {
+        pickFirst 'META-INF/AL2.0'
+        pickFirst 'META-INF/LGPL2.1'
     }
 }
 
