@@ -79,6 +79,8 @@ class SplitLayoutActivityTest {
                 )
             }
         }
+
+        // Checks that the two views are overlapped if there's no FoldingFeature.
         onView(withId(R.id.start_layout)).check(isBottomAlignedWith(withId(R.id.end_layout)))
         onView(withId(R.id.start_layout)).check(isTopAlignedWith(withId(R.id.end_layout)))
         onView(withId(R.id.start_layout)).check(isLeftAlignedWith(withId(R.id.end_layout)))
@@ -110,6 +112,9 @@ class SplitLayoutActivityTest {
                 )
             }
         }
+
+        // Checks that start_layout is on the left of end_layout with a vertical folding feature.
+        // This requires to run the test on a big enough screen to fit both views on screen
         onView(withId(R.id.start_layout)).check(isCompletelyLeftOf(withId(R.id.end_layout)))
     }
 
@@ -138,6 +143,9 @@ class SplitLayoutActivityTest {
                 )
             }
         }
+
+        // Checks that start_layout is above of end_layout with a horizontal folding feature.
+        // This requires to run the test on a big enough screen to fit both views on screen
         onView(withId(R.id.start_layout)).check(isCompletelyAbove(withId(R.id.end_layout)))
     }
 }
