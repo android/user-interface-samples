@@ -44,11 +44,11 @@ import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
+@OptIn(ExperimentalCoroutinesApi::class)
 class DisplayFeaturesActivityTest {
     private val activityRule = ActivityScenarioRule(DisplayFeaturesActivity::class.java)
     private val publisherRule = WindowLayoutInfoPublisherRule()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private val testScope = TestCoroutineScope()
 
     @get:Rule
@@ -58,7 +58,6 @@ class DisplayFeaturesActivityTest {
         testRule = RuleChain.outerRule(publisherRule).around(activityRule)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun testDeviceOpen_Flat(): Unit = testScope.runBlockingTest {
         activityRule.scenario.onActivity { activity ->
@@ -87,7 +86,6 @@ class DisplayFeaturesActivityTest {
         onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is horizontal")))
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun testDeviceOpen_TableTop(): Unit = testScope.runBlockingTest {
         activityRule.scenario.onActivity { activity ->
@@ -113,7 +111,6 @@ class DisplayFeaturesActivityTest {
         onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is horizontal")))
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun testDeviceOpen_Book(): Unit = testScope.runBlockingTest {
         activityRule.scenario.onActivity { activity ->

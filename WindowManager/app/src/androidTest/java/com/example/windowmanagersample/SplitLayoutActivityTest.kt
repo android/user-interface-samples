@@ -43,12 +43,12 @@ import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 class SplitLayoutActivityTest {
     private val activityRule = ActivityScenarioRule(SplitLayoutActivity::class.java)
     private val publisherRule = WindowLayoutInfoPublisherRule()
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private val testScope = TestCoroutineScope()
 
     @get:Rule
@@ -58,7 +58,6 @@ class SplitLayoutActivityTest {
         testRule = RuleChain.outerRule(publisherRule).around(activityRule)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun testDeviceOpen_Vertical(): Unit = testScope.runBlockingTest {
         activityRule.scenario.onActivity { activity ->
@@ -89,7 +88,6 @@ class SplitLayoutActivityTest {
         onView(withId(R.id.end_layout)).check(matches(isDisplayed()))
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun testDeviceOpen_Horizontal(): Unit = testScope.runBlockingTest {
         activityRule.scenario.onActivity { activity ->
