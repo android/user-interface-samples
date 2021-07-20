@@ -18,8 +18,12 @@ package com.example.windowmanagersample
 
 import android.graphics.Rect
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.assertion.PositionAssertions.isBottomAlignedWith
+import androidx.test.espresso.assertion.PositionAssertions.isCompletelyAbove
+import androidx.test.espresso.assertion.PositionAssertions.isCompletelyLeftOf
+import androidx.test.espresso.assertion.PositionAssertions.isLeftAlignedWith
+import androidx.test.espresso.assertion.PositionAssertions.isRightAlignedWith
+import androidx.test.espresso.assertion.PositionAssertions.isTopAlignedWith
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -31,7 +35,6 @@ import androidx.window.testing.WindowLayoutInfoPublisherRule
 import androidx.window.windowInfoRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toCollection
 import kotlinx.coroutines.test.TestCoroutineScope
@@ -59,6 +62,30 @@ class SplitLayoutActivityTest {
     }
 
     @Test
+    fun testDeviceOpen_Flat(): Unit = testScope.runBlockingTest {
+        activityRule.scenario.onActivity { activity ->
+            val expected = WindowLayoutInfo.Builder().setDisplayFeatures(listOf()).build()
+
+            val values = mutableListOf<WindowLayoutInfo>()
+            val value = testScope.async {
+                activity.windowInfoRepository().windowLayoutInfo.take(1).toCollection(values)
+            }
+            publisherRule.overrideWindowLayoutInfo(expected)
+            runBlockingTest {
+                val newValues = value.await().toList()
+                Assert.assertEquals(
+                    listOf(expected),
+                    newValues
+                )
+            }
+        }
+        onView(withId(R.id.start_layout)).check(isBottomAlignedWith(withId(R.id.end_layout)))
+        onView(withId(R.id.start_layout)).check(isTopAlignedWith(withId(R.id.end_layout)))
+        onView(withId(R.id.start_layout)).check(isLeftAlignedWith(withId(R.id.end_layout)))
+        onView(withId(R.id.start_layout)).check(isRightAlignedWith(withId(R.id.end_layout)))
+    }
+
+    @Test
     fun testDeviceOpen_Vertical(): Unit = testScope.runBlockingTest {
         activityRule.scenario.onActivity { activity ->
             val bounds = activity.windowInfoRepository().currentWindowMetrics.bounds
@@ -81,11 +108,9 @@ class SplitLayoutActivityTest {
                     listOf(expected),
                     newValues
                 )
-                delay(5000)
             }
         }
-        onView(withId(R.id.start_layout)).check(matches(isDisplayed()))
-        onView(withId(R.id.end_layout)).check(matches(isDisplayed()))
+        onView(withId(R.id.start_layout)).check(isCompletelyLeftOf(withId(R.id.end_layout)))
     }
 
     @Test
@@ -111,10 +136,8 @@ class SplitLayoutActivityTest {
                     listOf(expected),
                     newValues
                 )
-                delay(5000)
             }
         }
-        onView(withId(R.id.start_layout)).check(matches(isDisplayed()))
-        onView(withId(R.id.end_layout)).check(matches(isDisplayed()))
+        onView(withId(R.id.start_layout)).check(isCompletelyAbove(withId(R.id.end_layout)))
     }
 }
