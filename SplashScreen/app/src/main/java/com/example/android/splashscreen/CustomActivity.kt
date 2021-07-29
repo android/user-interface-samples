@@ -18,11 +18,12 @@ package com.example.android.splashscreen
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.os.SystemClock
 import android.view.View
 import android.view.animation.AnticipateInterpolator
 import android.window.SplashScreenView
 import androidx.core.animation.doOnEnd
+import java.time.Duration
+import java.time.Instant
 
 /**
  * "Custom Splash Screen". This is similar to [AnimatedActivity], but also has a custom animation
@@ -67,13 +68,18 @@ class CustomActivity : MainActivity() {
 
 /**
  * Calculates the remaining duration of the icon animation based on the total duration
- * ([SplashScreenView.getIconAnimationDurationMillis]), the start time
- * ([SplashScreenView.getIconAnimationStartMillis]), and the current time
- * ([SystemClock.uptimeMillis]).
+ * ([SplashScreenView.getIconAnimationDuration]) and the start time
+ * ([SplashScreenView.getIconAnimationStart])
  */
 private val SplashScreenView.iconAnimationRemainingDurationMillis: Long
     get() {
-        return (iconAnimationDurationMillis -
-                (SystemClock.uptimeMillis() - iconAnimationStartMillis)
-                ).coerceAtLeast(0L)
+        val duration = iconAnimationDuration
+        val start = iconAnimationStart
+        return if (duration != null && start != null) {
+            (duration - Duration.between(start, Instant.now()))
+                .toMillis()
+                .coerceAtLeast(0L)
+        } else {
+            0L
+        }
     }
