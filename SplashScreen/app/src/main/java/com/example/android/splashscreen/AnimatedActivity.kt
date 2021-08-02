@@ -14,27 +14,11 @@
  * limitations under the License.
  */
 
-buildscript {
-    ext {
-        kotlin_version = '1.5.21'
-    }
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
+package com.example.android.splashscreen
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
+/**
+ * "Animated Splash Screen". The splash screen shows an animated icon and a branding image.
+ *
+ * @see R.style.Theme_SplashScreen_Animated
+ */
+class AnimatedActivity : MainActivity()

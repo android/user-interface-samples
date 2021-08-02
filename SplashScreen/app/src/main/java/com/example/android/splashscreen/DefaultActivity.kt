@@ -14,27 +14,10 @@
  * limitations under the License.
  */
 
-buildscript {
-    ext {
-        kotlin_version = '1.5.21'
-    }
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
+package com.example.android.splashscreen
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
+/**
+ * "Default Splash Screen". This has no animated icon configured for the splash screen and shows the
+ * system default splash screen.
+ */
+class DefaultActivity : MainActivity()

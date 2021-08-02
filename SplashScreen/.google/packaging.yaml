@@ -1,4 +1,3 @@
-
 # GOOGLE SAMPLE PACKAGING DATA
 #
 # This file is used by Google as part of our samples packaging process.
@@ -10,4 +9,10 @@ categories:   [User Interface]
 languages:    [Kotlin]
 solutions:    [Mobile]
 github:       android/user-interface
+level:        BASIC
+icon:         screenshots/icon-web.png
+apiRefs:
+    - android.app.Activity.getSplashScreen
+    - android.window.SplashScreen
+    - android.window.SplashScreenView
 license: apache2
