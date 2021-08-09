@@ -23,10 +23,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.window.FoldingFeature
-import androidx.window.WindowInfoRepo
-import androidx.window.WindowLayoutInfo
-import androidx.window.windowInfoRepository
+import androidx.window.layout.FoldingFeature
+import androidx.window.layout.WindowInfoRepository
+import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
+import androidx.window.layout.WindowLayoutInfo
 import com.example.windowmanagersample.databinding.ActivityDisplayFeaturesBinding
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -44,7 +44,7 @@ class DisplayFeaturesActivity : AppCompatActivity() {
     private val displayFeatureViews = ArrayList<View>()
 
     private lateinit var binding: ActivityDisplayFeaturesBinding
-    private lateinit var windowInfoRepo: WindowInfoRepo
+    private lateinit var windowInfoRepo: WindowInfoRepository
 
     @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {

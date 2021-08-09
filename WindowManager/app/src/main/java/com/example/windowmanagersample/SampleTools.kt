@@ -19,7 +19,7 @@ package com.example.windowmanagersample
 import android.graphics.Rect
 import android.view.View
 import android.widget.FrameLayout
-import androidx.window.DisplayFeature
+import androidx.window.layout.DisplayFeature
 
 /**
  * Gets the bounds of the display feature translated to the View's coordinate space and current
