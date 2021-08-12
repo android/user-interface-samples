@@ -23,36 +23,35 @@ You can determine what [`DisplayFeature`][0]'s are available on the device
 and their
 [`bounds`][1].
 
-The alpha07 release introduces a new [`WindowInfoRepo`][2] interface that can
+Jetpack WindowManager introduces a new [`WindowInfoRepository`][2] interface that can
 be used to receive `DisplayFeature` changes. You can collect the flow taking
 into consideration the application lifecycle as in:
 ``` java
-private lateinit var windowInfoRepo: WindowInfoRepo
+private lateinit var windowInfoRepository: WindowInfoRepository
 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    windowInfoRepo = windowInfoRepository()
+    windowInfoRepository = windowInfoRepository()
+
+    // Create a new coroutine since repeatOnLifecycle is a suspend function
+    lifecycleScope.launch(Dispatchers.Main) {
+        // The block passed to repeatOnLifecycle is executed when the lifecycle
+        // is at least STARTED and is cancelled when the lifecycle is STOPPED.
+        // It automatically restarts the block when the lifecycle is STARTED again.
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            // Safely collect from windowInfoRepo when the lifecycle is STARTED
+            // and stops collection when the lifecycle is STOPPED
+            windowInfoRepository.windowLayoutInfo
+                .collect { newLayoutInfo ->
+                    updateStateLog(newLayoutInfo)
+                    updateCurrentState(newLayoutInfo)
+                }
+        }
+    }
 
     // Other initialization
 
-}
-
-override fun onStart() {
-    super.onStart()
-    layoutUpdatesJob = CoroutineScope(Dispatchers.Main).launch {
-        windowInfoRepo.windowLayoutInfo()
-            .collect { newLayoutInfo ->
-                // New posture information
-                updateStateLog(newLayoutInfo)
-                updateCurrentState(newLayoutInfo)
-        }
-    }
-}
-
-override fun onStop() {
-    super.onStop()
-    layoutUpdatesJob?.cancel()
 }
 ```
 
@@ -77,7 +76,7 @@ can be:
 
 [0]: https://developer.android.com/reference/androidx/window/DisplayFeature
 [1]: https://developer.android.com/reference/androidx/window/DisplayFeature#bounds()
-[2]: https://developer.android.com/reference/androidx/window/WindowInfoRepo
+[2]: https://developer.android.com/reference/androidx/window/WindowInfoRepository
 [3]: https://developer.android.com/reference/androidx/window/WindowLayoutInfo
 [4]: https://developer.android.com/reference/androidx/window/FoldingFeature
 
@@ -88,24 +87,25 @@ can be:
 [24]: https://developer.android.com/reference/androidx/window/FoldingFeature.Companion#STATE_FLAT()
 [25]: https://developer.android.com/reference/androidx/window/FoldingFeature.Companion#STATE_HALF_OPENED()
 
-`WindowInfoRepoJavaAdapter`
----------------------------
+`WindowInfoRepositoryCallbackAdapter`
+-------------------------------------
 
-To use this library from Java it is available artifact `window:window-java`
-that makes available the [`WindowInfoRepoJavaAdapter`][30] that allows to
+To use this library from Java or if you prefer to use a callback interface, it
+is available the artifact `window:window-java` that makes available the 
+[`WindowInfoRepositoryCallbackAdapter`][30] that allows to
 register/unregister a callback to receive updates on the device's postgure
 from the library as shown in the `SplitLayoutActivity` class included in this
 sample.  
 To create a new `WindowInfoRepoJavaAdapter`, you can use the code:
 
 ```java
-WindowInfoRepoJavaAdapter windowInfoRepo = new WindowInfoRepoJavaAdapter(WindowInfoRepo.create(this));
+windowInfoRepository = new WindowInfoRepositoryCallbackAdapter(WindowInfoRepository.getOrCreate(this));
 ```
 
-[30]: https://developer.android.com/reference/androidx/window/java/WindowInfoRepoJavaAdapter
+[30]: https://developer.android.com/reference/androidx/window/java/WindowInfoRepositoryCallbackAdapter
 
 `WindowMetrics`
--------------
+---------------
 
 The WindowManager library includes a new WindowMetrics API to get information
 about your current window state and the maximum window size for the current
@@ -118,20 +118,26 @@ that might occur when your layout is inflated. If you are looking for specific
 information for laying out views you should get the width/height from the
 `Configuration` object or the `DecorView`.
 
-To access these APIs, you can use, when working in Kotlin, a `WindowInfoRepo`:
+To access these APIs, you can use, when working in Kotlin, a `WindowInfoRepository`:
 
 ``` java
-val windowInfoRepo = windowInfoRepository()
+val windowInfoRepository = windowInfoRepository()
 ```
 
-From here you now have access to the WindowMetrics APIs and can easily call
+From here you now have access to the WindowMetrics APIs collecting events from it Flow:
 
 ``` java
-windowInfoRepo.currentWindowMetrics
-windowInfoRepo.maximumWindowMetrics
+windowInfoRepository.currentWindowMetrics
+windowInfoRepository.maximumWindowMetrics
 ```
 
-Or, when working in java, you can use a `WindowInfoRepoJavaAdapter`:
+Or, if you want to retrieve the information sinchronously, you can use the [`WindowMetricsCalculator`][]
+
+``` java
+val windowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(activity)
+```
+
+when working in java, you can use a `WindowInfoRepoJavaAdapter`:
 
 ```java
 WindowInfoRepoJavaAdapter windowInfoRepo = new WindowInfoRepoJavaAdapter(WindowInfoRepo.create(this));
@@ -154,7 +160,7 @@ Pre-requisites
 --------------
 
 - Android SDK 30
-- Android Studio 4.2.1
+- Android Studio Artic Fox | 2020.3.1
 
 Getting Started
 ---------------

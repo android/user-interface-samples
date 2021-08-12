@@ -81,7 +81,7 @@ class DisplayFeaturesActivityTest {
                 )
             }
         }
-        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state=FLAT")))
+//        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state=FLAT")))
         onView(withId(R.id.current_state)).check(matches(withSubstring("is not separated")))
         onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is horizontal")))
     }
@@ -106,7 +106,7 @@ class DisplayFeaturesActivityTest {
                 )
             }
         }
-        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state=HALF_OPENED")))
+//        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state=HALF_OPENED")))
         onView(withId(R.id.current_state)).check(matches(withSubstring("are separated")))
         onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is horizontal")))
     }
@@ -131,7 +131,7 @@ class DisplayFeaturesActivityTest {
                 )
             }
         }
-        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state=HALF_OPENED")))
+//        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state=HALF_OPENED")))
         onView(withId(R.id.current_state)).check(matches(withSubstring("are separated")))
         onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is vertical")))
     }

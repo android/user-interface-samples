@@ -16,7 +16,6 @@
 
 package com.example.windowmanagersample
 
-import android.graphics.Rect
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.PositionAssertions.isBottomAlignedWith
 import androidx.test.espresso.assertion.PositionAssertions.isCompletelyAbove
@@ -27,12 +26,13 @@ import androidx.test.espresso.assertion.PositionAssertions.isTopAlignedWith
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.window.layout.FoldingFeature
+import androidx.window.layout.FoldingFeature.Orientation.Companion.HORIZONTAL
+import androidx.window.layout.FoldingFeature.Orientation.Companion.VERTICAL
 import androidx.window.layout.FoldingFeature.State.Companion.HALF_OPENED
-import androidx.window.layout.FoldingFeature.Type.Companion.FOLD
 import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
 import androidx.window.layout.WindowLayoutInfo
 import androidx.window.layout.WindowMetricsCalculator
+import androidx.window.testing.layout.FoldingFeature
 import androidx.window.testing.layout.WindowLayoutInfoPublisherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
@@ -95,9 +95,11 @@ class SplitLayoutActivityTest {
                 WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(activity)
             val center = windowMetrics.bounds.centerX()
             val feature = FoldingFeature(
-                Rect(center, 0, center, windowMetrics.bounds.height()),
-                FOLD,
-                HALF_OPENED
+                activity = activity,
+                center = center,
+                size = 0,
+                orientation = VERTICAL,
+                state = HALF_OPENED
             )
             val expected =
                 WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
@@ -129,9 +131,11 @@ class SplitLayoutActivityTest {
                 WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(activity)
             val center = windowMetrics.bounds.centerY()
             val feature = FoldingFeature(
-                Rect(0, center, windowMetrics.bounds.height(), center),
-                FOLD,
-                HALF_OPENED
+                activity = activity,
+                center = center,
+                size = 0,
+                orientation = HORIZONTAL,
+                state = HALF_OPENED
             )
             val expected =
                 WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()

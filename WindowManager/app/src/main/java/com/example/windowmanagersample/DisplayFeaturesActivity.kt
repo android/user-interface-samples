@@ -44,7 +44,7 @@ class DisplayFeaturesActivity : AppCompatActivity() {
     private val displayFeatureViews = ArrayList<View>()
 
     private lateinit var binding: ActivityDisplayFeaturesBinding
-    private lateinit var windowInfoRepo: WindowInfoRepository
+    private lateinit var windowInfoRepository: WindowInfoRepository
 
     @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +53,7 @@ class DisplayFeaturesActivity : AppCompatActivity() {
         binding = ActivityDisplayFeaturesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        windowInfoRepo = windowInfoRepository()
+        windowInfoRepository = windowInfoRepository()
 
         // Create a new coroutine since repeatOnLifecycle is a suspend function
         lifecycleScope.launch(Dispatchers.Main) {
@@ -63,7 +63,7 @@ class DisplayFeaturesActivity : AppCompatActivity() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 // Safely collect from windowInfoRepo when the lifecycle is STARTED
                 // and stops collection when the lifecycle is STOPPED
-                windowInfoRepo.windowLayoutInfo
+                windowInfoRepository.windowLayoutInfo
                     .collect { newLayoutInfo ->
                         updateStateLog(newLayoutInfo)
                         updateCurrentState(newLayoutInfo)
