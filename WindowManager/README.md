@@ -70,22 +70,22 @@ You can see an example of this in the `DisplayFeaturesActivity` class.
 It is also access the folding posture if needed using its [`state`][23] that
 can be:
 
-  * [`STATE_FLAT`][24]
-  * [`STATE_HALF_OPENED`][25]
+  * [`FLAT`][24]
+  * [`HALF_OPENED`][25]
 
 
-[0]: https://developer.android.com/reference/androidx/window/DisplayFeature
-[1]: https://developer.android.com/reference/androidx/window/DisplayFeature#bounds()
-[2]: https://developer.android.com/reference/androidx/window/WindowInfoRepository
-[3]: https://developer.android.com/reference/androidx/window/WindowLayoutInfo
-[4]: https://developer.android.com/reference/androidx/window/FoldingFeature
+[0]: https://developer.android.com/reference/androidx/window/layout/DisplayFeature
+[1]: https://developer.android.com/reference/androidx/window/layout/DisplayFeature#bounds()
+[2]: https://developer.android.com/reference/androidx/window/layout/WindowInfoRepository
+[3]: https://developer.android.com/reference/androidx/window/layout/WindowLayoutInfo
+[4]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature
 
-[20]: https://developer.android.com/reference/androidx/window/FoldingFeature#isSeparating()
-[21]: https://developer.android.com/reference/androidx/window/FoldingFeature#orientation()
-[22]: https://developer.android.com/reference/androidx/window/FoldingFeature#occlusionMode()
-[23]: https://developer.android.com/reference/androidx/window/FoldingFeature#state()
-[24]: https://developer.android.com/reference/androidx/window/FoldingFeature.Companion#STATE_FLAT()
-[25]: https://developer.android.com/reference/androidx/window/FoldingFeature.Companion#STATE_HALF_OPENED()
+[20]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature#isSeparating()
+[21]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature#orientation()
+[22]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature#occlusionMode()
+[23]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature#state()
+[24]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature.Companion#FLAT()
+[25]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature.State.Companion#HALF_OPENED()
 
 `WindowInfoRepositoryCallbackAdapter`
 -------------------------------------
@@ -96,18 +96,18 @@ is available the artifact `window:window-java` that makes available the
 register/unregister a callback to receive updates on the device's postgure
 from the library as shown in the `SplitLayoutActivity` class included in this
 sample.  
-To create a new `WindowInfoRepoJavaAdapter`, you can use the code:
+To create a new `WindowInfoRepositoryCallbackAdapter`, you can use the code:
 
 ```java
 windowInfoRepository = new WindowInfoRepositoryCallbackAdapter(WindowInfoRepository.getOrCreate(this));
 ```
 
-[30]: https://developer.android.com/reference/androidx/window/java/WindowInfoRepositoryCallbackAdapter
+[30]: https://developer.android.com/reference/androidx/window/java/layout/WindowInfoRepositoryCallbackAdapter
 
 `WindowMetrics`
 ---------------
 
-The WindowManager library includes a new WindowMetrics API to get information
+The WindowManager library includes a new [`WindowMetrics`][40] API to get information
 about your current window state and the maximum window size for the current
 state of the system.
 
@@ -131,19 +131,14 @@ windowInfoRepository.currentWindowMetrics
 windowInfoRepository.maximumWindowMetrics
 ```
 
-Or, if you want to retrieve the information sinchronously, you can use the [`WindowMetricsCalculator`][]
+Or, if you want to retrieve the information sinchronously, you can use the [`WindowMetricsCalculator`][41]
 
 ``` java
 val windowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(activity)
 ```
 
-when working in java, you can use a `WindowInfoRepoJavaAdapter`:
-
-```java
-WindowInfoRepoJavaAdapter windowInfoRepo = new WindowInfoRepoJavaAdapter(WindowInfoRepo.create(this));
-windowInfoRepo.getCurrentWindowMetrics();
-windowInfoRepo.getMaximumWindowMetrics();
-```
+[40]: https://developer.android.com/reference/androidx/window/layout/WindowMetrics
+[41]: https://developer.android.com/reference/androidx/window/layout/WindowMetricsCalculator
 
 Notes
 -----

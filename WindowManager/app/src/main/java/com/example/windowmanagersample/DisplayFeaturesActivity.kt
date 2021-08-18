@@ -61,8 +61,8 @@ class DisplayFeaturesActivity : AppCompatActivity() {
             // is at least STARTED and is cancelled when the lifecycle is STOPPED.
             // It automatically restarts the block when the lifecycle is STARTED again.
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                // Safely collect from windowInfoRepo when the lifecycle is STARTED
-                // and stops collection when the lifecycle is STOPPED
+                // Safely collects from windowInfoRepository when the lifecycle is STARTED
+                // and stops collection when the lifecycle is STOPPED.
                 windowInfoRepository.windowLayoutInfo
                     .collect { newLayoutInfo ->
                         updateStateLog(newLayoutInfo)

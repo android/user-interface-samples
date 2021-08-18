@@ -31,13 +31,11 @@ import androidx.window.layout.FoldingFeature.Orientation.Companion.VERTICAL
 import androidx.window.layout.FoldingFeature.State.Companion.HALF_OPENED
 import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
 import androidx.window.layout.WindowLayoutInfo
-import androidx.window.layout.WindowMetricsCalculator
 import androidx.window.testing.layout.FoldingFeature
 import androidx.window.testing.layout.WindowLayoutInfoPublisherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.toCollection
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
@@ -67,16 +65,14 @@ class SplitLayoutActivityTest {
         activityRule.scenario.onActivity { activity ->
             val expected = WindowLayoutInfo.Builder().setDisplayFeatures(listOf()).build()
 
-            val values = mutableListOf<WindowLayoutInfo>()
             val value = testScope.async {
-                activity.windowInfoRepository().windowLayoutInfo.take(1).toCollection(values)
+                activity.windowInfoRepository().windowLayoutInfo.first()
             }
             publisherRule.overrideWindowLayoutInfo(expected)
             runBlockingTest {
-                val newValues = value.await().toList()
                 Assert.assertEquals(
-                    listOf(expected),
-                    newValues
+                    expected,
+                    value.await()
                 )
             }
         }
@@ -91,30 +87,22 @@ class SplitLayoutActivityTest {
     @Test
     fun testDeviceOpen_Vertical(): Unit = testScope.runBlockingTest {
         activityRule.scenario.onActivity { activity ->
-            val windowMetrics =
-                WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(activity)
-            val center = windowMetrics.bounds.centerX()
             val feature = FoldingFeature(
                 activity = activity,
-                center = center,
-                size = 0,
                 orientation = VERTICAL,
                 state = HALF_OPENED
             )
             val expected =
                 WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
 
-            val values = mutableListOf<WindowLayoutInfo>()
             val value = testScope.async {
-                activity.windowInfoRepository().windowLayoutInfo.take(1)
-                    .toCollection(values)
+                activity.windowInfoRepository().windowLayoutInfo.first()
             }
             publisherRule.overrideWindowLayoutInfo(expected)
             runBlockingTest {
-                val newValues = value.await().toList()
                 Assert.assertEquals(
-                    listOf(expected),
-                    newValues
+                    expected,
+                    value.await()
                 )
             }
         }
@@ -127,29 +115,22 @@ class SplitLayoutActivityTest {
     @Test
     fun testDeviceOpen_Horizontal(): Unit = testScope.runBlockingTest {
         activityRule.scenario.onActivity { activity ->
-            val windowMetrics =
-                WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(activity)
-            val center = windowMetrics.bounds.centerY()
             val feature = FoldingFeature(
                 activity = activity,
-                center = center,
-                size = 0,
                 orientation = HORIZONTAL,
                 state = HALF_OPENED
             )
             val expected =
                 WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
 
-            val values = mutableListOf<WindowLayoutInfo>()
             val value = testScope.async {
-                activity.windowInfoRepository().windowLayoutInfo.take(1)
-                    .toCollection(values)
+                activity.windowInfoRepository().windowLayoutInfo.first()
             }
             publisherRule.overrideWindowLayoutInfo(expected)
             runBlockingTest {
-                val newValues = value.await().toList()
+                val newValues = value.await()
                 Assert.assertEquals(
-                    listOf(expected),
+                    expected,
                     newValues
                 )
             }
