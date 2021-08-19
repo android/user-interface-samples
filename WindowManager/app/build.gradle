@@ -18,7 +18,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.example.windowmanagersample"
         minSdkVersion 23
@@ -39,7 +39,7 @@ android {
         freeCompilerArgs += '-Xopt-in=kotlin.RequiresOptIn'
     }
     buildFeatures {
-        viewBinding = true
+        viewBinding true
     }
 
     // Workaround for https://issuetracker.google.com/161465530

@@ -20,39 +20,38 @@ library allows you to handle all of these devices through a common API as well
 as through different versions of Android.
 
 You can determine what [`DisplayFeature`][0]'s are available on the device
-and their
-[`bounds`][1].
+and their [`bounds`][1].
 
-The alpha07 release introduces a new [`WindowInfoRepo`][2] interface that can
-be used to receive `DisplayFeature` changes. You can collect the flow taking
-into consideration the application lifecycle as in:
+Jetpack WindowManager introduces a new [`WindowInfoRepository`][2] interface
+that can be used to receive `DisplayFeature` changes. You can collect the flow
+taking into consideration the application lifecycle as in:
+
 ``` java
-private lateinit var windowInfoRepo: WindowInfoRepo
+private lateinit var windowInfoRepository: WindowInfoRepository
 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    windowInfoRepo = windowInfoRepository()
+    windowInfoRepository = windowInfoRepository()
+
+    // Create a new coroutine since repeatOnLifecycle is a suspend function
+    lifecycleScope.launch(Dispatchers.Main) {
+        // The block passed to repeatOnLifecycle is executed when the lifecycle
+        // is at least STARTED and is cancelled when the lifecycle is STOPPED.
+        // It automatically restarts the block when the lifecycle is STARTED again.
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            // Safely collect from windowInfoRepo when the lifecycle is STARTED
+            // and stops collection when the lifecycle is STOPPED
+            windowInfoRepository.windowLayoutInfo
+                .collect { newLayoutInfo ->
+                    updateStateLog(newLayoutInfo)
+                    updateCurrentState(newLayoutInfo)
+                }
+        }
+    }
 
     // Other initialization
 
-}
-
-override fun onStart() {
-    super.onStart()
-    layoutUpdatesJob = CoroutineScope(Dispatchers.Main).launch {
-        windowInfoRepo.windowLayoutInfo()
-            .collect { newLayoutInfo ->
-                // New posture information
-                updateStateLog(newLayoutInfo)
-                updateCurrentState(newLayoutInfo)
-        }
-    }
-}
-
-override fun onStop() {
-    super.onStop()
-    layoutUpdatesJob?.cancel()
 }
 ```
 
@@ -71,45 +70,46 @@ You can see an example of this in the `DisplayFeaturesActivity` class.
 It is also access the folding posture if needed using its [`state`][23] that
 can be:
 
-  * [`STATE_FLAT`][24]
-  * [`STATE_HALF_OPENED`][25]
+  * [`FLAT`][24]
+  * [`HALF_OPENED`][25]
 
 
-[0]: https://developer.android.com/reference/androidx/window/DisplayFeature
-[1]: https://developer.android.com/reference/androidx/window/DisplayFeature#bounds()
-[2]: https://developer.android.com/reference/androidx/window/WindowInfoRepo
-[3]: https://developer.android.com/reference/androidx/window/WindowLayoutInfo
-[4]: https://developer.android.com/reference/androidx/window/FoldingFeature
+[0]: https://developer.android.com/reference/androidx/window/layout/DisplayFeature
+[1]: https://developer.android.com/reference/androidx/window/layout/DisplayFeature#bounds()
+[2]: https://developer.android.com/reference/androidx/window/layout/WindowInfoRepository
+[3]: https://developer.android.com/reference/androidx/window/layout/WindowLayoutInfo
+[4]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature
 
-[20]: https://developer.android.com/reference/androidx/window/FoldingFeature#isSeparating()
-[21]: https://developer.android.com/reference/androidx/window/FoldingFeature#orientation()
-[22]: https://developer.android.com/reference/androidx/window/FoldingFeature#occlusionMode()
-[23]: https://developer.android.com/reference/androidx/window/FoldingFeature#state()
-[24]: https://developer.android.com/reference/androidx/window/FoldingFeature.Companion#STATE_FLAT()
-[25]: https://developer.android.com/reference/androidx/window/FoldingFeature.Companion#STATE_HALF_OPENED()
+[20]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature#isSeparating()
+[21]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature#orientation()
+[22]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature#occlusionMode()
+[23]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature#state()
+[24]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature.Companion#FLAT()
+[25]: https://developer.android.com/reference/androidx/window/layout/FoldingFeature.State.Companion#HALF_OPENED()
 
-`WindowInfoRepoJavaAdapter`
----------------------------
+`WindowInfoRepositoryCallbackAdapter`
+-------------------------------------
 
-To use this library from Java it is available artifact `window:window-java`
-that makes available the [`WindowInfoRepoJavaAdapter`][30] that allows to
+To use this library from Java or if you prefer to use a callback interface, it
+is available the artifact `window:window-java` that makes available the 
+[`WindowInfoRepositoryCallbackAdapter`][30] that allows to
 register/unregister a callback to receive updates on the device's postgure
 from the library as shown in the `SplitLayoutActivity` class included in this
 sample.  
-To create a new `WindowInfoRepoJavaAdapter`, you can use the code:
+To create a new `WindowInfoRepositoryCallbackAdapter`, you can use the code:
 
 ```java
-WindowInfoRepoJavaAdapter windowInfoRepo = new WindowInfoRepoJavaAdapter(WindowInfoRepo.create(this));
+windowInfoRepository = new WindowInfoRepositoryCallbackAdapter(WindowInfoRepository.getOrCreate(this));
 ```
 
-[30]: https://developer.android.com/reference/androidx/window/java/WindowInfoRepoJavaAdapter
+[30]: https://developer.android.com/reference/androidx/window/java/layout/WindowInfoRepositoryCallbackAdapter
 
 `WindowMetrics`
--------------
+---------------
 
-The WindowManager library includes a new WindowMetrics API to get information
-about your current window state and the maximum window size for the current
-state of the system.
+The WindowManager library includes a new [`WindowMetrics`][40] API to get
+information about your current window state and the maximum window size for
+the current state of the system.
 
 The API results don’t include information about the system insets such as the
 status bar or action bar, since those values aren’t available before the first
@@ -118,32 +118,32 @@ that might occur when your layout is inflated. If you are looking for specific
 information for laying out views you should get the width/height from the
 `Configuration` object or the `DecorView`.
 
-To access these APIs, you can use, when working in Kotlin, a `WindowInfoRepo`:
+To access these APIs, you can use, when working in Kotlin, a
+`WindowInfoRepository`:
 
 ``` java
-val windowInfoRepo = windowInfoRepository()
+val windowInfoRepository = windowInfoRepository()
 ```
 
-From here you now have access to the WindowMetrics APIs and can easily call
+From here you now have access to the WindowMetrics APIs collecting events from
+the [`currentWindowMetrics`][41] Flow.
+
+If you want to retrieve the information sinchronously, you can use the
+[`WindowMetricsCalculator`][42]
 
 ``` java
-windowInfoRepo.currentWindowMetrics
-windowInfoRepo.maximumWindowMetrics
+val windowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(activity)
 ```
 
-Or, when working in java, you can use a `WindowInfoRepoJavaAdapter`:
-
-```java
-WindowInfoRepoJavaAdapter windowInfoRepo = new WindowInfoRepoJavaAdapter(WindowInfoRepo.create(this));
-windowInfoRepo.getCurrentWindowMetrics();
-windowInfoRepo.getMaximumWindowMetrics();
-```
+[40]: https://developer.android.com/reference/androidx/window/layout/WindowMetrics
+[41]: https://developer.android.com/reference/androidx/window/layout/WindowInfoRepository#currentWindowMetrics()
+[42]: https://developer.android.com/reference/androidx/window/layout/WindowMetricsCalculator
 
 Notes
 -----
 
-Any feedback to the library's API surface is greatly appreciated on things you would
-like to see added or changed!
+Any feedback to the library's API surface is greatly appreciated on things
+you would like to see added or changed!
 
 For more information on the Jetpack Window Manager library, see the
 [Jetpack Window Manager release page][99].
@@ -154,7 +154,7 @@ Pre-requisites
 --------------
 
 - Android SDK 30
-- Android Studio 4.2.1
+- Android Studio Artic Fox | 2020.3.1
 
 Getting Started
 ---------------
@@ -171,7 +171,8 @@ If you've found an error in this sample, please file an issue:
 https://github.com/android/user-interface
 
 Patches are encouraged, and may be submitted by forking this project and
-submitting a pull request through GitHub. Please see CONTRIBUTING.md for more details.
+submitting a pull request through GitHub. Please see CONTRIBUTING.md for more
+details.
 
 License
 -------
@@ -192,5 +193,3 @@ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
 License for the specific language governing permissions and limitations under
 the License.
-
-
