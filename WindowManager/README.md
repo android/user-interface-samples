@@ -20,12 +20,12 @@ library allows you to handle all of these devices through a common API as well
 as through different versions of Android.
 
 You can determine what [`DisplayFeature`][0]'s are available on the device
-and their
-[`bounds`][1].
+and their [`bounds`][1].
 
-Jetpack WindowManager introduces a new [`WindowInfoRepository`][2] interface that can
-be used to receive `DisplayFeature` changes. You can collect the flow taking
-into consideration the application lifecycle as in:
+Jetpack WindowManager introduces a new [`WindowInfoRepository`][2] interface
+that can be used to receive `DisplayFeature` changes. You can collect the flow
+taking into consideration the application lifecycle as in:
+
 ``` java
 private lateinit var windowInfoRepository: WindowInfoRepository
 
@@ -107,9 +107,9 @@ windowInfoRepository = new WindowInfoRepositoryCallbackAdapter(WindowInfoReposit
 `WindowMetrics`
 ---------------
 
-The WindowManager library includes a new [`WindowMetrics`][40] API to get information
-about your current window state and the maximum window size for the current
-state of the system.
+The WindowManager library includes a new [`WindowMetrics`][40] API to get
+information about your current window state and the maximum window size for
+the current state of the system.
 
 The API results don’t include information about the system insets such as the
 status bar or action bar, since those values aren’t available before the first
@@ -118,33 +118,32 @@ that might occur when your layout is inflated. If you are looking for specific
 information for laying out views you should get the width/height from the
 `Configuration` object or the `DecorView`.
 
-To access these APIs, you can use, when working in Kotlin, a `WindowInfoRepository`:
+To access these APIs, you can use, when working in Kotlin, a
+`WindowInfoRepository`:
 
 ``` java
 val windowInfoRepository = windowInfoRepository()
 ```
 
-From here you now have access to the WindowMetrics APIs collecting events from it Flow:
+From here you now have access to the WindowMetrics APIs collecting events from
+the [`currentWindowMetrics`][41] Flow.
 
-``` java
-windowInfoRepository.currentWindowMetrics
-windowInfoRepository.maximumWindowMetrics
-```
-
-Or, if you want to retrieve the information sinchronously, you can use the [`WindowMetricsCalculator`][41]
+If you want to retrieve the information sinchronously, you can use the
+[`WindowMetricsCalculator`][42]
 
 ``` java
 val windowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(activity)
 ```
 
 [40]: https://developer.android.com/reference/androidx/window/layout/WindowMetrics
-[41]: https://developer.android.com/reference/androidx/window/layout/WindowMetricsCalculator
+[41]: https://developer.android.com/reference/androidx/window/layout/WindowInfoRepository#currentWindowMetrics()
+[42]: https://developer.android.com/reference/androidx/window/layout/WindowMetricsCalculator
 
 Notes
 -----
 
-Any feedback to the library's API surface is greatly appreciated on things you would
-like to see added or changed!
+Any feedback to the library's API surface is greatly appreciated on things
+you would like to see added or changed!
 
 For more information on the Jetpack Window Manager library, see the
 [Jetpack Window Manager release page][99].
@@ -172,7 +171,8 @@ If you've found an error in this sample, please file an issue:
 https://github.com/android/user-interface
 
 Patches are encouraged, and may be submitted by forking this project and
-submitting a pull request through GitHub. Please see CONTRIBUTING.md for more details.
+submitting a pull request through GitHub. Please see CONTRIBUTING.md for more
+details.
 
 License
 -------
@@ -193,5 +193,3 @@ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
 WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
 License for the specific language governing permissions and limitations under
 the License.
-
-
