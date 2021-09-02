@@ -41,7 +41,7 @@ public class Main extends ListActivity implements OnClickListener {
     private static final String ID_ADD_WEBSITE = "add_website";
 
     private static final String ACTION_ADD_WEBSITE =
-            "com.example.android.shortcutsample.ADD_WEBSITE";
+            "com.example.android.appshortcuts.ADD_WEBSITE";
 
     private MyAdapter mAdapter;
 
