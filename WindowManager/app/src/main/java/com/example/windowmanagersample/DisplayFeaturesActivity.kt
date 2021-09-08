@@ -32,7 +32,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -46,7 +45,6 @@ class DisplayFeaturesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDisplayFeaturesBinding
     private lateinit var windowInfoRepository: WindowInfoRepository
 
-    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
