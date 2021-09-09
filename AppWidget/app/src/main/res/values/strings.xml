@@ -41,4 +41,24 @@
     <string name="switch_element">Switch</string>
     <string name="items_widget_description">Widget for collection of items</string>
     <string name="items_collection">Items collection</string>
+    <string name="app_widget_weather_description">Widget for weather forecast</string>
+    <string name="icon_for_weather_content_description">Icon for weather</string>
+    <string name="city_tokyo">Tokyo</string>
+    <string name="mostly_cloudy">Mostly cloudy</string>
+    <string name="degree_10">10°</string>
+    <string name="degree_11">11°</string>
+    <string name="degree_12">12°</string>
+    <string name="degree_13">13°</string>
+    <string name="degree_14">14°</string>
+    <string name="degree_15">15°</string>
+    <string name="degree_16">16°</string>
+    <string name="degree_17">17°</string>
+    <string name="pm_4">4pm</string>
+    <string name="pm_5">5pm</string>
+    <string name="pm_6">6pm</string>
+    <string name="pm_7">7pm</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
 </resources>

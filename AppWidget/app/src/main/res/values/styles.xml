@@ -41,4 +41,12 @@
         <item name="android:minHeight">@dimen/widget_element_min_length</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
+
+    <style name="Widget.AppWidget.TextView.CurrentTemperature" parent="android:Widget.TextView">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textSize">48sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.AppWidget.ImageView.WeatherIcon" parent="android:Widget" />
 </resources>
