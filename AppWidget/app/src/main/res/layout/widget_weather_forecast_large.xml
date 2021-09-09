@@ -18,7 +18,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:theme="@style/Theme.AppWidget.AppWidgetContainer">
+    android:theme="@style/Theme.AppWidget.AppWidgetContainer.WeatherForecast">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,8 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:gravity="bottom"
-                android:text="@string/city_tokyo"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/city_tokyo" />
 
             <TextView
                 style="@style/TextAppearance.AppCompat.Medium"
@@ -55,8 +54,7 @@
                 android:layout_height="@dimen/widget_element_min_length"
                 android:layout_gravity="end"
                 android:gravity="top"
-                android:text="@string/mostly_cloudy"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/mostly_cloudy" />
         </LinearLayout>
     </LinearLayout>
 
@@ -79,7 +77,6 @@
                 android:layout_gravity="center_vertical"
                 android:text="@string/tuesday"
                 android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary"
                 android:layout_weight="1"
                 />
 
@@ -99,8 +96,7 @@
                 android:gravity="center_vertical"
                 android:layout_marginEnd="8dp"
                 android:minHeight="@dimen/widget_element_min_length"
-                android:text="@string/degree_15"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/degree_15" />
 
             <TextView
                 style="@style/TextAppearance.AppCompat.Medium"
@@ -108,8 +104,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="@dimen/widget_element_min_length"
-                android:text="@string/degree_11"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/degree_11" />
         </LinearLayout>
 
         <LinearLayout
@@ -123,7 +118,6 @@
                 android:layout_gravity="center_vertical"
                 android:text="@string/wednesday"
                 android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary"
                 android:layout_weight="1"
                 />
 
@@ -143,8 +137,7 @@
                 android:gravity="center_vertical"
                 android:layout_marginEnd="8dp"
                 android:minHeight="@dimen/widget_element_min_length"
-                android:text="@string/degree_16"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/degree_16" />
 
             <TextView
                 style="@style/TextAppearance.AppCompat.Medium"
@@ -152,8 +145,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="@dimen/widget_element_min_length"
-                android:text="@string/degree_12"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/degree_12" />
         </LinearLayout>
 
         <LinearLayout
@@ -167,7 +159,6 @@
                 android:layout_gravity="center_vertical"
                 android:text="@string/thursday"
                 android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary"
                 android:layout_weight="1"
                 />
 
@@ -187,8 +178,7 @@
                 android:gravity="center_vertical"
                 android:layout_marginEnd="8dp"
                 android:minHeight="@dimen/widget_element_min_length"
-                android:text="@string/degree_13"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/degree_13" />
 
             <TextView
                 style="@style/TextAppearance.AppCompat.Medium"
@@ -196,8 +186,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="@dimen/widget_element_min_length"
-                android:text="@string/degree_10"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/degree_10" />
         </LinearLayout>
 
         <LinearLayout
@@ -211,7 +200,6 @@
                 android:layout_gravity="center_vertical"
                 android:text="@string/friday"
                 android:textStyle="bold"
-                android:textColor="?android:attr/textColorPrimary"
                 android:layout_weight="1"
                 />
 
@@ -231,8 +219,7 @@
                 android:gravity="center_vertical"
                 android:layout_marginEnd="8dp"
                 android:minHeight="@dimen/widget_element_min_length"
-                android:text="@string/degree_17"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/degree_17" />
 
             <TextView
                 style="@style/TextAppearance.AppCompat.Medium"
@@ -240,8 +227,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:minHeight="@dimen/widget_element_min_length"
-                android:text="@string/degree_12"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/degree_12" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -18,7 +18,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:theme="@style/Theme.AppWidget.AppWidgetContainer">
+    android:theme="@style/Theme.AppWidget.AppWidgetContainer.WeatherForecast">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,8 +40,7 @@
             android:layout_height="@dimen/widget_element_min_length"
             android:gravity="center_vertical|end"
             android:layout_weight="1"
-            android:text="@string/city_tokyo"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:text="@string/city_tokyo" />
     </LinearLayout>
 
     <TextView
@@ -64,15 +63,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:minHeight="@dimen/widget_element_min_length"
-            android:text="@string/degree_16"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:text="@string/degree_16" />
 
         <TextView
             style="@style/TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="@dimen/widget_element_min_length"
-            android:text="@string/degree_10"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:text="@string/degree_10" />
     </LinearLayout>
 </LinearLayout>

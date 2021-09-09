@@ -46,16 +46,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:minHeight="@dimen/widget_element_min_length"
-                    android:text="@string/degree_16"
-                    android:textColor="?android:attr/textColorPrimary" />
+                    android:text="@string/degree_16" />
 
                 <TextView
                     style="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="@dimen/widget_element_min_length"
-                    android:text="@string/degree_10"
-                    android:textColor="?android:attr/textColorPrimary" />
+                    android:text="@string/degree_10" />
             </LinearLayout>
         </LinearLayout>
 
@@ -69,8 +67,7 @@
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/degree_13"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/degree_13" />
 
             <ImageView
                 style="@style/Widget.AppWidget.ImageView.WeatherIcon"
@@ -84,8 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/widget_element_min_length"
-                android:text="@string/pm_4"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/pm_4" />
         </LinearLayout>
 
         <LinearLayout
@@ -98,8 +94,7 @@
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/degree_14"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/degree_14" />
 
             <ImageView
                 style="@style/Widget.AppWidget.ImageView.WeatherIcon"
@@ -113,8 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/widget_element_min_length"
-                android:text="@string/pm_5"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/pm_5" />
         </LinearLayout>
 
         <LinearLayout
@@ -127,8 +121,7 @@
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/degree_12"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/degree_12" />
 
             <ImageView
                 style="@style/Widget.AppWidget.ImageView.WeatherIcon"
@@ -142,8 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/widget_element_min_length"
-                android:text="@string/pm_6"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/pm_6" />
         </LinearLayout>
 
         <LinearLayout
@@ -156,8 +148,7 @@
                 style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/degree_11"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/degree_11" />
 
             <ImageView
                 style="@style/Widget.AppWidget.ImageView.WeatherIcon"
@@ -171,8 +162,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/widget_element_min_length"
-                android:text="@string/pm_7"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/pm_7" />
         </LinearLayout>
     </LinearLayout>
 </merge>

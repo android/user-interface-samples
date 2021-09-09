@@ -44,7 +44,7 @@ class WeatherForecastAppWidget : AppWidgetProvider() {
         appWidgetId: Int
     ) {
         val viewMapping: MutableMap<SizeF, RemoteViews> = mutableMapOf()
-        // Specify the maximum width and height in dp and a layout, which you want to use for the
+        // Specify the minimum width and height in dp and a layout, which you want to use for the
         // specified size
         // In the following case:
         //   - R.layout.widget_weather_forecast_small is used from
@@ -53,9 +53,9 @@ class WeatherForecastAppWidget : AppWidgetProvider() {
         //   - R.layout.widget_weather_forecast_large is used from
         //     270dp x 280dp to 570dp (specified as maxResizeWidth) x 450dp (specified as maxResizeHeight)
         viewMapping[SizeF(180.0f, 110.0f)] = RemoteViews(
-                        context.packageName,
-                        R.layout.widget_weather_forecast_small
-                    )
+            context.packageName,
+            R.layout.widget_weather_forecast_small
+        )
         viewMapping[SizeF(270.0f, 110.0f)] = RemoteViews(
             context.packageName,
             R.layout.widget_weather_forecast_medium
