@@ -43,4 +43,8 @@
         <!-- Apply padding to avoid the content of the widget colliding with the rounded corners -->
         <item name="appWidgetPadding">16dp</item>
     </style>
+
+    <style name="Theme.AppWidget.AppWidgetContainer.WeatherForecast" parent="Theme.AppWidget.AppWidgetContainer">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
 </resources>

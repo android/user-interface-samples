@@ -27,4 +27,8 @@ requires API level 21
         <item name="android:padding">?attr/appWidgetPadding</item>
         <item name="android:background">@drawable/app_widget_inner_view_background</item>
     </style>
+
+    <style name="Widget.AppWidget.ImageView.WeatherIcon" parent="android:Widget">
+        <item name="android:tint">?android:attr/colorAccent</item>
+    </style>
 </resources>
