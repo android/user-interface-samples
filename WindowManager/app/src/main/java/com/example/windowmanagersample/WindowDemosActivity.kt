@@ -35,10 +35,16 @@ class WindowDemosActivity : AppCompatActivity() {
 
         binding.featuresActivityButton.setOnClickListener { showDisplayFeatures() }
         binding.splitLayoutActivityButton.setOnClickListener { showSplitLayout() }
+        binding.windowMetricsActivityButton.setOnClickListener { showWindowMetrics() }
     }
 
     private fun showDisplayFeatures() {
         val intent = Intent(this, DisplayFeaturesActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun showWindowMetrics() {
+        val intent = Intent(this, WindowMetricsActivity::class.java)
         startActivity(intent)
     }
 
