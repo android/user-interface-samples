@@ -14,6 +14,13 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+
+<!--
+TODO We want to resize this widget to 5 cells in width, in that regard maxResizeWidth="570dp" may
+be too high because for example Pixel 3 XL has 412 maximum width in dp. But setting
+maxResizeWidth="412dp" doesn't make the widget be able to resizeable to 5 cells in width.
+b/200002521 should be related internally.
+-->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/app_widget_weather_description"
     android:initialKeyguardLayout="@layout/widget_weather_forecast_small"
