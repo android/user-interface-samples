@@ -48,8 +48,6 @@ class DisplayFeaturesActivityTest {
     private val activityRule = ActivityScenarioRule(DisplayFeaturesActivity::class.java)
     private val publisherRule = WindowLayoutInfoPublisherRule()
 
-    private val testScope = TestCoroutineScope()
-
     @get:Rule
     val testRule: TestRule
 
@@ -58,7 +56,7 @@ class DisplayFeaturesActivityTest {
     }
 
     @Test
-    fun testDeviceOpen_Flat(): Unit = testScope.runBlockingTest {
+    fun testDeviceOpen_Flat() {
         activityRule.scenario.onActivity { activity ->
             val feature = FoldingFeature(
                 activity = activity,
@@ -67,7 +65,7 @@ class DisplayFeaturesActivityTest {
             )
             val expected = WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
 
-            val value = testScope.async {
+            val value = TestCoroutineScope().async {
                 activity.windowInfoRepository().windowLayoutInfo.first()
             }
             publisherRule.overrideWindowLayoutInfo(expected)
@@ -84,13 +82,13 @@ class DisplayFeaturesActivityTest {
     }
 
     @Test
-    fun testDeviceOpen_TableTop(): Unit = testScope.runBlockingTest {
+    fun testDeviceOpen_TableTop() {
         activityRule.scenario.onActivity { activity ->
             val feature =
                 FoldingFeature(activity = activity, state = HALF_OPENED, orientation = HORIZONTAL)
             val expected = WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
 
-            val value = testScope.async {
+            val value = TestCoroutineScope().async {
                 activity.windowInfoRepository().windowLayoutInfo.first()
             }
             publisherRule.overrideWindowLayoutInfo(expected)
@@ -107,13 +105,13 @@ class DisplayFeaturesActivityTest {
     }
 
     @Test
-    fun testDeviceOpen_Book(): Unit = testScope.runBlockingTest {
+    fun testDeviceOpen_Book() {
         activityRule.scenario.onActivity { activity ->
             val feature =
                 FoldingFeature(activity = activity, state = HALF_OPENED, orientation = VERTICAL)
             val expected = WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
 
-            val value = testScope.async {
+            val value = TestCoroutineScope().async {
                 activity.windowInfoRepository().windowLayoutInfo.first()
             }
             publisherRule.overrideWindowLayoutInfo(expected)
