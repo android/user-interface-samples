@@ -17,12 +17,14 @@
 package com.example.windowmanagersample
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
+import androidx.window.layout.WindowMetricsCalculator
 import com.example.windowmanagersample.databinding.ActivityWindowMetricsBinding
 import com.example.windowmanagersample.infolog.InfoLogAdapter
 import kotlinx.coroutines.flow.collect
@@ -48,10 +50,23 @@ class WindowMetricsActivity : AppCompatActivity() {
                 windowInfoRepository().currentWindowMetrics.collect { windowMetrics ->
                     val width = windowMetrics.bounds.width()
                     val height = windowMetrics.bounds.height()
-                    adapter.append("AndroidX Callback", "width: $width, height: $height")
+                    adapter.append("AndroidX Flow", "width: $width, height: $height")
                     adapter.notifyDataSetChanged()
                 }
             }
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        val windowMetrics = WindowMetricsCalculator.getOrCreate()
+            .computeCurrentWindowMetrics(this)
+        val width = windowMetrics.bounds.width()
+        val height = windowMetrics.bounds.height()
+        adapter.append("Config.Change", "width: $width, height: $height")
+        runOnUiThread {
+            adapter.notifyDataSetChanged()
         }
     }
 }
