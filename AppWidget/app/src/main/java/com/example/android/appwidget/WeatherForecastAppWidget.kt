@@ -43,26 +43,27 @@ class WeatherForecastAppWidget : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetId: Int
     ) {
-        val viewMapping: MutableMap<SizeF, RemoteViews> = mutableMapOf()
-        // Specify the minimum width and height in dp and a layout, which you want to use for the
-        // specified size
-        // In the following case:
-        //   - R.layout.widget_weather_forecast_small is used from
-        //     180dp (or minResizeWidth) x 110dp (or minResizeHeight) to 269dp (next cutoff point - 1) x 279dp (next cutoff point - 1)
-        //   - R.layout.widget_weather_forecast_medium is used from 270dp x 110dp to 270dp x 279dp (next cutoff point - 1)
-        //   - R.layout.widget_weather_forecast_large is used from
-        //     270dp x 280dp to 570dp (specified as maxResizeWidth) x 450dp (specified as maxResizeHeight)
-        viewMapping[SizeF(180.0f, 110.0f)] = RemoteViews(
-            context.packageName,
-            R.layout.widget_weather_forecast_small
-        )
-        viewMapping[SizeF(270.0f, 110.0f)] = RemoteViews(
-            context.packageName,
-            R.layout.widget_weather_forecast_medium
-        )
-        viewMapping[SizeF(270.0f, 280.0f)] = RemoteViews(
-            context.packageName,
-            R.layout.widget_weather_forecast_large
+        val viewMapping: Map<SizeF, RemoteViews> = mapOf(
+            // Specify the minimum width and height in dp and a layout, which you want to use for the
+            // specified size
+            // In the following case:
+            //   - R.layout.widget_weather_forecast_small is used from
+            //     180dp (or minResizeWidth) x 110dp (or minResizeHeight) to 269dp (next cutoff point - 1) x 279dp (next cutoff point - 1)
+            //   - R.layout.widget_weather_forecast_medium is used from 270dp x 110dp to 270dp x 279dp (next cutoff point - 1)
+            //   - R.layout.widget_weather_forecast_large is used from
+            //     270dp x 280dp to 570dp (specified as maxResizeWidth) x 450dp (specified as maxResizeHeight)
+            SizeF(180.0f, 110.0f) to RemoteViews(
+                context.packageName,
+                R.layout.widget_weather_forecast_small
+            ),
+            SizeF(270.0f, 110.0f) to RemoteViews(
+                context.packageName,
+                R.layout.widget_weather_forecast_medium
+            ),
+            SizeF(270.0f, 280.0f) to RemoteViews(
+                context.packageName,
+                R.layout.widget_weather_forecast_large
+            )
         )
         appWidgetManager.updateAppWidget(appWidgetId, RemoteViews(viewMapping))
     }
