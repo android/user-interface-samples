@@ -19,8 +19,14 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
+        // Adding the snapshot repository to fetch the snapshot version of glance dependencies.
+        // Specifying the version as latest doesn't guarantee stable builds.
+        // Specify a specific build number if you want to build the app reliably by looking at
+        // https://androidx.dev/snapshots/builds
+        maven { url 'https://androidx.dev/snapshots/latest/artifacts/repository' }
+        // maven { url 'https://androidx.dev/snapshots/builds/<build-number>/artifacts/repository' }
     }
 }
 rootProject.name = "AppWidget"
 include ':app'
+include ':glance-widget'
