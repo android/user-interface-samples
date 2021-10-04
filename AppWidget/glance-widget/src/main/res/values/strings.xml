@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">glance-widget</string>
+    <string name="activity_for_glance_widgets">Activity for the Glance widgets</string>
+    <string name="app_widget_description">First Glance widget</string>
+</resources>

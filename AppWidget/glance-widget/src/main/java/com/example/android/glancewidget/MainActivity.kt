@@ -14,24 +14,14 @@
  * limitations under the License.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    ext {
-        kotlin_version = '1.5.21'
-    }
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.3'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+package com.example.android.glancewidget
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
 }
