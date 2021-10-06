@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   Copyright 2020 The Android Open Source Project
 
   Licensed under the Apache License, Version 2.0 (the "License");
@@ -51,4 +50,6 @@
     <string name="window_metrics_description">Demo of using WindowMetrics API with activity handling rotations.</string>
     <string name="occlusion_is_full">Occlusion is full</string>
     <string name="occlusion_is_none">Occlusion is none</string>
+    <string name="rxJava">RxJava</string>
+    <string name="rx_description">Demo of using RxJava to receive updates</string>
 </resources>

@@ -58,8 +58,12 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-rc01'
     implementation "androidx.recyclerview:recyclerview:1.2.1"
 
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
+
     implementation "androidx.window:window:$window_version"
     implementation "androidx.window:window-java:$window_version"
+    implementation "androidx.window:window-rxjava2:$window_version"
+    implementation 'com.google.android.material:material:1.4.0'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 

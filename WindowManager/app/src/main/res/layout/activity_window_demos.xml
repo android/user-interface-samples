@@ -78,7 +78,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/split_layout_activity_button" />
 
-
         <Button
             android:id="@+id/windowMetricsActivityButton"
             android:layout_width="wrap_content"
@@ -98,6 +97,26 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/windowMetricsActivityButton" />
+
+        <Button
+            android:id="@+id/rxActivityButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/rxJava"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/windowMetricsTextView" />
+
+        <TextView
+            android:id="@+id/rxTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/rx_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rxActivityButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -36,6 +36,7 @@ class WindowDemosActivity : AppCompatActivity() {
         binding.featuresActivityButton.setOnClickListener { showDisplayFeatures() }
         binding.splitLayoutActivityButton.setOnClickListener { showSplitLayout() }
         binding.windowMetricsActivityButton.setOnClickListener { showWindowMetrics() }
+        binding.rxActivityButton.setOnClickListener { showRxDisplayFeatures() }
     }
 
     private fun showDisplayFeatures() {
@@ -50,6 +51,11 @@ class WindowDemosActivity : AppCompatActivity() {
 
     private fun showSplitLayout() {
         val intent = Intent(this, SplitLayoutActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun showRxDisplayFeatures() {
+        val intent = Intent(this, DisplayFeaturesActivity::class.java)
         startActivity(intent)
     }
 }
