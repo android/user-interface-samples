@@ -128,7 +128,7 @@ class DisplayFeaturesActivity : AppCompatActivity() {
                     )
                     .append(" - ")
                     .append(
-                        if (foldFeature.occlusionType == FoldingFeature.OcclusionType.NONE) {
+                        if (foldFeature.occlusionType == FoldingFeature.OcclusionType.FULL) {
                             getString(R.string.occlusion_is_full)
                         } else {
                             getString(R.string.occlusion_is_none)

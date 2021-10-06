@@ -18,7 +18,7 @@ package com.example.windowmanagersample
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withSubstring
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -27,8 +27,8 @@ import androidx.window.layout.FoldingFeature.Orientation.Companion.VERTICAL
 import androidx.window.layout.FoldingFeature.State.Companion.FLAT
 import androidx.window.layout.FoldingFeature.State.Companion.HALF_OPENED
 import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
-import androidx.window.layout.WindowLayoutInfo
 import androidx.window.testing.layout.FoldingFeature
+import androidx.window.testing.layout.TestWindowLayoutInfo
 import androidx.window.testing.layout.WindowLayoutInfoPublisherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
@@ -63,7 +63,7 @@ class DisplayFeaturesActivityTest {
                 state = FLAT,
                 orientation = HORIZONTAL
             )
-            val expected = WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
+            val expected = TestWindowLayoutInfo(listOf(feature))
 
             val value = TestCoroutineScope().async {
                 activity.windowInfoRepository().windowLayoutInfo.first()
@@ -76,9 +76,9 @@ class DisplayFeaturesActivityTest {
                 )
             }
         }
-        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state = FLAT")))
-        onView(withId(R.id.current_state)).check(matches(withSubstring("is not separated")))
-        onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is horizontal")))
+        onView(withSubstring("state = FLAT")).check(matches(isDisplayed()))
+        onView(withSubstring("is not separated")).check(matches(isDisplayed()))
+        onView(withSubstring("Hinge is horizontal")).check(matches(isDisplayed()))
     }
 
     @Test
@@ -86,7 +86,7 @@ class DisplayFeaturesActivityTest {
         activityRule.scenario.onActivity { activity ->
             val feature =
                 FoldingFeature(activity = activity, state = HALF_OPENED, orientation = HORIZONTAL)
-            val expected = WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
+            val expected = TestWindowLayoutInfo(listOf(feature))
 
             val value = TestCoroutineScope().async {
                 activity.windowInfoRepository().windowLayoutInfo.first()
@@ -99,9 +99,9 @@ class DisplayFeaturesActivityTest {
                 )
             }
         }
-        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state = HALF_OPENED")))
-        onView(withId(R.id.current_state)).check(matches(withSubstring("are separated")))
-        onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is horizontal")))
+        onView(withSubstring("state = HALF_OPENED")).check(matches(isDisplayed()))
+        onView(withSubstring("are separated")).check(matches(isDisplayed()))
+        onView(withSubstring("Hinge is horizontal")).check(matches(isDisplayed()))
     }
 
     @Test
@@ -109,7 +109,7 @@ class DisplayFeaturesActivityTest {
         activityRule.scenario.onActivity { activity ->
             val feature =
                 FoldingFeature(activity = activity, state = HALF_OPENED, orientation = VERTICAL)
-            val expected = WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
+            val expected = TestWindowLayoutInfo(listOf(feature))
 
             val value = TestCoroutineScope().async {
                 activity.windowInfoRepository().windowLayoutInfo.first()
@@ -122,8 +122,8 @@ class DisplayFeaturesActivityTest {
                 )
             }
         }
-        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state = HALF_OPENED")))
-        onView(withId(R.id.current_state)).check(matches(withSubstring("are separated")))
-        onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is vertical")))
+        onView(withSubstring("state = HALF_OPENED")).check(matches(isDisplayed()))
+        onView(withSubstring("are separated")).check(matches(isDisplayed()))
+        onView(withSubstring("Hinge is vertical")).check(matches(isDisplayed()))
     }
 }

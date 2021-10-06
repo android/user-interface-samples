@@ -30,8 +30,8 @@ import androidx.window.layout.FoldingFeature.Orientation.Companion.HORIZONTAL
 import androidx.window.layout.FoldingFeature.Orientation.Companion.VERTICAL
 import androidx.window.layout.FoldingFeature.State.Companion.HALF_OPENED
 import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
-import androidx.window.layout.WindowLayoutInfo
 import androidx.window.testing.layout.FoldingFeature
+import androidx.window.testing.layout.TestWindowLayoutInfo
 import androidx.window.testing.layout.WindowLayoutInfoPublisherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
@@ -61,7 +61,7 @@ class SplitLayoutActivityTest {
     @Test
     fun testDeviceOpen_Flat() {
         activityRule.scenario.onActivity { activity ->
-            val expected = WindowLayoutInfo.Builder().setDisplayFeatures(listOf()).build()
+            val expected = TestWindowLayoutInfo(listOf())
 
             val value = TestCoroutineScope().async {
                 activity.windowInfoRepository().windowLayoutInfo.first()
@@ -90,8 +90,7 @@ class SplitLayoutActivityTest {
                 orientation = VERTICAL,
                 state = HALF_OPENED
             )
-            val expected =
-                WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
+            val expected = TestWindowLayoutInfo(listOf(feature))
 
             val value = TestCoroutineScope().async {
                 activity.windowInfoRepository().windowLayoutInfo.first()
@@ -118,8 +117,7 @@ class SplitLayoutActivityTest {
                 orientation = HORIZONTAL,
                 state = HALF_OPENED
             )
-            val expected =
-                WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
+            val expected = TestWindowLayoutInfo(listOf(feature))
 
             val value = TestCoroutineScope().async {
                 activity.windowInfoRepository().windowLayoutInfo.first()

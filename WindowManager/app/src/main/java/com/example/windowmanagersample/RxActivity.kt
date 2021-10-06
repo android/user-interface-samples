@@ -30,8 +30,8 @@ import com.example.windowmanagersample.databinding.ActivityRxBinding
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
-import java.util.Locale
 import java.util.Date
+import java.util.Locale
 import kotlin.collections.ArrayList
 
 /** Demo activity that shows all display features and current device state on the screen. */

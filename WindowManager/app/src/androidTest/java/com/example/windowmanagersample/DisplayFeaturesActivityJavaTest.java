@@ -18,12 +18,13 @@ package com.example.windowmanagersample;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withSubstring;
 import static androidx.window.layout.FoldingFeature.Orientation.HORIZONTAL;
 import static androidx.window.layout.FoldingFeature.Orientation.VERTICAL;
 import static androidx.window.layout.FoldingFeature.State.FLAT;
 import static androidx.window.layout.FoldingFeature.State.HALF_OPENED;
+import static androidx.window.testing.layout.DisplayFeatureTesting.createFoldingFeature;
 import static org.mockito.Mockito.verify;
 
 import androidx.core.util.Consumer;
@@ -33,8 +34,8 @@ import androidx.window.java.layout.WindowInfoRepositoryCallbackAdapter;
 import androidx.window.layout.FoldingFeature;
 import androidx.window.layout.WindowInfoRepository;
 import androidx.window.layout.WindowLayoutInfo;
-import androidx.window.testing.layout.DisplayFeatureTesting;
 import androidx.window.testing.layout.WindowLayoutInfoPublisherRule;
+import androidx.window.testing.layout.WindowLayoutInfoTesting;
 import java.util.Collections;
 import org.junit.Before;
 import org.junit.Rule;
@@ -72,13 +73,11 @@ public class DisplayFeaturesActivityJavaTest {
                 .onActivity(
                         activity -> {
                             FoldingFeature feature =
-                                    DisplayFeatureTesting.createFoldingFeature(
-                                            activity, -1, 0, FLAT, HORIZONTAL);
+                                    createFoldingFeature(activity, -1, 0, FLAT, HORIZONTAL);
 
                             WindowLayoutInfo expected =
-                                    new WindowLayoutInfo.Builder()
-                                            .setDisplayFeatures(Collections.singletonList(feature))
-                                            .build();
+                                    WindowLayoutInfoTesting.createWindowLayoutInfo(
+                                            Collections.singletonList(feature));
 
                             WindowInfoRepositoryCallbackAdapter adapter =
                                     new WindowInfoRepositoryCallbackAdapter(
@@ -91,9 +90,9 @@ public class DisplayFeaturesActivityJavaTest {
                             verify(testConsumer).accept(expected);
                         });
 
-        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state = FLAT")));
-        onView(withId(R.id.current_state)).check(matches(withSubstring("is not separated")));
-        onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is horizontal")));
+        onView(withSubstring("state = FLAT")).check(matches(isDisplayed()));
+        onView(withSubstring("is not separated")).check(matches(isDisplayed()));
+        onView(withSubstring("Hinge is horizontal")).check(matches(isDisplayed()));
     }
 
     @Test
@@ -103,17 +102,11 @@ public class DisplayFeaturesActivityJavaTest {
                 .onActivity(
                         activity -> {
                             FoldingFeature feature =
-                                    DisplayFeatureTesting.createFoldingFeature(
-                                            activity,
-                                            -1,
-                                            0,
-                                            HALF_OPENED,
-                                            FoldingFeature.Orientation.HORIZONTAL);
+                                    createFoldingFeature(activity, -1, 0, HALF_OPENED, HORIZONTAL);
 
                             WindowLayoutInfo expected =
-                                    new WindowLayoutInfo.Builder()
-                                            .setDisplayFeatures(Collections.singletonList(feature))
-                                            .build();
+                                    WindowLayoutInfoTesting.createWindowLayoutInfo(
+                                            Collections.singletonList(feature));
 
                             WindowInfoRepositoryCallbackAdapter adapter =
                                     new WindowInfoRepositoryCallbackAdapter(
@@ -126,9 +119,9 @@ public class DisplayFeaturesActivityJavaTest {
                             verify(testConsumer).accept(expected);
                         });
 
-        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state = HALF_OPENED")));
-        onView(withId(R.id.current_state)).check(matches(withSubstring("are separated")));
-        onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is horizontal")));
+        onView(withSubstring("state = HALF_OPENED")).check(matches(isDisplayed()));
+        onView(withSubstring("are separated")).check(matches(isDisplayed()));
+        onView(withSubstring("Hinge is horizontal")).check(matches(isDisplayed()));
     }
 
     @Test
@@ -138,13 +131,11 @@ public class DisplayFeaturesActivityJavaTest {
                 .onActivity(
                         activity -> {
                             FoldingFeature feature =
-                                    DisplayFeatureTesting.createFoldingFeature(
-                                            activity, -1, 0, HALF_OPENED, VERTICAL);
+                                    createFoldingFeature(activity, -1, 0, HALF_OPENED, VERTICAL);
 
                             WindowLayoutInfo expected =
-                                    new WindowLayoutInfo.Builder()
-                                            .setDisplayFeatures(Collections.singletonList(feature))
-                                            .build();
+                                    WindowLayoutInfoTesting.createWindowLayoutInfo(
+                                            Collections.singletonList(feature));
 
                             WindowInfoRepositoryCallbackAdapter adapter =
                                     new WindowInfoRepositoryCallbackAdapter(
@@ -157,8 +148,8 @@ public class DisplayFeaturesActivityJavaTest {
                             verify(testConsumer).accept(expected);
                         });
 
-        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state = HALF_OPENED")));
-        onView(withId(R.id.current_state)).check(matches(withSubstring("are separated")));
-        onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is vertical")));
+        onView(withSubstring("state = HALF_OPENED")).check(matches(isDisplayed()));
+        onView(withSubstring("are separated")).check(matches(isDisplayed()));
+        onView(withSubstring("Hinge is vertical")).check(matches(isDisplayed()));
     }
 }
