@@ -18,6 +18,7 @@ package com.example.windowmanagersample
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
@@ -125,6 +126,14 @@ class DisplayFeaturesActivity : AppCompatActivity() {
                             getString(R.string.screen_is_vertical)
                         }
                     )
+                    .append(" - ")
+                    .append(
+                        if (foldFeature.occlusionType == FoldingFeature.OcclusionType.NONE) {
+                            getString(R.string.occlusion_is_full)
+                        } else {
+                            getString(R.string.occlusion_is_none)
+                        }
+                    )
             }
             featureView.foreground = ColorDrawable(color)
 
@@ -135,6 +144,7 @@ class DisplayFeaturesActivity : AppCompatActivity() {
         }
 
         binding.currentState.text = stateStringBuilder.toString()
+        Log.i("FoldingFeature", stateStringBuilder.toString())
     }
 
     /** Adds the current state to the text log of changes on screen. */
