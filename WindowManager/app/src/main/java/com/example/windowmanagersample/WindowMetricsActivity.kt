@@ -55,16 +55,23 @@ class WindowMetricsActivity : AppCompatActivity() {
                 }
             }
         }
+
+        logCurrentWindowMetrics("onCreate")
     }
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
+        logCurrentWindowMetrics("Config.Change")
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun logCurrentWindowMetrics(tag: String) {
         val windowMetrics = WindowMetricsCalculator.getOrCreate()
             .computeCurrentWindowMetrics(this)
         val width = windowMetrics.bounds.width()
         val height = windowMetrics.bounds.height()
-        adapter.append("Config.Change", "width: $width, height: $height")
+        adapter.append(tag, "width: $width, height: $height")
         runOnUiThread {
             adapter.notifyDataSetChanged()
         }
