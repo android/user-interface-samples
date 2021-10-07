@@ -58,11 +58,8 @@ class DisplayFeaturesActivityTest {
     @Test
     fun testDeviceOpen_Flat() {
         activityRule.scenario.onActivity { activity ->
-            val feature = FoldingFeature(
-                activity = activity,
-                state = FLAT,
-                orientation = HORIZONTAL
-            )
+            val feature =
+                FoldingFeature(activity = activity, state = FLAT, orientation = HORIZONTAL)
             val expected = TestWindowLayoutInfo(listOf(feature))
 
             val value = TestCoroutineScope().async {
