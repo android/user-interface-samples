@@ -13,6 +13,11 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
+<!--
+This layout file is meant to be used only for the previewLayout attribute
+to mimic the fake items in the ListView to follow the recommended practice
+at https://developer.android.com/guide/topics/appwidgets/advanced#build-accurate-previews.
+-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Widget.AppWidget.AppWidget.Container"
     android:layout_width="match_parent"
