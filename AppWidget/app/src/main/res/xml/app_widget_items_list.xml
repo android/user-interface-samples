@@ -26,6 +26,7 @@ Thus, only supplying a static image through android:previewImage
     android:minWidth="180dp"
     android:minHeight="220dp"
     android:previewImage="@drawable/items_collection_widget_preview"
+    android:previewLayout="@layout/widget_items_collection_preview"
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="3"
     android:targetCellHeight="4"
