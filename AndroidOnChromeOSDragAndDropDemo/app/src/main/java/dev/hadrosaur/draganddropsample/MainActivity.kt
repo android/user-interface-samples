@@ -149,6 +149,8 @@ class MainActivity : AppCompatActivity() {
                                 val CHARS_TO_READ = 200
                                 val content_length =
                                     if (contents.length > CHARS_TO_READ) CHARS_TO_READ else 0
+
+                                // Show the read chars in drop target
                                 binding.textDropTarget.setTextSize(COMPLEX_UNIT_SP, 15f)
                                 binding.textDropTarget.text = contents.substring(0, content_length)
                             }
