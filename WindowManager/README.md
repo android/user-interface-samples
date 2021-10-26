@@ -118,25 +118,13 @@ that might occur when your layout is inflated. If you are looking for specific
 information for laying out views you should get the width/height from the
 `Configuration` object or the `DecorView`.
 
-To access these APIs, you can use, when working in Kotlin, a
-`WindowInfoRepository`:
-
-``` java
-val windowInfoRepository = windowInfoRepository()
-```
-
-From here you now have access to the WindowMetrics APIs collecting events from
-the [`currentWindowMetrics`][41] Flow.
-
-If you want to retrieve the information sinchronously, you can use the
-[`WindowMetricsCalculator`][42]
+To access these APIs, you can use the [`WindowMetricsCalculator`][42]
 
 ``` java
 val windowMetrics = WindowMetricsCalculator.getOrCreate().computeCurrentWindowMetrics(activity)
 ```
 
 [40]: https://developer.android.com/reference/androidx/window/layout/WindowMetrics
-[41]: https://developer.android.com/reference/androidx/window/layout/WindowInfoRepository#currentWindowMetrics()
 [42]: https://developer.android.com/reference/androidx/window/layout/WindowMetricsCalculator
 
 Notes

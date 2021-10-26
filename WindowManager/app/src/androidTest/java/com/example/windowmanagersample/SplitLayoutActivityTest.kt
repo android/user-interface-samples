@@ -32,14 +32,12 @@ import androidx.window.layout.FoldingFeature.State.Companion.HALF_OPENED
 import androidx.window.testing.layout.FoldingFeature
 import androidx.window.testing.layout.TestWindowLayoutInfo
 import androidx.window.testing.layout.WindowLayoutInfoPublisherRule
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 class SplitLayoutActivityTest {
     private val activityRule = ActivityScenarioRule(SplitLayoutActivity::class.java)

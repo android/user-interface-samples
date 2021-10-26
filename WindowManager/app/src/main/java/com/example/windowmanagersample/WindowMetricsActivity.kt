@@ -20,15 +20,9 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
 import androidx.window.layout.WindowMetricsCalculator
 import com.example.windowmanagersample.databinding.ActivityWindowMetricsBinding
 import com.example.windowmanagersample.infolog.InfoLogAdapter
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class WindowMetricsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityWindowMetricsBinding
@@ -44,17 +38,6 @@ class WindowMetricsActivity : AppCompatActivity() {
 
         binding.recyclerView.adapter = adapter
         adapter.append("onCreate", "triggered")
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
-                windowInfoRepository().currentWindowMetrics.collect { windowMetrics ->
-                    val width = windowMetrics.bounds.width()
-                    val height = windowMetrics.bounds.height()
-                    adapter.append("AndroidX Flow", "width: $width, height: $height")
-                    adapter.notifyDataSetChanged()
-                }
-            }
-        }
 
         logCurrentWindowMetrics("onCreate")
     }

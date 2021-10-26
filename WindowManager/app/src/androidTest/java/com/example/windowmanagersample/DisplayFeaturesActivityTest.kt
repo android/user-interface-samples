@@ -26,16 +26,9 @@ import androidx.window.layout.FoldingFeature.Orientation.Companion.HORIZONTAL
 import androidx.window.layout.FoldingFeature.Orientation.Companion.VERTICAL
 import androidx.window.layout.FoldingFeature.State.Companion.FLAT
 import androidx.window.layout.FoldingFeature.State.Companion.HALF_OPENED
-import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
 import androidx.window.testing.layout.FoldingFeature
 import androidx.window.testing.layout.TestWindowLayoutInfo
 import androidx.window.testing.layout.WindowLayoutInfoPublisherRule
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
@@ -43,7 +36,6 @@ import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@OptIn(ExperimentalCoroutinesApi::class)
 class DisplayFeaturesActivityTest {
     private val activityRule = ActivityScenarioRule(DisplayFeaturesActivity::class.java)
     private val publisherRule = WindowLayoutInfoPublisherRule()
@@ -62,16 +54,7 @@ class DisplayFeaturesActivityTest {
                 FoldingFeature(activity = activity, state = FLAT, orientation = HORIZONTAL)
             val expected = TestWindowLayoutInfo(listOf(feature))
 
-            val value = TestCoroutineScope().async {
-                activity.windowInfoRepository().windowLayoutInfo.first()
-            }
             publisherRule.overrideWindowLayoutInfo(expected)
-            runBlockingTest {
-                assertEquals(
-                    expected,
-                    value.await()
-                )
-            }
         }
         onView(withSubstring("state = FLAT")).check(matches(isDisplayed()))
         onView(withSubstring("is not separated")).check(matches(isDisplayed()))
@@ -85,16 +68,7 @@ class DisplayFeaturesActivityTest {
                 FoldingFeature(activity = activity, state = HALF_OPENED, orientation = HORIZONTAL)
             val expected = TestWindowLayoutInfo(listOf(feature))
 
-            val value = TestCoroutineScope().async {
-                activity.windowInfoRepository().windowLayoutInfo.first()
-            }
             publisherRule.overrideWindowLayoutInfo(expected)
-            runBlockingTest {
-                assertEquals(
-                    expected,
-                    value.await()
-                )
-            }
         }
         onView(withSubstring("state = HALF_OPENED")).check(matches(isDisplayed()))
         onView(withSubstring("are separated")).check(matches(isDisplayed()))
@@ -108,16 +82,7 @@ class DisplayFeaturesActivityTest {
                 FoldingFeature(activity = activity, state = HALF_OPENED, orientation = VERTICAL)
             val expected = TestWindowLayoutInfo(listOf(feature))
 
-            val value = TestCoroutineScope().async {
-                activity.windowInfoRepository().windowLayoutInfo.first()
-            }
             publisherRule.overrideWindowLayoutInfo(expected)
-            runBlockingTest {
-                assertEquals(
-                    expected,
-                    value.await()
-                )
-            }
         }
         onView(withSubstring("state = HALF_OPENED")).check(matches(isDisplayed()))
         onView(withSubstring("are separated")).check(matches(isDisplayed()))

@@ -25,26 +25,19 @@ import static androidx.window.layout.FoldingFeature.Orientation.VERTICAL;
 import static androidx.window.layout.FoldingFeature.State.FLAT;
 import static androidx.window.layout.FoldingFeature.State.HALF_OPENED;
 import static androidx.window.testing.layout.DisplayFeatureTesting.createFoldingFeature;
-import static org.mockito.Mockito.verify;
 
-import androidx.core.util.Consumer;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.window.java.layout.WindowInfoRepositoryCallbackAdapter;
 import androidx.window.layout.FoldingFeature;
-import androidx.window.layout.WindowInfoRepository;
 import androidx.window.layout.WindowLayoutInfo;
 import androidx.window.testing.layout.WindowLayoutInfoPublisherRule;
 import androidx.window.testing.layout.WindowLayoutInfoTesting;
 import java.util.Collections;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 @RunWith(AndroidJUnit4.class)
 public class DisplayFeaturesActivityJavaTest {
@@ -53,18 +46,11 @@ public class DisplayFeaturesActivityJavaTest {
             new ActivityScenarioRule<>(DisplayFeaturesActivity.class);
     private WindowLayoutInfoPublisherRule publisherRule = new WindowLayoutInfoPublisherRule();
 
-    @Mock private Consumer<WindowLayoutInfo> testConsumer;
-
     @Rule public TestRule testRule;
 
     public DisplayFeaturesActivityJavaTest() {
         testRule = RuleChain.outerRule(publisherRule).around(activityRule);
     };
-
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-    }
 
     @Test
     public void testDeviceOpen_Flat() {
@@ -79,15 +65,7 @@ public class DisplayFeaturesActivityJavaTest {
                                     WindowLayoutInfoTesting.createWindowLayoutInfo(
                                             Collections.singletonList(feature));
 
-                            WindowInfoRepositoryCallbackAdapter adapter =
-                                    new WindowInfoRepositoryCallbackAdapter(
-                                            WindowInfoRepository.getOrCreate(activity));
-
-                            adapter.addWindowLayoutInfoListener(Runnable::run, testConsumer);
-
                             publisherRule.overrideWindowLayoutInfo(expected);
-
-                            verify(testConsumer).accept(expected);
                         });
 
         onView(withSubstring("state = FLAT")).check(matches(isDisplayed()));
@@ -108,15 +86,7 @@ public class DisplayFeaturesActivityJavaTest {
                                     WindowLayoutInfoTesting.createWindowLayoutInfo(
                                             Collections.singletonList(feature));
 
-                            WindowInfoRepositoryCallbackAdapter adapter =
-                                    new WindowInfoRepositoryCallbackAdapter(
-                                            WindowInfoRepository.getOrCreate(activity));
-
-                            adapter.addWindowLayoutInfoListener(Runnable::run, testConsumer);
-
                             publisherRule.overrideWindowLayoutInfo(expected);
-
-                            verify(testConsumer).accept(expected);
                         });
 
         onView(withSubstring("state = HALF_OPENED")).check(matches(isDisplayed()));
@@ -137,15 +107,7 @@ public class DisplayFeaturesActivityJavaTest {
                                     WindowLayoutInfoTesting.createWindowLayoutInfo(
                                             Collections.singletonList(feature));
 
-                            WindowInfoRepositoryCallbackAdapter adapter =
-                                    new WindowInfoRepositoryCallbackAdapter(
-                                            WindowInfoRepository.getOrCreate(activity));
-
-                            adapter.addWindowLayoutInfoListener(Runnable::run, testConsumer);
-
                             publisherRule.overrideWindowLayoutInfo(expected);
-
-                            verify(testConsumer).accept(expected);
                         });
 
         onView(withSubstring("state = HALF_OPENED")).check(matches(isDisplayed()));
