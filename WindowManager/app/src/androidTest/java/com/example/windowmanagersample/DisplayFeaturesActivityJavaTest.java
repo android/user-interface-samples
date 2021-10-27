@@ -25,13 +25,13 @@ import static androidx.window.layout.FoldingFeature.Orientation.VERTICAL;
 import static androidx.window.layout.FoldingFeature.State.FLAT;
 import static androidx.window.layout.FoldingFeature.State.HALF_OPENED;
 import static androidx.window.testing.layout.DisplayFeatureTesting.createFoldingFeature;
+import static androidx.window.testing.layout.WindowLayoutInfoTesting.createWindowLayoutInfo;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.window.layout.FoldingFeature;
 import androidx.window.layout.WindowLayoutInfo;
 import androidx.window.testing.layout.WindowLayoutInfoPublisherRule;
-import androidx.window.testing.layout.WindowLayoutInfoTesting;
 import java.util.Collections;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,8 +62,7 @@ public class DisplayFeaturesActivityJavaTest {
                                     createFoldingFeature(activity, -1, 0, FLAT, HORIZONTAL);
 
                             WindowLayoutInfo expected =
-                                    WindowLayoutInfoTesting.createWindowLayoutInfo(
-                                            Collections.singletonList(feature));
+                                    createWindowLayoutInfo(Collections.singletonList(feature));
 
                             publisherRule.overrideWindowLayoutInfo(expected);
                         });
@@ -83,8 +82,7 @@ public class DisplayFeaturesActivityJavaTest {
                                     createFoldingFeature(activity, -1, 0, HALF_OPENED, HORIZONTAL);
 
                             WindowLayoutInfo expected =
-                                    WindowLayoutInfoTesting.createWindowLayoutInfo(
-                                            Collections.singletonList(feature));
+                                    createWindowLayoutInfo(Collections.singletonList(feature));
 
                             publisherRule.overrideWindowLayoutInfo(expected);
                         });
@@ -104,8 +102,7 @@ public class DisplayFeaturesActivityJavaTest {
                                     createFoldingFeature(activity, -1, 0, HALF_OPENED, VERTICAL);
 
                             WindowLayoutInfo expected =
-                                    WindowLayoutInfoTesting.createWindowLayoutInfo(
-                                            Collections.singletonList(feature));
+                                    createWindowLayoutInfo(Collections.singletonList(feature));
 
                             publisherRule.overrideWindowLayoutInfo(expected);
                         });
