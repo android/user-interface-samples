@@ -6,7 +6,7 @@ Compose.
 
 ## Build a first widget
 
-You need to at least following components to build a widget using Glance.
+You need to prepare at least following components to build a widget using Glance.
 
 1. AppWidgetProviderInfo metadata
 
