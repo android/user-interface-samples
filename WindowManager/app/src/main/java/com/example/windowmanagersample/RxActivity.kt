@@ -28,22 +28,20 @@ import androidx.window.layout.WindowLayoutInfo
 import androidx.window.rxjava2.layout.windowLayoutInfoObservable
 import com.example.windowmanagersample.databinding.ActivityRxBinding
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.collections.ArrayList
 
 /** Demo activity that shows all display features and current device state on the screen. */
 class RxActivity : AppCompatActivity() {
 
     private val stateLog: StringBuilder = StringBuilder()
-
-    private val displayFeatureViews = ArrayList<View>()
+    private var disposable: Disposable? = null
 
     private lateinit var binding: ActivityRxBinding
     private lateinit var windowInfoRepository: WindowInfoRepository
-    private lateinit var disposable: Disposable
     private lateinit var observable: Observable<WindowLayoutInfo>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,21 +63,30 @@ class RxActivity : AppCompatActivity() {
         super.onStart()
 
         // Subscribe to receive WindowLayoutInfo updates
-        disposable = observable.subscribe { newLayoutInfo ->
-            updateStateLog(newLayoutInfo)
-            updateCurrentState(newLayoutInfo)
+        disposable?.let {
+            if (!it.isDisposed) it.dispose()
         }
+        disposable = observable
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe() { newLayoutInfo ->
+                updateStateLog(newLayoutInfo)
+                updateCurrentState(newLayoutInfo)
+            }
     }
 
     override fun onStop() {
         super.onStop()
 
         // Dispose the WindowLayoutInfo observable
-        disposable.dispose()
+        disposable?.let {
+            if (!it.isDisposed) it.dispose()
+        }
     }
 
     /** Updates the device state and display feature positions. */
     private fun updateCurrentState(layoutInfo: WindowLayoutInfo) {
+        val displayFeatureViews = mutableListOf<View>()
+
         // Cleanup previously added feature views
         val rootLayout = binding.featureContainerLayout
         for (featureView in displayFeatureViews) {

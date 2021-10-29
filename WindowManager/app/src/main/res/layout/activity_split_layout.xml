@@ -15,7 +15,7 @@
   limitations under the License.
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -39,4 +39,4 @@
             layout="@layout/split_layout_control" />
     </com.example.windowmanagersample.SplitLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

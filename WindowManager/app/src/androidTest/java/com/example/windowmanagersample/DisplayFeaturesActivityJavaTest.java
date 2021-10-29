@@ -93,7 +93,7 @@ public class DisplayFeaturesActivityJavaTest {
     }
 
     @Test
-    public void testDeviceOpen_Book() { // : Unit = testScope.runBlockingTest {
+    public void testDeviceOpen_Book() {
         activityRule
                 .getScenario()
                 .onActivity(

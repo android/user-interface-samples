@@ -55,7 +55,7 @@ class WindowDemosActivity : AppCompatActivity() {
     }
 
     private fun showRxDisplayFeatures() {
-        val intent = Intent(this, DisplayFeaturesActivity::class.java)
+        val intent = Intent(this, RxActivity::class.java)
         startActivity(intent)
     }
 }
