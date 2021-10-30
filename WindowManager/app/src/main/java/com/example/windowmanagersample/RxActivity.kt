@@ -63,12 +63,10 @@ class RxActivity : AppCompatActivity() {
         super.onStart()
 
         // Subscribe to receive WindowLayoutInfo updates
-        disposable?.let {
-            if (!it.isDisposed) it.dispose()
-        }
+        disposable?.dispose()
         disposable = observable
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe() { newLayoutInfo ->
+            .subscribe { newLayoutInfo ->
                 updateStateLog(newLayoutInfo)
                 updateCurrentState(newLayoutInfo)
             }
@@ -78,9 +76,7 @@ class RxActivity : AppCompatActivity() {
         super.onStop()
 
         // Dispose the WindowLayoutInfo observable
-        disposable?.let {
-            if (!it.isDisposed) it.dispose()
-        }
+        disposable?.dispose()
     }
 
     /** Updates the device state and display feature positions. */
@@ -89,9 +85,7 @@ class RxActivity : AppCompatActivity() {
 
         // Cleanup previously added feature views
         val rootLayout = binding.featureContainerLayout
-        for (featureView in displayFeatureViews) {
-            rootLayout.removeView(featureView)
-        }
+        rootLayout.removeAllViews()
         displayFeatureViews.clear()
 
         // Update the UI with the current state
