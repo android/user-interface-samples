@@ -17,4 +17,6 @@
     <string name="app_name">glance-widget</string>
     <string name="activity_for_glance_widgets">Activity for the Glance widgets</string>
     <string name="app_widget_description">First Glance widget</string>
+    <string name="loading_widget">Loading widget…</string>
+    <string name="first_glance_widget">First Glance widget</string>
 </resources>
