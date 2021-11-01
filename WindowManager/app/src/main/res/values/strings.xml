@@ -38,7 +38,6 @@
     <string name="test_activity">Test activity</string>
     <string name="show_all_display_features_description">Show all display features of the device on the screen</string>
     <string name="split_layout_demo_description">Demo of a layout that splits the content to sides of a fold or a hinge. If not present or minimal size requirements are not meant, it behave like a FrameLayout.</string>
-    <string name="device_state_toggle_button">Toggle Device State</string>
     <string name="unknown_legend_color">Unknown Legend Color</string>
     <string name="hinge_legend_color">Hinge Legend Color</string>
     <string name="separating_legend_color">Separating Legend Color</string>

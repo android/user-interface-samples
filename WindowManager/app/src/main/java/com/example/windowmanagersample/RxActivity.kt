@@ -81,12 +81,9 @@ class RxActivity : AppCompatActivity() {
 
     /** Updates the device state and display feature positions. */
     private fun updateCurrentState(layoutInfo: WindowLayoutInfo) {
-        val displayFeatureViews = mutableListOf<View>()
-
         // Cleanup previously added feature views
         val rootLayout = binding.featureContainerLayout
         rootLayout.removeAllViews()
-        displayFeatureViews.clear()
 
         // Update the UI with the current state
         val stateStringBuilder = StringBuilder()
@@ -144,8 +141,6 @@ class RxActivity : AppCompatActivity() {
 
             rootLayout.addView(featureView, lp)
             featureView.id = View.generateViewId()
-
-            displayFeatureViews.add(featureView)
         }
 
         binding.currentState.text = stateStringBuilder.toString()

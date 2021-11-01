@@ -41,8 +41,6 @@ class DisplayFeaturesActivity : AppCompatActivity() {
 
     private val stateLog: StringBuilder = StringBuilder()
 
-    private val displayFeatureViews = ArrayList<View>()
-
     private lateinit var binding: ActivityDisplayFeaturesBinding
     private lateinit var windowInfoRepository: WindowInfoRepository
 
@@ -78,10 +76,7 @@ class DisplayFeaturesActivity : AppCompatActivity() {
     private fun updateCurrentState(layoutInfo: WindowLayoutInfo) {
         // Cleanup previously added feature views
         val rootLayout = binding.featureContainerLayout
-        for (featureView in displayFeatureViews) {
-            rootLayout.removeView(featureView)
-        }
-        displayFeatureViews.clear()
+        rootLayout.removeAllViews()
 
         // Update the UI with the current state
         val stateStringBuilder = StringBuilder()
@@ -139,8 +134,6 @@ class DisplayFeaturesActivity : AppCompatActivity() {
 
             rootLayout.addView(featureView, lp)
             featureView.id = View.generateViewId()
-
-            displayFeatureViews.add(featureView)
         }
 
         binding.currentState.text = stateStringBuilder.toString()
