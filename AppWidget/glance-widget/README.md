@@ -31,7 +31,7 @@ and have a reference of the metadata from the AndroidManifest.
 ```xml
 <receiver
     android:name=".FirstGlanceWidgetReceiver"
-    android:exported="true">
+    android:exported="false">
     <intent-filter>
         <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
     </intent-filter>
@@ -86,8 +86,10 @@ class FirstGlanceWidgetReceiver : GlanceAppWidgetReceiver() {
 
 # Pre-requisites
 
-* Android SDK 21
+* Android SDK 23
 * Jetpack Compose
+
+Note: The app will compile with SDK 21, but it doesn't work as expected.
 
 # Getting Started
 
@@ -96,7 +98,7 @@ This sample uses the Gradle build system. To build this project, use the
 
 # Support
 
-- Stack Overflow: http://stackoverflow.com/questions/tagged/android
+- Stack Overflow: http://stackoverflow.com/questions/tagged/glance+glance-appwidget
 
 If you've found an error in this sample, please file an issue:
 https://github.com/android/user-interface

@@ -35,11 +35,6 @@ import androidx.glance.layout.padding
 import androidx.glance.text.FontWeight
 import androidx.glance.text.TextStyle
 
-class FirstGlanceWidgetReceiver : GlanceAppWidgetReceiver() {
-
-    override val glanceAppWidget: GlanceAppWidget = FirstGlanceWidget()
-}
-
 /**
  * Simple widget for showcasing how a widget using Glace is constructed.
  */
@@ -73,4 +68,9 @@ class FirstGlanceWidget : GlanceAppWidget() {
             }
         }
     }
+}
+
+class FirstGlanceWidgetReceiver : GlanceAppWidgetReceiver() {
+
+    override val glanceAppWidget: GlanceAppWidget = FirstGlanceWidget()
 }
