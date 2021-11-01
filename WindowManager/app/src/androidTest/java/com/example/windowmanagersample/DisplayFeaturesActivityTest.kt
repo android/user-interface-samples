@@ -18,7 +18,7 @@ package com.example.windowmanagersample
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withSubstring
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -26,16 +26,9 @@ import androidx.window.layout.FoldingFeature.Orientation.Companion.HORIZONTAL
 import androidx.window.layout.FoldingFeature.Orientation.Companion.VERTICAL
 import androidx.window.layout.FoldingFeature.State.Companion.FLAT
 import androidx.window.layout.FoldingFeature.State.Companion.HALF_OPENED
-import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
-import androidx.window.layout.WindowLayoutInfo
 import androidx.window.testing.layout.FoldingFeature
+import androidx.window.testing.layout.TestWindowLayoutInfo
 import androidx.window.testing.layout.WindowLayoutInfoPublisherRule
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
@@ -43,12 +36,9 @@ import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-@OptIn(ExperimentalCoroutinesApi::class)
 class DisplayFeaturesActivityTest {
     private val activityRule = ActivityScenarioRule(DisplayFeaturesActivity::class.java)
     private val publisherRule = WindowLayoutInfoPublisherRule()
-
-    private val testScope = TestCoroutineScope()
 
     @get:Rule
     val testRule: TestRule
@@ -58,74 +48,44 @@ class DisplayFeaturesActivityTest {
     }
 
     @Test
-    fun testDeviceOpen_Flat(): Unit = testScope.runBlockingTest {
+    fun testDeviceOpen_Flat() {
         activityRule.scenario.onActivity { activity ->
-            val feature = FoldingFeature(
-                activity = activity,
-                state = FLAT,
-                orientation = HORIZONTAL
-            )
-            val expected = WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
+            val feature =
+                FoldingFeature(activity = activity, state = FLAT, orientation = HORIZONTAL)
+            val expected = TestWindowLayoutInfo(listOf(feature))
 
-            val value = testScope.async {
-                activity.windowInfoRepository().windowLayoutInfo.first()
-            }
             publisherRule.overrideWindowLayoutInfo(expected)
-            runBlockingTest {
-                assertEquals(
-                    expected,
-                    value.await()
-                )
-            }
         }
-        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state = FLAT")))
-        onView(withId(R.id.current_state)).check(matches(withSubstring("is not separated")))
-        onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is horizontal")))
+        onView(withSubstring("state = FLAT")).check(matches(isDisplayed()))
+        onView(withSubstring("is not separated")).check(matches(isDisplayed()))
+        onView(withSubstring("Hinge is horizontal")).check(matches(isDisplayed()))
     }
 
     @Test
-    fun testDeviceOpen_TableTop(): Unit = testScope.runBlockingTest {
+    fun testDeviceOpen_TableTop() {
         activityRule.scenario.onActivity { activity ->
             val feature =
                 FoldingFeature(activity = activity, state = HALF_OPENED, orientation = HORIZONTAL)
-            val expected = WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
+            val expected = TestWindowLayoutInfo(listOf(feature))
 
-            val value = testScope.async {
-                activity.windowInfoRepository().windowLayoutInfo.first()
-            }
             publisherRule.overrideWindowLayoutInfo(expected)
-            runBlockingTest {
-                assertEquals(
-                    expected,
-                    value.await()
-                )
-            }
         }
-        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state = HALF_OPENED")))
-        onView(withId(R.id.current_state)).check(matches(withSubstring("are separated")))
-        onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is horizontal")))
+        onView(withSubstring("state = HALF_OPENED")).check(matches(isDisplayed()))
+        onView(withSubstring("are separated")).check(matches(isDisplayed()))
+        onView(withSubstring("Hinge is horizontal")).check(matches(isDisplayed()))
     }
 
     @Test
-    fun testDeviceOpen_Book(): Unit = testScope.runBlockingTest {
+    fun testDeviceOpen_Book() {
         activityRule.scenario.onActivity { activity ->
             val feature =
                 FoldingFeature(activity = activity, state = HALF_OPENED, orientation = VERTICAL)
-            val expected = WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
+            val expected = TestWindowLayoutInfo(listOf(feature))
 
-            val value = testScope.async {
-                activity.windowInfoRepository().windowLayoutInfo.first()
-            }
             publisherRule.overrideWindowLayoutInfo(expected)
-            runBlockingTest {
-                assertEquals(
-                    expected,
-                    value.await()
-                )
-            }
         }
-        onView(withId(R.id.state_update_log)).check(matches(withSubstring("state = HALF_OPENED")))
-        onView(withId(R.id.current_state)).check(matches(withSubstring("are separated")))
-        onView(withId(R.id.current_state)).check(matches(withSubstring("Hinge is vertical")))
+        onView(withSubstring("state = HALF_OPENED")).check(matches(isDisplayed()))
+        onView(withSubstring("are separated")).check(matches(isDisplayed()))
+        onView(withSubstring("Hinge is vertical")).check(matches(isDisplayed()))
     }
 }

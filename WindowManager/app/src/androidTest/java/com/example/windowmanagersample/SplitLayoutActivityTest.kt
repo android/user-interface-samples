@@ -29,29 +29,19 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.window.layout.FoldingFeature.Orientation.Companion.HORIZONTAL
 import androidx.window.layout.FoldingFeature.Orientation.Companion.VERTICAL
 import androidx.window.layout.FoldingFeature.State.Companion.HALF_OPENED
-import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
-import androidx.window.layout.WindowLayoutInfo
 import androidx.window.testing.layout.FoldingFeature
+import androidx.window.testing.layout.TestWindowLayoutInfo
 import androidx.window.testing.layout.WindowLayoutInfoPublisherRule
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.TestCoroutineScope
-import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
 import org.junit.runner.RunWith
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 class SplitLayoutActivityTest {
     private val activityRule = ActivityScenarioRule(SplitLayoutActivity::class.java)
     private val publisherRule = WindowLayoutInfoPublisherRule()
-
-    private val testScope = TestCoroutineScope()
 
     @get:Rule
     val testRule: TestRule
@@ -61,20 +51,10 @@ class SplitLayoutActivityTest {
     }
 
     @Test
-    fun testDeviceOpen_Flat(): Unit = testScope.runBlockingTest {
-        activityRule.scenario.onActivity { activity ->
-            val expected = WindowLayoutInfo.Builder().setDisplayFeatures(listOf()).build()
-
-            val value = testScope.async {
-                activity.windowInfoRepository().windowLayoutInfo.first()
-            }
+    fun testDeviceOpen_Flat() {
+        activityRule.scenario.onActivity {
+            val expected = TestWindowLayoutInfo(listOf())
             publisherRule.overrideWindowLayoutInfo(expected)
-            runBlockingTest {
-                Assert.assertEquals(
-                    expected,
-                    value.await()
-                )
-            }
         }
 
         // Checks that the two views are overlapped if there's no FoldingFeature.
@@ -85,26 +65,15 @@ class SplitLayoutActivityTest {
     }
 
     @Test
-    fun testDeviceOpen_Vertical(): Unit = testScope.runBlockingTest {
+    fun testDeviceOpen_Vertical() {
         activityRule.scenario.onActivity { activity ->
             val feature = FoldingFeature(
                 activity = activity,
                 orientation = VERTICAL,
                 state = HALF_OPENED
             )
-            val expected =
-                WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
-
-            val value = testScope.async {
-                activity.windowInfoRepository().windowLayoutInfo.first()
-            }
+            val expected = TestWindowLayoutInfo(listOf(feature))
             publisherRule.overrideWindowLayoutInfo(expected)
-            runBlockingTest {
-                Assert.assertEquals(
-                    expected,
-                    value.await()
-                )
-            }
         }
 
         // Checks that start_layout is on the left of end_layout with a vertical folding feature.
@@ -113,27 +82,15 @@ class SplitLayoutActivityTest {
     }
 
     @Test
-    fun testDeviceOpen_Horizontal(): Unit = testScope.runBlockingTest {
+    fun testDeviceOpen_Horizontal() {
         activityRule.scenario.onActivity { activity ->
             val feature = FoldingFeature(
                 activity = activity,
                 orientation = HORIZONTAL,
                 state = HALF_OPENED
             )
-            val expected =
-                WindowLayoutInfo.Builder().setDisplayFeatures(listOf(feature)).build()
-
-            val value = testScope.async {
-                activity.windowInfoRepository().windowLayoutInfo.first()
-            }
+            val expected = TestWindowLayoutInfo(listOf(feature))
             publisherRule.overrideWindowLayoutInfo(expected)
-            runBlockingTest {
-                val newValues = value.await()
-                Assert.assertEquals(
-                    expected,
-                    newValues
-                )
-            }
         }
 
         // Checks that start_layout is above of end_layout with a horizontal folding feature.

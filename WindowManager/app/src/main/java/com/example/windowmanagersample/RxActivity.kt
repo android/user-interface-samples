@@ -21,55 +21,62 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.window.layout.FoldingFeature
 import androidx.window.layout.WindowInfoRepository
 import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
 import androidx.window.layout.WindowLayoutInfo
-import com.example.windowmanagersample.databinding.ActivityDisplayFeaturesBinding
+import androidx.window.rxjava2.layout.windowLayoutInfoObservable
+import com.example.windowmanagersample.databinding.ActivityRxBinding
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 /** Demo activity that shows all display features and current device state on the screen. */
-class DisplayFeaturesActivity : AppCompatActivity() {
+class RxActivity : AppCompatActivity() {
 
     private val stateLog: StringBuilder = StringBuilder()
+    private var disposable: Disposable? = null
 
-    private lateinit var binding: ActivityDisplayFeaturesBinding
+    private lateinit var binding: ActivityRxBinding
     private lateinit var windowInfoRepository: WindowInfoRepository
+    private lateinit var observable: Observable<WindowLayoutInfo>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityDisplayFeaturesBinding.inflate(layoutInflater)
+        binding = ActivityRxBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         windowInfoRepository = windowInfoRepository()
 
-        // Create a new coroutine since repeatOnLifecycle is a suspend function
-        lifecycleScope.launch(Dispatchers.Main) {
-            // The block passed to repeatOnLifecycle is executed when the lifecycle
-            // is at least STARTED and is cancelled when the lifecycle is STOPPED.
-            // It automatically restarts the block when the lifecycle is STARTED again.
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                // Safely collects from windowInfoRepository when the lifecycle is STARTED
-                // and stops collection when the lifecycle is STOPPED.
-                windowInfoRepository.windowLayoutInfo
-                    .collect { newLayoutInfo ->
-                        updateStateLog(newLayoutInfo)
-                        updateCurrentState(newLayoutInfo)
-                    }
-            }
-        }
+        // Create a new observable
+        observable = windowInfoRepository.windowLayoutInfoObservable()
 
         stateLog.clear()
         stateLog.append(getString(R.string.state_update_log)).append("\n")
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // Subscribe to receive WindowLayoutInfo updates
+        disposable?.dispose()
+        disposable = observable
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { newLayoutInfo ->
+                updateStateLog(newLayoutInfo)
+                updateCurrentState(newLayoutInfo)
+            }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        // Dispose the WindowLayoutInfo observable
+        disposable?.dispose()
     }
 
     /** Updates the device state and display feature positions. */
@@ -123,7 +130,7 @@ class DisplayFeaturesActivity : AppCompatActivity() {
                     )
                     .append(" - ")
                     .append(
-                        if (foldFeature.occlusionType == FoldingFeature.OcclusionType.FULL) {
+                        if (foldFeature.occlusionType == FoldingFeature.OcclusionType.NONE) {
                             getString(R.string.occlusion_is_full)
                         } else {
                             getString(R.string.occlusion_is_none)
