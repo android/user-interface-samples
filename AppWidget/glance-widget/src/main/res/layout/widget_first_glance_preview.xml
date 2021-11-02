@@ -14,10 +14,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<!--
-Empty layout. At the moment, specifying an empty layout from the android:initialLayout in
-appwidget-provider is needed for widgets using Glance.
--->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"

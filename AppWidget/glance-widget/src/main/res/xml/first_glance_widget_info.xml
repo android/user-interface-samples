@@ -16,7 +16,7 @@
   -->
 <!--
 Metadata for the first Glance widget.
-At the moment, specifying an empty layout from the android:initialLayout is needed.
+At the moment, specifying a layout from the android:initialLayout is needed.
 -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/app_widget_description"
