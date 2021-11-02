@@ -27,7 +27,7 @@
 
         <activity
             android:name=".ListWidgetConfigureActivity"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
@@ -35,7 +35,7 @@
 
         <receiver
             android:name=".ListAppWidget"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -47,7 +47,7 @@
 
         <receiver
             android:name=".ItemsCollectionAppWidget"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -59,7 +59,7 @@
 
         <receiver
             android:name=".WeatherForecastAppWidget"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
