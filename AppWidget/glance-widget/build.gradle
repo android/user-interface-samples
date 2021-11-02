@@ -24,7 +24,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.android.glancewidget"
-        minSdk 23
+        minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -59,9 +59,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
 
-    def glance_version = "1.0.0-SNAPSHOT"
-    implementation "androidx.glance:glance-appwidget:$glance_version"
-    implementation "androidx.glance:glance:$glance_version"
+    implementation "androidx.glance:glance-appwidget:1.0.0-SNAPSHOT"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

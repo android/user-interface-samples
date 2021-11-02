@@ -15,7 +15,7 @@
   ~ limitations under the License.
   -->
 <!--
-Empty layout. At the moment, specifying an empty layout from the android:initialLayout in
+Loading layout. At the moment, specifying a layout from the android:initialLayout in
 appwidget-provider is needed for widgets using Glance.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"

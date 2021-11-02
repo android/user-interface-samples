@@ -1,12 +1,11 @@
 
 # AppWidget sample for Glance
 
-This sample demonstrates how to build widgets using Glance that is powered by Jetpack
-Compose.
+This sample demonstrates how to build widgets using Glance, a new API powered by Compose runtime.
 
 ## Build a first widget
 
-You need to prepare at least following components to build a widget using Glance.
+You need to prepare at least the following components to build a widget using Glance.
 
 1. AppWidgetProviderInfo metadata
 
@@ -18,10 +17,10 @@ You need to prepare at least following components to build a widget using Glance
     android:minHeight="50dp"
     android:initialLayout="@layout/widget_empty"
     android:previewImage="@drawable/first_glance_widget_preview"
+    android:previewLayout="@layout/widget_first_glance_preview"
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="3"
     android:targetCellHeight="1"
-    android:updatePeriodMillis="86400000"
     android:widgetCategory="home_screen" />
 ```
 
@@ -86,10 +85,8 @@ class FirstGlanceWidgetReceiver : GlanceAppWidgetReceiver() {
 
 # Pre-requisites
 
-* Android SDK 23
-* Jetpack Compose
-
-Note: The app will compile with SDK 21, but it doesn't work as expected.
+* Android SDK 21
+* [Jetpack Compose](https://developer.android.com/jetpack/compose/interop/adding#setup)
 
 # Getting Started
 
