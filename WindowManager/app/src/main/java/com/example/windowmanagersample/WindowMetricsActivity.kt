@@ -19,6 +19,8 @@ package com.example.windowmanagersample
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.window.layout.WindowMetricsCalculator
 import com.example.windowmanagersample.databinding.ActivityWindowMetricsBinding
@@ -40,12 +42,24 @@ class WindowMetricsActivity : AppCompatActivity() {
         adapter.append("onCreate", "triggered")
 
         logCurrentWindowMetrics("onCreate")
-    }
 
-    @SuppressLint("NotifyDataSetChanged")
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        logCurrentWindowMetrics("Config.Change")
+        val container: ViewGroup = binding.root
+
+        // Add a utility view to the container to hook into
+        // View.onConfigurationChanged.
+        // This is required for all activities, even those that don't
+        // handle configuration changes.
+        // We also can't use Activity.onConfigurationChanged, since there
+        // are situations where that won't be called when the configuration
+        // changes.
+        // View.onConfigurationChanged is called in those scenarios.
+        container.addView(object : View(this) {
+            override fun onConfigurationChanged(newConfig: Configuration?) {
+                super.onConfigurationChanged(newConfig)
+                logCurrentWindowMetrics("Config.Change")
+            }
+        })
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
