@@ -15,7 +15,7 @@ You need to prepare at least the following components to build a widget using Gl
     android:description="@string/app_widget_description"
     android:minWidth="180dp"
     android:minHeight="50dp"
-    android:initialLayout="@layout/widget_empty"
+    android:initialLayout="@layout/widget_loading"
     android:previewImage="@drawable/first_glance_widget_preview"
     android:previewLayout="@layout/widget_first_glance_preview"
     android:resizeMode="horizontal|vertical"
@@ -30,6 +30,7 @@ and have a reference of the metadata from the AndroidManifest.
 ```xml
 <receiver
     android:name=".FirstGlanceWidgetReceiver"
+    android:enabled="@bool/glance_appwidget_available"
     android:exported="false">
     <intent-filter>
         <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -85,8 +86,10 @@ class FirstGlanceWidgetReceiver : GlanceAppWidgetReceiver() {
 
 # Pre-requisites
 
-* Android SDK 21
+* Android SDK 23
 * [Jetpack Compose](https://developer.android.com/jetpack/compose/interop/adding#setup)
+
+Note: The app will compile with SDK 21, but it doesn't work as expected
 
 # Getting Started
 
