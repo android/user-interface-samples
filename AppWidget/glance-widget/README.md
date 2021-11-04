@@ -89,7 +89,7 @@ class FirstGlanceWidgetReceiver : GlanceAppWidgetReceiver() {
 * Android SDK 23
 * [Jetpack Compose](https://developer.android.com/jetpack/compose/interop/adding#setup)
 
-Note: The app will compile with SDK 21, but it doesn't work as expected
+Note: The app will compile with SDK 21, but it might not work as expected
 
 # Getting Started
 
