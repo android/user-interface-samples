@@ -25,8 +25,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.window.layout.FoldingFeature
-import androidx.window.layout.WindowInfoRepository
-import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
+import androidx.window.layout.WindowInfoTracker
 import androidx.window.layout.WindowLayoutInfo
 import com.example.windowmanagersample.databinding.ActivityDisplayFeaturesBinding
 import java.text.SimpleDateFormat
@@ -42,15 +41,12 @@ class DisplayFeaturesActivity : AppCompatActivity() {
     private val stateLog: StringBuilder = StringBuilder()
 
     private lateinit var binding: ActivityDisplayFeaturesBinding
-    private lateinit var windowInfoRepository: WindowInfoRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityDisplayFeaturesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        windowInfoRepository = windowInfoRepository()
 
         // Create a new coroutine since repeatOnLifecycle is a suspend function
         lifecycleScope.launch(Dispatchers.Main) {
@@ -60,7 +56,8 @@ class DisplayFeaturesActivity : AppCompatActivity() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 // Safely collects from windowInfoRepository when the lifecycle is STARTED
                 // and stops collection when the lifecycle is STOPPED.
-                windowInfoRepository.windowLayoutInfo
+                WindowInfoTracker.getOrCreate(this@DisplayFeaturesActivity)
+                    .windowLayoutInfo(this@DisplayFeaturesActivity)
                     .collect { newLayoutInfo ->
                         updateStateLog(newLayoutInfo)
                         updateCurrentState(newLayoutInfo)
