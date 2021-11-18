@@ -51,4 +51,6 @@
     <string name="occlusion_is_none">Occlusion is none</string>
     <string name="rxJava">RxJava</string>
     <string name="rx_description">Demo of using RxJava to receive updates</string>
+    <string name="activity_embedding">Embedded Activity</string>
+    <string name="activity_embedding_description">Launch Activity Embedding Demo</string>
 </resources>
