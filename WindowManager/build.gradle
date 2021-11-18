@@ -18,8 +18,7 @@ buildscript {
     ext.kotlin_version = '1.5.31'
     ext.coroutines_version = '1.5.0'
     ext.ktlint_version = '0.40.0'
-    ext.window_version = '1.0.0-SNAPSHOT'
-//    ext.window_version = '1.0.0-beta03'
+    ext.window_version = '1.0.0-beta04'
     repositories {
         google()
         mavenCentral()
@@ -61,6 +60,5 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://androidx.dev/snapshots/builds/7904636/artifacts/repository' }
     }
 }
