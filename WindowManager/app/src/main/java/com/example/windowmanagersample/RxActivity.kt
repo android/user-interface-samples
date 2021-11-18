@@ -22,8 +22,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.window.layout.FoldingFeature
-import androidx.window.layout.WindowInfoRepository
-import androidx.window.layout.WindowInfoRepository.Companion.windowInfoRepository
+import androidx.window.layout.WindowInfoTracker
 import androidx.window.layout.WindowLayoutInfo
 import androidx.window.rxjava2.layout.windowLayoutInfoObservable
 import com.example.windowmanagersample.databinding.ActivityRxBinding
@@ -41,7 +40,6 @@ class RxActivity : AppCompatActivity() {
     private var disposable: Disposable? = null
 
     private lateinit var binding: ActivityRxBinding
-    private lateinit var windowInfoRepository: WindowInfoRepository
     private lateinit var observable: Observable<WindowLayoutInfo>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,10 +48,9 @@ class RxActivity : AppCompatActivity() {
         binding = ActivityRxBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        windowInfoRepository = windowInfoRepository()
-
         // Create a new observable
-        observable = windowInfoRepository.windowLayoutInfoObservable()
+        observable = WindowInfoTracker.getOrCreate(this@RxActivity)
+            .windowLayoutInfoObservable(this@RxActivity)
 
         stateLog.clear()
         stateLog.append(getString(R.string.state_update_log)).append("\n")

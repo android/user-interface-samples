@@ -20,14 +20,14 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Consumer;
-import androidx.window.java.layout.WindowInfoRepositoryCallbackAdapter;
-import androidx.window.layout.WindowInfoRepository;
+import androidx.window.java.layout.WindowInfoTrackerCallbackAdapter;
+import androidx.window.layout.WindowInfoTracker;
 import androidx.window.layout.WindowLayoutInfo;
 import com.example.windowmanagersample.databinding.ActivitySplitLayoutBinding;
 
 public class SplitLayoutActivity extends AppCompatActivity {
 
-    private WindowInfoRepositoryCallbackAdapter windowInfoRepository;
+    private WindowInfoTrackerCallbackAdapter windowInfoTracker;
     private ActivitySplitLayoutBinding binding;
     private final LayoutStateChangeCallback layoutStateChangeCallback =
             new LayoutStateChangeCallback();
@@ -39,20 +39,21 @@ public class SplitLayoutActivity extends AppCompatActivity {
         binding = ActivitySplitLayoutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        windowInfoRepository =
-                new WindowInfoRepositoryCallbackAdapter(WindowInfoRepository.getOrCreate(this));
+        windowInfoTracker =
+                new WindowInfoTrackerCallbackAdapter(WindowInfoTracker.getOrCreate(this));
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        windowInfoRepository.addWindowLayoutInfoListener(Runnable::run, layoutStateChangeCallback);
+        windowInfoTracker.addWindowLayoutInfoListener(
+                this, Runnable::run, layoutStateChangeCallback);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        windowInfoRepository.removeWindowLayoutInfoListener(layoutStateChangeCallback);
+        windowInfoTracker.removeWindowLayoutInfoListener(layoutStateChangeCallback);
     }
 
     class LayoutStateChangeCallback implements Consumer<WindowLayoutInfo> {

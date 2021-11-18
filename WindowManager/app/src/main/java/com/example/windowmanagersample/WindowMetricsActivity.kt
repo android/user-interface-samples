@@ -59,7 +59,6 @@ class WindowMetricsActivity : AppCompatActivity() {
                 logCurrentWindowMetrics("Config.Change")
             }
         })
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
