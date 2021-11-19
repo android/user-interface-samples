@@ -36,7 +36,7 @@
             android:exported="true"
             android:label="Split Main"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|colorMode|density|touchscreen"
-            android:taskAffinity="androidx.window.sample.manual_split_affinity">
+            android:taskAffinity="com.example.windowmanagersample.manual_split_affinity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -47,43 +47,43 @@
             android:exported="false"
             android:label="B"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|colorMode|density|touchscreen"
-            android:taskAffinity="androidx.window.sample.manual_split_affinity"/>
+            android:taskAffinity="com.example.windowmanagersample.manual_split_affinity"/>
         <activity
             android:name=".embedding.SplitActivityC"
             android:exported="false"
             android:label="C"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|colorMode|density|touchscreen"
-            android:taskAffinity="androidx.window.sample.manual_split_affinity"/>
+            android:taskAffinity="com.example.windowmanagersample.manual_split_affinity"/>
         <activity
             android:name=".embedding.SplitActivityD"
             android:exported="false"
             android:label="D"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|colorMode|density|touchscreen"
-            android:taskAffinity="androidx.window.sample.manual_split_affinity"/>
+            android:taskAffinity="com.example.windowmanagersample.manual_split_affinity"/>
         <activity
             android:name=".embedding.SplitActivityE"
             android:exported="false"
             android:label="E"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|colorMode|density|touchscreen"
-            android:taskAffinity="androidx.window.sample.manual_split_affinity"/>
+            android:taskAffinity="com.example.windowmanagersample.manual_split_affinity"/>
         <activity
             android:name=".embedding.SplitActivityF"
             android:exported="false"
             android:label="F"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|colorMode|density|touchscreen"
-            android:taskAffinity="androidx.window.sample.manual_split_affinity"/>
+            android:taskAffinity="com.example.windowmanagersample.manual_split_affinity"/>
         <activity
             android:name=".embedding.SplitActivityPlaceholder"
             android:exported="false"
             android:label="Placeholder"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|colorMode|density|touchscreen"
-            android:taskAffinity="androidx.window.sample.manual_split_affinity"/>
+            android:taskAffinity="com.example.windowmanagersample.manual_split_affinity"/>
         <activity
             android:name=".embedding.SplitActivityTrampoline"
             android:exported="true"
             android:label="Split Trampoline"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|colorMode|density|touchscreen"
-            android:taskAffinity="androidx.window.sample.trampoline_affinity">
+            android:taskAffinity="com.example.windowmanagersample.trampoline_affinity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -97,7 +97,7 @@
             android:exported="true"
             android:label="Split List"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|colorMode|density|touchscreen"
-            android:taskAffinity="androidx.window.sample.list_detail_split_affinity">
+            android:taskAffinity="com.example.windowmanagersample.list_detail_split_affinity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -109,13 +109,13 @@
             android:label="Item detail"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|colorMode|density|touchscreen"
             android:launchMode="singleTop"
-            android:taskAffinity="androidx.window.sample.list_detail_split_affinity"/>
+            android:taskAffinity="com.example.windowmanagersamplee.list_detail_split_affinity"/>
         <activity
             android:name=".embedding.SplitActivityListPlaceholder"
             android:exported="false"
             android:label="Placeholder"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|colorMode|density|touchscreen"
-            android:taskAffinity="androidx.window.sample.list_detail_split_affinity" />
+            android:taskAffinity="com.example.windowmanagersample.list_detail_split_affinity" />
         <provider android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"

@@ -268,7 +268,8 @@ public class SplitActivityBase extends AppCompatActivity
         activityFilters.add(new ActivityFilter(componentName(SplitActivityB.class), null));
         Intent intent = new Intent();
         intent.setComponent(
-                componentName("androidx.window.sample.embedding.SplitActivityPlaceholder"));
+                componentName(
+                        "com.example.windowmanagersample.embedding.SplitActivityPlaceholder"));
         SplitPlaceholderRule placeholderRule =
                 new SplitPlaceholderRule(
                         activityFilters,
