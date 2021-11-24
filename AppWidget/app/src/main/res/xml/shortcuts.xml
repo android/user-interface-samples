@@ -1,0 +1,22 @@
+<?xml version ="1.0" encoding ="utf-8"?><!--  Learn More about how to use App Actions: https://developer.android.com/guide/actions/index.html -->
+<shortcuts>
+    <capability xmlns:android="http://schemas.android.com/apk/res/android"
+        android:name="actions.intent.GET_THING">
+        <app-widget
+            android:identifier="WEATHER_LOCATION"
+            android:targetClass="com.example.android.appwidget.WeatherForecastAppWidget"
+            android:targetPackage="com.example.android.appwidget">
+            <parameter
+                android:name="thing.name"
+                android:key="name" />
+            <extra
+                android:name="hasTts"
+                android:value="true" />
+        </app-widget>
+        <!-- Fallback intent with no parameters needed to successfully execute. -->
+        <intent
+            android:action="com.example.android.appwidget.QUERY_WEATHER"
+            android:identifier="QUERY_WEATHER"
+            android:targetClass="com.example.android.appwidget.MainActivity" />
+    </capability>
+</shortcuts>

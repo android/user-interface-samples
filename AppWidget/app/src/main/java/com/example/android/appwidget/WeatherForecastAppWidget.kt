@@ -19,8 +19,11 @@ package com.example.android.appwidget
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.util.Log
 import android.util.SizeF
 import android.widget.RemoteViews
+import com.google.assistant.appactions.widgets.AppActionsWidgetExtension
+
 
 /**
  * Implementation of the weather forecast app widget that demonstrates the flexible layouts based
@@ -43,6 +46,18 @@ class WeatherForecastAppWidget : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetId: Int
     ) {
+
+        val optionsBundle = appWidgetManager.getAppWidgetOptions(appWidgetId)
+        val bii =
+            optionsBundle.getString(AppActionsWidgetExtension.EXTRA_APP_ACTIONS_BII) // "actions.intent.CREATE_TAXI_RESERVATION"
+
+        val params = optionsBundle.getBundle(AppActionsWidgetExtension.EXTRA_APP_ACTIONS_PARAMS)
+
+        if (params != null && params.containsKey("location")) {
+            val location = params.getString("location")
+            Log.i("WeatherForecastAppWidget", "location = $location")
+        }
+
         val viewMapping: Map<SizeF, RemoteViews> = mapOf(
             // Specify the minimum width and height in dp and a layout, which you want to use for the
             // specified size
