@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2021 Google LLC
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="32dp"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -29,36 +29,64 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
-    <TextView
-        android:id="@+id/text_drag_item"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_new_task"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@android:color/holo_orange_light"
         android:padding="20dp"
-        android:text="Drag Me"
+        android:text="@string/new_task"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/text_drag_item"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bg_drag_normal"
+        android:padding="20dp"
+        android:text="@string/drag_item"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_center"
+        app:layout_constraintEnd_toStartOf="@id/text_drag_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_new_task" />
+
+    <TextView
+        android:id="@+id/text_drag_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/drag_image"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@id/text_drag_item"
+        app:layout_constraintStart_toEndOf="@id/text_drag_item"
+        app:layout_constraintTop_toTopOf="@id/text_drag_item" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image_drag_item"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/earth"
+        app:layout_constraintBottom_toBottomOf="@id/text_drag_item"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/text_drag_image"
+        app:layout_constraintTop_toTopOf="@id/text_drag_item" />
+
+    <TextView
         android:id="@+id/text_drop_target"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@android:color/holo_purple"
+        android:background="@drawable/bg_target_normal"
         android:gravity="center_horizontal|center_vertical"
         android:padding="20dp"
-        android:text="Drop Things Here"
+        android:text="@string/drop_target"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -66,4 +94,14 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline_center" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button_clear"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_clear"
+        app:layout_constraintEnd_toEndOf="@id/text_drop_target"
+        app:layout_constraintTop_toTopOf="@id/text_drop_target" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

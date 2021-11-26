@@ -16,4 +16,11 @@
 
 <resources>
     <string name="app_name">DragAndDropSample</string>
+    <string name="drag_item">Drag me</string>
+    <string name="drag_image">or drag:</string>
+    <string name="drop_target">Drop here</string>
+    <string name="drop_text">Dropped text: \"%1$s\"</string>
+    <string name="drop_image">Dropped image (sampled to %1$d x %2$d)</string>
+    <string name="drop_error">Error: could not load file: %1$s</string>
+    <string name="new_task">New task</string>
 </resources>
