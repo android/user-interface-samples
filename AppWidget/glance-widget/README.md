@@ -1,3 +1,51 @@
+# Pre-requisites
+
+* Android SDK 23
+* [Jetpack Compose](https://developer.android.com/jetpack/compose/interop/adding#setup)
+
+Note: The app will compile with SDK 21, but it might not work as expected
+
+# Getting Started
+
+This sample uses the Gradle build system. To build this project, use the
+"gradlew build" command or use "Import Project" in Android Studio.
+
+## Setup 
+
+Glance is currently only available as SNAPSHOT. Those are builds that are periodically generated in [androidx.dev](androidx.dev) repo.
+
+To include them in your project, declare the [androidx.dev](https://androidx.dev) snapshot repo in your root build.gradle file:
+
+```groovy
+// main/root build.gradle file
+allprojects {
+ repositories {
+   // …
+   maven { url 'https://androidx.dev/snapshots/latest/artifacts/repository' }
+ }
+}
+```
+
+Alternatively, if your project is using settings repositories configuration, add the following in your settings.gradle file:
+
+```groovy
+// settings.gradle
+dependencyResolutionManagement {
+ // …
+ repositories {
+   // …
+   maven { url 'https://androidx.dev/snapshots/latest/artifacts/repository' }
+ }
+}
+```
+
+Then, add the glance and glance-appwidget dependencies in your module's build.gradle:
+
+```groovy
+dependencies {
+   implementation "androidx.glance:glance-appwidget:1.0.0-SNAPSHOT"
+}
+```
 
 # AppWidget sample for Glance
 
@@ -82,19 +130,6 @@ class FirstGlanceWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget = FirstGlanceWidget()
 }
 ```
-
-
-# Pre-requisites
-
-* Android SDK 23
-* [Jetpack Compose](https://developer.android.com/jetpack/compose/interop/adding#setup)
-
-Note: The app will compile with SDK 21, but it might not work as expected
-
-# Getting Started
-
-This sample uses the Gradle build system. To build this project, use the
-"gradlew build" command or use "Import Project" in Android Studio.
 
 # Support
 
