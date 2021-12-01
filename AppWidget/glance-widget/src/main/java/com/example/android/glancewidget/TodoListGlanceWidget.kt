@@ -88,7 +88,7 @@ class TodoListGlanceWidget : GlanceAppWidget() {
                     .padding(8.dp),
                 style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 18.sp),
             )
-            CountToggled()
+            CountChecked()
             LazyColumn {
                 items(groceryStringIds) {
                     val toggledString = context.getString(it)
@@ -138,7 +138,7 @@ class CheckboxClickAction : ActionCallback {
 }
 
 @Composable
-private fun CountToggled() {
+private fun CountChecked() {
     val prefs = currentState<Preferences>()
     val context = LocalContext.current
     val checkedCount = groceryStringIds.filter {
