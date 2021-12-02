@@ -39,7 +39,7 @@ import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.state.updateAppWidgetState
-import androidx.glance.background
+import androidx.glance.appwidget.background
 import androidx.glance.currentState
 import androidx.glance.layout.Column
 import androidx.glance.layout.fillMaxSize
@@ -79,7 +79,7 @@ class TodoListGlanceWidget : GlanceAppWidget() {
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(color = Color.White)
+                .background(day = Color.White, night = Color.DarkGray)
                 .appWidgetBackground()
                 .cornerRadius(16.dp)
                 .padding(8.dp)
