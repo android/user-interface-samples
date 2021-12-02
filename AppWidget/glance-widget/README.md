@@ -167,9 +167,9 @@ date of a weather widget needs to be stored in a persistent storage.
 of the UI content.
 
 By overriding the `stateDefinition` field in the `GlanceAppWidget`, you can configure the underlying
-data store. (At the moment, `PreferencesGlanceStateDefinition`, which stores the underlying data 
-using [Preference](https://developer.android.com/jetpack/androidx/releases/preference) androidx
-library, is the only implementation of the `GlanceStateDefinition`)
+data store. `PreferencesGlanceStateDefinition` is used for its implementation, which stores the 
+underlying data using [Preference](https://developer.android.com/jetpack/androidx/releases/preference) androidx
+library.
 
 [`TodoListGlanceWidget.kt`](src/main/java/com/example/android/glancewidget/TodoListGlanceWidget.kt\#L72)
 
