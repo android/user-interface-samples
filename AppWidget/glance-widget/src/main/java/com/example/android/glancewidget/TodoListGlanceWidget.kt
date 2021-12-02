@@ -32,7 +32,10 @@ import androidx.glance.appwidget.CheckBox
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.action.ActionCallback
+import androidx.glance.appwidget.action.ToggleableStateKey
 import androidx.glance.appwidget.action.actionRunCallback
+import androidx.glance.appwidget.appWidgetBackground
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.state.updateAppWidgetState
@@ -77,6 +80,8 @@ class TodoListGlanceWidget : GlanceAppWidget() {
             modifier = GlanceModifier
                 .fillMaxSize()
                 .background(color = Color.White)
+                .appWidgetBackground()
+                .cornerRadius(16.dp)
                 .padding(8.dp)
         ) {
             val context = LocalContext.current
@@ -91,15 +96,14 @@ class TodoListGlanceWidget : GlanceAppWidget() {
             CountChecked()
             LazyColumn {
                 items(groceryStringIds) {
-                    val toggledString = context.getString(it)
-                    val checked = prefs[booleanPreferencesKey(toggledString)] ?: false
+                    val idString = it.toString()
+                    val checked = prefs[booleanPreferencesKey(idString)] ?: false
                     CheckBox(
-                        text = toggledString,
-                        checked = prefs[booleanPreferencesKey(toggledString)] ?: false,
+                        text = context.getString(it),
+                        checked = checked,
                         onCheckedChange = actionRunCallback<CheckboxClickAction>(
                             actionParametersOf(
-                                toggledKey to toggledString,
-                                toggledValue to !checked
+                                toggledKey to idString,
                             )
                         ),
                         modifier = GlanceModifier.padding(12.dp)
@@ -111,27 +115,19 @@ class TodoListGlanceWidget : GlanceAppWidget() {
 }
 
 private val toggledKey = ActionParameters.Key<String>("ToggledKey")
-private val toggledValue = ActionParameters.Key<Boolean>("ToggledValue")
 
 class CheckboxClickAction : ActionCallback {
     override suspend fun onRun(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
-        val toggledString = requireNotNull(parameters[toggledKey]) {
+        val toggledStringId = requireNotNull(parameters[toggledKey]) {
             "Add $toggledKey parameter in the ActionParameters."
         }
-        // TODO: Remove this parameter once the checked state can be retrieved through
-        // ToggleableStateKey.
-        val checked = requireNotNull(parameters[toggledValue]) {
-            "Add $toggledValue parameter in the ActionParameters."
-        }
 
-        // TODO: Uncomment this once the checked state is retrieved from the action parameters
-        // in a lazy list
-//        val checked = requireNotNull(parameters[ToggleableStateKey]) {
-//            "This action should only be called in response to toggleable events"
-//        }
+        val checked = requireNotNull(parameters[ToggleableStateKey]) {
+            "This action should only be called in response to toggleable events"
+        }
         updateAppWidgetState(context, PreferencesGlanceStateDefinition, glanceId) {
             it.toMutablePreferences()
-                .apply { set(booleanPreferencesKey(toggledString), checked) }
+                .apply { this[booleanPreferencesKey(toggledStringId)] = checked }
         }
         TodoListGlanceWidget().update(context, glanceId)
     }
@@ -140,9 +136,8 @@ class CheckboxClickAction : ActionCallback {
 @Composable
 private fun CountChecked() {
     val prefs = currentState<Preferences>()
-    val context = LocalContext.current
     val checkedCount = groceryStringIds.filter {
-        prefs[booleanPreferencesKey(context.getString(it))] ?: false
+        prefs[booleanPreferencesKey(it.toString())] ?: false
     }.size
 
     Text(
