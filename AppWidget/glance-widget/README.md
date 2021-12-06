@@ -188,7 +188,7 @@ Then you can store the data to the underlying storage by following code
 ```kotlin
 updateAppWidgetState(context, PreferencesGlanceStateDefinition, glanceId) {
     it.toMutablePreferences()
-        .apply { set(booleanPreferencesKey(toggledString), checked) }
+        .apply { this[booleanPreferencesKey(toggledStringId)] = checked }
 }
 TodoListGlanceWidget().update(context, glanceId)
 ```
