@@ -24,7 +24,9 @@ import androidx.glance.GlanceModifier
 import androidx.glance.action.actionLaunchActivity
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
-import androidx.glance.background
+import androidx.glance.appwidget.appWidgetBackground
+import androidx.glance.appwidget.background
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
@@ -45,7 +47,9 @@ class FirstGlanceWidget : GlanceAppWidget() {
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(color = Color.White)
+                .background(day = Color.White, night = Color.LightGray)
+                .appWidgetBackground()
+                .cornerRadius(16.dp)
                 .padding(8.dp)
         ) {
             Text(

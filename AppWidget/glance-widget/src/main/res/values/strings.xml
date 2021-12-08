@@ -19,4 +19,16 @@
     <string name="app_widget_description">First Glance widget</string>
     <string name="loading_widget">Loading widget…</string>
     <string name="first_glance_widget">First Glance widget</string>
+    <string name="glance_todo_list">Glance todo list</string>
+    <string name="todo_list_number_of_checkboxes_checked_placeholder">0 checkboxes checked</string>
+    <string name="grocery_list_milk">Milk</string>
+    <string name="grocery_list_eggs">Eggs</string>
+    <string name="grocery_list_tomatoes">Tomatoes</string>
+    <string name="grocery_list_bacon">Bacon</string>
+    <string name="grocery_list_butter">Butter</string>
+    <string name="grocery_list_cheese">Cheese</string>
+    <string name="grocery_list_potatoes">Potatoes</string>
+    <string name="grocery_list_broccoli">Broccoli</string>
+    <string name="grocery_list_salmon">Salmon</string>
+    <string name="grocery_list_yogurt">Yogurt</string>
 </resources>

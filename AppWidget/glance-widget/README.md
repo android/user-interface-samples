@@ -131,6 +131,85 @@ class FirstGlanceWidgetReceiver : GlanceAppWidgetReceiver() {
 }
 ```
 
+## Scrollable layout
+
+`LazyColumn` composable allows you to define a set of items inside a scrollable container in the
+widget.
+
+[`TodoListGlanceWidget.kt`](src/main/java/com/example/android/glancewidget/TodoListGlanceWidget.kt\#L92)
+
+```kotlin
+LazyColumn {
+    items(groceryStringIds) {
+        ...
+        CheckBox(
+            ...
+        )
+    }
+}
+```
+
+Note: Glance translates a LazyColumn into an actual [ListView](https://developer.android.com/reference/android/widget/ListView),
+thus same limitations and restrictions of the [collection of RemoteViews](https://developer.android.com/guide/topics/appwidgets/collections)
+apply.
+
+## State management
+
+Intrinsically, a widget is stateless because a widget lives in a different process from the app
+process and the underlying UI content may be restored or updated by the system
+(See https://developer.android.com/guide/topics/appwidgets/advanced#update-widgets for more details
+on when and how an widget is updated). 
+
+Thus, the state of the UI content of the widget, such as the checked state of the checkboxes or the
+date of a weather widget needs to be stored in a persistent storage.
+
+`GlanceStateDefinition` defines where and how the underlying data is stored to retrieve the state
+of the UI content.
+
+By overriding the `stateDefinition` field in the `GlanceAppWidget`, you can configure the underlying
+data store. `PreferencesGlanceStateDefinition` is used for its implementation, which stores the 
+underlying data using [Preference](https://developer.android.com/jetpack/androidx/releases/preference) androidx
+library.
+
+[`TodoListGlanceWidget.kt`](src/main/java/com/example/android/glancewidget/TodoListGlanceWidget.kt\#L72)
+
+```kotlin
+class TodoListGlanceWidget : GlanceAppWidget() {
+    ...
+    override var stateDefinition: GlanceStateDefinition<*> = PreferencesGlanceStateDefinition
+    ...
+}
+```
+
+Then you can store the data to the underlying storage by following code
+
+[`TodoListGlanceWidget.kt`](src/main/java/com/example/android/glancewidget/TodoListGlanceWidget.kt\#L117)
+
+```kotlin
+updateAppWidgetState(context, PreferencesGlanceStateDefinition, glanceId) {
+    it.toMutablePreferences()
+        .apply { this[booleanPreferencesKey(toggledStringId)] = checked }
+}
+TodoListGlanceWidget().update(context, glanceId)
+```
+
+or read the value  by the following code
+
+[`TodoListGlanceWidget.kt`](src/main/java/com/example/android/glancewidget/TodoListGlanceWidget.kt\#L83)
+
+```kotlin
+class TodoListGlanceWidget : GlanceAppWidget() {
+
+    @Composable
+    override fun Content() {
+        ...
+        val prefs = currentState<Preferences>()
+        val checked = prefs[booleanPreferencesKey(keyOfCheckedState)] ?: false
+        ...
+    }
+}
+```
+
 # Support
 
 - Stack Overflow: http://stackoverflow.com/questions/tagged/glance+glance-appwidget
