@@ -103,7 +103,7 @@ class TodoListGlanceWidget : GlanceAppWidget() {
                         checked = checked,
                         onCheckedChange = actionRunCallback<CheckboxClickAction>(
                             actionParametersOf(
-                                toggledKey to idString,
+                                toggledStringIdKey to idString,
                             )
                         ),
                         modifier = GlanceModifier.padding(12.dp)
@@ -114,24 +114,6 @@ class TodoListGlanceWidget : GlanceAppWidget() {
     }
 }
 
-private val toggledKey = ActionParameters.Key<String>("ToggledKey")
-
-class CheckboxClickAction : ActionCallback {
-    override suspend fun onRun(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
-        val toggledStringId = requireNotNull(parameters[toggledKey]) {
-            "Add $toggledKey parameter in the ActionParameters."
-        }
-
-        val checked = requireNotNull(parameters[ToggleableStateKey]) {
-            "This action should only be called in response to toggleable events"
-        }
-        updateAppWidgetState(context, PreferencesGlanceStateDefinition, glanceId) {
-            it.toMutablePreferences()
-                .apply { this[booleanPreferencesKey(toggledStringId)] = checked }
-        }
-        TodoListGlanceWidget().update(context, glanceId)
-    }
-}
 
 @Composable
 private fun CountChecked() {
@@ -144,6 +126,27 @@ private fun CountChecked() {
         text = "$checkedCount checkboxes checked",
         modifier = GlanceModifier.padding(start = 8.dp)
     )
+}
+
+private val toggledStringIdKey = ActionParameters.Key<String>("ToggledStringIdKey")
+
+class CheckboxClickAction : ActionCallback {
+    override suspend fun onRun(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
+        val toggledStringId = requireNotNull(parameters[toggledStringIdKey]) {
+            "Add $toggledStringIdKey parameter in the ActionParameters."
+        }
+
+        // The checked state of the clicked checkbox can be added implicitly to the parameters and
+        // can be retrieved by using the ToggleableStateKey
+        val checked = requireNotNull(parameters[ToggleableStateKey]) {
+            "This action should only be called in response to toggleable events"
+        }
+        updateAppWidgetState(context, PreferencesGlanceStateDefinition, glanceId) {
+            it.toMutablePreferences()
+                .apply { this[booleanPreferencesKey(toggledStringId)] = checked }
+        }
+        TodoListGlanceWidget().update(context, glanceId)
+    }
 }
 
 class TodoListGlanceWidgetReceiver : GlanceAppWidgetReceiver() {
