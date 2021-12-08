@@ -25,8 +25,6 @@ import android.os.Bundle
 import android.os.ParcelFileDescriptor
 import android.util.Log
 import android.util.TypedValue.COMPLEX_UNIT_SP
-import android.view.DragEvent
-import android.view.DragEvent.*
 import android.view.View
 import android.view.View.DRAG_FLAG_GLOBAL
 import android.view.View.DRAG_FLAG_GLOBAL_URI_READ
@@ -36,6 +34,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.util.component1
+import androidx.core.util.component2
+import androidx.core.view.DragStartHelper
+import androidx.draganddrop.DropHelper
 import dev.hadrosaur.draganddropsample.databinding.ActivityMainBinding
 import java.io.*
 
@@ -44,7 +46,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     companion object {
-        val LOG_TAG = "DragDropSample"
+        private const val LOG_TAG = "DragDropSample"
+        private const val MAX_LENGTH = 200
         fun logD(message: String) {
             Log.d(LOG_TAG, message)
         }
@@ -68,25 +71,25 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        binding.textDragItem.setOnLongClickListener {
-            val textView = it as TextView
-            val dragContent = textView.text
+        // Use the DragStartHelper class to easily support initiating drag and drop in response to
+        // both long press and mouse drag events. Note the call to attach() at the end. Without it,
+        // the listener would never actually be attached to the view. Also note that attach() replaces
+        // any OnTouchListener or OnLongClickListener already attached to the view.
+        DragStartHelper(binding.textDragItem) { view, _ ->
+            val text = (view as TextView).text
 
-            //Set the drag content and type
-            val item = ClipData.Item(dragContent)
-            val dragData = ClipData(dragContent, arrayOf(MIMETYPE_TEXT_PLAIN), item)
+            // Create the ClipData to be shared
+            val dragClipData = ClipData.newPlainText(/*label*/"Text", text)
 
-            //Set the visual look of the dragged object
-            //Can be extended and customized. We use the default here.
-            val dragShadow = View.DragShadowBuilder(textView)
+            // Use the default drag shadow
+            val dragShadowBuilder = View.DragShadowBuilder(view)
 
-            // Starts the drag, note: global flag allows for cross-application drag
-            textView.startDragAndDrop(dragData, dragShadow, null, DRAG_FLAG_GLOBAL)
-        }
+            // Initiate the drag. Note the DRAG_FLAG_GLOBAL, which allows for drag events to be listened
+            // to by apps other than the source app.
+            view.startDragAndDrop(dragClipData, dragShadowBuilder, null, DRAG_FLAG_GLOBAL)
+        }.attach()
 
-        binding.imageDragItem.setOnLongClickListener {
-            val textView = it as ImageView
-
+        DragStartHelper(binding.imageDragItem) { view, _ ->
             val imageFile = File(File(filesDir, "images"), "earth.png")
 
             if (!imageFile.exists()) {
@@ -94,7 +97,7 @@ class MainActivity : AppCompatActivity() {
                 File(filesDir, "images").mkdirs()
                 // Write the file to local storage
                 ByteArrayOutputStream().use { bos ->
-                    textView.drawable.toBitmap()
+                    (view as ImageView).drawable.toBitmap()
                         .compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos)
                     FileOutputStream(imageFile).use { fos ->
                         fos.write(bos.toByteArray())
@@ -103,192 +106,132 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            val dragContent =
+            val imageUri =
                 FileProvider.getUriForFile(
                     this,
                     "dev.hadrosaur.draganddropsample.images",
                     imageFile
                 )
 
-            //Set the drag content and type
-            val item = ClipData.Item(dragContent)
-            val dragData = ClipData("Image", arrayOf("image/png"), item)
+            // Sets the appropriate MIME types automatically
+            val dragClipData = ClipData.newUri(contentResolver, "Image", imageUri)
 
-            //Set the visual look of the dragged object
-            //Can be extended and customized. We use the default here.
-            val dragShadow = View.DragShadowBuilder(textView)
+            // Set the visual look of the dragged object
+            // Can be extended and customized. We use the default here.
+            val dragShadow = View.DragShadowBuilder(view)
 
             // Starts the drag, note: global flag allows for cross-application drag
-            textView.startDragAndDrop(
-                dragData,
+            view.startDragAndDrop(
+                dragClipData,
                 dragShadow,
                 null,
+                // Since this is a "content:" URI and not just plain text, we can use the
+                // DRAG_FLAG_GLOBAL_URI_READ to allow other apps to read from our content provider.
+                // Without it, other apps won't receive the drag events
                 DRAG_FLAG_GLOBAL.or(DRAG_FLAG_GLOBAL_URI_READ)
             )
-        }
+        }.attach()
 
-        binding.textDropTarget.setOnDragListener(DropTargetListener())
+        DropHelper.configureView(
+            this,
+            binding.textDropTarget,
+            arrayOf(MIMETYPE_TEXT_PLAIN, "image/png", "image/jpeg", "image/jpg"),
+            DropHelper.Options.Builder()
+                .setHighlightColor(getColor(R.color.purple_300))
+                // Match the radius of the view's background drawable
+                .setHighlightCornerRadiusPx(resources.getDimensionPixelSize(R.dimen.drop_target_corner_radius))
+                .build()
+        ) { _, payload ->
+            resetDropTarget()
+
+            // For the purposes of this demo, only handle the first ClipData.Item
+            val item = payload.clip.getItemAt(0)
+            val (_, remaining) = payload.partition { it == item }
+
+            when {
+                payload.clip.description.hasMimeType(MIMETYPE_TEXT_PLAIN) -> handlePlainTextDrop(
+                    item
+                )
+                payload.clip.description.hasMimeType("image/png") || payload.clip.description.hasMimeType("image/jpeg") -> handleImageDrop(
+                    item
+                )
+            }
+
+            // Allow the system to handle any remaining ClipData.Item objects if applicable
+            remaining
+        }
 
         binding.buttonClear.setOnClickListener {
             resetDropTarget()
         }
     }
 
-    inner class DropTargetListener : View.OnDragListener {
+    private fun handlePlainTextDrop(item: ClipData.Item) {
+        // The text is contained in the ClipData.Item
+        if (item.text != null) {
+            binding.textDropTarget.setTextSize(COMPLEX_UNIT_SP, 22f)
+            binding.textDropTarget.text = getString(
+                R.string.drop_text,
+                item.text.substring(0, item.text.length.coerceAtMost(MAX_LENGTH))
+            )
+        } else {
+            // The text is in a file pointed to by the ClipData.Item
+            val parcelFileDescriptor: ParcelFileDescriptor? = try {
+                contentResolver.openFileDescriptor(item.uri, "r")
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+                logE("FileNotFound")
+                return
+            }
 
-        override fun onDrag(view: View, event: DragEvent): Boolean {
-            return when (event.action) {
-                ACTION_DRAG_STARTED -> {
-                    event.clipDescription?.let { clip ->
-                        if (clip.hasMimeType(MIMETYPE_TEXT_PLAIN)
-                            || clip.hasMimeType("image/jpeg")
-                            || clip.hasMimeType("image/png")
-                        ) {
-                            // Highlight background colour so user knows this is a target
-                            binding.textDropTarget.background =
-                                ContextCompat.getDrawable(
-                                    this@MainActivity,
-                                    R.drawable.bg_drop_highlight
-                                )
-                            return true
-                        }
-                        for (i in 0 until clip.mimeTypeCount) {
-                            logD("Mime type not supported: ${clip.getMimeType(i)}")
-                        }
-                    } ?: run {
-                        logE("Clip does not contain a description")
+            if (parcelFileDescriptor == null) {
+                logE("Could not load file")
+                binding.textDropTarget.text =
+                    resources.getString(R.string.drop_error, item.uri.toString())
+            } else {
+                val fileDescriptor = parcelFileDescriptor.fileDescriptor
+                val bytes = ByteArray(MAX_LENGTH)
+
+                try {
+                    FileInputStream(fileDescriptor).use {
+                        it.read(bytes, 0, MAX_LENGTH)
                     }
-                    false
+                } catch (e: java.lang.Exception) {
+                    logE("Unable to read file: ${e.message}")
                 }
-                ACTION_DRAG_ENTERED -> {
-                    // More intense background colour when item is over top of target
-                    binding.textDropTarget.background =
-                        ContextCompat.getDrawable(this@MainActivity, R.drawable.bg_drop_enter)
-                    true
-                }
-                ACTION_DRAG_LOCATION -> {
-                    true
-                }
-                ACTION_DRAG_EXITED -> {
-                    // Less intense background colour when item not over target
-                    binding.textDropTarget.background =
-                        ContextCompat.getDrawable(this@MainActivity, R.drawable.bg_drop_highlight)
-                    true
-                }
-                ACTION_DRAG_ENDED -> {
-                    // Back to default colour when drag is not in process
-                    binding.textDropTarget.background =
-                        ContextCompat.getDrawable(this@MainActivity, R.drawable.bg_target_normal)
-                    true
-                }
-                ACTION_DROP -> {
-                    resetDropTarget()
 
-                    requestDragAndDropPermissions(event) //Allow items from other applications
-                    val item = event.clipData.getItemAt(0)
-
-                    when {
-                        event.clipDescription.hasMimeType(MIMETYPE_TEXT_PLAIN) -> {
-                            val MAX_LENGTH = 200
-                            if (item.text != null) {
-                                // Plain text item, show it on screen
-                                binding.textDropTarget.setTextSize(COMPLEX_UNIT_SP, 22f)
-                                binding.textDropTarget.text = getString(
-                                    R.string.drop_text,
-                                    item.text.substring(
-                                        0,
-                                        item.text.length.coerceAtMost(MAX_LENGTH)
-                                    )
-                                )
-                            } else {
-                                // This is a plain text file. Read some characters and show them
-                                // Use ContentResolver to resolve the URI
-                                val contentUri = item.uri
-                                val parcelFileDescriptor: ParcelFileDescriptor?
-                                try {
-                                    parcelFileDescriptor =
-                                        contentResolver.openFileDescriptor(contentUri, "r")
-                                } catch (e: FileNotFoundException) {
-                                    e.printStackTrace()
-                                    logD("File not found.")
-                                    return false
-                                }
-
-                                if (parcelFileDescriptor == null) {
-                                    logD("Error: could not load file: $contentUri")
-                                    binding.textDropTarget.text =
-                                        resources.getString(
-                                            R.string.drop_error,
-                                            contentUri.toString()
-                                        )
-                                } else {
-                                    // Got the file descriptor, now read the file
-                                    val fileDescriptor = parcelFileDescriptor.fileDescriptor
-                                    val bytes = ByteArray(MAX_LENGTH)
-
-                                    // Read the first MAX_LENGTH bytes of the file
-                                    try {
-                                        FileInputStream(fileDescriptor).use {
-                                            it.read(bytes, 0, MAX_LENGTH)
-                                        }
-                                    } catch (e: Exception) {
-                                        logD("Unable to read file: ${e.message}")
-                                    }
-
-                                    // Show CHARS_TO_READ chars in the UI
-                                    val contents = String(bytes)
-
-                                    // Show the read chars in drop target
-                                    binding.textDropTarget.setTextSize(COMPLEX_UNIT_SP, 15f)
-                                    binding.textDropTarget.text = getString(
-                                        R.string.drop_text,
-                                        contents.substring(
-                                            0,
-                                            contents.length.coerceAtMost(MAX_LENGTH)
-                                        )
-                                    )
-                                }
-                            }
-                        }
-                        event.clipDescription.hasMimeType("image/png") ||
-                                event.clipDescription.hasMimeType("image/jpeg") -> {
-                            item.uri?.let { uri ->
-                                // PNG image received; display it
-                                val size = 72.px
-                                decodeSampledBitmapFromUri(
-                                    contentResolver,
-                                    uri,
-                                    size,
-                                    size
-                                )?.let { bitmap ->
-                                    binding.textDropTarget.text =
-                                        getString(R.string.drop_image, bitmap.width, bitmap.height)
-                                    val drawable = BitmapDrawable(resources, bitmap).apply {
-                                        val ratio =
-                                            intrinsicHeight.toFloat() / intrinsicWidth.toFloat()
-                                        setBounds(0, 0, size, (size * ratio).toInt())
-                                    }
-                                    binding.textDropTarget.setCompoundDrawables(
-                                        drawable,
-                                        null,
-                                        null,
-                                        null
-                                    )
-                                }
-                            } ?: run {
-                                logE("Clip data is missing URI")
-                            }
-                        }
-                    }
-                    true
-                }
-                else -> {
-                    logE("Unknown dragListener action.")
-                    false
-                }
+                binding.textDropTarget.setTextSize(COMPLEX_UNIT_SP, 15f)
+                binding.textDropTarget.text = getString(R.string.drop_text, String(bytes))
             }
         }
+    }
 
+    private fun handleImageDrop(item: ClipData.Item) {
+        item.uri?.let { uri ->
+            val size = 72.px
+            decodeSampledBitmapFromUri(
+                contentResolver,
+                uri,
+                size,
+                size
+            )?.let { bitmap ->
+                binding.textDropTarget.text =
+                    getString(R.string.drop_image, bitmap.width, bitmap.height)
+                val drawable = BitmapDrawable(resources, bitmap).apply {
+                    val ratio =
+                        intrinsicHeight.toFloat() / intrinsicWidth.toFloat()
+                    setBounds(0, 0, size, (size * ratio).toInt())
+                }
+                binding.textDropTarget.setCompoundDrawables(
+                    drawable,
+                    null,
+                    null,
+                    null
+                )
+            }
+        } ?: run {
+            logE("Clip data is missing URI")
+        }
     }
 
     private fun resetDropTarget() {
