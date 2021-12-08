@@ -9,7 +9,7 @@ Allows for plain-text items and files from the Chrome OS file manager to be
 dragged into the app as well as PNGs and JPEGs. Has a plain-text item and PNG that can be dragged
 out of the app.
 
-Utilizes [`androix.core`](https://developer.android.com/jetpack/androidx/releases/core)'s [`DragStartHelper`](https://developer.android.com/reference/kotlin/androidx/core/view/DragStartHelper) 
+Utilizes [`androidx.core`](https://developer.android.com/jetpack/androidx/releases/core)'s [`DragStartHelper`](https://developer.android.com/reference/kotlin/androidx/core/view/DragStartHelper) 
 and [`androidx.draganddrop`](https://developer.android.com/jetpack/androidx/releases/draganddrop)'s `DropHelper` to simplify
 the process of implementing both dragging and dropping functionality.
 
