@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.glance.Button
 import androidx.glance.GlanceModifier
-import androidx.glance.action.actionLaunchActivity
+import androidx.glance.action.actionStartActivity
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.appWidgetBackground
@@ -67,12 +67,12 @@ class FirstGlanceWidget : GlanceAppWidget() {
                 Button(
                     text = "Button 1",
                     modifier = GlanceModifier.height(48.dp),
-                    onClick = actionLaunchActivity<MainActivity>()
+                    onClick = actionStartActivity<MainActivity>()
                 )
                 Button(
                     text = "Button 2",
                     modifier = GlanceModifier.height(48.dp),
-                    onClick = actionLaunchActivity<MainActivity>()
+                    onClick = actionStartActivity<MainActivity>()
                 )
             }
         }
