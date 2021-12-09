@@ -32,6 +32,7 @@ import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
+import androidx.glance.layout.height
 import androidx.glance.layout.padding
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
@@ -47,14 +48,16 @@ class FirstGlanceWidget : GlanceAppWidget() {
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(day = Color.White, night = Color.LightGray)
+                .background(day = Color.White, night = Color.Black)
                 .appWidgetBackground()
                 .cornerRadius(16.dp)
-                .padding(8.dp)
+                .padding(16.dp)
         ) {
             Text(
                 text = "First Glance widget",
-                modifier = GlanceModifier.fillMaxWidth(),
+                modifier = GlanceModifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
                 style = TextStyle(fontWeight = FontWeight.Bold),
             )
             Row(
@@ -62,11 +65,13 @@ class FirstGlanceWidget : GlanceAppWidget() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Button(
-                    text = "button1",
+                    text = "Button 1",
+                    modifier = GlanceModifier.height(48.dp),
                     onClick = actionLaunchActivity<MainActivity>()
                 )
                 Button(
-                    text = "button2",
+                    text = "Button 2",
+                    modifier = GlanceModifier.height(48.dp),
                     onClick = actionLaunchActivity<MainActivity>()
                 )
             }

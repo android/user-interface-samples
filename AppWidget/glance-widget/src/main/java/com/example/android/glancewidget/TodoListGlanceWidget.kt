@@ -79,10 +79,10 @@ class TodoListGlanceWidget : GlanceAppWidget() {
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(day = Color.White, night = Color.DarkGray)
+                .background(day = Color.White, night = Color.Black)
                 .appWidgetBackground()
                 .cornerRadius(16.dp)
-                .padding(8.dp)
+                .padding(16.dp)
         ) {
             val context = LocalContext.current
             val prefs = currentState<Preferences>()

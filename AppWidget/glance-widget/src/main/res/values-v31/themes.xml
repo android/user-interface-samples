@@ -14,18 +14,11 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<!--
-Metadata for the first Glance widget.
-At the moment, specifying a layout from the android:initialLayout is needed.
--->
-<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:description="@string/glance_todo_list"
-    android:minWidth="180dp"
-    android:minHeight="180dp"
-    android:initialLayout="@layout/widget_loading"
-    android:previewImage="@drawable/todo_list_glance_widget_preview"
-    android:previewLayout="@layout/widget_todo_list_glance_preview"
-    android:resizeMode="horizontal|vertical"
-    android:targetCellWidth="3"
-    android:targetCellHeight="3"
-    android:widgetCategory="home_screen" />
+<resources>
+
+    <!-- This theme below is only used for the preview layouts -->
+    <style name="Theme.AppWidget.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault.DayNight">
+        <item name="appWidgetRadius">@android:dimen/system_app_widget_background_radius</item>
+        <item name="appWidgetInnerRadius">@android:dimen/system_app_widget_inner_radius</item>
+    </style>
+</resources>
