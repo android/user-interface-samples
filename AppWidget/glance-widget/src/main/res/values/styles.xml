@@ -19,5 +19,6 @@
     <style name="Widget.AppWidget.AppWidget.Container" parent="android:Widget">
         <item name="android:id">@android:id/background</item>
         <item name="android:background">?android:attr/colorBackground</item>
+        <item name="android:padding">@dimen/appWidgetPadding</item>
     </style>
 </resources>

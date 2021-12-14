@@ -17,8 +17,12 @@
 package com.example.android.glancewidget
 
 import android.content.Context
+import android.util.TypedValue
+import androidx.annotation.AttrRes
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.Preferences
@@ -79,9 +83,11 @@ class TodoListGlanceWidget : GlanceAppWidget() {
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(day = Color.White, night = Color.Black)
+                .background(
+                    day = colorAttrResource(R.color.m3_sys_color_dynamic_light_background),
+                    night = colorAttrResource(R.color.m3_sys_color_dynamic_dark_background))
                 .appWidgetBackground()
-                .cornerRadius(16.dp)
+                .appWidgetBackgroundRadius()
                 .padding(16.dp)
         ) {
             val context = LocalContext.current
@@ -113,7 +119,6 @@ class TodoListGlanceWidget : GlanceAppWidget() {
         }
     }
 }
-
 
 @Composable
 private fun CountChecked() {
