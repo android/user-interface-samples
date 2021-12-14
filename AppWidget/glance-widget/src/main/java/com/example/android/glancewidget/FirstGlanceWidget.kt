@@ -50,7 +50,7 @@ class FirstGlanceWidget : GlanceAppWidget() {
                 .fillMaxSize()
                 .background(day = Color.White, night = Color.Black)
                 .appWidgetBackground()
-                .cornerRadius(16.dp)
+                .appWidgetBackgroundRadius()
                 .padding(16.dp)
         ) {
             Text(

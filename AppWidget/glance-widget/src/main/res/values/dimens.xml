@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright (C) 2021 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,9 +15,11 @@
   ~ limitations under the License.
   -->
 <resources>
-    <!-- This theme below are only used for the preview layouts -->
-    <style name="Theme.AppWidget.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault.DayNight">
-        <item name="appWidgetRadius">@android:dimen/system_app_widget_background_radius</item>
-        <item name="appWidgetInnerRadius">@android:dimen/system_app_widget_inner_radius</item>
-    </style>
+    <!--
+    Dimension values for previews. We define these as dimen values because they don't have to be
+    overridden unlike defining these as attributes.
+    -->
+    <dimen name="appWidgetRadius">16dp</dimen>
+    <dimen name="appWidgetInnerRadius">8dp</dimen>
+    <dimen name="appWidgetPadding">16dp</dimen>
 </resources>
