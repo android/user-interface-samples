@@ -15,6 +15,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://androidx.dev/snapshots/latest/artifacts/repository' }
     }
 }
 rootProject.name = "DragAndDropSample"
