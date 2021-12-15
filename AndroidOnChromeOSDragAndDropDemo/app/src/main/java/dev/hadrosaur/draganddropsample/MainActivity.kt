@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity() {
         DropHelper.configureView(
             this,
             binding.textDropTarget,
-            arrayOf(MIMETYPE_TEXT_PLAIN, "image/png", "image/jpeg", "image/jpg"),
+            arrayOf(MIMETYPE_TEXT_PLAIN, "image/*"),
             DropHelper.Options.Builder()
                 .setHighlightColor(getColor(R.color.purple_300))
                 // Match the radius of the view's background drawable
@@ -149,12 +149,10 @@ class MainActivity : AppCompatActivity() {
             val (_, remaining) = payload.partition { it == item }
 
             when {
-                payload.clip.description.hasMimeType(MIMETYPE_TEXT_PLAIN) -> handlePlainTextDrop(
-                    item
-                )
-                payload.clip.description.hasMimeType("image/png") || payload.clip.description.hasMimeType("image/jpeg") -> handleImageDrop(
-                    item
-                )
+                payload.clip.description.hasMimeType(MIMETYPE_TEXT_PLAIN) ->
+                    handlePlainTextDrop(item)
+                else ->
+                    handleImageDrop(item)
             }
 
             // Allow the system to handle any remaining ClipData.Item objects if applicable
