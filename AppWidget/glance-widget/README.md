@@ -26,6 +26,16 @@ allprojects {
 }
 ```
 
+If you are using Kotlin Gradle DSL, add this repo to your root `build.gradle.kts`:
+```kotlin
+allprojects {
+    repositories {
+        // ...
+        maven { url = URI("https://androidx.dev/snapshots/latest/artifacts/repository") }
+    }
+}
+```
+
 Alternatively, if your project is using settings repositories configuration, add the following in your settings.gradle file:
 
 ```groovy
@@ -45,6 +55,14 @@ Then, add the glance and glance-appwidget dependencies in your module's build.gr
 dependencies {
    implementation "androidx.glance:glance-appwidget:1.0.0-SNAPSHOT"
 }
+```
+
+If you are using Kotlin Gradle DSL:
+```kotlin
+dependencies {
+   implementation("androidx.glance:glance-appwidget:1.0.0-SNAPSHOT")
+}
+
 ```
 
 # AppWidget sample for Glance
