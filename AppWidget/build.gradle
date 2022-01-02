@@ -19,6 +19,7 @@ buildscript {
     ext {
         kotlin_version = '1.5.31'
         compose_version = '1.0.5'
+        glance_version = '1.0.0-alpha01'
     }
     repositories {
         google()
