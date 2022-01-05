@@ -28,4 +28,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <!-- This theme below are only used for the preview layouts -->
+    <style name="Theme.AppWidget.AppWidgetContainer" parent="Theme.Material3.DynamicColors.Dark"/>
 </resources>

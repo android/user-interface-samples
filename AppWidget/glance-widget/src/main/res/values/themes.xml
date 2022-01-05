@@ -33,4 +33,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
+    <!-- The themes below are only used for the preview layouts -->
+    <style name="Theme.AppWidget.AppWidgetContainer" parent="Theme.Material3.DynamicColors.Light"/>
 </resources>

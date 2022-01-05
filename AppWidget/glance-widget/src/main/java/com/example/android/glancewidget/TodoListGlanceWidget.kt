@@ -17,14 +17,19 @@
 package com.example.android.glancewidget
 
 import android.content.Context
+import android.util.TypedValue
+import androidx.annotation.AttrRes
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.action.ActionParameters
 import androidx.glance.action.actionParametersOf
@@ -39,7 +44,7 @@ import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.state.updateAppWidgetState
-import androidx.glance.appwidget.background
+import androidx.glance.background
 import androidx.glance.currentState
 import androidx.glance.layout.Column
 import androidx.glance.layout.fillMaxSize
@@ -79,10 +84,10 @@ class TodoListGlanceWidget : GlanceAppWidget() {
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(day = Color.White, night = Color.DarkGray)
+                .background(ImageProvider(R.drawable.app_widget_background))
                 .appWidgetBackground()
-                .cornerRadius(16.dp)
-                .padding(8.dp)
+                .appWidgetBackgroundRadius()
+                .padding(16.dp)
         ) {
             val context = LocalContext.current
             val prefs = currentState<Preferences>()
@@ -113,7 +118,6 @@ class TodoListGlanceWidget : GlanceAppWidget() {
         }
     }
 }
-
 
 @Composable
 private fun CountChecked() {
