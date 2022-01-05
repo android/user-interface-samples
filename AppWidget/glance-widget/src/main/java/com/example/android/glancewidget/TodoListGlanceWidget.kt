@@ -29,6 +29,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.action.ActionParameters
 import androidx.glance.action.actionParametersOf
@@ -43,7 +44,7 @@ import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.state.updateAppWidgetState
-import androidx.glance.appwidget.background
+import androidx.glance.background
 import androidx.glance.currentState
 import androidx.glance.layout.Column
 import androidx.glance.layout.fillMaxSize
@@ -83,9 +84,7 @@ class TodoListGlanceWidget : GlanceAppWidget() {
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(
-                    day = colorAttrResource(R.color.m3_sys_color_dynamic_light_background),
-                    night = colorAttrResource(R.color.m3_sys_color_dynamic_dark_background))
+                .background(ImageProvider(R.drawable.app_widget_background))
                 .appWidgetBackground()
                 .appWidgetBackgroundRadius()
                 .padding(16.dp)

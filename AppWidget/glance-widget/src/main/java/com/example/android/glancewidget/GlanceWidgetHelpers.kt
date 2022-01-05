@@ -36,8 +36,3 @@ fun GlanceModifier.appWidgetBackgroundRadius(): GlanceModifier {
     }
 }
 
-@Composable
-fun colorAttrResource(@ColorRes id: Int): Color {
-    val context = LocalContext.current
-    return Color(ContextCompat.getColor(context, id))
-}
