@@ -66,7 +66,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.6.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
 
-    implementation "androidx.glance:glance-appwidget:1.0.0-SNAPSHOT"
+    implementation "androidx.glance:glance-appwidget:1.0.0-alpha01"
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
