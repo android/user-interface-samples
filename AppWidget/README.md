@@ -59,14 +59,14 @@ We recommend creating a custom theme and overriding it when running on devices w
 
 ```xml
 <style name="Theme.AppWidget.AppWidgetContainer"
-    parent="@android:style/Theme.DeviceDefault" />
+    parent="Theme.Material3.DynamicColors.Light" />
 ```
 
 [`values-v31/themes.xml`](app/src/main/res/values-v31/themes.xml\#L22)
 
 ```xml
 <style name="Theme.AppWidget.AppWidgetContainer"
-    parent="@android:style/Theme.DeviceDefault.DayNight" />
+    parent="Theme.Material3.DynamicColors.DayNight" />
 ```
 
 [`values-night-v31/themes.xml`](app/src/main/res/values-night-v31/themes.xml\#L20)
@@ -74,7 +74,7 @@ We recommend creating a custom theme and overriding it when running on devices w
 ```xml
 <!-- Having themes.xml for night-v31 because of the priority order of the resource qualifiers. -->
 <style name="Theme.AppWidget.AppWidgetContainer"
-    parent="@android:style/Theme.DeviceDefault.DayNight" />
+    parent="Theme.Material3.DynamicColors.DayNight" />
 ```
 
 [`layout/widget_grocery_list.xml`](app/src/main/res/layout/widget_grocery_list.xml\#L21)
@@ -110,7 +110,7 @@ To ensure widget compatibility with previous versions of Android, we recommend d
 [`values/themes.xml`](app/src/main/res/values/themes.xml\#L32)
 
 ```xml
-<style name="Theme.AppWidget.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
+<style name="Theme.AppWidget.AppWidgetContainerParent" parent="Theme.Material3.DynamicColors.Light">
     <!-- Radius of the outer bound of widgets to make the rounded corners -->
     <item name="appWidgetRadius">16dp</item>
     <!--
@@ -129,7 +129,7 @@ To ensure widget compatibility with previous versions of Android, we recommend d
 [`values-v31/themes.xml`](app/src/main/res/values-v31/themes.xml\#L22)
 
 ```xml
-<style name="Theme.AppWidget.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault.DayNight">
+<style name="Theme.AppWidget.AppWidgetContainerParent" parent="Theme.Material3.DynamicColors.DayNight">
     <item name="appWidgetRadius">@android:dimen/system_app_widget_background_radius</item>
     <item name="appWidgetInnerRadius">@android:dimen/system_app_widget_inner_radius</item>
 </style>
@@ -165,7 +165,7 @@ To ensure widget compatibility with previous versions of Android, we recommend d
 
     <corners android:radius="?attr/appWidgetRadius" />
     <solid android:color="?android:attr/colorBackground" />
-</shape>>
+</shape>
 ```
 
 [`layout/widget_checkbox_list.xml`](app/src/main/res/layout/widget_checkbox_list.xml\#L17)

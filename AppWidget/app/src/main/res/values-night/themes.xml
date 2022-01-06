@@ -29,5 +29,5 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.AppWidget.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault" />
+    <style name="Theme.AppWidget.AppWidgetContainerParent" parent="Theme.Material3.DynamicColors.Dark" />
 </resources>
