@@ -5,8 +5,7 @@ pluginManagement {
         mavenCentral()
     }
     plugins {
-        id 'com.android.application' version '7.1.0-beta04'
-        id 'com.android.library' version '7.1.0-beta04'
+        id 'com.android.application' version '7.0.4'
         id 'org.jetbrains.kotlin.android' version '1.5.31'
     }
 }
@@ -15,7 +14,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url 'https://androidx.dev/snapshots/latest/artifacts/repository' }
     }
 }
 rootProject.name = "DragAndDropSample"
