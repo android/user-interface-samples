@@ -20,6 +20,8 @@ import android.app.Application
 import android.app.UiModeManager
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
+import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -72,12 +74,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun updateNightMode(nightMode: Int) {
         val prefs = _prefs ?: return
         val uiModeManager =
-            getApplication<Application>().getSystemService(UiModeManager::class.java)
+            ContextCompat.getSystemService(getApplication(), UiModeManager::class.java)
         // Sets and persists the night mode setting for this app. This allows the system to know
         // if the app wants to be displayed in dark mode before it launches so that the splash
         // screen can be displayed accordingly.
         // You don't need to do this if your app doesn't provide in-app dark mode setting.
-        uiModeManager.setApplicationNightMode(nightMode)
+        if (Build.VERSION.SDK_INT >= 31) {
+            uiModeManager?.setApplicationNightMode(nightMode)
+        }
         prefs.edit { putInt(PREF_NIGHT_MODE, nightMode) }
         _nightMode.value = nightMode
     }

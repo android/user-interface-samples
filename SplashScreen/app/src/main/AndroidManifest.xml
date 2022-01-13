@@ -24,12 +24,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SplashScreen">
+        android:theme="@style/Theme.App">
 
         <activity
             android:name=".DefaultActivity"
             android:exported="true"
-            android:label="@string/default_splash_screen">
+            android:label="@string/default_splash_screen"
+            android:theme="@style/Theme.App.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -40,7 +41,7 @@
             android:name=".AnimatedActivity"
             android:exported="true"
             android:label="@string/animated_splash_screen"
-            android:theme="@style/Theme.SplashScreen.Animated">
+            android:theme="@style/Theme.App.SplashScreen.Animated">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -51,7 +52,7 @@
             android:name=".CustomActivity"
             android:exported="true"
             android:label="@string/custom_splash_screen"
-            android:theme="@style/Theme.SplashScreen.Animated">
+            android:theme="@style/Theme.App.SplashScreen.Animated">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

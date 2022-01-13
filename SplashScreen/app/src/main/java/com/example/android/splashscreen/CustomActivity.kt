@@ -20,10 +20,8 @@ import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnticipateInterpolator
-import android.window.SplashScreenView
 import androidx.core.animation.doOnEnd
-import java.time.Duration
-import java.time.Instant
+import androidx.core.splashscreen.SplashScreenViewProvider
 
 /**
  * "Custom Splash Screen". This is similar to [AnimatedActivity], but also has a custom animation
@@ -36,27 +34,29 @@ class CustomActivity : MainActivity() {
 
         // This callback is called when the app is ready to draw its content and replace the splash
         // screen. We can customize the exit animation of the splash screen here.
-        splashScreen.setOnExitAnimationListener { splashScreenView ->
+        installedSplashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
 
             // The animated vector drawable is already animating at this point. Depending on the
             // duration of the app launch, the animation might not have finished yet.
             // Check the extension property to see how to calculate the remaining duration of the
             // icon animation.
-            val remainingDuration = splashScreenView.iconAnimationRemainingDurationMillis
+            val remainingDuration = splashScreenViewProvider.iconAnimationRemainingDurationMillis
 
-            // The callback gives us a `SplashScreenView` as its parameter. This is the view for the
-            // entire splash screen.
+            // The callback gives us a `SplashScreenViewProvider` as its parameter. It holds the
+            // view for the entire splash screen.
+            val view = splashScreenViewProvider.view
             val slideUp = ObjectAnimator.ofFloat(
-                splashScreenView,
+                view,
                 View.TRANSLATION_Y,
                 0f,
-                -splashScreenView.height.toFloat()
+                -view.height.toFloat()
             )
             slideUp.interpolator = AnticipateInterpolator()
             slideUp.duration = 200L
 
-            // Make sure to call SplashScreenView.remove at the end of your custom animation.
-            slideUp.doOnEnd { splashScreenView.remove() }
+            // Make sure to call SplashScreenViewProvider.remove at the end of your custom
+            // animation.
+            slideUp.doOnEnd { splashScreenViewProvider.remove() }
 
             // For the purpose of the demo, we wait for the icon animation to finish. Your app
             // should prioritize showing app content as soon as possible.
@@ -68,18 +68,11 @@ class CustomActivity : MainActivity() {
 
 /**
  * Calculates the remaining duration of the icon animation based on the total duration
- * ([SplashScreenView.getIconAnimationDuration]) and the start time
- * ([SplashScreenView.getIconAnimationStart])
+ * ([SplashScreenViewProvider.iconAnimationDurationMillis]) and the start time
+ * ([SplashScreenViewProvider.iconAnimationStartMillis])
  */
-private val SplashScreenView.iconAnimationRemainingDurationMillis: Long
+private val SplashScreenViewProvider.iconAnimationRemainingDurationMillis: Long
     get() {
-        val duration = iconAnimationDuration
-        val start = iconAnimationStart
-        return if (duration != null && start != null) {
-            (duration - Duration.between(start, Instant.now()))
-                .toMillis()
-                .coerceAtLeast(0L)
-        } else {
-            0L
-        }
+        return iconAnimationDurationMillis - (System.currentTimeMillis() - iconAnimationStartMillis)
+            .coerceAtLeast(0L)
     }

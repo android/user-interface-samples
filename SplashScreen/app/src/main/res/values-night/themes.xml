@@ -14,8 +14,8 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
 -->
-<resources>
-    <style name="Base.Theme.SplashScreen" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="android:windowLightStatusBar">false</item>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.App" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
     </style>
 </resources>
