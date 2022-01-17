@@ -14,17 +14,17 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
 -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Base.Theme.SplashScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowLightStatusBar">true</item>
+    <style name="Base.Theme.App" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
 
     <!--
         The default theme for activities. This does not have any configuration about the splash
         screen.
     -->
-    <style name="Theme.SplashScreen" parent="Base.Theme.SplashScreen">
+    <style name="Theme.App" parent="Base.Theme.App">
         <item name="colorPrimary">@color/lime_500</item>
         <item name="colorPrimaryVariant">@color/lime_700</item>
         <item name="colorOnPrimary">@android:color/black</item>
@@ -36,17 +36,35 @@
     </style>
 
     <!--
-        The activity theme with animated icon in the splash screen.
+        The splash screen theme without any customization.
+        On API level 31 and above, this shows the app icon on the splash screen.
+        On API level 30 and below, this shows a default icon from the library.
+        See "Theme.App.SplashScreen.Animated" below for the backward-compatible splash screen.
     -->
-    <style name="Theme.SplashScreen.Animated">
-        <!-- The animated icon to be displayed at the center of the splash screen -->
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_hourglass_animated</item>
-        <!-- The background color for the splash screen -->
-        <item name="android:windowSplashScreenBackground">@color/lime_500</item>
-        <!-- The duration, in milliseconds, of the icon animation of the splash screen -->
-        <item name="android:windowSplashScreenAnimationDuration">1000</item>
-        <!-- The branding image displayed at the bottom of the splash screen -->
-        <item name="android:windowSplashScreenBrandingImage">@drawable/branding_image</item>
+    <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
+        <!-- The 'core-splashscreen' switches the theme back to this after splash screen. -->
+        <item name="postSplashScreenTheme">@style/Theme.App</item>
+    </style>
+
+    <!--
+        The splash screen theme with animated icon in the splash screen.
+        "Theme.SplashScreen.IconBackground" is an alternative theme that shows the background color
+        behind the icon.
+    -->
+    <style name="Theme.App.SplashScreen.Animated" parent="Theme.SplashScreen.IconBackground">
+        <!--
+          The animated icon to be displayed at the center of the splash screen.
+          Note that the icon is *not* animated on API level 30 and below.
+        -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_hourglass_animated</item>
+        <!-- The background color behind the icon. -->
+        <item name="windowSplashScreenIconBackgroundColor">@color/lime_700</item>
+        <!-- The background color for the splash screen. -->
+        <item name="windowSplashScreenBackground">@color/lime_500</item>
+        <!-- The duration, in milliseconds, of the icon animation of the splash screen. -->
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+        <!-- The 'core-splashscreen' switches the theme back to this after splash screen. -->
+        <item name="postSplashScreenTheme">@style/Theme.App</item>
     </style>
 
 </resources>

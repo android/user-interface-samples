@@ -17,8 +17,8 @@
 package com.example.android.splashscreen
 
 /**
- * "Animated Splash Screen". The splash screen shows an animated icon and a branding image.
+ * "Animated Splash Screen". The splash screen shows an animated icon.
  *
- * @see R.style.Theme_SplashScreen_Animated
+ * @see R.style.Theme_App_SplashScreen_Animated
  */
 class AnimatedActivity : MainActivity()

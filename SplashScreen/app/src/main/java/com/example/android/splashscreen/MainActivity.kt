@@ -1,12 +1,14 @@
 package com.example.android.splashscreen
 
 import android.app.UiModeManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Process
 import android.view.View
-import android.view.ViewTreeObserver
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -15,19 +17,26 @@ import com.example.android.splashscreen.databinding.MainActivityBinding
 
 /**
  * Shows the app content that is commonly used in all of [DefaultActivity], [AnimatedActivity], and
- * [CustomActivity]. This also handles the custom dark mode.
+ * [CustomActivity]. This also handles the custom dark mode on API level 31 and above.
  */
 abstract class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    protected lateinit var splashScreen: SplashScreen
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Set up 'core-splashscreen' to handle the splash screen in a backward compatible manner.
+        splashScreen = installSplashScreen()
+
+        // The splash screen remains on the screen as long as this condition is true.
+        splashScreen.setKeepOnScreenCondition { !viewModel.isReady }
+
         super.onCreate(savedInstanceState)
+
         val binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        // Suppress drawing the app content until the initial data is ready.
-        suppressDraw()
 
         // Configure edge-to-edge display.
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -38,18 +47,22 @@ abstract class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Show the Theme setting.
-        var previousMode: Int? = null
-        viewModel.nightMode.observe(this) { nightMode ->
-            val radioButtonId = radioButtonId(nightMode)
-            if (binding.theme.checkedRadioButtonId != radioButtonId) {
-                binding.theme.check(radioButtonId)
+        // Show the in-app dark theme settings. This is available on API level 31 and above.
+        if (Build.VERSION.SDK_INT >= 31) {
+            var previousMode: Int? = null
+            viewModel.nightMode.observe(this) { nightMode ->
+                val radioButtonId = radioButtonId(nightMode)
+                if (binding.theme.checkedRadioButtonId != radioButtonId) {
+                    binding.theme.check(radioButtonId)
+                }
+                if (previousMode == null) previousMode = nightMode
+                if (previousMode != nightMode) recreate()
             }
-            if (previousMode == null) previousMode = nightMode
-            if (previousMode != nightMode) recreate()
-        }
-        binding.theme.setOnCheckedChangeListener { _, checkedId ->
-            viewModel.updateNightMode(nightMode(checkedId))
+            binding.theme.setOnCheckedChangeListener { _, checkedId ->
+                viewModel.updateNightMode(nightMode(checkedId))
+            }
+        } else {
+            binding.content.visibility = View.INVISIBLE
         }
     }
 
@@ -73,24 +86,5 @@ abstract class MainActivity : AppCompatActivity() {
         R.id.theme_light -> UiModeManager.MODE_NIGHT_NO
         R.id.theme_dark -> UiModeManager.MODE_NIGHT_YES
         else -> throw RuntimeException("Unknown view ID: $radioButtonId")
-    }
-
-    private fun suppressDraw() {
-        val content: View = findViewById(android.R.id.content)
-        // The splash screen is dismissed as soon as the app draws its first frame. If you want to
-        // load some small data asynchronously during the splash screen, you can use an
-        // OnPreDrawListener to suppress drawing the app content before the data is ready.
-        content.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    return if (viewModel.isReady) {
-                        content.viewTreeObserver.removeOnPreDrawListener(this)
-                        true
-                    } else {
-                        false
-                    }
-                }
-            }
-        )
     }
 }
