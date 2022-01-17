@@ -34,7 +34,7 @@ class CustomActivity : MainActivity() {
 
         // This callback is called when the app is ready to draw its content and replace the splash
         // screen. We can customize the exit animation of the splash screen here.
-        installedSplashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
+        splashScreen.setOnExitAnimationListener { splashScreenViewProvider ->
 
             // The animated vector drawable is already animating at this point. Depending on the
             // duration of the app launch, the animation might not have finished yet.
@@ -44,12 +44,12 @@ class CustomActivity : MainActivity() {
 
             // The callback gives us a `SplashScreenViewProvider` as its parameter. It holds the
             // view for the entire splash screen.
-            val view = splashScreenViewProvider.view
+            val splashScreenView = splashScreenViewProvider.view
             val slideUp = ObjectAnimator.ofFloat(
-                view,
+                splashScreenView,
                 View.TRANSLATION_Y,
                 0f,
-                -view.height.toFloat()
+                -splashScreenView.height.toFloat()
             )
             slideUp.interpolator = AnticipateInterpolator()
             slideUp.duration = 200L

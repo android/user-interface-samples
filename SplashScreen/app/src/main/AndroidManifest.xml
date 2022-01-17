@@ -26,6 +26,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App">
 
+        <!--
+          The launcher icon without any splash screen settings.
+          On API level 31 and above, this still shows the default splash screen.
+          Note that the activity should use a splash screen theme.
+        -->
         <activity
             android:name=".DefaultActivity"
             android:exported="true"
@@ -37,6 +42,9 @@
             </intent-filter>
         </activity>
 
+        <!--
+          The launcher icon that shows the splash screen with an animated icon.
+        -->
         <activity
             android:name=".AnimatedActivity"
             android:exported="true"
@@ -48,6 +56,9 @@
             </intent-filter>
         </activity>
 
+        <!--
+          The launcher icon that shows the splash screen with further customization.
+        -->
         <activity
             android:name=".CustomActivity"
             android:exported="true"

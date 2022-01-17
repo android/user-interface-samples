@@ -48,16 +48,20 @@
 
     <!--
         The splash screen theme with animated icon in the splash screen.
+        "Theme.SplashScreen.IconBackground" is an alternative theme that shows the background color
+        behind the icon.
     -->
-    <style name="Theme.App.SplashScreen.Animated" parent="Theme.SplashScreen">
+    <style name="Theme.App.SplashScreen.Animated" parent="Theme.SplashScreen.IconBackground">
         <!--
           The animated icon to be displayed at the center of the splash screen.
           Note that the icon is *not* animated on API level 30 and below.
         -->
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_hourglass_animated</item>
-        <!-- The background color for the splash screen -->
+        <!-- The background color behind the icon. -->
+        <item name="windowSplashScreenIconBackgroundColor">@color/lime_700</item>
+        <!-- The background color for the splash screen. -->
         <item name="windowSplashScreenBackground">@color/lime_500</item>
-        <!-- The duration, in milliseconds, of the icon animation of the splash screen -->
+        <!-- The duration, in milliseconds, of the icon animation of the splash screen. -->
         <item name="windowSplashScreenAnimationDuration">1000</item>
         <!-- The 'core-splashscreen' switches the theme back to this after splash screen. -->
         <item name="postSplashScreenTheme">@style/Theme.App</item>
