@@ -26,13 +26,13 @@ abstract class MainActivity : AppCompatActivity() {
     protected lateinit var splashScreen: SplashScreen
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
         // Set up 'core-splashscreen' to handle the splash screen in a backward compatible manner.
         splashScreen = installSplashScreen()
 
         // The splash screen remains on the screen as long as this condition is true.
         splashScreen.setKeepOnScreenCondition { !viewModel.isReady }
+
+        super.onCreate(savedInstanceState)
 
         val binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
