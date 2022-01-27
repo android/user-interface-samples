@@ -168,8 +168,9 @@ of the UI content.
 
 By overriding the `stateDefinition` field in the `GlanceAppWidget`, you can configure the underlying
 data store. `PreferencesGlanceStateDefinition` is used for its implementation, which stores the 
-underlying data using [Preference](https://developer.android.com/jetpack/androidx/releases/preference) androidx
-library.
+underlying data using
+[Preferences Datastore](https://developer.android.com/jetpack/androidx/releases/datastore#datastore-preferences)
+androidx library.
 
 [`TodoListGlanceWidget.kt`](src/main/java/com/example/android/glancewidget/TodoListGlanceWidget.kt\#L72)
 
