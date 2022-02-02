@@ -48,12 +48,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="@string/description_voice_call"
-            android:tint="?attr/colorAccent"
             app:layout_constraintBottom_toBottomOf="@id/input"
             app:layout_constraintEnd_toStartOf="@id/input"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_voice_call" />
+            app:srcCompat="@drawable/ic_voice_call"
+            app:tint="?attr/colorAccent" />
 
         <com.example.android.people.ui.chat.ChatEditText
             android:id="@+id/input"
@@ -87,12 +87,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="@string/description_send"
-            android:tint="?attr/colorAccent"
             app:layout_constraintBottom_toBottomOf="@id/input"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/input"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_send" />
+            app:srcCompat="@drawable/ic_send"
+            app:tint="?attr/colorAccent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
