@@ -30,6 +30,7 @@ import android.content.pm.ShortcutManager
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Icon
 import android.net.Uri
+import android.os.Build
 import androidx.annotation.WorkerThread
 import androidx.core.content.getSystemService
 import androidx.core.net.toUri
@@ -121,6 +122,18 @@ class NotificationHelper(private val context: Context) {
         shortcutManager.addDynamicShortcuts(shortcuts)
     }
 
+    private fun flagUpdateCurrent(mutable: Boolean): Int {
+        return if (mutable) {
+            if (Build.VERSION.SDK_INT >= 31) {
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+            } else {
+                PendingIntent.FLAG_UPDATE_CURRENT
+            }
+        } else {
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        }
+    }
+
     @WorkerThread
     fun showNotification(chat: Chat, fromUser: Boolean, update: Boolean = false) {
         updateShortcuts(chat.contact)
@@ -136,7 +149,7 @@ class NotificationHelper(private val context: Context) {
             Intent(context, BubbleActivity::class.java)
                 .setAction(Intent.ACTION_VIEW)
                 .setData(contentUri),
-            PendingIntent.FLAG_UPDATE_CURRENT
+            flagUpdateCurrent(mutable = true)
         )
 
         val builder = Notification.Builder(context, CHANNEL_NEW_MESSAGES)
@@ -179,7 +192,7 @@ class NotificationHelper(private val context: Context) {
                     Intent(context, MainActivity::class.java)
                         .setAction(Intent.ACTION_VIEW)
                         .setData(contentUri),
-                    PendingIntent.FLAG_UPDATE_CURRENT
+                    flagUpdateCurrent(mutable = false)
                 )
             )
             // Direct Reply
@@ -192,7 +205,7 @@ class NotificationHelper(private val context: Context) {
                             context,
                             REQUEST_CONTENT,
                             Intent(context, ReplyReceiver::class.java).setData(contentUri),
-                            PendingIntent.FLAG_UPDATE_CURRENT
+                            flagUpdateCurrent(mutable = true)
                         )
                     )
                     .addRemoteInput(
