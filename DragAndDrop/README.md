@@ -1,13 +1,12 @@
-# Android on Chrome OS - Drag and Drop Demo
+# Drag and Drop Demo
 
 ## This is not an official Google product
 
-A demo android application demonstrating basic Drag and Drop functionality
-with Chrome OS in mind.
+A demo android application demonstrating basic Drag and Drop functionality using the
+[`Jetpack Drag and Drop Library`](https://developer.android.com/jetpack/androidx/releases/draganddrop).
 
-Allows for plain-text items and files from the Chrome OS file manager to be
-dragged into the app as well as images. Has a plain-text item and PNG that can be dragged
-out of the app.
+Allows for plain-text items and images to be dragged into the app. Has a plain-text item and a PNG
+item that can be dragged within, out of, or to a second instant of the demo.
 
 Utilizes [`androidx.core`](https://developer.android.com/jetpack/androidx/releases/core)'s [`DragStartHelper`](https://developer.android.com/reference/kotlin/androidx/core/view/DragStartHelper) 
 and [`androidx.draganddrop`](https://developer.android.com/jetpack/androidx/releases/draganddrop)'s [`DropHelper`](https://developer.android.com/reference/kotlin/androidx/draganddrop/DropHelper) to simplify
