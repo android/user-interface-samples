@@ -135,7 +135,11 @@ class MainActivity : AppCompatActivity() {
         DropHelper.configureView(
             this,
             binding.textDropTarget,
-            arrayOf(MIMETYPE_TEXT_PLAIN, "image/*"),
+            arrayOf(
+                MIMETYPE_TEXT_PLAIN,
+                "image/*",
+                "application/x-arc-uri-list" // Support external items on Chrome OS Android 9
+            ),
             DropHelper.Options.Builder()
                 .setHighlightColor(getColor(R.color.purple_300))
                 // Match the radius of the view's background drawable
