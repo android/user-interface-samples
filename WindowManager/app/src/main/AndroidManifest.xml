@@ -13,6 +13,7 @@
             android:exported="true" />
         <activity
             android:name=".demos.WindowDemosActivity"
+            android:exported="true"
             android:label="@string/window_manager_demos">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

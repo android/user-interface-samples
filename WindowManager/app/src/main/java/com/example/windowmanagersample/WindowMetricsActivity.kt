@@ -31,7 +31,6 @@ class WindowMetricsActivity : AppCompatActivity() {
 
     private val adapter = InfoLogAdapter()
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWindowMetricsBinding.inflate(layoutInflater)
@@ -64,7 +63,7 @@ class WindowMetricsActivity : AppCompatActivity() {
     @SuppressLint("NotifyDataSetChanged")
     private fun logCurrentWindowMetrics(tag: String) {
         val windowMetrics = WindowMetricsCalculator.getOrCreate()
-            .computeCurrentWindowMetrics(this)
+            .computeCurrentWindowMetrics(this@WindowMetricsActivity)
         val width = windowMetrics.bounds.width()
         val height = windowMetrics.bounds.height()
         adapter.append(tag, "width: $width, height: $height")
