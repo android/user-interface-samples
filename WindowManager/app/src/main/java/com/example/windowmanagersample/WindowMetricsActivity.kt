@@ -52,6 +52,7 @@ class WindowMetricsActivity : AppCompatActivity() {
         // are situations where that won't be called when the configuration
         // changes.
         // View.onConfigurationChanged is called in those scenarios.
+        // https://issuetracker.google.com/202338815
         container.addView(object : View(this) {
             override fun onConfigurationChanged(newConfig: Configuration?) {
                 super.onConfigurationChanged(newConfig)
