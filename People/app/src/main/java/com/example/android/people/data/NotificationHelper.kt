@@ -19,20 +19,21 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.app.Person
-import android.app.RemoteInput
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.LocusId
-import android.content.pm.ShortcutInfo
-import android.content.pm.ShortcutManager
 import android.graphics.BitmapFactory
-import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.WorkerThread
+import androidx.core.app.NotificationCompat
+import androidx.core.app.Person
+import androidx.core.app.RemoteInput
+import androidx.core.content.LocusIdCompat
 import androidx.core.content.getSystemService
+import androidx.core.content.pm.ShortcutInfoCompat
+import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.graphics.drawable.IconCompat
 import androidx.core.net.toUri
 import com.example.android.people.BubbleActivity
 import com.example.android.people.MainActivity
@@ -57,9 +58,6 @@ class NotificationHelper(private val context: Context) {
     private val notificationManager: NotificationManager =
         context.getSystemService() ?: throw IllegalStateException()
 
-    private val shortcutManager: ShortcutManager =
-        context.getSystemService() ?: throw IllegalStateException()
-
     fun setUpNotificationChannels() {
         if (notificationManager.getNotificationChannel(CHANNEL_NEW_MESSAGES) == null) {
             notificationManager.createNotificationChannel(
@@ -79,15 +77,15 @@ class NotificationHelper(private val context: Context) {
     @WorkerThread
     fun updateShortcuts(importantContact: Contact?) {
         var shortcuts = Contact.CONTACTS.map { contact ->
-            val icon = Icon.createWithAdaptiveBitmap(
+            val icon = IconCompat.createWithAdaptiveBitmap(
                 context.resources.assets.open(contact.icon).use { input ->
                     BitmapFactory.decodeStream(input)
                 }
             )
             // Create a dynamic shortcut for each of the contacts.
             // The same shortcut ID will be used when we show a bubble notification.
-            ShortcutInfo.Builder(context, contact.shortcutId)
-                .setLocusId(LocusId(contact.shortcutId))
+            ShortcutInfoCompat.Builder(context, contact.shortcutId)
+                .setLocusId(LocusIdCompat(contact.shortcutId))
                 .setActivity(ComponentName(context, MainActivity::class.java))
                 .setShortLabel(contact.name)
                 .setIcon(icon)
@@ -115,11 +113,13 @@ class NotificationHelper(private val context: Context) {
             shortcuts = shortcuts.sortedByDescending { it.id == importantContact.shortcutId }
         }
         // Truncate the list if we can't show all of our contacts.
-        val maxCount = shortcutManager.maxShortcutCountPerActivity
+        val maxCount = ShortcutManagerCompat.getMaxShortcutCountPerActivity(context)
         if (shortcuts.size > maxCount) {
             shortcuts = shortcuts.take(maxCount)
         }
-        shortcutManager.addDynamicShortcuts(shortcuts)
+        for (shortcut in shortcuts) {
+            ShortcutManagerCompat.pushDynamicShortcut(context, shortcut)
+        }
     }
 
     private fun flagUpdateCurrent(mutable: Boolean): Int {
@@ -137,7 +137,7 @@ class NotificationHelper(private val context: Context) {
     @WorkerThread
     fun showNotification(chat: Chat, fromUser: Boolean, update: Boolean = false) {
         updateShortcuts(chat.contact)
-        val icon = Icon.createWithAdaptiveBitmapContentUri(chat.contact.iconUri)
+        val icon = IconCompat.createWithAdaptiveBitmapContentUri(chat.contact.iconUri)
         val user = Person.Builder().setName(context.getString(R.string.sender_you)).build()
         val person = Person.Builder().setName(chat.contact.name).setIcon(icon).build()
         val contentUri = "https://android.example.com/chat/${chat.contact.id}".toUri()
@@ -151,11 +151,31 @@ class NotificationHelper(private val context: Context) {
                 .setData(contentUri),
             flagUpdateCurrent(mutable = true)
         )
+        // Let's add some more content to the notification in case it falls back to a normal
+        // notification.
+        val messagingStyle = NotificationCompat.MessagingStyle(user)
+        val lastId = chat.messages.last().id
+        for (message in chat.messages) {
+            val m = NotificationCompat.MessagingStyle.Message(
+                message.text,
+                message.timestamp,
+                if (message.isIncoming) person else null
+            ).apply {
+                if (message.photoUri != null) {
+                    setData(message.photoMimeType, message.photoUri)
+                }
+            }
+            if (message.id < lastId) {
+                messagingStyle.addHistoricMessage(m)
+            } else {
+                messagingStyle.addMessage(m)
+            }
+        }
 
-        val builder = Notification.Builder(context, CHANNEL_NEW_MESSAGES)
+        val builder = NotificationCompat.Builder(context, CHANNEL_NEW_MESSAGES)
             // A notification can be shown as a bubble by calling setBubbleMetadata()
             .setBubbleMetadata(
-                Notification.BubbleMetadata.Builder(pendingIntent, icon)
+                NotificationCompat.BubbleMetadata.Builder(pendingIntent, icon)
                     // The height of the expanded bubble.
                     .setDesiredHeight(context.resources.getDimensionPixelSize(R.dimen.bubble_height))
                     .apply {
@@ -180,7 +200,7 @@ class NotificationHelper(private val context: Context) {
             .setShortcutId(chat.contact.shortcutId)
             // This ID helps the intelligence services of the device to correlate this notification
             // with the corresponding dynamic shortcut.
-            .setLocusId(LocusId(chat.contact.shortcutId))
+            .setLocusId(LocusIdCompat(chat.contact.shortcutId))
             .addPerson(person)
             .setShowWhen(true)
             // The content Intent is used when the user clicks on the "Open Content" icon button on
@@ -197,9 +217,9 @@ class NotificationHelper(private val context: Context) {
             )
             // Direct Reply
             .addAction(
-                Notification.Action
+                NotificationCompat.Action
                     .Builder(
-                        Icon.createWithResource(context, R.drawable.ic_send),
+                        IconCompat.createWithResource(context, R.drawable.ic_send),
                         context.getString(R.string.label_reply),
                         PendingIntent.getBroadcast(
                             context,
@@ -218,34 +238,12 @@ class NotificationHelper(private val context: Context) {
             )
             // Let's add some more content to the notification in case it falls back to a normal
             // notification.
-            .setStyle(
-                Notification.MessagingStyle(user)
-                    .apply {
-                        val lastId = chat.messages.last().id
-                        for (message in chat.messages) {
-                            val m = Notification.MessagingStyle.Message(
-                                message.text,
-                                message.timestamp,
-                                if (message.isIncoming) person else null
-                            ).apply {
-                                if (message.photoUri != null) {
-                                    setData(message.photoMimeType, message.photoUri)
-                                }
-                            }
-                            if (message.id < lastId) {
-                                addHistoricMessage(m)
-                            } else {
-                                addMessage(m)
-                            }
-                        }
-                    }
-                    .setGroupConversation(false)
-            )
+            .setStyle(messagingStyle)
             .setWhen(chat.messages.last().timestamp)
-            // Don't sound/vibrate if an update to an existing notification.
-            if (update) {
-                builder.setOnlyAlertOnce(true)
-            }
+        // Don't sound/vibrate if an update to an existing notification.
+        if (update) {
+            builder.setOnlyAlertOnce(true)
+        }
         notificationManager.notify(chat.contact.id.toInt(), builder.build())
     }
 
@@ -271,3 +269,4 @@ class NotificationHelper(private val context: Context) {
         }
     }
 }
+
