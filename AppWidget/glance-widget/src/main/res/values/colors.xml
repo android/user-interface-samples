@@ -27,5 +27,5 @@
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
 
-    <color name="appwidget_background">@color/m3_sys_color_light_background</color>
+    <color name="appwidget_background">@android:color/background_light</color>
 </resources>

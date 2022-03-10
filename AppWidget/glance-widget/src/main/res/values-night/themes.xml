@@ -15,20 +15,12 @@
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.AppWidget" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.AppWidget" parent="android:Theme.Material">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="android:colorPrimary">@color/purple_200</item>
+        <item name="android:colorPrimaryDark">@color/purple_700</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?android:attr/colorPrimaryDark</item>
         <!-- Customize your theme here. -->
     </style>
-
-    <!-- This theme below are only used for the preview layouts -->
-    <style name="Theme.AppWidget.AppWidgetContainer" parent="Theme.Material3.DynamicColors.Dark"/>
 </resources>

@@ -16,5 +16,5 @@
   -->
 <resources>
 
-    <color name="appwidget_background">@color/m3_sys_color_dark_background</color>
+    <color name="appwidget_background">@android:color/background_dark</color>
 </resources>

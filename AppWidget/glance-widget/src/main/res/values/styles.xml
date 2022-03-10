@@ -13,12 +13,13 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- This style is only used for the preview layouts -->
     <style name="Widget.AppWidget.AppWidget.Container" parent="android:Widget">
         <item name="android:id">@android:id/background</item>
         <item name="android:background">?android:attr/colorBackground</item>
         <item name="android:padding">@dimen/appWidgetPadding</item>
+        <item name="android:clipToOutline" tools:targetApi="31">true</item>
     </style>
 </resources>

@@ -17,15 +17,10 @@
 package com.example.android.glancewidget
 
 import android.os.Build
-import androidx.annotation.ColorRes
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.glance.GlanceModifier
-import androidx.glance.LocalContext
 import androidx.glance.appwidget.cornerRadius
-
 
 @Composable
 fun GlanceModifier.appWidgetBackgroundRadius(): GlanceModifier {
@@ -35,4 +30,3 @@ fun GlanceModifier.appWidgetBackgroundRadius(): GlanceModifier {
         this.cornerRadius(16.dp)
     }
 }
-
