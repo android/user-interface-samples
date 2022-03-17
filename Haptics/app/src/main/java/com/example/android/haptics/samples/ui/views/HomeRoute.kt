@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.example.android.haptics.samples.ui.theme
+package com.example.android.haptics.samples.ui.views
 
-import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.example.android.haptics.samples.R
 
-val lightestYellow = Color(0xFFF2F1E9)
-val lightYellow = Color(0xFFE3E2DA)
-val lightYellowVariant = Color(0xFFCDCCC5)
-val mediumDarkYellow = Color(0xFF69664A)
-val darkYellow = Color(0xFF545238)
-val darkestYellow = Color(0xFF30302A)
-
-val lightestOrange = Color(0xFFFFEDD4)
-val lightOrange = Color(0xFFEBAB78)
-
-
+@Composable
+fun HomeRoute() {
+    // TODO(jmylen): Implement this view in next commit.
+    Text(stringResource(R.string.home_screen_title), modifier = Modifier.padding(start = 32.dp))
+}
