@@ -23,8 +23,30 @@ plugins {
     id 'com.android.application' version '7.1.2' apply false
     id 'com.android.library' version '7.1.2' apply false
     id 'org.jetbrains.kotlin.android' version '1.5.21' apply false
+    id 'com.diffplug.spotless' version '6.3.0'
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+subprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    apply plugin: 'com.diffplug.spotless'
+    spotless {
+        kotlin {
+            target '**/*.kt'
+            targetExclude("$buildDir/**/*.kt")
+            targetExclude('bin/**/*.kt')
+            ktlint("0.44.0")
+            trimTrailingWhitespace()
+            indentWithSpaces()
+            endWithNewline()
+            licenseHeaderFile rootProject.file('spotless/license.kt')
+        }
+    }
 }
