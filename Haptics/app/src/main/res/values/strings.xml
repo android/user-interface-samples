@@ -15,4 +15,6 @@
 -->
 <resources>
     <string name="app_name">Haptic Sampler</string>
+    <string name="drawer_content_description">Drawer menu</string>
+    <string name="home_screen_title">Vibration effects</string>
 </resources>
