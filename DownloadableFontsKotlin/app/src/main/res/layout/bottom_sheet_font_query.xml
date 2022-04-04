@@ -14,16 +14,16 @@
   limitations under the License.
 -->
 
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet_font_query"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:behavior_peekHeight="120dp"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     app:cardElevation="8dp">
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -37,52 +37,52 @@
 
             <LinearLayout
                 android:id="@+id/family_name_input_area"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/bottom_sheet_top_margin"
                 android:layout_marginStart="@dimen/margin_large"
+                android:layout_marginTop="@dimen/bottom_sheet_top_margin"
                 android:layout_marginEnd="@dimen/margin_large"
-                android:layout_marginBottom="@dimen/margin_large">
+                android:layout_marginBottom="@dimen/margin_large"
+                android:orientation="horizontal">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/auto_complete_family_name_input"
                     android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4">
 
                     <AutoCompleteTextView
                         android:id="@+id/auto_complete_family_name"
-                        android:completionThreshold="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:completionThreshold="1"
                         android:hint="@string/family_name"
                         android:singleLine="true" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.v4.widget.Space
-                    android:layout_weight="1"
+                <Space
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/button_request"
-                    android:layout_weight="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="@string/request" />
             </LinearLayout>
 
 
             <LinearLayout
                 android:id="@+id/width_input_area"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:layout_marginBottom="@dimen/margin_medium"
                 android:layout_marginStart="@dimen/margin_large"
-                android:layout_marginEnd="@dimen/margin_large">
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/width_seekbar_label"
@@ -107,24 +107,24 @@
 
                     <TextView
                         android:id="@+id/textview_width"
-                        android:layout_height="wrap_content"
                         android:layout_width="80dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_small"
                         android:layout_marginLeft="@dimen/margin_small"
-                        android:textSize="16sp"
-                        android:gravity="end" />
+                        android:gravity="end"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/weight_input_area"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:layout_marginBottom="@dimen/margin_medium"
                 android:layout_marginStart="@dimen/margin_large"
-                android:layout_marginEnd="@dimen/margin_large">
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/weight_seekbar_label"
@@ -149,24 +149,24 @@
 
                     <TextView
                         android:id="@+id/textview_weight"
-                        android:layout_height="wrap_content"
                         android:layout_width="80dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_small"
                         android:layout_marginLeft="@dimen/margin_small"
-                        android:textSize="16sp"
-                        android:gravity="end" />
+                        android:gravity="end"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/italic_input_area"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:layout_marginBottom="@dimen/margin_medium"
                 android:layout_marginStart="@dimen/margin_large"
-                android:layout_marginEnd="@dimen/margin_large">
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/italic_seekbar_label"
@@ -191,25 +191,25 @@
 
                     <TextView
                         android:id="@+id/textview_italic"
-                        android:layout_height="wrap_content"
                         android:layout_width="80dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_small"
                         android:layout_marginLeft="@dimen/margin_small"
-                        android:textSize="16sp"
-                        android:gravity="end" />
+                        android:gravity="end"
+                        android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
 
             <CheckBox
                 android:id="@+id/checkbox_best_effort"
-                android:text="@string/best_effort"
-                android:checked="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:layout_marginBottom="@dimen/margin_medium"
                 android:layout_marginStart="@dimen/margin_large"
-                android:layout_marginEnd="@dimen/margin_large" />
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:checked="true"
+                android:text="@string/best_effort" />
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</android.support.v7.widget.CardView>
+    </androidx.core.widget.NestedScrollView>
+</androidx.cardview.widget.CardView>
