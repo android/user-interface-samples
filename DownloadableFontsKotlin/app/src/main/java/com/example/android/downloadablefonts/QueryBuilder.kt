@@ -23,10 +23,10 @@ internal class QueryBuilder(val familyName: String,
                             val width: Float? = null,
                             val weight: Int? = null,
                             val italic: Float? = null,
-                            val besteffort: Boolean? = null) {
+                            val bestEffort: Boolean? = null) {
 
     fun build(): String {
-        if (weight == null && width == null && italic == null && besteffort == null) {
+        if (weight == null && width == null && italic == null && bestEffort == null) {
             return familyName
         }
         val builder = StringBuilder()
@@ -34,7 +34,7 @@ internal class QueryBuilder(val familyName: String,
         weight?.let { builder.append("&weight=").append(weight) }
         width?.let { builder.append("&width=").append(width) }
         italic?.let { builder.append("&italic=").append(italic) }
-        besteffort?.let { builder.append("&besteffort=").append(besteffort) }
+        bestEffort?.let { builder.append("&besteffort=").append(bestEffort) }
         return builder.toString()
     }
 }
