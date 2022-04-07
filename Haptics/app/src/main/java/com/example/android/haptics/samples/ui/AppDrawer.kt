@@ -55,10 +55,10 @@ fun AppDrawer(
     Column(modifier = modifier.fillMaxSize()) {
         Text(
             stringResource(R.string.app_name),
-            style = MaterialTheme.typography.h5,
             modifier = modifier
                 .padding(start = 32.dp)
                 .padding(vertical = 16.dp),
+            style = MaterialTheme.typography.h5
         )
         DrawerButton(
             icon = Icons.Rounded.Home,
@@ -140,6 +140,9 @@ private fun DrawerButton(
 @Composable
 fun AppDrawerPreview() {
     HapticSamplerTheme {
-        AppDrawer(HapticSamplerDestinations.HOME_ROUTE, navigateToHome = {}, navigateToResist = {}, closeDrawer = {})
+        AppDrawer(
+            HapticSamplerDestinations.HOME_ROUTE, navigateToHome = {},
+            navigateToResist = {}, closeDrawer = {}
+        )
     }
 }
