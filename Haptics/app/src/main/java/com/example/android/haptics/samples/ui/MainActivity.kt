@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.haptics.samples.ui.theme
+package com.example.android.haptics.samples.ui
 
-import androidx.compose.ui.graphics.Color
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 
-val lightestYellow = Color(0xFFF2F1E9)
-val lightYellow = Color(0xFFE3E2DA)
-val lightYellowVariant = Color(0xFFCDCCC5)
-val mediumDarkYellow = Color(0xFF69664A)
-val darkYellow = Color(0xFF545238)
-val darkestYellow = Color(0xFF30302A)
-
-val lightestOrange = Color(0xFFFFEDD4)
-val lightOrange = Color(0xFFEBAB78)
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            HapticSamplerApp(application)
+        }
+    }
+}

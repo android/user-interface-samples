@@ -17,6 +17,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.haptics.samples">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,8 +26,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HapticSampler">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
             android:label="@string/app_name"
             android:theme="@style/Theme.HapticSampler">
             <intent-filter>
