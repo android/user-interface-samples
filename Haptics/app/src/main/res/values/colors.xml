@@ -15,5 +15,6 @@
   ~ limitations under the License.
 -->
 <resources>
-    <color name="light_yellow">#E3E2DA</color>
+    <!-- Design intent for this color to match ui.theme.backgroundColor.-->
+    <color name="light_yellow">#F2F1E8</color>
 </resources>

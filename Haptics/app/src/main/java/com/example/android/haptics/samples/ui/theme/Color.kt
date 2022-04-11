@@ -17,12 +17,23 @@ package com.example.android.haptics.samples.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val lightestYellow = Color(0xFFF2F1E9)
-val lightYellow = Color(0xFFE3E2DA)
-val lightYellowVariant = Color(0xFFCDCCC5)
-val mediumDarkYellow = Color(0xFF69664A)
-val darkYellow = Color(0xFF545238)
-val darkestYellow = Color(0xFF30302A)
+// Light theming colors.
+val textColorPrimary = Color(0xFF1B1C17)
+val backgroundColor = Color(0xFFF2F1E8)
+val textColorSecondary = Color(0xFF46483B)
+val textColorTertiary = Color(0xFF767769)
+val surfaceColor = Color(0xFFFBFAF0)
+val surfaceColorVariant = Color(0xFFE3E4D3)
+val surfaceHeader = Color(0xFFE4E3DA)
+val overviewSurface = Color(0xFFDCDBCA)
+val colorAccentPrimary = Color(0xFFDAEC77)
 
-val lightestOrange = Color(0xFFFFEDD4)
-val lightOrange = Color(0xFFEBAB78)
+// Dark theming colors.
+val darkTextColorPrimary = Color(0xFFF2F1E8)
+val darkBackgroundColor = Color(0xFF1B1C17)
+val darkTextColorSecondary = Color(0xFFC7C8B7)
+val darkTextColorTertiary = Color(0xFF919283)
+val darkSurfaceColor = Color(0xFF30312B)
+val darkSurfaceColorVariant = Color(0xFF474741)
+val darkSurfaceHeader = Color(0xFF474741)
+val darkOverviewSurface = Color(0xFF53534B)

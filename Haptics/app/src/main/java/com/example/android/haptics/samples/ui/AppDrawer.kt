@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import com.example.android.haptics.samples.R
 import com.example.android.haptics.samples.ui.theme.DrawerButtonShape
 import com.example.android.haptics.samples.ui.theme.HapticSamplerTheme
-import com.example.android.haptics.samples.ui.theme.drawerButtonUnselected
+import com.example.android.haptics.samples.ui.theme.secondaryText
 
 @Composable
 fun AppDrawer(
@@ -122,8 +122,8 @@ private fun DrawerButton(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                val textAndIconColor = if (isSelected) MaterialTheme.colors.onPrimary
-                else MaterialTheme.colors.drawerButtonUnselected
+                val textAndIconColor = if (isSelected) MaterialTheme.colors.onSecondary
+                else MaterialTheme.colors.secondaryText
                 Icon(icon, contentDescription = null, tint = textAndIconColor)
                 Spacer(Modifier.width(16.dp))
                 Text(
