@@ -15,4 +15,4 @@ the process of implementing both dragging and dropping functionality.
 ## Screenshots
 ![Animation of the sample app. Text and images are dragged and dropped between two instances of the app](screenshots/drag-n-drop.gif)
 
-For reference and education only.
+For reference and educational purposes only.
