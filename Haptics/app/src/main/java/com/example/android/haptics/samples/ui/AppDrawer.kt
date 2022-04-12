@@ -30,6 +30,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.OpenWith
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -49,6 +50,7 @@ fun AppDrawer(
     currentRoute: String,
     navigateToHome: () -> Unit,
     navigateToResist: () -> Unit,
+    navigateToExpand: () -> Unit,
     closeDrawer: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -82,6 +84,15 @@ fun AppDrawer(
             isSelected = currentRoute === HapticSamplerDestinations.RESIST_ROUTE,
             onClick = {
                 navigateToResist()
+                closeDrawer()
+            }
+        )
+        DrawerButton(
+            icon = Icons.Rounded.OpenWith,
+            label = stringResource(R.string.expand_screen_title),
+            isSelected = currentRoute === HapticSamplerDestinations.EXPAND_ROUTE,
+            onClick = {
+                navigateToExpand()
                 closeDrawer()
             }
         )
@@ -141,8 +152,11 @@ private fun DrawerButton(
 fun AppDrawerPreview() {
     HapticSamplerTheme {
         AppDrawer(
-            HapticSamplerDestinations.HOME_ROUTE, navigateToHome = {},
-            navigateToResist = {}, closeDrawer = {}
+            HapticSamplerDestinations.HOME_ROUTE,
+            navigateToHome = {},
+            navigateToResist = {},
+            navigateToExpand = {},
+            closeDrawer = {},
         )
     }
 }

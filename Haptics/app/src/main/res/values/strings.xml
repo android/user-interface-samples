@@ -36,8 +36,10 @@
     <string name="resist_screen_title">Resist</string>
     <string name="resist_screen_drag_down">Drag down</string>
     <string name="resist_screen_and_release">And release</string>
+    <string name="expand_screen_title">Expand</string>
+    <string name="expand_screen_tap_to_expand">Tap to expand</string>
+    <string name="expand_screen_tap_to_minimize">Tap to minimize</string>
     <string name="message_degraded_experience">Not fully supported by your current device.</string>
     <string name="message_not_supported">Not supported by your current device.</string>
-
 
 </resources>
