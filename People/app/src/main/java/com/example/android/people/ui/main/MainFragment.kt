@@ -15,6 +15,7 @@
 
 package com.example.android.people.ui.main
 
+import android.content.LocusId
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.View
@@ -55,5 +56,8 @@ class MainFragment : Fragment(R.layout.main_fragment) {
             setHasFixedSize(true)
             adapter = contactAdapter
         }
+        // Differentiate the main view from a chat view (ChatFragment) for  content capture.
+        // See https://developer.android.com/reference/androidx/core/content/LocusIdCompat
+        requireActivity().setLocusContext(LocusId("mainFragment"), null)
     }
 }
