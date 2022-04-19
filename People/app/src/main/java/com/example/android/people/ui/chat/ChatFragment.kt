@@ -94,6 +94,7 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             if (contact == null) {
                 Toast.makeText(view.context, "Contact not found", Toast.LENGTH_SHORT).show()
                 parentFragmentManager.popBackStack()
+                requireActivity().setLocusContext(null, null)
             } else {
                 requireActivity().setLocusContext(LocusId(contact.shortcutId), null)
                 navigationController.updateAppBar { name, icon ->
