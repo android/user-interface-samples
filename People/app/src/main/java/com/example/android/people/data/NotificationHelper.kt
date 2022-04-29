@@ -22,13 +22,11 @@ import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ShortcutManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.WorkerThread
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.Person
 import androidx.core.app.RemoteInput
 import androidx.core.content.LocusIdCompat
@@ -58,9 +56,6 @@ class NotificationHelper(private val context: Context) {
     }
 
     private val notificationManager: NotificationManager =
-        context.getSystemService() ?: throw IllegalStateException()
-
-    private val shortcutManager: ShortcutManager =
         context.getSystemService() ?: throw IllegalStateException()
 
     fun setUpNotificationChannels() {
@@ -156,7 +151,6 @@ class NotificationHelper(private val context: Context) {
                 .setData(contentUri),
             flagUpdateCurrent(mutable = true)
         )
-
         // Let's add some more content to the notification in case it falls back to a normal
         // notification.
         val messagingStyle = NotificationCompat.MessagingStyle(user)
@@ -177,7 +171,6 @@ class NotificationHelper(private val context: Context) {
                 messagingStyle.addMessage(m)
             }
         }
-        messagingStyle.isGroupConversation = false
 
         val builder = NotificationCompat.Builder(context, CHANNEL_NEW_MESSAGES)
             // A notification can be shown as a bubble by calling setBubbleMetadata()
@@ -243,12 +236,14 @@ class NotificationHelper(private val context: Context) {
                     .setAllowGeneratedReplies(true)
                     .build()
             )
+            // Let's add some more content to the notification in case it falls back to a normal
+            // notification.
             .setStyle(messagingStyle)
             .setWhen(chat.messages.last().timestamp)
-            // Don't sound/vibrate if an update to an existing notification.
-            if (update) {
-                builder.setOnlyAlertOnce(true)
-            }
+        // Don't sound/vibrate if an update to an existing notification.
+        if (update) {
+            builder.setOnlyAlertOnce(true)
+        }
         notificationManager.notify(chat.contact.id.toInt(), builder.build())
     }
 
