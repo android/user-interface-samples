@@ -30,6 +30,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,16 +48,17 @@ import com.example.android.haptics.samples.ui.theme.drawerButtonUnselected
 fun AppDrawer(
     currentRoute: String,
     navigateToHome: () -> Unit,
+    navigateToResist: () -> Unit,
     closeDrawer: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         Text(
             stringResource(R.string.app_name),
+            style = MaterialTheme.typography.h5,
             modifier = modifier
                 .padding(start = 32.dp)
                 .padding(vertical = 16.dp),
-            style = MaterialTheme.typography.h5
         )
         DrawerButton(
             icon = Icons.Rounded.Home,
@@ -64,6 +66,22 @@ fun AppDrawer(
             isSelected = currentRoute === HapticSamplerDestinations.HOME_ROUTE,
             onClick = {
                 navigateToHome()
+                closeDrawer()
+            }
+        )
+        Text(
+            stringResource(R.string.drawer_content_example_effects),
+            style = MaterialTheme.typography.subtitle2,
+            modifier = modifier
+                .padding(start = 32.dp)
+                .padding(vertical = 16.dp)
+        )
+        DrawerButton(
+            icon = Icons.Rounded.Refresh,
+            label = stringResource(R.string.resist_screen_title),
+            isSelected = currentRoute === HapticSamplerDestinations.RESIST_ROUTE,
+            onClick = {
+                navigateToResist()
                 closeDrawer()
             }
         )
@@ -122,6 +140,6 @@ private fun DrawerButton(
 @Composable
 fun AppDrawerPreview() {
     HapticSamplerTheme {
-        AppDrawer(HapticSamplerDestinations.HOME_ROUTE, navigateToHome = {}, closeDrawer = {})
+        AppDrawer(HapticSamplerDestinations.HOME_ROUTE, navigateToHome = {}, navigateToResist = {}, closeDrawer = {})
     }
 }
