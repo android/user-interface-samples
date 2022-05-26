@@ -1,5 +1,4 @@
-
-Android EmojiCompat Sample
+Android EmojiCompat Sample (Kotlin)
 ===================================
 
 This sample demonstrates usage of EmojiCompat support library. You can use this library
@@ -95,14 +94,14 @@ If you want to use EmojiCompat in your custom TextView, you can create an instan
 Pre-requisites
 --------------
 
-- Android SDK 28
-- Android Build Tools v28.0.3
+- Android SDK 25
+- Android Build Tools v25.0.3
 - Android Support Repository
 
 Screenshots
 -------------
 
-<img src="screenshots/1-main.png" height="400" alt="Screenshot"/> 
+<img src="../EmojiCompat/screenshots/1-main.png" height="400" alt="Screenshot"/> 
 
 Getting Started
 ---------------
