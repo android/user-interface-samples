@@ -33,6 +33,10 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name=".MainActivity$WidgetPinnedReceiver"
+            android:exported="false" />
+
         <activity
             android:name=".list.ListWidgetConfigureActivity"
             android:exported="false">

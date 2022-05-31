@@ -15,7 +15,9 @@
   -->
 <resources>
     <string name="app_name">AppWidget</string>
-    <string name="placeholder_main_activity">This is an Activity of the AppWidget sample. Long press the app icon and choose the widget picker to try the widgets in the sample</string>
+    <string name="placeholder_main_activity_pin">Pin an App Widget:</string>
+    <string name="placeholder_main_activity_pin_unavailable">Pinning is not supported</string>
+    <string name="placeholder_main_activity">This is an Activity of the AppWidget sample. Long press the app icon and choose the widget picker to try the widgets in the sample or pin one by pressing one of the buttons below.</string>
     <string name="grocery_list">Grocery list</string>
     <string name="add_button_grocery_list_content_description">Add button for grocery list</string>
     <string name="app_widget_grocery_list_description">Todo list for groceries</string>
@@ -42,6 +44,7 @@
     <string name="switch_element">Switch</string>
     <string name="buttons_widget_description">Widget for collection of items</string>
     <string name="buttons_title">Items collection</string>
+    <string name="weather">Weather</string>
     <string name="app_widget_weather_description">Widget for weather forecast</string>
     <string name="icon_for_weather_content_description">Icon for weather</string>
     <string name="city_tokyo">Tokyo</string>
