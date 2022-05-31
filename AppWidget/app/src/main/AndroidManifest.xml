@@ -54,7 +54,7 @@
         </receiver>
 
         <receiver
-            android:name=".buttons.ItemsCollectionAppWidget"
+            android:name=".buttons.ButtonsAppWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -62,7 +62,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/app_widget_items_list" />
+                android:resource="@xml/app_widget_buttons" />
         </receiver>
 
         <receiver

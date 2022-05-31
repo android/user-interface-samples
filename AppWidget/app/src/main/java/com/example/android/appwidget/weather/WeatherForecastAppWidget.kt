@@ -19,8 +19,9 @@ package com.example.android.appwidget.weather
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
-import android.util.SizeF
 import android.widget.RemoteViews
+import androidx.core.util.SizeFCompat
+import androidx.core.widget.updateAppWidget
 import com.example.android.appwidget.R
 
 /**
@@ -35,38 +36,20 @@ class WeatherForecastAppWidget : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         for (appWidgetId in appWidgetIds) {
-            updateWeatherWidget(context, appWidgetManager, appWidgetId)
-        }
-    }
-
-    private fun updateWeatherWidget(
-        context: Context,
-        appWidgetManager: AppWidgetManager,
-        appWidgetId: Int
-    ) {
-        val viewMapping: Map<SizeF, RemoteViews> = mapOf(
-            // Specify the minimum width and height in dp and a layout, which you want to use for the
-            // specified size
-            // In the following case:
-            //   - R.layout.widget_weather_forecast_small is used from
-            //     180dp (or minResizeWidth) x 110dp (or minResizeHeight) to 269dp (next cutoff point - 1) x 279dp (next cutoff point - 1)
-            //   - R.layout.widget_weather_forecast_medium is used from 270dp x 110dp to 270dp x 279dp (next cutoff point - 1)
-            //   - R.layout.widget_weather_forecast_large is used from
-            //     270dp x 280dp to 570dp (specified as maxResizeWidth) x 450dp (specified as maxResizeHeight)
-            SizeF(180.0f, 110.0f) to RemoteViews(
-                context.packageName,
-                R.layout.widget_weather_forecast_small
-            ),
-            SizeF(270.0f, 110.0f) to RemoteViews(
-                context.packageName,
-                R.layout.widget_weather_forecast_medium
-            ),
-            SizeF(270.0f, 280.0f) to RemoteViews(
-                context.packageName,
-                R.layout.widget_weather_forecast_large
+            val supportedSizes = listOf(
+                SizeFCompat(180.0f, 110.0f),
+                SizeFCompat(270.0f, 110.0f),
+                SizeFCompat(270.0f, 280.0f)
             )
-        )
-        appWidgetManager.updateAppWidget(appWidgetId, RemoteViews(viewMapping))
+            appWidgetManager.updateAppWidget(appWidgetId, supportedSizes) {
+                val layoutId = when (it) {
+                    supportedSizes[0] -> R.layout.widget_weather_forecast_small
+                    supportedSizes[1] -> R.layout.widget_weather_forecast_medium
+                    else -> R.layout.widget_weather_forecast_large
+                }
+                RemoteViews(context.packageName, layoutId)
+            }
+        }
     }
 }
 
