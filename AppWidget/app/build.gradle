@@ -24,7 +24,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.android.appwidget"
-        minSdkVersion 31
+        minSdkVersion 26
         targetSdkVersion 32
         versionCode 1
         versionName "1.0"
@@ -48,6 +48,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    namespace 'com.example.android.appwidget'
 }
 
 dependencies {
