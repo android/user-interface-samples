@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package com.example.android.appwidget
+package com.example.android.appwidget.weather
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.util.SizeF
 import android.widget.RemoteViews
+import com.example.android.appwidget.R
 
 /**
  * Implementation of the weather forecast app widget that demonstrates the flexible layouts based

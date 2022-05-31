@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.appwidget
+package com.example.android.appwidget.list
 
 import android.annotation.SuppressLint
 import android.app.PendingIntent
@@ -25,6 +25,8 @@ import android.content.Intent
 import android.util.SizeF
 import android.widget.RemoteViews
 import androidx.annotation.LayoutRes
+import com.example.android.appwidget.MainActivity
+import com.example.android.appwidget.R
 
 /**
  * Implementation of a list app widget.

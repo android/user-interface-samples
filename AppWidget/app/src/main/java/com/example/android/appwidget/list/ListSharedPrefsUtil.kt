@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package com.example.android.appwidget
+package com.example.android.appwidget.list
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.LayoutRes
 import androidx.core.content.edit
+import com.example.android.appwidget.R
 
 object ListSharedPrefsUtil {
     private const val PREFS_NAME = "com.example.android.appwidget.GroceryListWidget"

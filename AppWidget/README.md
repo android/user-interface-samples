@@ -202,7 +202,7 @@ Specify the `reconfigurable` flag in the `widgetFeatures` attribute of `appwidge
 
 ```xml
 <appwidget-provider
-    android:configure="com.example.android.appwidget.ListWidgetConfigureActivity"
+    android:configure="com.example.android.appwidget.list.ListWidgetConfigureActivity"
     android:widgetFeatures="reconfigurable"
     ... />
 ```
@@ -213,7 +213,7 @@ If you’d like your widget to use its default configuration when a user adds it
 
 ```xml
 <appwidget-provider
-    android:configure="com.example.android.appwidget.ListWidgetConfigureActivity"
+    android:configure="com.example.android.appwidget.list.ListWidgetConfigureActivity"
     android:widgetFeatures="reconfigurable|configuration_optional"
     ... />
 ```
