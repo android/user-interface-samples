@@ -19,7 +19,6 @@ package com.google.android.samples.insetsanimation
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.view.WindowInsets
 import android.view.WindowInsetsAnimation
 import android.widget.LinearLayout
 import androidx.core.view.NestedScrollingParent3
@@ -144,7 +143,7 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
             } else if (scrollImeOnScreenWhenNotVisible &&
                 !imeAnimController.isInsetAnimationRequestPending() &&
                 ViewCompat.getRootWindowInsets(this)
-                    ?.isVisible(WindowInsets.Type.ime()) == false
+                    ?.isVisible(WindowInsetsCompat.Type.ime()) == false
             ) {
                 // If we don't currently have control, the IME is not shown,
                 // the user is scrolling up, and the view can't scroll up any more
@@ -173,7 +172,7 @@ class InsetsAnimationLinearLayout @JvmOverloads constructor(
             // Otherwise we may need to start a control request and immediately fling
             // using the velocityY
             val imeVisible = ViewCompat.getRootWindowInsets(this)
-                ?.isVisible(WindowInsets.Type.ime()) == true
+                ?.isVisible(WindowInsetsCompat.Type.ime()) == true
             when {
                 velocityY > 0 && scrollImeOnScreenWhenNotVisible && !imeVisible -> {
                     // If the fling is in a upwards direction, and the IME is not visible,
