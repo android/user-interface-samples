@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 32
     defaultConfig {
         applicationId "com.example.androidx.preference.sample"
         minSdkVersion 14
-        targetSdkVersion 29
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
     }
@@ -18,6 +18,6 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.preference:preference:1.1.0'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
