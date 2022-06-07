@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2021 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,8 +13,7 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.appwidget">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
@@ -26,7 +24,20 @@
         android:theme="@style/Theme.AppWidget">
 
         <activity
-            android:name=".ListWidgetConfigureActivity"
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".MainActivity$WidgetPinnedReceiver"
+            android:exported="false" />
+
+        <activity
+            android:name=".list.ListWidgetConfigureActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -34,7 +45,7 @@
         </activity>
 
         <receiver
-            android:name=".ListAppWidget"
+            android:name=".list.ListAppWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -46,7 +57,7 @@
         </receiver>
 
         <receiver
-            android:name=".ItemsCollectionAppWidget"
+            android:name=".buttons.ButtonsAppWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -54,11 +65,11 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/app_widget_items_list" />
+                android:resource="@xml/app_widget_buttons" />
         </receiver>
 
         <receiver
-            android:name=".WeatherForecastAppWidget"
+            android:name=".weather.WeatherForecastAppWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -68,19 +79,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_weather_forecast" />
         </receiver>
-
-        <service
-            android:name=".ItemsCollectionRemoteViewsService"
-            android:permission="android.permission.BIND_REMOTEVIEWS" />
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

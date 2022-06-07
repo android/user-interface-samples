@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package com.example.android.appwidget
+package com.example.android.appwidget.list
 
 import android.appwidget.AppWidgetManager
 import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import com.example.android.appwidget.R
 import com.example.android.appwidget.databinding.ActivityWidgetConfigureBinding
 
 /**

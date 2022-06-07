@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.appwidget
+package com.example.android.appwidget.list
 
 import android.annotation.SuppressLint
 import android.app.PendingIntent
@@ -22,9 +22,12 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
-import android.util.SizeF
 import android.widget.RemoteViews
 import androidx.annotation.LayoutRes
+import androidx.core.util.SizeFCompat
+import androidx.core.widget.createResponsiveSizeAppWidget
+import com.example.android.appwidget.MainActivity
+import com.example.android.appwidget.R
 
 /**
  * Implementation of a list app widget.
@@ -95,18 +98,17 @@ class ListAppWidget : AppWidgetProvider() {
             val remoteViews = if (layoutId == R.layout.widget_grocery_list) {
                 // Specify the maximum width and height in dp and a layout, which you want to use
                 // for the specified size
-                val viewMapping = mapOf(
-                    SizeF(150f, 150f) to constructRemoteViews(
+                val sizes = listOf(SizeFCompat(150f, 150f), SizeFCompat(250f, 150f))
+                createResponsiveSizeAppWidget(appWidgetManager, appWidgetId, sizes) { size ->
+                    val id = if (size == sizes[0]) {
                         R.layout.widget_grocery_list
-                    ), SizeF(250f, 150f) to constructRemoteViews(
+                    } else {
                         R.layout.widget_grocery_grid
-                    )
-                )
-                RemoteViews(viewMapping)
+                    }
+                    constructRemoteViews(id)
+                }
             } else {
-                constructRemoteViews(
-                    layoutId
-                )
+                constructRemoteViews(layoutId)
             }
             appWidgetManager.updateAppWidget(appWidgetId, remoteViews)
         }

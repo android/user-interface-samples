@@ -202,7 +202,7 @@ Specify the `reconfigurable` flag in the `widgetFeatures` attribute of `appwidge
 
 ```xml
 <appwidget-provider
-    android:configure="com.example.android.appwidget.ListWidgetConfigureActivity"
+    android:configure="com.example.android.appwidget.list.ListWidgetConfigureActivity"
     android:widgetFeatures="reconfigurable"
     ... />
 ```
@@ -213,7 +213,7 @@ If you’d like your widget to use its default configuration when a user adds it
 
 ```xml
 <appwidget-provider
-    android:configure="com.example.android.appwidget.ListWidgetConfigureActivity"
+    android:configure="com.example.android.appwidget.list.ListWidgetConfigureActivity"
     android:widgetFeatures="reconfigurable|configuration_optional"
     ... />
 ```
@@ -249,21 +249,21 @@ Android 12 adds new support for stateful behavior using the following existing c
 
 The widget itself is still stateless, so you need to store the state and register a listener for the state change events.
 
-[`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L139)
+[`ButtonsAppWidget.kt`](app/src/main/java/com/example/android/appwidget/buttons/ButtonsAppWidget.kt\#L139)
 
 ```kotlin
 // This code will check the Checkbox
 remoteViews.setCompoundButtonChecked(R.id.item_checkbox, true)
 ```
 
-[`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L142)
+[`ButtonsAppWidget.kt`](app/src/main/java/com/example/android/appwidget/buttons/ButtonsAppWidget.kt\#L142)
 
 ```kotlin
 // This code will check the item_radio_button2 in the item_radio_group RadioGroup
 remoteViews.setRadioGroupChecked(R.id.item_radio_group, R.id.item_radio_button2))
 ```
 
-[`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L162)
+[`ButtonsAppWidget.kt`](app/src/main/java/com/example/android/appwidget/buttons/ButtonsAppWidget.kt\#L162)
 
 ```kotlin
 // Listen for change events.
@@ -290,7 +290,7 @@ If the collection doesn’t use a constant set of layouts (in other words, if so
 
 Here’s an example of how to implement simplified `RemoteViews` collections.
 
-[`ItemsCollectionAppWidget.kt`](app/src/main/java/com/example/android/appwidget/ItemsCollectionAppWidget.kt\#L51)
+[`ButtonsAppWidget.kt`](app/src/main/java/com/example/android/appwidget/buttons/ButtonsAppWidget.kt\#L51)
 
 ```kotlin
 remoteViews.setRemoteAdapter(

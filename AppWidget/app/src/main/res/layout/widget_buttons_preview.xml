@@ -25,7 +25,7 @@ at https://developer.android.com/guide/topics/appwidgets/advanced#build-accurate
     android:orientation="vertical"
     android:theme="@style/Theme.AppWidget.AppWidgetContainer">
 
-    <include layout="@layout/widget_items_collection"
+    <include layout="@layout/widget_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
