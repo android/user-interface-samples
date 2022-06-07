@@ -21,18 +21,18 @@
     android:theme="@style/Theme.AppWidget.AppWidgetContainer">
 
     <TextView
-        android:id="@+id/items_collection_title"
+        android:id="@+id/buttons_title"
         style="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="8dp"
         android:minHeight="@dimen/widget_element_min_length"
-        android:text="@string/items_collection"
+        android:text="@string/buttons_title"
         android:textColor="?android:attr/textColorPrimary" />
 
     <ListView
-        android:id="@+id/items_list_view"
+        android:id="@+id/buttons_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>
