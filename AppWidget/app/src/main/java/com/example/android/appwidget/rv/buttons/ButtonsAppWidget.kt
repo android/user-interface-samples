@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.appwidget.buttons
+package com.example.android.appwidget.rv.buttons
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -29,9 +29,9 @@ import androidx.core.widget.RemoteViewsCompat
 import androidx.core.widget.RemoteViewsCompat.RemoteCollectionItems
 import com.example.android.appwidget.MainActivity
 import com.example.android.appwidget.R
-import com.example.android.appwidget.buttons.WidgetItems.EXTRA_VIEW_ID
-import com.example.android.appwidget.buttons.WidgetItems.REQUEST_CODE
-import com.example.android.appwidget.buttons.WidgetItems.REQUEST_CODE_FROM_COLLECTION_WIDGET
+import com.example.android.appwidget.rv.buttons.WidgetItems.EXTRA_VIEW_ID
+import com.example.android.appwidget.rv.buttons.WidgetItems.REQUEST_CODE
+import com.example.android.appwidget.rv.buttons.WidgetItems.REQUEST_CODE_FROM_COLLECTION_WIDGET
 
 
 /**
