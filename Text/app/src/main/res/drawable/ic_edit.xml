@@ -14,12 +14,13 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
 -->
-<resources>
-    <string name="app_name">Text</string>
-
-    <!-- Line break -->
-    <string name="label_edit_text">EDIT TEXT</string>
-    <string name="attr_textSize" translatable="false">textSize</string>
-    <string name="attr_lineBreakWordStyle">lineBreakWordStyle</string>
-    <string name="line_break_sample">常に最新、最高のモバイル。Android を開発した同じチームから。</string>
-</resources>
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#000000"
+        android:pathData="M3,17.25V21h3.75L17.81,9.94l-3.75,-3.75L3,17.25zM20.71,7.04c0.39,-0.39 0.39,-1.02 0,-1.41l-2.34,-2.34c-0.39,-0.39 -1.02,-0.39 -1.41,0l-1.83,1.83 3.75,3.75 1.83,-1.83z" />
+</vector>

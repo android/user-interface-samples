@@ -14,12 +14,19 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
 -->
-<resources>
-    <string name="app_name">Text</string>
+<com.google.android.material.textfield.TextInputLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/spacing_medium"
+    android:paddingTop="@dimen/spacing_medium">
 
-    <!-- Line break -->
-    <string name="label_edit_text">EDIT TEXT</string>
-    <string name="attr_textSize" translatable="false">textSize</string>
-    <string name="attr_lineBreakWordStyle">lineBreakWordStyle</string>
-    <string name="line_break_sample">常に最新、最高のモバイル。Android を開発した同じチームから。</string>
-</resources>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/label_edit_text" />
+
+</com.google.android.material.textfield.TextInputLayout>
