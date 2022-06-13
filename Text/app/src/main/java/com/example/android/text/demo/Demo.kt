@@ -17,6 +17,7 @@
 package com.example.android.text.demo
 
 import androidx.fragment.app.Fragment
+import com.example.android.text.demo.conversion.ConversionFragment
 import com.example.android.text.demo.linebreak.LineBreakFragment
 import com.example.android.text.demo.textspan.TextSpanFragment
 
@@ -33,5 +34,9 @@ val Demos = listOf(
     Demo(
         title = "Line break",
         fragment = { LineBreakFragment() }
+    ),
+    Demo(
+        title = "Conversion suggestions",
+        fragment = { ConversionFragment() }
     ),
 )
