@@ -14,7 +14,18 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
-    <background android:drawable="@drawable/ic_launcher_background" />
-    <foreground android:drawable="@drawable/ic_launcher_foreground" />
-</adaptive-icon>
+<!--
+Metadata for the first Glance widget.
+At the moment, specifying a layout from the android:initialLayout is needed.
+-->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/glance_todo_list"
+    android:minWidth="46dp"
+    android:minHeight="46dp"
+    android:initialLayout="@layout/widget_loading"
+    android:previewImage="@drawable/todo_list_glance_widget_preview"
+    android:previewLayout="@layout/widget_todo_list_glance_preview"
+    android:resizeMode="horizontal|vertical"
+    android:targetCellWidth="3"
+    android:targetCellHeight="3"
+    android:widgetCategory="home_screen" />

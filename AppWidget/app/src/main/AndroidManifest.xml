@@ -53,7 +53,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/app_widget_info_checkbox_list" />
+                android:resource="@xml/app_widget_list_rv" />
         </receiver>
 
         <receiver
@@ -78,6 +78,19 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_weather_forecast" />
+        </receiver>
+
+        <receiver
+            android:name=".glance.list.ListGlanceWidgetReceiver"
+            android:enabled="@bool/glance_appwidget_available"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_list_glance" />
         </receiver>
     </application>
 

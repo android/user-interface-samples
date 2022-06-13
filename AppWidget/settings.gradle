@@ -23,4 +23,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "AppWidget"
 include ':app'
-include ':glance-widget'

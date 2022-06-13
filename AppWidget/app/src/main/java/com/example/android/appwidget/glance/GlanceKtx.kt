@@ -14,14 +14,21 @@
  * limitations under the License.
  */
 
-package com.example.android.glancewidget.ui.theme
+package com.example.android.appwidget.glance
 
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Shapes
+
+import android.os.Build
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import androidx.glance.GlanceModifier
+import androidx.glance.appwidget.cornerRadius
 
-val Shapes = Shapes(
-    small = RoundedCornerShape(4.dp),
-    medium = RoundedCornerShape(4.dp),
-    large = RoundedCornerShape(0.dp)
-)
+@Composable
+fun GlanceModifier.appWidgetBackgroundCornerRadius(): GlanceModifier {
+    if (Build.VERSION.SDK_INT >= 31) {
+        cornerRadius(android.R.dimen.system_app_widget_background_radius)
+    } else {
+        cornerRadius(16.dp)
+    }
+    return this
+}
