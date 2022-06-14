@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2017 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<resources>
+    <string-array name="family_names">
+        <item>ABeeZee</item>
+        <item>Abel</item>
+        <item>Abhaya Libre</item>
+        <item>Abril Fatface</item>
+        <item>Aclonica</item>
+        <item>Acme</item>
+        <item>Actor</item>
+        <item>Adamina</item>
+        <item>Advent Pro</item>
+        <item>Aguafina Script</item>
+        <item>Akronim</item>
+        <item>Aladin</item>
+        <item>Aldrich</item>
+        <item>Alef</item>
+        <item>Alegreya</item>
+        <item>Alegreya SC</item>
+        <item>Alegreya Sans</item>
+        <item>Alegreya Sans SC</item>
+        <item>Alex Brush</item>
+        <item>Alfa Slab One</item>
+        <item>Alice</item>
+        <item>Alike</item>
+        <item>Alike Angular</item>
+        <item>Allan</item>
+        <item>Allerta</item>
+        <item>Allerta Stencil</item>
+        <item>Allura</item>
+        <item>Almendra</item>
+        <item>Almendra Display</item>
+        <item>Almendra SC</item>
+        <item>Amarante</item>
+        <item>Amaranth</item>
+        <item>Amatic SC</item>
+        <item>Amatica SC</item>
+        <item>Amethysta</item>
+        <item>Amiko</item>
+        <item>Amiri</item>
+        <item>Amita</item>
+        <item>Anaheim</item>
+        <item>Andada</item>
+        <item>Andika</item>
+        <item>Angkor</item>
+        <item>Annie Use Your Telescope</item>
+        <item>Anonymous Pro</item>
+        <item>Antic</item>
+        <item>Antic Didone</item>
+        <item>Antic Slab</item>
+        <item>Anton</item>
+        <item>Arapey</item>
+        <item>Arbutus</item>
+        <item>Arbutus Slab</item>
+        <item>Architects Daughter</item>
+        <item>Archivo Black</item>
+        <item>Archivo Narrow</item>
+        <item>Aref Ruqaa</item>
+        <item>Arima Madurai</item>
+        <item>Arimo</item>
+        <item>Arizonia</item>
+        <item>Armata</item>
+        <item>Arsenal</item>
+        <item>Artifika</item>
+        <item>Arvo</item>
+        <item>Arya</item>
+        <item>Asap</item>
+        <item>Asar</item>
+        <item>Asset</item>
+        <item>Assistant</item>
+        <item>Astloch</item>
+        <item>Asul</item>
+        <item>Athiti</item>
+        <item>Atma</item>
+        <item>Atomic Age</item>
+        <item>Aubrey</item>
+        <item>Audiowide</item>
+        <item>Autour One</item>
+        <item>Average</item>
+        <item>Average Sans</item>
+        <item>Averia Gruesa Libre</item>
+        <item>Averia Libre</item>
+        <item>Averia Sans Libre</item>
+        <item>Averia Serif Libre</item>
+        <item>Bad Script</item>
+        <item>Bahiana</item>
+        <item>Baloo</item>
+        <item>Baloo Bhai</item>
+        <item>Baloo Bhaina</item>
+        <item>Baloo Chettan</item>
+        <item>Baloo Da</item>
+        <item>Baloo Paaji</item>
+        <item>Baloo Tamma</item>
+        <item>Baloo Thambi</item>
+        <item>Balthazar</item>
+        <item>Bangers</item>
+        <item>Barrio</item>
+        <item>Basic</item>
+        <item>Battambang</item>
+        <item>Baumans</item>
+        <item>Bayon</item>
+        <item>Belgrano</item>
+        <item>Belleza</item>
+        <item>BenchNine</item>
+        <item>Bentham</item>
+        <item>Berkshire Swash</item>
+        <item>Bevan</item>
+        <item>Bigelow Rules</item>
+        <item>Bigshot One</item>
+        <item>Bilbo</item>
+        <item>Bilbo Swash Caps</item>
+        <item>BioRhyme</item>
+        <item>BioRhyme Expanded</item>
+        <item>Biryani</item>
+        <item>Bitter</item>
+        <item>Black Ops One</item>
+        <item>Bokor</item>
+        <item>Bonbon</item>
+        <item>Boogaloo</item>
+        <item>Bowlby One</item>
+        <item>Bowlby One SC</item>
+        <item>Brawler</item>
+        <item>Bree Serif</item>
+        <item>Bubblegum Sans</item>
+        <item>Bubbler One</item>
+        <item>Buda</item>
+        <item>Buenard</item>
+        <item>Bungee</item>
+        <item>Bungee Hairline</item>
+        <item>Bungee Inline</item>
+        <item>Bungee Outline</item>
+        <item>Bungee Shade</item>
+        <item>Butcherman</item>
+        <item>Butterfly Kids</item>
+        <item>Cabin</item>
+        <item>Cabin Condensed</item>
+        <item>Cabin Sketch</item>
+        <item>Caesar Dressing</item>
+        <item>Cagliostro</item>
+        <item>Cairo</item>
+        <item>Calligraffitti</item>
+        <item>Cambay</item>
+        <item>Cambo</item>
+        <item>Candal</item>
+        <item>Cantarell</item>
+        <item>Cantata One</item>
+        <item>Cantora One</item>
+        <item>Capriola</item>
+        <item>Cardo</item>
+        <item>Carme</item>
+        <item>Carrois Gothic</item>
+        <item>Carrois Gothic SC</item>
+        <item>Carter One</item>
+        <item>Catamaran</item>
+        <item>Caudex</item>
+        <item>Caveat</item>
+        <item>Caveat Brush</item>
+        <item>Cedarville Cursive</item>
+        <item>Ceviche One</item>
+        <item>Changa</item>
+        <item>Changa One</item>
+        <item>Chango</item>
+        <item>Chathura</item>
+        <item>Chau Philomene One</item>
+        <item>Chela One</item>
+        <item>Chelsea Market</item>
+        <item>Chenla</item>
+        <item>Cherry Cream Soda</item>
+        <item>Cherry Swash</item>
+        <item>Chewy</item>
+        <item>Chicle</item>
+        <item>Chivo</item>
+        <item>Chonburi</item>
+        <item>Cinzel</item>
+        <item>Cinzel Decorative</item>
+        <item>Clicker Script</item>
+        <item>Coda</item>
+        <item>Coda Caption</item>
+        <item>Codystar</item>
+        <item>Coiny</item>
+        <item>Combo</item>
+        <item>Comfortaa</item>
+        <item>Coming Soon</item>
+        <item>Concert One</item>
+        <item>Condiment</item>
+        <item>Content</item>
+        <item>Contrail One</item>
+        <item>Convergence</item>
+        <item>Cookie</item>
+        <item>Copse</item>
+        <item>Corben</item>
+        <item>Cormorant</item>
+        <item>Cormorant Garamond</item>
+        <item>Cormorant Infant</item>
+        <item>Cormorant SC</item>
+        <item>Cormorant Unicase</item>
+        <item>Cormorant Upright</item>
+        <item>Courgette</item>
+        <item>Cousine</item>
+        <item>Coustard</item>
+        <item>Covered By Your Grace</item>
+        <item>Crafty Girls</item>
+        <item>Creepster</item>
+        <item>Crete Round</item>
+        <item>Crimson Text</item>
+        <item>Croissant One</item>
+        <item>Crushed</item>
+        <item>Cuprum</item>
+        <item>Cutive</item>
+        <item>Cutive Mono</item>
+        <item>Damion</item>
+        <item>Dancing Script</item>
+        <item>Dangrek</item>
+        <item>David Libre</item>
+        <item>Dawning of a New Day</item>
+        <item>Days One</item>
+        <item>Dekko</item>
+        <item>Delius</item>
+        <item>Delius Swash Caps</item>
+        <item>Delius Unicase</item>
+        <item>Della Respira</item>
+        <item>Denk One</item>
+        <item>Devonshire</item>
+        <item>Dhurjati</item>
+        <item>Didact Gothic</item>
+        <item>Diplomata</item>
+        <item>Diplomata SC</item>
+        <item>Domine</item>
+        <item>Donegal One</item>
+        <item>Doppio One</item>
+        <item>Dorsa</item>
+        <item>Dosis</item>
+        <item>Dr Sugiyama</item>
+        <item>Droid Sans</item>
+        <item>Droid Sans Mono</item>
+        <item>Droid Serif</item>
+        <item>Duru Sans</item>
+        <item>Dynalight</item>
+        <item>EB Garamond</item>
+        <item>Eagle Lake</item>
+        <item>Eater</item>
+        <item>Economica</item>
+        <item>Eczar</item>
+        <item>Ek Mukta</item>
+        <item>El Messiri</item>
+        <item>Electrolize</item>
+        <item>Elsie</item>
+        <item>Elsie Swash Caps</item>
+        <item>Emblema One</item>
+        <item>Emilys Candy</item>
+        <item>Engagement</item>
+        <item>Englebert</item>
+        <item>Enriqueta</item>
+        <item>Erica One</item>
+        <item>Esteban</item>
+        <item>Euphoria Script</item>
+        <item>Ewert</item>
+        <item>Exo</item>
+        <item>Exo 2</item>
+        <item>Expletus Sans</item>
+        <item>Fanwood Text</item>
+        <item>Farsan</item>
+        <item>Fascinate</item>
+        <item>Fascinate Inline</item>
+        <item>Faster One</item>
+        <item>Fasthand</item>
+        <item>Fauna One</item>
+        <item>Federant</item>
+        <item>Federo</item>
+        <item>Felipa</item>
+        <item>Fenix</item>
+        <item>Finger Paint</item>
+        <item>Fira Mono</item>
+        <item>Fira Sans</item>
+        <item>Fira Sans Condensed</item>
+        <item>Fira Sans Extra Condensed</item>
+        <item>Fjalla One</item>
+        <item>Fjord One</item>
+        <item>Flamenco</item>
+        <item>Flavors</item>
+        <item>Fondamento</item>
+        <item>Fontdiner Swanky</item>
+        <item>Forum</item>
+        <item>Francois One</item>
+        <item>Frank Ruhl Libre</item>
+        <item>Freckle Face</item>
+        <item>Fredericka the Great</item>
+        <item>Fredoka One</item>
+        <item>Freehand</item>
+        <item>Fresca</item>
+        <item>Frijole</item>
+        <item>Fruktur</item>
+        <item>Fugaz One</item>
+        <item>GFS Didot</item>
+        <item>GFS Neohellenic</item>
+        <item>Gabriela</item>
+        <item>Gafata</item>
+        <item>Galada</item>
+        <item>Galdeano</item>
+        <item>Galindo</item>
+        <item>Gentium Basic</item>
+        <item>Gentium Book Basic</item>
+        <item>Geo</item>
+        <item>Geostar</item>
+        <item>Geostar Fill</item>
+        <item>Germania One</item>
+        <item>Gidugu</item>
+        <item>Gilda Display</item>
+        <item>Give You Glory</item>
+        <item>Glass Antiqua</item>
+        <item>Glegoo</item>
+        <item>Gloria Hallelujah</item>
+        <item>Goblin One</item>
+        <item>Gochi Hand</item>
+        <item>Gorditas</item>
+        <item>Goudy Bookletter 1911</item>
+        <item>Graduate</item>
+        <item>Grand Hotel</item>
+        <item>Gravitas One</item>
+        <item>Great Vibes</item>
+        <item>Griffy</item>
+        <item>Gruppo</item>
+        <item>Gudea</item>
+        <item>Gurajada</item>
+        <item>Habibi</item>
+        <item>Halant</item>
+        <item>Hammersmith One</item>
+        <item>Hanalei</item>
+        <item>Hanalei Fill</item>
+        <item>Handlee</item>
+        <item>Hanuman</item>
+        <item>Happy Monkey</item>
+        <item>Harmattan</item>
+        <item>Headland One</item>
+        <item>Heebo</item>
+        <item>Henny Penny</item>
+        <item>Herr Von Muellerhoff</item>
+        <item>Hind</item>
+        <item>Hind Guntur</item>
+        <item>Hind Madurai</item>
+        <item>Hind Siliguri</item>
+        <item>Hind Vadodara</item>
+        <item>Holtwood One SC</item>
+        <item>Homemade Apple</item>
+        <item>Homenaje</item>
+        <item>IM Fell DW Pica</item>
+        <item>IM Fell DW Pica SC</item>
+        <item>IM Fell Double Pica</item>
+        <item>IM Fell Double Pica SC</item>
+        <item>IM Fell English</item>
+        <item>IM Fell English SC</item>
+        <item>IM Fell French Canon</item>
+        <item>IM Fell French Canon SC</item>
+        <item>IM Fell Great Primer</item>
+        <item>IM Fell Great Primer SC</item>
+        <item>Iceberg</item>
+        <item>Iceland</item>
+        <item>Imprima</item>
+        <item>Inconsolata</item>
+        <item>Inder</item>
+        <item>Indie Flower</item>
+        <item>Inika</item>
+        <item>Inknut Antiqua</item>
+        <item>Irish Grover</item>
+        <item>Istok Web</item>
+        <item>Italiana</item>
+        <item>Italianno</item>
+        <item>Itim</item>
+        <item>Jacques Francois</item>
+        <item>Jacques Francois Shadow</item>
+        <item>Jaldi</item>
+        <item>Jim Nightshade</item>
+        <item>Jockey One</item>
+        <item>Jolly Lodger</item>
+        <item>Jomhuria</item>
+        <item>Josefin Sans</item>
+        <item>Josefin Slab</item>
+        <item>Joti One</item>
+        <item>Judson</item>
+        <item>Julee</item>
+        <item>Julius Sans One</item>
+        <item>Junge</item>
+        <item>Jura</item>
+        <item>Just Another Hand</item>
+        <item>Just Me Again Down Here</item>
+        <item>Kadwa</item>
+        <item>Kalam</item>
+        <item>Kameron</item>
+        <item>Kanit</item>
+        <item>Kantumruy</item>
+        <item>Karla</item>
+        <item>Karma</item>
+        <item>Katibeh</item>
+        <item>Kaushan Script</item>
+        <item>Kavivanar</item>
+        <item>Kavoon</item>
+        <item>Kdam Thmor</item>
+        <item>Keania One</item>
+        <item>Kelly Slab</item>
+        <item>Kenia</item>
+        <item>Khand</item>
+        <item>Khmer</item>
+        <item>Khula</item>
+        <item>Kite One</item>
+        <item>Knewave</item>
+        <item>Kotta One</item>
+        <item>Koulen</item>
+        <item>Kranky</item>
+        <item>Kreon</item>
+        <item>Kristi</item>
+        <item>Krona One</item>
+        <item>Kumar One</item>
+        <item>Kumar One Outline</item>
+        <item>Kurale</item>
+        <item>La Belle Aurore</item>
+        <item>Laila</item>
+        <item>Lakki Reddy</item>
+        <item>Lalezar</item>
+        <item>Lancelot</item>
+        <item>Lateef</item>
+        <item>Lato</item>
+        <item>League Script</item>
+        <item>Leckerli One</item>
+        <item>Ledger</item>
+        <item>Lekton</item>
+        <item>Lemon</item>
+        <item>Lemonada</item>
+        <item>Libre Baskerville</item>
+        <item>Libre Franklin</item>
+        <item>Life Savers</item>
+        <item>Lilita One</item>
+        <item>Lily Script One</item>
+        <item>Limelight</item>
+        <item>Linden Hill</item>
+        <item>Lobster</item>
+        <item>Lobster Two</item>
+        <item>Londrina Outline</item>
+        <item>Londrina Shadow</item>
+        <item>Londrina Sketch</item>
+        <item>Londrina Solid</item>
+        <item>Lora</item>
+        <item>Love Ya Like A Sister</item>
+        <item>Loved by the King</item>
+        <item>Lovers Quarrel</item>
+        <item>Luckiest Guy</item>
+        <item>Lusitana</item>
+        <item>Lustria</item>
+        <item>Macondo</item>
+        <item>Macondo Swash Caps</item>
+        <item>Mada</item>
+        <item>Magra</item>
+        <item>Maiden Orange</item>
+        <item>Maitree</item>
+        <item>Mako</item>
+        <item>Mallanna</item>
+        <item>Mandali</item>
+        <item>Marcellus</item>
+        <item>Marcellus SC</item>
+        <item>Marck Script</item>
+        <item>Margarine</item>
+        <item>Marko One</item>
+        <item>Marmelad</item>
+        <item>Martel</item>
+        <item>Martel Sans</item>
+        <item>Marvel</item>
+        <item>Mate</item>
+        <item>Mate SC</item>
+        <item>Maven Pro</item>
+        <item>McLaren</item>
+        <item>Meddon</item>
+        <item>MedievalSharp</item>
+        <item>Medula One</item>
+        <item>Meera Inimai</item>
+        <item>Megrim</item>
+        <item>Meie Script</item>
+        <item>Merienda</item>
+        <item>Merienda One</item>
+        <item>Merriweather</item>
+        <item>Merriweather Sans</item>
+        <item>Metal</item>
+        <item>Metal Mania</item>
+        <item>Metamorphous</item>
+        <item>Metrophobic</item>
+        <item>Michroma</item>
+        <item>Milonga</item>
+        <item>Miltonian</item>
+        <item>Miltonian Tattoo</item>
+        <item>Miniver</item>
+        <item>Miriam Libre</item>
+        <item>Mirza</item>
+        <item>Miss Fajardose</item>
+        <item>Mitr</item>
+        <item>Modak</item>
+        <item>Modern Antiqua</item>
+        <item>Mogra</item>
+        <item>Molengo</item>
+        <item>Molle</item>
+        <item>Monda</item>
+        <item>Monofett</item>
+        <item>Monoton</item>
+        <item>Monsieur La Doulaise</item>
+        <item>Montaga</item>
+        <item>Montez</item>
+        <item>Montserrat</item>
+        <item>Montserrat Alternates</item>
+        <item>Montserrat Subrayada</item>
+        <item>Moul</item>
+        <item>Moulpali</item>
+        <item>Mountains of Christmas</item>
+        <item>Mouse Memoirs</item>
+        <item>Mr Bedfort</item>
+        <item>Mr Dafoe</item>
+        <item>Mr De Haviland</item>
+        <item>Mrs Saint Delafield</item>
+        <item>Mrs Sheppards</item>
+        <item>Mukta Vaani</item>
+        <item>Muli</item>
+        <item>Mystery Quest</item>
+        <item>NTR</item>
+        <item>Neucha</item>
+        <item>Neuton</item>
+        <item>New Rocker</item>
+        <item>News Cycle</item>
+        <item>Niconne</item>
+        <item>Nixie One</item>
+        <item>Nobile</item>
+        <item>Nokora</item>
+        <item>Norican</item>
+        <item>Nosifer</item>
+        <item>Nothing You Could Do</item>
+        <item>Noticia Text</item>
+        <item>Noto Sans</item>
+        <item>Noto Serif</item>
+        <item>Nova Cut</item>
+        <item>Nova Flat</item>
+        <item>Nova Mono</item>
+        <item>Nova Oval</item>
+        <item>Nova Round</item>
+        <item>Nova Script</item>
+        <item>Nova Slim</item>
+        <item>Nova Square</item>
+        <item>Numans</item>
+        <item>Nunito</item>
+        <item>Nunito Sans</item>
+        <item>Odor Mean Chey</item>
+        <item>Offside</item>
+        <item>Old Standard TT</item>
+        <item>Oldenburg</item>
+        <item>Oleo Script</item>
+        <item>Oleo Script Swash Caps</item>
+        <item>Open Sans</item>
+        <item>Open Sans Condensed</item>
+        <item>Oranienbaum</item>
+        <item>Orbitron</item>
+        <item>Oregano</item>
+        <item>Orienta</item>
+        <item>Original Surfer</item>
+        <item>Oswald</item>
+        <item>Over the Rainbow</item>
+        <item>Overlock</item>
+        <item>Overlock SC</item>
+        <item>Overpass</item>
+        <item>Overpass Mono</item>
+        <item>Ovo</item>
+        <item>Oxygen</item>
+        <item>Oxygen Mono</item>
+        <item>PT Mono</item>
+        <item>PT Sans</item>
+        <item>PT Sans Caption</item>
+        <item>PT Sans Narrow</item>
+        <item>PT Serif</item>
+        <item>PT Serif Caption</item>
+        <item>Pacifico</item>
+        <item>Padauk</item>
+        <item>Palanquin</item>
+        <item>Palanquin Dark</item>
+        <item>Pangolin</item>
+        <item>Paprika</item>
+        <item>Parisienne</item>
+        <item>Passero One</item>
+        <item>Passion One</item>
+        <item>Pathway Gothic One</item>
+        <item>Patrick Hand</item>
+        <item>Patrick Hand SC</item>
+        <item>Pattaya</item>
+        <item>Patua One</item>
+        <item>Pavanam</item>
+        <item>Paytone One</item>
+        <item>Peddana</item>
+        <item>Peralta</item>
+        <item>Permanent Marker</item>
+        <item>Petit Formal Script</item>
+        <item>Petrona</item>
+        <item>Philosopher</item>
+        <item>Piedra</item>
+        <item>Pinyon Script</item>
+        <item>Pirata One</item>
+        <item>Plaster</item>
+        <item>Play</item>
+        <item>Playball</item>
+        <item>Playfair Display</item>
+        <item>Playfair Display SC</item>
+        <item>Podkova</item>
+        <item>Poiret One</item>
+        <item>Poller One</item>
+        <item>Poly</item>
+        <item>Pompiere</item>
+        <item>Pontano Sans</item>
+        <item>Poppins</item>
+        <item>Port Lligat Sans</item>
+        <item>Port Lligat Slab</item>
+        <item>Pragati Narrow</item>
+        <item>Prata</item>
+        <item>Preahvihear</item>
+        <item>Press Start 2P</item>
+        <item>Pridi</item>
+        <item>Princess Sofia</item>
+        <item>Prociono</item>
+        <item>Prompt</item>
+        <item>Prosto One</item>
+        <item>Proza Libre</item>
+        <item>Puritan</item>
+        <item>Purple Purse</item>
+        <item>Quando</item>
+        <item>Quantico</item>
+        <item>Quattrocento</item>
+        <item>Quattrocento Sans</item>
+        <item>Questrial</item>
+        <item>Quicksand</item>
+        <item>Quintessential</item>
+        <item>Qwigley</item>
+        <item>Racing Sans One</item>
+        <item>Radley</item>
+        <item>Rajdhani</item>
+        <item>Rakkas</item>
+        <item>Raleway</item>
+        <item>Raleway Dots</item>
+        <item>Ramabhadra</item>
+        <item>Ramaraja</item>
+        <item>Rambla</item>
+        <item>Rammetto One</item>
+        <item>Ranchers</item>
+        <item>Rancho</item>
+        <item>Ranga</item>
+        <item>Rasa</item>
+        <item>Rationale</item>
+        <item>Ravi Prakash</item>
+        <item>Redressed</item>
+        <item>Reem Kufi</item>
+        <item>Reenie Beanie</item>
+        <item>Revalia</item>
+        <item>Rhodium Libre</item>
+        <item>Ribeye</item>
+        <item>Ribeye Marrow</item>
+        <item>Righteous</item>
+        <item>Risque</item>
+        <item>Roboto</item>
+        <item>Roboto Condensed</item>
+        <item>Roboto Mono</item>
+        <item>Roboto Slab</item>
+        <item>Rochester</item>
+        <item>Rock Salt</item>
+        <item>Rokkitt</item>
+        <item>Romanesco</item>
+        <item>Ropa Sans</item>
+        <item>Rosario</item>
+        <item>Rosarivo</item>
+        <item>Rouge Script</item>
+        <item>Rozha One</item>
+        <item>Rubik</item>
+        <item>Rubik Mono One</item>
+        <item>Ruda</item>
+        <item>Rufina</item>
+        <item>Ruge Boogie</item>
+        <item>Ruluko</item>
+        <item>Rum Raisin</item>
+        <item>Ruslan Display</item>
+        <item>Russo One</item>
+        <item>Ruthie</item>
+        <item>Rye</item>
+        <item>Sacramento</item>
+        <item>Sahitya</item>
+        <item>Sail</item>
+        <item>Salsa</item>
+        <item>Sanchez</item>
+        <item>Sancreek</item>
+        <item>Sansita</item>
+        <item>Sarala</item>
+        <item>Sarina</item>
+        <item>Sarpanch</item>
+        <item>Satisfy</item>
+        <item>Scada</item>
+        <item>Scheherazade</item>
+        <item>Schoolbell</item>
+        <item>Scope One</item>
+        <item>Seaweed Script</item>
+        <item>Secular One</item>
+        <item>Sevillana</item>
+        <item>Seymour One</item>
+        <item>Shadows Into Light</item>
+        <item>Shadows Into Light Two</item>
+        <item>Shanti</item>
+        <item>Share</item>
+        <item>Share Tech</item>
+        <item>Share Tech Mono</item>
+        <item>Shojumaru</item>
+        <item>Short Stack</item>
+        <item>Shrikhand</item>
+        <item>Siemreap</item>
+        <item>Sigmar One</item>
+        <item>Signika</item>
+        <item>Signika Negative</item>
+        <item>Simonetta</item>
+        <item>Sintony</item>
+        <item>Sirin Stencil</item>
+        <item>Six Caps</item>
+        <item>Skranji</item>
+        <item>Slabo 13px</item>
+        <item>Slabo 27px</item>
+        <item>Slackey</item>
+        <item>Smokum</item>
+        <item>Smythe</item>
+        <item>Sniglet</item>
+        <item>Snippet</item>
+        <item>Snowburst One</item>
+        <item>Sofadi One</item>
+        <item>Sofia</item>
+        <item>Sonsie One</item>
+        <item>Sorts Mill Goudy</item>
+        <item>Source Code Pro</item>
+        <item>Source Sans Pro</item>
+        <item>Source Serif Pro</item>
+        <item>Space Mono</item>
+        <item>Special Elite</item>
+        <item>Spicy Rice</item>
+        <item>Spinnaker</item>
+        <item>Spirax</item>
+        <item>Squada One</item>
+        <item>Sree Krushnadevaraya</item>
+        <item>Sriracha</item>
+        <item>Stalemate</item>
+        <item>Stalinist One</item>
+        <item>Stardos Stencil</item>
+        <item>Stint Ultra Condensed</item>
+        <item>Stint Ultra Expanded</item>
+        <item>Stoke</item>
+        <item>Strait</item>
+        <item>Sue Ellen Francisco</item>
+        <item>Suez One</item>
+        <item>Sumana</item>
+        <item>Sunshiney</item>
+        <item>Supermercado One</item>
+        <item>Sura</item>
+        <item>Suranna</item>
+        <item>Suravaram</item>
+        <item>Suwannaphum</item>
+        <item>Swanky and Moo Moo</item>
+        <item>Syncopate</item>
+        <item>Tangerine</item>
+        <item>Taprom</item>
+        <item>Tauri</item>
+        <item>Taviraj</item>
+        <item>Teko</item>
+        <item>Telex</item>
+        <item>Tenali Ramakrishna</item>
+        <item>Tenor Sans</item>
+        <item>Text Me One</item>
+        <item>The Girl Next Door</item>
+        <item>Tienne</item>
+        <item>Tillana</item>
+        <item>Timmana</item>
+        <item>Tinos</item>
+        <item>Titan One</item>
+        <item>Titillium Web</item>
+        <item>Trade Winds</item>
+        <item>Trirong</item>
+        <item>Trocchi</item>
+        <item>Trochut</item>
+        <item>Trykker</item>
+        <item>Tulpen One</item>
+        <item>Ubuntu</item>
+        <item>Ubuntu Condensed</item>
+        <item>Ubuntu Mono</item>
+        <item>Ultra</item>
+        <item>Uncial Antiqua</item>
+        <item>Underdog</item>
+        <item>Unica One</item>
+        <item>UnifrakturCook</item>
+        <item>UnifrakturMaguntia</item>
+        <item>Unkempt</item>
+        <item>Unlock</item>
+        <item>Unna</item>
+        <item>VT323</item>
+        <item>Vampiro One</item>
+        <item>Varela</item>
+        <item>Varela Round</item>
+        <item>Vast Shadow</item>
+        <item>Vesper Libre</item>
+        <item>Vibur</item>
+        <item>Vidaloka</item>
+        <item>Viga</item>
+        <item>Voces</item>
+        <item>Volkhov</item>
+        <item>Vollkorn</item>
+        <item>Voltaire</item>
+        <item>Waiting for the Sunrise</item>
+        <item>Wallpoet</item>
+        <item>Walter Turncoat</item>
+        <item>Warnes</item>
+        <item>Wellfleet</item>
+        <item>Wendy One</item>
+        <item>Wire One</item>
+        <item>Work Sans</item>
+        <item>Yanone Kaffeesatz</item>
+        <item>Yantramanav</item>
+        <item>Yatra One</item>
+        <item>Yellowtail</item>
+        <item>Yeseva One</item>
+        <item>Yesteryear</item>
+        <item>Yrsa</item>
+        <item>Zeyada</item>
+    </string-array>
+</resources>
