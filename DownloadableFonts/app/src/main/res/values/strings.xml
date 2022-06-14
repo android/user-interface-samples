@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2017 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+    <string name="app_name">Downloadable fonts sample</string>
+    <string name="request">request</string>
+    <string name="invalid_family_name">Not a valid Family Name</string>
+    <string name="invalid_input">Invalid inputs exist</string>
+    <string name="family_name">Family Name</string>
+    <string name="weight">Weight</string>
+    <string name="width">Width</string>
+    <string name="italic">Italic</string>
+    <string name="best_effort">Best Effort (Nearest match)</string>
+    <string name="predefined_font">The pre-downloaded font is used for this part to avoid the overhead of the time until the requested font is downloaded. See "src/main/res/font" directory for usage.</string>
+    <string name="downloadable_font_applied_text">Typeface of this part is going to be changed when a new font is downloaded. To request a new font, fill the \"Family Name\" (and optionally change other attributes such as width, weight, italic), then tap the \"Request\" button</string>
+    <string name="request_failed">Font request failed with reason code: %1$d</string>
+</resources>
