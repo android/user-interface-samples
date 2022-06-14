@@ -26,14 +26,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.android.haptics.samples.ui.views.HomeRoute
-import com.example.android.haptics.samples.ui.views.HomeViewModel
+import com.example.android.haptics.samples.ui.home.HomeRoute
+import com.example.android.haptics.samples.ui.home.HomeViewModel
+import com.example.android.haptics.samples.ui.resist.ResistRoute
+import com.example.android.haptics.samples.ui.resist.ResistViewModel
 
 /**
  * Destinations used in the Haptic Sampler app.
  */
 object HapticSamplerDestinations {
     const val HOME_ROUTE = "home"
+    const val RESIST_ROUTE = "resist"
 }
 
 class HapticSamplerNavigation(navController: NavHostController) {
@@ -47,6 +50,16 @@ class HapticSamplerNavigation(navController: NavHostController) {
             // Avoid multiple copies of the same destination when selecting from nav.
             launchSingleTop = true
             // Restore state.
+            restoreState = true
+        }
+    }
+
+    val navigateToResist: () -> Unit = {
+        navController.navigate(HapticSamplerDestinations.RESIST_ROUTE) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
             restoreState = true
         }
     }
@@ -72,6 +85,12 @@ fun HapticSamplerNavGraph(
                 factory = HomeViewModel.provideFactory(application, scaffoldState, scrollState)
             )
             HomeRoute(homeViewModel)
+        }
+        composable(HapticSamplerDestinations.RESIST_ROUTE) {
+            val resistViewModel: ResistViewModel = viewModel(
+                factory = ResistViewModel.provideFactory(application)
+            )
+            ResistRoute(resistViewModel)
         }
     }
 }
