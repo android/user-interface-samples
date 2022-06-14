@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.haptics.samples.ui.views
+package com.example.android.haptics.samples.ui.home
 
 import android.os.VibrationEffect
 import android.view.View
