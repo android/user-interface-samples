@@ -1,0 +1,28 @@
+# GOOGLE SAMPLE PACKAGING DATA
+#
+# This file is used by Google as part of our samples packaging process.
+# End users may safely ignore this file. It has no relevance to other systems.
+---
+status:       PUBLISHED
+
+technologies: [Android]
+categories:   [User Interface]
+languages:    [Java]
+solutions:    [Mobile]
+
+github:       android/user-interface
+
+level:        BEGINNER
+
+# Dimensions: 512x512, PNG fomrat
+icon: screenshots/icon_web.png
+
+apiRefs:
+    - android:android.text.SpannableStringBuilder
+    - android:android.text.Spanned
+    - android:android.text.SpannedString
+    - android:android.text.style.StyleSpan
+    - android:android.text.style.RelativeSizeSpan
+    - android:android.text.style.MetricAffectingSpan
+
+license: apache2
