@@ -37,7 +37,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".list.ListWidgetConfigureActivity"
+            android:name="com.example.android.appwidget.rv.list.ListWidgetConfigureActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -45,7 +45,7 @@
         </activity>
 
         <receiver
-            android:name=".list.ListAppWidget"
+            android:name="com.example.android.appwidget.rv.list.ListAppWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -53,11 +53,11 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/app_widget_info_checkbox_list" />
+                android:resource="@xml/app_widget_list_rv" />
         </receiver>
 
         <receiver
-            android:name=".buttons.ButtonsAppWidget"
+            android:name="com.example.android.appwidget.rv.buttons.ButtonsAppWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -69,7 +69,7 @@
         </receiver>
 
         <receiver
-            android:name=".weather.WeatherForecastAppWidget"
+            android:name="com.example.android.appwidget.rv.weather.WeatherForecastAppWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -78,6 +78,19 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_weather_forecast" />
+        </receiver>
+
+        <receiver
+            android:name=".glance.list.ListGlanceWidgetReceiver"
+            android:enabled="@bool/glance_appwidget_available"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_list_glance" />
         </receiver>
     </application>
 

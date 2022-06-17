@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.appwidget.list
+package com.example.android.appwidget.rv.list
 
 import android.content.Context
 import android.content.SharedPreferences

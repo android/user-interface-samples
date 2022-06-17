@@ -14,25 +14,21 @@
  * limitations under the License.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-buildscript {
-    ext {
-        kotlin_version = '1.6.21'
-        compose_version = '1.2.0-beta03'
-    }
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.1'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+package com.example.android.appwidget.glance
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+import android.os.Build
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
+import androidx.glance.GlanceModifier
+import androidx.glance.appwidget.cornerRadius
+
+@Composable
+fun GlanceModifier.appWidgetBackgroundCornerRadius(): GlanceModifier {
+    if (Build.VERSION.SDK_INT >= 31) {
+        cornerRadius(android.R.dimen.system_app_widget_background_radius)
+    } else {
+        cornerRadius(16.dp)
+    }
+    return this
 }
