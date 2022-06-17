@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.android.appwidget.weather
+package com.example.android.appwidget.rv.weather
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider

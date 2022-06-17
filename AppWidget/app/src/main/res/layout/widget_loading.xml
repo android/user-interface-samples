@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright (C) 2021 The Android Open Source Project
   ~
@@ -13,30 +14,16 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Widget.AppWidget.AppWidget.Container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:theme="@style/Theme.AppWidget.AppWidgetContainer">
 
-    <include layout="@layout/widget_checkbox_list_title_region" />
-
-    <CheckBox
-        style="@style/Widget.AppWidget.Checkbox"
-        android:layout_width="match_parent"
+    <ProgressBar
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/todo_list_clean_kitchen" />
+        android:layout_gravity="center" />
 
-    <CheckBox
-        style="@style/Widget.AppWidget.Checkbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/todo_list_buy_groceries" />
-
-    <CheckBox
-        style="@style/Widget.AppWidget.Checkbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/todo_list_build_widgets" />
-</LinearLayout>
+</FrameLayout>

@@ -5,7 +5,7 @@
   ~ you may not use this file except in compliance with the License.
   ~ You may obtain a copy of the License at
   ~
-  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~      http://www.apache.org/licenses/LICENSE-2.0
   ~
   ~ Unless required by applicable law or agreed to in writing, software
   ~ distributed under the License is distributed on an "AS IS" BASIS,
@@ -21,6 +21,8 @@
     <string name="grocery_list">Grocery list</string>
     <string name="add_button_grocery_list_content_description">Add button for grocery list</string>
     <string name="app_widget_grocery_list_description">Todo list for groceries</string>
+    <string name="glance_todo_list">Glance todo list</string>
+    <string name="todo_list_number_of_checkboxes_checked_placeholder">0 checkboxes checked</string>
     <string name="grocery_list_milk">Milk</string>
     <string name="grocery_list_eggs">Eggs</string>
     <string name="grocery_list_tomatoes">Tomatoes</string>

@@ -28,9 +28,9 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.android.appwidget.buttons.ButtonsAppWidget
-import com.example.android.appwidget.list.ListAppWidget
-import com.example.android.appwidget.weather.WeatherForecastAppWidget
+import com.example.android.appwidget.rv.buttons.ButtonsAppWidget
+import com.example.android.appwidget.rv.list.ListAppWidget
+import com.example.android.appwidget.rv.weather.WeatherForecastAppWidget
 
 class MainActivity : AppCompatActivity() {
 
