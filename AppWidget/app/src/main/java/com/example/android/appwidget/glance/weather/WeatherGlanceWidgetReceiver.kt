@@ -20,7 +20,7 @@ import android.content.Context
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
 
 /**
- * Handle system events for AppWidgets, providing the GlanceAppWidget instance.
+ * Handle system events for AppWidgets with the provided GlanceAppWidget instance.
  *
  * Use this class to handle widget lifecycle specific events like onEnable/Disable.
  */
