@@ -24,8 +24,11 @@ import kotlin.random.Random
 
 object WeatherRepo {
 
-    // TODO get by place instead of hardcoded
+    /**
+     * Request the WeatherInfo of a given location
+     */
     suspend fun getWeatherInfo(): WeatherInfo {
+        // Simulate network loading
         delay(Random.nextInt(1, 3) * 1000L)
         return WeatherInfo.Available(
             placeName = "Tokyo",
@@ -39,6 +42,9 @@ object WeatherRepo {
         )
     }
 
+    /**
+     * Fake the weather data
+     */
     private fun getRandomWeatherData(instant: Instant): WeatherData {
         val dateTime = instant.atZone(ZoneId.systemDefault())
         return WeatherData(
