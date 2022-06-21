@@ -48,7 +48,6 @@ import com.example.android.appwidget.glance.appWidgetBackgroundCornerRadius
 
 /**
  * Glance widget that showcases how to use:
- * - Compound buttons
  * - LazyColumn
  * - State management using GlanceStateDefinition
  */

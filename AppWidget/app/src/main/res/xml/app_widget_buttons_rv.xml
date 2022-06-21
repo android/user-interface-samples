@@ -21,7 +21,6 @@ Thus, only supplying a static image through android:previewImage
 -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/buttons_widget_description"
-    android:initialKeyguardLayout="@layout/widget_buttons"
     android:initialLayout="@layout/widget_buttons"
     android:minWidth="180dp"
     android:minHeight="220dp"
@@ -30,5 +29,4 @@ Thus, only supplying a static image through android:previewImage
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="3"
     android:targetCellHeight="4"
-    android:updatePeriodMillis="86400000"
     android:widgetCategory="home_screen" />

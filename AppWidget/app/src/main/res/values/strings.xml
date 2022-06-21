@@ -45,6 +45,7 @@
     <string name="check_box">Check box</string>
     <string name="switch_element">Switch</string>
     <string name="buttons_widget_description">Widget for collection of items</string>
+    <string name="buttons_glance_widget_description">Glance Widget of CompoundButtons</string>
     <string name="buttons_title">Items collection</string>
     <string name="weather">Weather</string>
     <string name="app_widget_weather_description">Widget for weather forecast</string>
