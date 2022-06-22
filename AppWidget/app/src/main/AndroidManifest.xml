@@ -65,7 +65,7 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/app_widget_buttons" />
+                android:resource="@xml/app_widget_buttons_rv" />
         </receiver>
 
         <receiver
@@ -104,6 +104,19 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_weather_forecast_glance" />
+        </receiver>
+
+        <receiver
+            android:name=".glance.buttons.ButtonsGlanceWidgetReceiver"
+            android:enabled="@bool/glance_appwidget_available"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_buttons_glance" />
         </receiver>
     </application>
 
