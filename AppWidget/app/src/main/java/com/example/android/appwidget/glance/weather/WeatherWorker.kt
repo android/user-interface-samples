@@ -51,7 +51,6 @@ class WeatherWorker(
             // Replace any enqueued work and expedite the request
             if (force) {
                 workPolicy = ExistingPeriodicWorkPolicy.REPLACE
-                requestBuilder.setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
             }
 
             manager.enqueueUniquePeriodicWork(

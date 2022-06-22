@@ -78,6 +78,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.7.0-alpha02'
     // Recommended to use WorkManager to load data for widgets
     implementation "androidx.work:work-runtime-ktx:2.7.1"
+    // To load images
+    implementation("io.coil-kt:coil:2.1.0")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
