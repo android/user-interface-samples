@@ -15,6 +15,8 @@
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -104,6 +106,20 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_weather_forecast_glance" />
+        </receiver>
+
+        <receiver
+            android:name=".glance.image.ImageGlanceWidgetReceiver"
+            android:enabled="@bool/glance_appwidget_available"
+            android:exported="false"
+            android:label="@string/images">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_image_glance" />
         </receiver>
     </application>
 

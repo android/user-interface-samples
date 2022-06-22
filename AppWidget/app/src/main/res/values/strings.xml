@@ -47,7 +47,9 @@
     <string name="buttons_widget_description">Widget for collection of items</string>
     <string name="buttons_title">Items collection</string>
     <string name="weather">Weather</string>
+    <string name="images">Random Images</string>
     <string name="app_widget_weather_description">Widget for weather forecast</string>
+    <string name="app_widget_image_description">Shows random images for different sizes</string>
     <string name="icon_for_weather_content_description">Icon for weather</string>
     <string name="city_tokyo">Tokyo</string>
     <string name="mostly_cloudy">Mostly cloudy</string>
