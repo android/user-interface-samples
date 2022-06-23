@@ -67,7 +67,13 @@ class WindowMetricsActivity : AppCompatActivity() {
             .computeCurrentWindowMetrics(this@WindowMetricsActivity)
         val width = windowMetrics.bounds.width()
         val height = windowMetrics.bounds.height()
-        adapter.append(tag, "width: $width, height: $height")
+        adapter.append(
+            tag,
+            "width: $width, " +
+                    "height: $height, " +
+                    "widthDp: ${width / resources.displayMetrics.density}, " +
+                    "heightDp: ${height / resources.displayMetrics.density}"
+        )
         runOnUiThread {
             adapter.notifyDataSetChanged()
         }
