@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.SnackbarHostState
@@ -29,6 +30,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -39,6 +41,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.android.haptics.samples.R
 import com.example.android.haptics.samples.ui.theme.DrawerShape
 import com.example.android.haptics.samples.ui.theme.HapticSamplerTheme
+import com.example.android.haptics.samples.ui.theme.topAppBarBackgroundColor
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 
 @Composable
@@ -49,8 +53,15 @@ fun HapticSamplerApp(application: Application) {
             HapticSamplerNavigation(navController)
         }
         val scrollState = rememberScrollState()
-
         val coroutineScope = rememberCoroutineScope()
+        val systemUiController = rememberSystemUiController()
+
+        val isScrolled = scrollState.value > 0
+        val systemAndTopBarColor = if (isScrolled) MaterialTheme.colors.topAppBarBackgroundColor else MaterialTheme.colors.background
+
+        SideEffect {
+            systemUiController.setSystemBarsColor(systemAndTopBarColor)
+        }
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute =
@@ -63,7 +74,8 @@ fun HapticSamplerApp(application: Application) {
             topBar = {
                 TopAppBar(
                     title = {},
-                    elevation = animateDpAsState(if (scrollState.value > 0) 4.dp else 0.dp).value,
+                    elevation = animateDpAsState(if (isScrolled) 4.dp else 0.dp).value,
+                    backgroundColor = systemAndTopBarColor,
                     navigationIcon = {
                         IconButton(onClick = {
                             coroutineScope.launch {

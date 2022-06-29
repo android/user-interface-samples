@@ -15,43 +15,70 @@
  */
 package com.example.android.haptics.samples.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.Colors
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val LightColorPalette = lightColors(
-    primary = lightYellow,
-    onPrimary = darkestYellow,
-    primaryVariant = lightYellowVariant,
-    secondary = lightOrange,
-    secondaryVariant = lightestOrange,
-    surface = lightYellow,
-    onSurface = darkestYellow,
-    background = lightYellow,
-    onBackground = darkestYellow,
+private val DarkColorPalette = darkColors(
+    primary = darkBackgroundColor,
+    onPrimary = darkTextColorPrimary,
+    primaryVariant = darkOverviewSurface,
+    secondary = colorAccentPrimary,
+    onSecondary = textColorPrimary,
+    surface = darkBackgroundColor,
+    onSurface = darkTextColorPrimary,
+    background = darkBackgroundColor,
+    onBackground = darkTextColorPrimary,
 )
 
-val Colors.drawerButtonUnselected: Color
-    get() = darkYellow
+private val LightColorPalette = lightColors(
+    primary = backgroundColor,
+    onPrimary = textColorPrimary,
+    primaryVariant = overviewSurface,
+    secondary = colorAccentPrimary,
+    onSecondary = textColorPrimary,
+    surface = backgroundColor,
+    onSurface = textColorPrimary,
+    background = backgroundColor,
+    onBackground = textColorPrimary,
+)
+
+val Colors.secondaryText: Color
+    @Composable
+    get() = if (isSystemInDarkTheme()) darkTextColorSecondary else textColorSecondary
 
 val Colors.buttonSurface: Color
-    get() = lightestYellow
+    @Composable
+    get() = if (isSystemInDarkTheme()) darkSurfaceColor else surfaceColor
+
+val Colors.buttonSurfaceDisabled: Color
+    @Composable
+    get() = if (isSystemInDarkTheme()) darkSurfaceColorVariant else surfaceColorVariant
 
 val Colors.onButtonSurface: Color
-    get() = darkYellow
+    @Composable
+    get() = if (isSystemInDarkTheme()) darkTextColorPrimary else textColorPrimary
 
-val Colors.subtitleVariant: Color
-    get() = darkYellow
+val Colors.onButtonSurfaceDisabled: Color
+    @Composable
+    get() = if (isSystemInDarkTheme()) darkTextColorTertiary else textColorTertiary
+
+val Colors.topAppBarBackgroundColor: Color
+    @Composable
+    get() = if (isSystemInDarkTheme()) darkSurfaceHeader else surfaceHeader
 
 @Composable
 fun HapticSamplerTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
 
     MaterialTheme(
-        colors = LightColorPalette,
+        colors = if (darkTheme) DarkColorPalette else LightColorPalette,
         typography = Typography,
         shapes = Shapes,
         content = content

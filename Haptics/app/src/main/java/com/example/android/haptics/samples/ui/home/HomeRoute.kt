@@ -36,7 +36,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,8 +43,10 @@ import androidx.compose.ui.unit.dp
 import com.example.android.haptics.samples.R
 import com.example.android.haptics.samples.ui.theme.HapticSamplerTheme
 import com.example.android.haptics.samples.ui.theme.buttonSurface
+import com.example.android.haptics.samples.ui.theme.buttonSurfaceDisabled
 import com.example.android.haptics.samples.ui.theme.onButtonSurface
-import com.example.android.haptics.samples.ui.theme.subtitleVariant
+import com.example.android.haptics.samples.ui.theme.onButtonSurfaceDisabled
+import com.example.android.haptics.samples.ui.theme.secondaryText
 import kotlinx.coroutines.launch
 
 @Composable
@@ -132,7 +133,7 @@ private fun HomeHapticCategory(
             Text(
                 label,
                 style = MaterialTheme.typography.subtitle2,
-                color = MaterialTheme.colors.subtitleVariant
+                color = MaterialTheme.colors.secondaryText
             )
         }
         content()
@@ -146,7 +147,8 @@ private fun HomeHapticButton(
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
 ) {
-    val alpha = if (isEnabled) 1f else 0.5f
+    val buttonColor = if (isEnabled) MaterialTheme.colors.buttonSurface else MaterialTheme.colors.buttonSurfaceDisabled
+    val textColor = if (isEnabled) MaterialTheme.colors.onButtonSurface else MaterialTheme.colors.onButtonSurfaceDisabled
     val view = LocalView.current
     TextButton(
         onClick = { onClick(view) },
@@ -155,16 +157,14 @@ private fun HomeHapticButton(
             .width(180.dp)
             .padding(4.dp)
             .background(
-                color = MaterialTheme.colors.buttonSurface,
+                color = buttonColor,
                 shape = MaterialTheme.shapes.large
             )
-            .alpha(alpha)
     ) {
         Text(
             label,
-            color = MaterialTheme.colors.onButtonSurface,
+            color = textColor,
             style = MaterialTheme.typography.subtitle2,
-            modifier = Modifier.alpha(alpha)
         )
     }
 }

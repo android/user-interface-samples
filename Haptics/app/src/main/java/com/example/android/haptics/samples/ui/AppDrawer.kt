@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import com.example.android.haptics.samples.R
 import com.example.android.haptics.samples.ui.theme.DrawerButtonShape
 import com.example.android.haptics.samples.ui.theme.HapticSamplerTheme
-import com.example.android.haptics.samples.ui.theme.drawerButtonUnselected
+import com.example.android.haptics.samples.ui.theme.secondaryText
 
 @Composable
 fun AppDrawer(
@@ -55,10 +55,10 @@ fun AppDrawer(
     Column(modifier = modifier.fillMaxSize()) {
         Text(
             stringResource(R.string.app_name),
-            style = MaterialTheme.typography.h5,
             modifier = modifier
                 .padding(start = 32.dp)
                 .padding(vertical = 16.dp),
+            style = MaterialTheme.typography.h5
         )
         DrawerButton(
             icon = Icons.Rounded.Home,
@@ -122,8 +122,8 @@ private fun DrawerButton(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                val textAndIconColor = if (isSelected) MaterialTheme.colors.onPrimary
-                else MaterialTheme.colors.drawerButtonUnselected
+                val textAndIconColor = if (isSelected) MaterialTheme.colors.onSecondary
+                else MaterialTheme.colors.secondaryText
                 Icon(icon, contentDescription = null, tint = textAndIconColor)
                 Spacer(Modifier.width(16.dp))
                 Text(
@@ -140,6 +140,9 @@ private fun DrawerButton(
 @Composable
 fun AppDrawerPreview() {
     HapticSamplerTheme {
-        AppDrawer(HapticSamplerDestinations.HOME_ROUTE, navigateToHome = {}, navigateToResist = {}, closeDrawer = {})
+        AppDrawer(
+            HapticSamplerDestinations.HOME_ROUTE, navigateToHome = {},
+            navigateToResist = {}, closeDrawer = {}
+        )
     }
 }
