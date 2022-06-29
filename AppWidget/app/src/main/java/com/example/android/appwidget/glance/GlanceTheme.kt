@@ -40,7 +40,7 @@ internal val LocalColorProviders = staticCompositionLocalOf { dynamicThemeColorP
 /**
  * Temporary implementation of Material3 theme for Glance.
  *
- * Note: It still requires to manually set the colors to all Glance components
+ * Note: This still requires manually setting the colors for all Glance components.
  */
 @Composable
 fun GlanceTheme(colors: ColorProviders = GlanceTheme.colors, content: @Composable () -> Unit) {
@@ -50,7 +50,7 @@ fun GlanceTheme(colors: ColorProviders = GlanceTheme.colors, content: @Composabl
 }
 
 /**
- * Holds a set of Glance specific [ColorProvider] following Material naming conventions
+ * Holds a set of Glance-specific [ColorProvider] following Material naming conventions.
  */
 data class ColorProviders(
     val primary: ColorProvider,
