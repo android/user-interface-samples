@@ -16,8 +16,10 @@
 
 package com.example.android.text.demo
 
+import android.os.Build
 import androidx.fragment.app.Fragment
 import com.example.android.text.demo.conversion.ConversionFragment
+import com.example.android.text.demo.hyphenation.HyphenationFragment
 import com.example.android.text.demo.linebreak.LineBreakFragment
 import com.example.android.text.demo.textspan.TextSpanFragment
 
@@ -26,17 +28,31 @@ class Demo(
     val fragment: () -> Fragment
 )
 
-val Demos = listOf(
-    Demo(
-        title = "Text span",
-        fragment = { TextSpanFragment() }
-    ),
-    Demo(
-        title = "Line break",
-        fragment = { LineBreakFragment() }
-    ),
-    Demo(
-        title = "Conversion suggestions",
-        fragment = { ConversionFragment() }
-    ),
-)
+val Demos = buildList {
+    add(
+        Demo(
+            title = "Text span",
+            fragment = { TextSpanFragment() }
+        )
+    )
+    if (Build.VERSION.SDK_INT >= 23) {
+        add(
+            Demo(
+                title = "Hyphenation",
+                fragment = { HyphenationFragment() }
+            )
+        )
+    }
+    add(
+        Demo(
+            title = "Line break",
+            fragment = { LineBreakFragment() }
+        )
+    )
+    add(
+        Demo(
+            title = "Conversion suggestions",
+            fragment = { ConversionFragment() }
+        )
+    )
+}

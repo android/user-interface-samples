@@ -15,6 +15,7 @@
   ~ limitations under the License.
 -->
 <resources>
+    <dimen name="spacing_large">32dp</dimen>
     <dimen name="spacing_medium">16dp</dimen>
     <dimen name="spacing_small">8dp</dimen>
 </resources>
