@@ -93,11 +93,14 @@ class WeatherWorker(
     /**
      * Update the state of all widgets and then force update UI
      */
-    private suspend fun setWidgetState(glanceIds: List<GlanceId>, state: WeatherInfo) {
+    private suspend fun setWidgetState(glanceIds: List<GlanceId>, newState: WeatherInfo) {
         glanceIds.forEach { glanceId ->
-            updateAppWidgetState(context, WeatherInfoStateDefinition, glanceId) {
-                state
-            }
+            updateAppWidgetState(
+                context = context,
+                definition = WeatherInfoStateDefinition,
+                glanceId = glanceId,
+                updateState = { newState }
+            )
         }
         WeatherGlanceWidget().updateAll(context)
     }

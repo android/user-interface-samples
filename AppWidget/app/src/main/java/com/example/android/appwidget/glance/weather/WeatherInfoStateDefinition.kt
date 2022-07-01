@@ -38,9 +38,9 @@ object WeatherInfoStateDefinition : GlanceStateDefinition<WeatherInfo> {
     private const val DATA_STORE_FILENAME = "weatherInfo"
 
     /**
-     * Using the same file name regardless of the instance to share data between them
+     * Use the same file name regardless of the widget instance to share data between them
      *
-     * If you need different state/data for each instance, create a store using the fileKey.
+     * If you need different state/data for each instance, create a store using the provided fileKey
      */
     private val Context.datastore by dataStore(DATA_STORE_FILENAME, WeatherInfoSerializer)
 

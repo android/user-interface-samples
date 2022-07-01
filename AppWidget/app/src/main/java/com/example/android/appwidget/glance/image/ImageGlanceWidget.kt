@@ -144,7 +144,7 @@ class ImageGlanceWidget : GlanceAppWidget() {
     }
 
     /**
-     * Called when the widget instance is deleted. We can then cleanup any ongoing task.
+     * Called when the widget instance is deleted. We can then clean up any ongoing task.
      */
     override suspend fun onDelete(context: Context, glanceId: GlanceId) {
         super.onDelete(context, glanceId)
@@ -154,8 +154,9 @@ class ImageGlanceWidget : GlanceAppWidget() {
     /**
      * Get the bitmap from the cache file
      *
-     * Note: since it's a single image resized to the available space we probably won't reach the
-     * memory limit, otherwise you need to generate a URI granting permissions to the launcher.
+     * Note: Because it's a single image resized to the available space, you
+     * probably won't reach the memory limit. If you do reach the memory limit,
+     * you'll need to generate a URI granting permissions to the launcher.
      *
      * More info:
      * https://developer.android.com/training/secure-file-sharing/share-file#GrantPermissions

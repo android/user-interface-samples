@@ -46,7 +46,7 @@ class WeatherGlanceWidget : GlanceAppWidget() {
         private val largeMode = DpSize(260.dp, 280.dp)
     }
 
-    // Override the state definition to use our custom one using Koltin serialization
+    // Override the state definition to use our custom one using Kotlin serialization
     override val stateDefinition = WeatherInfoStateDefinition
 
     // Define the supported sizes for this widget.
