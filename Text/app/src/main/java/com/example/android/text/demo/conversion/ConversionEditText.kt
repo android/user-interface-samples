@@ -51,6 +51,12 @@ class ConversionEditText @JvmOverloads constructor(
     /** Suggestions for an ongoing conversion session. */
     private var currentSuggestions: List<String> = emptyList()
 
+    /**
+     * Passes the search queries.
+     *
+     * @param action A callback to receive the search queries. The caller should execute search by
+     * combining these search queries by OR condition.
+     */
     fun doOnSearchQueries(action: (searchQueries: List<String>) -> Unit) {
         onSearchQueries = action
     }
