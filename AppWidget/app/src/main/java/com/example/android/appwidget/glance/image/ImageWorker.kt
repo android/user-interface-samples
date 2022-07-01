@@ -127,8 +127,8 @@ class ImageWorker(
     }
 
     /**
-     * Using Coil and Picsum Photos to randomly load images into the cache based on the provided
-     * size. This method returns the path of the cached image so it can be send to the widget.
+     * Use Coil and Picsum Photos to randomly load images into the cache based on the provided
+     * size. This method returns the path of the cached image, which you can send to the widget.
      */
     @OptIn(ExperimentalCoilApi::class)
     private suspend fun getRandomImage(width: Float, height: Float, force: Boolean): String {

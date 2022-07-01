@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2021 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +13,6 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<!--
-Intentionally omitting adding android:previewLayout because it consists of ListView and doesn't
-reflect the inflated contents of ListView in a widget preview.
-Thus, only supplying a static image through android:previewImage
--->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/buttons_glance_widget_description"
     android:initialLayout="@layout/widget_buttons"
