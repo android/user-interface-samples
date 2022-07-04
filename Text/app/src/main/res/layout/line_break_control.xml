@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2022 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/control_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/spacing_small">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/edit"
+        style="?materialButtonOutlinedStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_edit_text"
+        app:icon="@drawable/ic_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/vertical_barrier"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="label_text_size,label_line_break_word_style" />
+
+    <TextView
+        android:id="@+id/label_text_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:padding="@dimen/spacing_small"
+        android:text="@string/attr_textSize"
+        app:layout_constraintEnd_toStartOf="@id/vertical_barrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit" />
+
+    <SeekBar
+        android:id="@+id/text_size"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_small"
+        app:layout_constraintBottom_toBottomOf="@id/label_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vertical_barrier"
+        app:layout_constraintTop_toTopOf="@id/label_text_size" />
+
+    <TextView
+        android:id="@+id/label_line_break_word_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:padding="@dimen/spacing_small"
+        android:text="@string/attr_lineBreakWordStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_text_size" />
+
+    <Spinner
+        android:id="@+id/line_break_word_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_small"
+        app:layout_constraintBottom_toBottomOf="@id/label_line_break_word_style"
+        app:layout_constraintStart_toEndOf="@id/vertical_barrier"
+        app:layout_constraintTop_toTopOf="@id/label_line_break_word_style"
+        tools:listitem="@android:layout/simple_spinner_item" />
+
+    <!-- Font size, text input, line break style, centered -->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
