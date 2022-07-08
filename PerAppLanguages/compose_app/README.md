@@ -30,7 +30,7 @@ In the manifest, add a line pointing to this new file:
 
 <img src="screenshots/settings_app_languages.jpg"
 alt="GIF of App Languages page in Pixel's Settings App"
-title="App Languages page in Settings App" />
+title="App Languages page in Settings App" width=300 />
 
 ## Allow users to change your app language directly in your app [(docs)](https://developer.android.com/about/versions/13/features/app-languages#api-implementation)
 
@@ -60,7 +60,7 @@ Delegate the user's locale preference pre Android T.
 
 <img src="screenshots/in_app_language_picker.gif"
 alt="GIF of in-app language picker"
-title="In-App Language Picker" />
+title="In-App Language Picker" width=300 />
 
 ### Resources
 
