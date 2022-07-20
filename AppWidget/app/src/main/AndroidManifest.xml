@@ -39,7 +39,7 @@
             android:exported="false" />
 
         <activity
-            android:name="com.example.android.appwidget.rv.list.ListWidgetConfigureActivity"
+            android:name=".rv.list.ListWidgetConfigureActivity"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
@@ -47,7 +47,7 @@
         </activity>
 
         <receiver
-            android:name="com.example.android.appwidget.rv.list.ListAppWidget"
+            android:name=".rv.list.ListAppWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -57,9 +57,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_list_rv" />
         </receiver>
-
         <receiver
-            android:name="com.example.android.appwidget.rv.buttons.ButtonsAppWidget"
+            android:name=".rv.buttons.ButtonsAppWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -69,9 +68,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_buttons_rv" />
         </receiver>
-
         <receiver
-            android:name="com.example.android.appwidget.rv.weather.WeatherForecastAppWidget"
+            android:name=".rv.weather.WeatherForecastAppWidget"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -81,7 +79,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_weather_forecast" />
         </receiver>
-
         <receiver
             android:name=".glance.list.ListGlanceWidgetReceiver"
             android:enabled="@bool/glance_appwidget_available"
@@ -94,9 +91,9 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_list_glance" />
         </receiver>
-
         <receiver
             android:name=".glance.weather.WeatherGlanceWidgetReceiver"
+            android:label="@string/glance_weather"
             android:enabled="@bool/glance_appwidget_available"
             android:exported="false">
             <intent-filter>
@@ -107,7 +104,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_weather_forecast_glance" />
         </receiver>
-
         <receiver
             android:name=".glance.buttons.ButtonsGlanceWidgetReceiver"
             android:enabled="@bool/glance_appwidget_available"
@@ -120,7 +116,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/app_widget_buttons_glance" />
         </receiver>
-
         <receiver
             android:name=".glance.image.ImageGlanceWidgetReceiver"
             android:enabled="@bool/glance_appwidget_available"
