@@ -34,6 +34,7 @@ import androidx.glance.appwidget.lazy.items
 import androidx.glance.layout.*
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
+import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import com.example.android.appwidget.glance.*
 import java.util.*
@@ -41,8 +42,9 @@ import java.util.*
 class WeatherGlanceWidget : GlanceAppWidget() {
 
     companion object {
-        private val smallMode = DpSize(140.dp, 120.dp)
-        private val mediumMode = DpSize(220.dp, 200.dp)
+        private val thinMode = DpSize(120.dp, 120.dp)
+        private val smallMode = DpSize(184.dp, 184.dp)
+        private val mediumMode = DpSize(260.dp, 200.dp)
         private val largeMode = DpSize(260.dp, 280.dp)
     }
 
@@ -52,7 +54,7 @@ class WeatherGlanceWidget : GlanceAppWidget() {
     // Define the supported sizes for this widget.
     // The system will decide which one fits better based on the available space
     override val sizeMode: SizeMode = SizeMode.Responsive(
-        setOf(smallMode, mediumMode, largeMode)
+        setOf(thinMode, smallMode, mediumMode, largeMode)
     )
 
     @Composable
@@ -71,6 +73,7 @@ class WeatherGlanceWidget : GlanceAppWidget() {
                 is WeatherInfo.Available -> {
                     // Based on the size render different UI
                     when (size) {
+                        thinMode -> WeatherThin(weatherInfo)
                         smallMode -> WeatherSmall(weatherInfo)
                         mediumMode -> WeatherMedium(weatherInfo)
                         largeMode -> WeatherLarge(weatherInfo)
@@ -91,6 +94,17 @@ class WeatherGlanceWidget : GlanceAppWidget() {
 }
 
 @Composable
+fun WeatherThin(weatherInfo: WeatherInfo.Available) {
+    AppWidgetColumn(GlanceModifier.clickable(actionRunCallback<UpdateWeatherAction>())) {
+        CurrentTemperature(
+            weatherInfo,
+            modifier = GlanceModifier.fillMaxSize(),
+            Alignment.CenterHorizontally
+        )
+    }
+}
+
+@Composable
 fun WeatherSmall(weatherInfo: WeatherInfo.Available) {
     AppWidgetColumn(GlanceModifier.clickable(actionRunCallback<UpdateWeatherAction>())) {
         Row(
@@ -100,7 +114,7 @@ fun WeatherSmall(weatherInfo: WeatherInfo.Available) {
             WeatherIcon(weatherInfo, modifier = GlanceModifier.fillMaxWidth().defaultWeight())
             PlaceWeather(weatherInfo, modifier = GlanceModifier.fillMaxWidth().defaultWeight())
         }
-        CurrentTemperature(weatherInfo, modifier = GlanceModifier.fillMaxSize())
+        CurrentTemperature(weatherInfo, modifier = GlanceModifier.fillMaxSize(), Alignment.Start)
     }
 }
 
@@ -118,7 +132,11 @@ fun WeatherMedium(weatherInfo: WeatherInfo.Available) {
             modifier = GlanceModifier.wrapContentHeight().fillMaxWidth(),
             horizontalAlignment = Alignment.Start
         ) {
-            CurrentTemperature(weatherInfo, modifier = GlanceModifier.fillMaxHeight())
+            CurrentTemperature(
+                weatherInfo,
+                modifier = GlanceModifier.fillMaxHeight(),
+                Alignment.Start
+            )
             HourlyForecast(weatherInfo, modifier = GlanceModifier.fillMaxSize())
         }
     }
@@ -138,7 +156,11 @@ fun WeatherLarge(weatherInfo: WeatherInfo.Available) {
             modifier = GlanceModifier.wrapContentHeight().fillMaxWidth(),
             horizontalAlignment = Alignment.Start
         ) {
-            CurrentTemperature(weatherInfo, modifier = GlanceModifier.wrapContentHeight())
+            CurrentTemperature(
+                weatherInfo,
+                modifier = GlanceModifier.wrapContentHeight(),
+                Alignment.Start
+            )
             HourlyForecast(weatherInfo, modifier = GlanceModifier.fillMaxWidth())
         }
         Spacer(GlanceModifier.size(8.dp))
@@ -161,12 +183,13 @@ fun WeatherIcon(weatherInfo: WeatherInfo.Available, modifier: GlanceModifier = G
 @Composable
 fun CurrentTemperature(
     weatherInfo: WeatherInfo.Available,
-    modifier: GlanceModifier = GlanceModifier
+    modifier: GlanceModifier = GlanceModifier,
+    horizontal: Alignment.Horizontal = Alignment.Start
 ) {
     Column(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalAlignment = Alignment.Start
+        horizontalAlignment = horizontal
     ) {
         val defaultWeight = GlanceModifier.wrapContentSize()
         Text(
@@ -214,7 +237,8 @@ fun PlaceWeather(
             text = weatherInfo.placeName,
             style = TextStyle(
                 color = GlanceTheme.colors.textColorPrimary,
-                fontSize = 18.sp
+                fontSize = 18.sp,
+                textAlign = TextAlign.End
             ),
             modifier = defaultWeight
         )
@@ -222,7 +246,8 @@ fun PlaceWeather(
             text = stringResource(weatherInfo.currentData.status),
             style = TextStyle(
                 color = GlanceTheme.colors.textColorSecondary,
-                fontSize = 12.sp
+                fontSize = 12.sp,
+                textAlign = TextAlign.End
             ),
             modifier = defaultWeight
         )
