@@ -17,6 +17,10 @@
 <resources>
     <string name="app_name">Text</string>
 
+    <!-- Linkify -->
+    <string name="linkify_web_urls">Web URL: https://developer.android.com. Click to open the link in a browser.</string>
+    <string name="linkify_custom">Twitter: @AndroidDev. Click to open the account.</string>
+
     <!-- Line break -->
     <string name="label_edit_text">EDIT TEXT</string>
     <string name="attr_textSize" translatable="false">textSize</string>

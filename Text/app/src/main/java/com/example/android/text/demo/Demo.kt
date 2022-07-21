@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import com.example.android.text.demo.conversion.ConversionFragment
 import com.example.android.text.demo.hyphenation.HyphenationFragment
 import com.example.android.text.demo.linebreak.LineBreakFragment
+import com.example.android.text.demo.linkify.LinkifyFragment
 import com.example.android.text.demo.textspan.TextSpanFragment
 
 class Demo(
@@ -33,6 +34,12 @@ val Demos = buildList {
         Demo(
             title = "Text span",
             fragment = { TextSpanFragment() }
+        )
+    )
+    add(
+        Demo(
+            title = "Linkify",
+            fragment = { LinkifyFragment() }
         )
     )
     if (Build.VERSION.SDK_INT >= 23) {
