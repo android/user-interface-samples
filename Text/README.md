@@ -11,6 +11,12 @@ This sample demonstrates several text-related features in Android.
 in the [core-ktx](https://developer.android.com/kotlin/ktx#core) library is useful for quickly
 building a rich text.
 
+### [Linkify](app/src/main/java/com/example/android/text/demo/linkify/LinkifyFragment.kt)
+
+[LinkifyCompat](https://developer.android.com/reference/androidx/core/text/util/LinkifyCompat)
+is useful for creating links in TextViews. The API supports email addresses, phone numbers, and web
+URLs out of the box, and you can also use regular expressions to create a custom link pattern.
+
 ### [Hyphenation](app/src/main/java/com/example/android/text/demo/hyphenation/HyphenationFragment.kt)
 
 Automatic hyphenation is available for a number of languages including English.
