@@ -1,4 +1,4 @@
-// Copyright 2016 Google Inc.
+// Copyright 2022 Google Inc.
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,14 +14,44 @@
 
 package com.google.android_quick_settings;
 
+import android.app.StatusBarManager;
+import android.content.ComponentName;
+import android.os.Build.VERSION;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.graphics.drawable.IconCompat;
+import com.google.common.util.concurrent.MoreExecutors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    StatusBarManager statusBarService = this.getSystemService(StatusBarManager.class);
+    ComponentName componentName = new ComponentName(
+        QuickSettingsService.class.getPackage().getName(),
+        QuickSettingsService.class.getName());
+    AppCompatButton btn = findViewById(R.id.add_tile_btn);
+    IconCompat icon =
+        IconCompat.createWithResource(getApplicationContext(),
+            android.R.drawable.ic_dialog_alert);
+    btn.setOnClickListener(view -> {
+      if (VERSION.SDK_INT >= 33) {
+        statusBarService.requestAddTileService(
+            componentName, "Quick Settings", icon.toIcon(MainActivity.this),
+            MoreExecutors.directExecutor(), integer -> {
+              setResult(integer);
+              finish();
+            });
+      } else {
+        Logger.getLogger(MainActivity.class.getName()).log(
+            Level.INFO, "Request to add tile for user is not supported");
+      }
+    });
+  }
 }

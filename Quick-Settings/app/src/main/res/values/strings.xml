@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
- Copyright 2016 Google Inc.
+ Copyright 2022 Google Inc.
  
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -18,10 +18,16 @@
 <resources>
     <string name="app_name">Quick Settings Sample</string>
     <string name="tile_label">Quick Settings Sample</string>
-    <string name="app_greeting">To open the notification shade, swipe down from the top of the phone.
-        Expand the widget on the right side and then click <b>Edit</b>.
+    <string name="app_greeting"><b>Manual</b>\nOpen the notification shade to
+        add the sample tile. Swipe down from the top of the phone to bring down
+        the notification shade and then click the <b>Edit</b> button to add the
+        Quick Settings tile.
     </string>
-
+    <string name="add_tile_for_user"><b>App request from user</b>\nFor API level
+        33+, the app can add the tile on your behalf with consent.
+        Click \'Add Quick Settings tile\' to test this.
+    </string>
+    <string name="add_tile_for_user_btn_label">Add Quick Settings tile</string>
     <string name="service_active">active</string>
     <string name="service_inactive">inactive</string>
 
