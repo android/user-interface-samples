@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     AppCompatButton btn = findViewById(R.id.add_tile_btn);
     IconCompat icon =
         IconCompat.createWithResource(getApplicationContext(),
-            android.R.drawable.ic_dialog_alert);
+            R.drawable.ic_android_black_24dp);
 
     btn.setOnClickListener(view -> {
       if (VERSION.CODENAME.equalsIgnoreCase("Tiramisu")) {
@@ -57,41 +57,5 @@ public class MainActivity extends AppCompatActivity {
             Level.INFO, "Request to add tile for user is not supported");
       }
     });
-  }
-
-  private String resultToString(int resultCode) {
-    String value;
-    switch(resultCode) {
-      case StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_NOT_ADDED:
-        value = "Tile not added";
-        break;
-      case StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_ALREADY_ADDED:
-        value = "Tile already added";
-        break;
-      case StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_ADDED:
-        value = "Tile added";
-        break;
-      case StatusBarManager.TILE_ADD_REQUEST_ERROR_MISMATCHED_PACKAGE:
-        value = "Error: mismatched package";
-        break;
-      case StatusBarManager.TILE_ADD_REQUEST_ERROR_REQUEST_IN_PROGRESS:
-        value = "Error: request in progress";
-        break;
-      case StatusBarManager.TILE_ADD_REQUEST_ERROR_BAD_COMPONENT:
-        value = "Error: bad component name";
-        break;
-      case StatusBarManager.TILE_ADD_REQUEST_ERROR_NOT_CURRENT_USER:
-        value = "Error: not current user";
-        break;
-      case StatusBarManager.TILE_ADD_REQUEST_ERROR_APP_NOT_IN_FOREGROUND:
-        value = "Error: app not in foreground";
-        break;
-      case StatusBarManager.TILE_ADD_REQUEST_ERROR_NO_STATUS_BAR_SERVICE:
-        value = "Error: no statusbar service found";
-        break;
-      default:
-        value = "Unknown error";
-    }
-    return value;
   }
 }
