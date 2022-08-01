@@ -15,16 +15,13 @@
 package com.google.android_quick_settings;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.os.Build;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
 @SuppressLint("Override")
-public class QSIntentService
-    extends TileService{
+public class QSIntentService extends TileService {
 
     @Override
     public void onClick() {
