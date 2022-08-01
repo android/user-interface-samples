@@ -1,4 +1,4 @@
-// Copyright 2016 Google Inc.
+// Copyright 2022 Google Inc.
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,11 +15,11 @@
 package com.google.android_quick_settings;
 
 import android.annotation.SuppressLint;
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 import android.util.Log;
+import androidx.fragment.app.DialogFragment;
 
 @SuppressLint("Override")
 public class QSDialogService
@@ -39,23 +39,23 @@ public class QSDialogService
 
         QSDialog dialog = dialogBuilder
                 .setClickListener(new QSDialog.QSDialogListener() {
-                    @Override
-                    public void onDialogPositiveClick(DialogFragment dialog) {
-                        Log.d("QS", "Positive registed");
+                  @Override
+                  public void onDialogPositiveClick(DialogFragment dialog) {
+                    Log.d("QS", "Positive registed");
 
-                        // The user wants to change the tile state.
-                        isTileActive = !isTileActive;
-                        updateTile();
-                    }
+                    // The user wants to change the tile state.
+                    isTileActive = !isTileActive;
+                    updateTile();
+                  }
 
-                    @Override
-                    public void onDialogNegativeClick(DialogFragment dialog) {
-                        Log.d("QS", "Negative registered");
+                  @Override
+                  public void onDialogNegativeClick(DialogFragment dialog) {
+                    Log.d("QS", "Negative registered");
 
-                        // The user is cancelled the dialog box.
-                        // We can't do anything to the dialog box here,
-                        // but we can do any cleanup work.
-                    }
+                    // The user is cancelled the dialog box.
+                    // We can't do anything to the dialog box here,
+                    // but we can do any cleanup work.
+                  }
                 })
                 .create();
 

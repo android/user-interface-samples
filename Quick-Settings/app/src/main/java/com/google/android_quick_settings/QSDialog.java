@@ -16,11 +16,11 @@ package com.google.android_quick_settings;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import androidx.fragment.app.DialogFragment;
 
 public class QSDialog
     extends DialogFragment {
@@ -62,8 +62,8 @@ public class QSDialog
      * dialog and the QSDialogService.
      */
     public interface QSDialogListener {
-        public void onDialogPositiveClick(DialogFragment dialog);
-        public void onDialogNegativeClick(DialogFragment dialog);
+        void onDialogPositiveClick(DialogFragment dialog);
+        void onDialogNegativeClick(DialogFragment dialog);
     }
 
     @Override
