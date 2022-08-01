@@ -1,4 +1,4 @@
-// Copyright 2022 Google Inc.
+// Copyright 2016 Google Inc.
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -45,12 +45,12 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.ic_android_black_24dp);
 
     btn.setOnClickListener(view -> {
-      if (VERSION.CODENAME.equalsIgnoreCase("Tiramisu")) {
+      if (VERSION.SDK_INT == 33) {
         statusBarService.requestAddTileService(
             componentName, "Quick Settings", icon.toIcon(MainActivity.this),
             MoreExecutors.directExecutor(), integer -> {
-              setResult(integer);
-              finish();
+               setResult(integer);
+               finish();
             });
       } else {
         Logger.getLogger(MainActivity.class.getName()).log(
