@@ -20,11 +20,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
@@ -39,6 +41,7 @@ import androidx.glance.appwidget.CircularProgressIndicator
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import androidx.glance.appwidget.ImageProvider
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.action.actionRunCallback
@@ -162,6 +165,10 @@ class ImageGlanceWidget : GlanceAppWidget() {
      * https://developer.android.com/training/secure-file-sharing/share-file#GrantPermissions
      */
     private fun getImageProvider(path: String): ImageProvider {
+        if (path.startsWith("content://")) {
+            Log.d("MPB", "Load image from content provider")
+            return ImageProvider(path.toUri())
+        }
         val bitmap = BitmapFactory.decodeFile(path)
         return ImageProvider(bitmap)
     }
