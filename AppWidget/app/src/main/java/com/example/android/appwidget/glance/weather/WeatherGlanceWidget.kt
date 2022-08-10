@@ -334,7 +334,7 @@ fun DailyForecast(
  * Force update the weather info after user click
  */
 class UpdateWeatherAction : ActionCallback {
-    override suspend fun onRun(
+    override suspend fun onAction(
         context: Context,
         glanceId: GlanceId,
         parameters: ActionParameters
