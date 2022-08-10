@@ -168,7 +168,7 @@ class ImageGlanceWidget : GlanceAppWidget() {
 }
 
 class RefreshAction : ActionCallback {
-    override suspend fun onRun(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
+    override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
         // Clear the state to show loading screen
         updateAppWidgetState(context, glanceId) { prefs ->
             prefs.clear()
