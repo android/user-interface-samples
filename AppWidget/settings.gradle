@@ -19,6 +19,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://androidx.dev/snapshots/builds/8834274/artifacts/repository' }
+        mavenLocal()
     }
 }
 rootProject.name = "AppWidget"
