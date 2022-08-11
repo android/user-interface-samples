@@ -32,6 +32,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.OpenWith
 import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.SportsVolleyball
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +52,7 @@ fun AppDrawer(
     navigateToHome: () -> Unit,
     navigateToResist: () -> Unit,
     navigateToExpand: () -> Unit,
+    navigateToBounce: () -> Unit,
     closeDrawer: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -93,6 +95,15 @@ fun AppDrawer(
             isSelected = currentRoute === HapticSamplerDestinations.EXPAND_ROUTE,
             onClick = {
                 navigateToExpand()
+                closeDrawer()
+            }
+        )
+        DrawerButton(
+            icon = Icons.Rounded.SportsVolleyball,
+            label = stringResource(R.string.bounce),
+            isSelected = currentRoute === HapticSamplerDestinations.BOUNCE_ROUTE,
+            onClick = {
+                navigateToBounce()
                 closeDrawer()
             }
         )
@@ -156,6 +167,7 @@ fun AppDrawerPreview() {
             navigateToHome = {},
             navigateToResist = {},
             navigateToExpand = {},
+            navigateToBounce = {},
             closeDrawer = {},
         )
     }

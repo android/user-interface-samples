@@ -97,6 +97,7 @@ fun HapticSamplerApp(application: Application) {
                     navigateToHome = navigationActions.navigateToHome,
                     navigateToResist = navigationActions.navigateToResist,
                     navigateToExpand = navigationActions.navigateToExpand,
+                    navigateToBounce = navigationActions.navigateToBounce,
                     closeDrawer = {
                         coroutineScope.launch {
                             toggleDrawer(scaffoldState)
