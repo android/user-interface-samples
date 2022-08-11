@@ -39,6 +39,9 @@
     <string name="expand_screen_title">Expand</string>
     <string name="expand_screen_tap_to_expand">Tap to expand</string>
     <string name="expand_screen_tap_to_minimize">Tap to minimize</string>
+    <string name="bounce">Bounce</string>
+    <string name="bounce_tap_to_reset">Tap to reset</string>
+    <string name="bounce_tap_to_drop">Tap to drop ball</string>
     <string name="message_degraded_experience">Not fully supported by your current device.</string>
     <string name="message_not_supported">Not supported by your current device.</string>
 

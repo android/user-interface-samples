@@ -26,6 +26,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.android.haptics.samples.ui.bounce.BounceRoute
+import com.example.android.haptics.samples.ui.bounce.BounceViewModel
 import com.example.android.haptics.samples.ui.expand.ExpandRoute
 import com.example.android.haptics.samples.ui.expand.ExpandViewModel
 import com.example.android.haptics.samples.ui.home.HomeRoute
@@ -40,6 +42,7 @@ object HapticSamplerDestinations {
     const val HOME_ROUTE = "home"
     const val RESIST_ROUTE = "resist"
     const val EXPAND_ROUTE = "expand"
+    const val BOUNCE_ROUTE = "bounce"
 }
 
 class HapticSamplerNavigation(navController: NavHostController) {
@@ -69,6 +72,16 @@ class HapticSamplerNavigation(navController: NavHostController) {
 
     val navigateToExpand: () -> Unit = {
         navController.navigate(HapticSamplerDestinations.EXPAND_ROUTE) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
+    val navigateToBounce: () -> Unit = {
+        navController.navigate(HapticSamplerDestinations.BOUNCE_ROUTE) {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
             }
@@ -110,6 +123,12 @@ fun HapticSamplerNavGraph(
                 factory = ExpandViewModel.provideFactory(application)
             )
             ExpandRoute(expandViewModel)
+        }
+        composable(HapticSamplerDestinations.BOUNCE_ROUTE) {
+            val bounceViewModel: BounceViewModel = viewModel(
+                factory = BounceViewModel.provideFactory(application)
+            )
+            BounceRoute(bounceViewModel)
         }
     }
 }
