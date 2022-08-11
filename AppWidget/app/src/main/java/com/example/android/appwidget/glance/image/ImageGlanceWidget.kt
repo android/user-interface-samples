@@ -155,18 +155,18 @@ class ImageGlanceWidget : GlanceAppWidget() {
     }
 
     /**
-     * Get the bitmap from the cache file
+     * Create an ImageProvider using an URI if it's a "content://" type, otherwise load
+     * the bitmap from the cache file
      *
-     * Note: Because it's a single image resized to the available space, you
-     * probably won't reach the memory limit. If you do reach the memory limit,
-     * you'll need to generate a URI granting permissions to the launcher.
+     * Note: When using bitmaps directly your might reach the memory limit for RemoteViews.
+     * If you do reach the memory limit, you'll need to generate a URI granting permissions
+     * to the launcher.
      *
      * More info:
      * https://developer.android.com/training/secure-file-sharing/share-file#GrantPermissions
      */
     private fun getImageProvider(path: String): ImageProvider {
         if (path.startsWith("content://")) {
-            Log.d("MPB", "Load image from content provider")
             return ImageProvider(path.toUri())
         }
         val bitmap = BitmapFactory.decodeFile(path)

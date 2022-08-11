@@ -165,7 +165,7 @@ class ImageWorker(
                 imageFile
             )
 
-            // Find the current launcher to grant permissions
+            // Find the current launcher everytime to ensure it has read permissions
             val resolveInfo = context.packageManager.resolveActivity(
                 Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_HOME) },
                 PackageManager.MATCH_DEFAULT_ONLY
