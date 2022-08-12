@@ -27,9 +27,11 @@ object WeatherRepo {
     /**
      * Request the WeatherInfo of a given location
      */
-    suspend fun getWeatherInfo(): WeatherInfo {
+    suspend fun getWeatherInfo(delay: Long = Random.nextInt(1, 3) * 1000L): WeatherInfo {
         // Simulate network loading
-        delay(Random.nextInt(1, 3) * 1000L)
+        if (delay > 0) {
+            delay(delay)
+        }
         return WeatherInfo.Available(
             placeName = "Tokyo",
             currentData = getRandomWeatherData(Instant.now()),

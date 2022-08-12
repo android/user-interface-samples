@@ -144,7 +144,7 @@ private val SwitchKey = booleanPreferencesKey("switch")
 private val SelectedKey = ActionParameters.Key<String>("key")
 
 class CompoundButtonAction : ActionCallback {
-    override suspend fun onRun(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
+    override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
         // The framework automatically sets the value of the toggled action (true/false)
         // Retrieve it using the ToggleableStateKey
         val toggled = parameters[ToggleableStateKey] ?: false
