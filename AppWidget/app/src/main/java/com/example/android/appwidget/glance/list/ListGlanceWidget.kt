@@ -135,7 +135,7 @@ private val groceryStringIds = listOf(
 )
 
 class CheckboxClickAction : ActionCallback {
-    override suspend fun onRun(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
+    override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
         val toggledStringId = requireNotNull(parameters[toggledStringIdKey]) {
             "Add $toggledStringIdKey parameter in the ActionParameters."
         }
