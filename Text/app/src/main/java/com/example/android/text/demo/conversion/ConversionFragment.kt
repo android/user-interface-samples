@@ -18,6 +18,7 @@ package com.example.android.text.demo.conversion
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.android.text.R
 import com.example.android.text.databinding.ConversionFragmentBinding
@@ -32,6 +33,7 @@ import com.example.android.text.ui.viewBindings
  * they are committed. With this API, apps can provide search-as-you-type feature in non-alphabet
  * languages.
  */
+@RequiresApi(33)
 class ConversionFragment : Fragment(R.layout.conversion_fragment) {
 
     private val binding by viewBindings(ConversionFragmentBinding::bind)
