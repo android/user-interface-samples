@@ -56,10 +56,12 @@ val Demos = buildList {
             fragment = { LineBreakFragment() }
         )
     )
-    add(
-        Demo(
-            title = "Conversion suggestions",
-            fragment = { ConversionFragment() }
+    if (Build.VERSION.SDK_INT >= 33) {
+        add(
+            Demo(
+                title = "Conversion suggestions",
+                fragment = { ConversionFragment() }
+            )
         )
-    )
+    }
 }
