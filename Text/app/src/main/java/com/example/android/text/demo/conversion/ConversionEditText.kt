@@ -21,6 +21,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
+import androidx.annotation.RequiresApi
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.textfield.TextInputEditText
 
@@ -28,6 +29,7 @@ import com.google.android.material.textfield.TextInputEditText
  * This EditText uses the Conversion Suggestion API introduced in Android 13 and returns possible
  * search queries as user types.
  */
+@RequiresApi(33)
 class ConversionEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -124,4 +126,3 @@ class ConversionEditText @JvmOverloads constructor(
         }
     }
 }
-

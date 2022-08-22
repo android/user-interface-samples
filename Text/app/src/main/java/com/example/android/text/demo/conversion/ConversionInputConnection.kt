@@ -19,11 +19,13 @@ package com.example.android.text.demo.conversion
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputConnectionWrapper
 import android.view.inputmethod.TextAttribute
+import androidx.annotation.RequiresApi
 
 /**
  * @param inputConnection The parent input connection.
  * @param onSuggestions Called when a new set of conversion suggestions is available.
  */
+@RequiresApi(33)
 internal class ConversionInputConnection(
     inputConnection: InputConnection?,
     private val onSuggestions: (text: CharSequence, suggestions: List<String>) -> Unit
