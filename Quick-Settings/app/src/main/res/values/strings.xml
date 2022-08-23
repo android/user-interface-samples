@@ -34,7 +34,6 @@
     <string name="service_inactive">inactive</string>
 
     <string name="qs_dialog_tile_label">QS Dialog Launcher</string>
-    <string name="qs_dialog_title">Quick Settings Dialog</string>
     <string name="qs_dialog_prompt">Change the tile state?</string>
     <string name="qs_dialog_active">Turn off</string>
     <string name="qs_dialog_inactive">Turn on</string>
@@ -43,7 +42,7 @@
     <string name="qs_intent_tile_label">QS Intent Launcher</string>
 
     <string name="result_label">Quick Settings Result Activity</string>
-    <string name="result_output" formatted="false">The %s tile is %s.</string>
+    <string name="result_output">The %1$s tile is %2$s.</string>
     <string name="result_return">Return to home</string>
 
 </resources>
