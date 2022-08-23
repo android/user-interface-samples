@@ -38,22 +38,13 @@ public class ResultActivity extends AppCompatActivity {
             String tileState = extras.getString(RESULT_ACTIVITY_INFO_KEY);
             String tileName = extras.getString(RESULT_ACTIVITY_NAME_KEY);
 
-            TextView outputText = (TextView)findViewById(R.id.result_info);
-            outputText.setText(String.format(Locale.US,
-                    getString(R.string.result_output),
-                    tileName,
-                    tileState));
+            TextView outputText = findViewById(R.id.result_info);
+            outputText.setText(getString(R.string.result_output, tileName, tileState));
 
-            TextView returnHome = (TextView)findViewById(R.id.result_return_main);
-            returnHome.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    Intent goHome = new Intent(getApplicationContext(),
-                            MainActivity.class);
-
-                    startActivity(goHome);
-                }
+            TextView returnHome = findViewById(R.id.result_return_main);
+            returnHome.setOnClickListener(view -> {
+                Intent goHome = new Intent(ResultActivity.this, MainActivity.class);
+                startActivity(goHome);
             });
         }
     }
