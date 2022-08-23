@@ -23,6 +23,7 @@ import android.view.HapticFeedbackConstants
 import android.view.View
 import androidx.compose.foundation.ScrollState
 import androidx.compose.material.ScaffoldState
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -126,7 +127,7 @@ class HomeViewModel(
         ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val vibrator = application.getSystemService(Vibrator::class.java)
+                val vibrator = ContextCompat.getSystemService(application, Vibrator::class.java)!!
 
                 // This state object is responsible for providing all the information necessary
                 // for the UI to build the home page of buttons, separated into categories.
