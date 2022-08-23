@@ -238,7 +238,7 @@ private fun updateTransitionData(ballPosition: BallPosition): TransitionData {
         isAtStart = isAtTargetState && transition.currentState == BallPosition.Start,
         isAtEnd = isAtTargetState && transition.currentState == BallPosition.End,
         isBouncing = !isAtTargetState && transition.targetState == BallPosition.End,
-        isResetting =  !isAtTargetState && transition.targetState == BallPosition.Start,
+        isResetting = !isAtTargetState && transition.targetState == BallPosition.Start,
     )
 }
 
