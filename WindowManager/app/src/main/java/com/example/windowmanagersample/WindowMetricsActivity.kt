@@ -70,9 +70,9 @@ class WindowMetricsActivity : AppCompatActivity() {
         adapter.append(
             tag,
             "width: $width, " +
-                    "height: $height, " +
-                    "widthDp: ${width / resources.displayMetrics.density}, " +
-                    "heightDp: ${height / resources.displayMetrics.density}"
+                "height: $height, " +
+                "widthDp: ${width / resources.displayMetrics.density}, " +
+                "heightDp: ${height / resources.displayMetrics.density}"
         )
         runOnUiThread {
             adapter.notifyDataSetChanged()
