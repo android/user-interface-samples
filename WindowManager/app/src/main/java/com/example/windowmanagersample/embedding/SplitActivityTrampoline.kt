@@ -23,6 +23,7 @@ import androidx.window.core.ExperimentalWindowApi
 import androidx.window.embedding.ActivityFilter
 import androidx.window.embedding.SplitController
 import androidx.window.embedding.SplitPlaceholderRule
+import androidx.window.embedding.SplitRule
 
 /**
  * Example trampoline activity that launches a split and finishes itself.
@@ -44,8 +45,14 @@ class SplitActivityTrampoline : SplitActivityBase() {
         placeholderIntent.component =
             componentName("com.example.windowmanagersample.embedding.SplitActivityPlaceholder")
         val placeholderRule = SplitPlaceholderRule(
-            activityFilters, placeholderIntent,
-            minSplitWidth(), minSplitWidth(), SPLIT_RATIO, LayoutDirection.LOCALE
+            filters = activityFilters,
+            placeholderIntent = placeholderIntent,
+            isSticky = false,
+            finishPrimaryWithSecondary = SplitRule.FINISH_ADJACENT,
+            minWidth = minSplitWidth(),
+            minSmallestWidth = 0,
+            splitRatio = SPLIT_RATIO,
+            layoutDirection = LayoutDirection.LOCALE
         )
         SplitController.getInstance().registerRule(placeholderRule)
         val activityIntent = Intent()
