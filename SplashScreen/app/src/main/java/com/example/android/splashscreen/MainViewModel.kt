@@ -28,6 +28,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -67,6 +68,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             _nightMode.value = nightMode
 
             // We have finished loading the initial essential data for showing the app content.
+            delay(1000)
             isReady = true
         }
     }
