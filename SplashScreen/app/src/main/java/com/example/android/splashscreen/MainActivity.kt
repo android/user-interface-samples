@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Process
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen
@@ -64,14 +65,15 @@ abstract class MainActivity : AppCompatActivity() {
         } else {
             binding.content.visibility = View.INVISIBLE
         }
-    }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        // For the sake of this demo app, we kill the app when it is closed so we see a cold start
-        // animation for each launch.
-        finishAndRemoveTask()
-        Process.killProcess(Process.myPid())
+        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // For the sake of this demo app, we kill the app process when the back button is
+                // pressed so we see a cold start animation for each launch.
+                finishAndRemoveTask()
+                Process.killProcess(Process.myPid())
+            }
+        })
     }
 
     private fun radioButtonId(nightMode: Int) = when (nightMode) {
