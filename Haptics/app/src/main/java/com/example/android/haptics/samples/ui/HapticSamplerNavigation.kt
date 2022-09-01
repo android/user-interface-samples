@@ -34,6 +34,8 @@ import com.example.android.haptics.samples.ui.home.HomeRoute
 import com.example.android.haptics.samples.ui.home.HomeViewModel
 import com.example.android.haptics.samples.ui.resist.ResistRoute
 import com.example.android.haptics.samples.ui.resist.ResistViewModel
+import com.example.android.haptics.samples.ui.wobble.WobbleRoute
+import com.example.android.haptics.samples.ui.wobble.WobbleViewModel
 
 /**
  * Destinations used in the Haptic Sampler app.
@@ -43,6 +45,7 @@ object HapticSamplerDestinations {
     const val RESIST_ROUTE = "resist"
     const val EXPAND_ROUTE = "expand"
     const val BOUNCE_ROUTE = "bounce"
+    const val WOBBLE_ROUTE = "wobble"
 }
 
 class HapticSamplerNavigation(navController: NavHostController) {
@@ -82,6 +85,16 @@ class HapticSamplerNavigation(navController: NavHostController) {
 
     val navigateToBounce: () -> Unit = {
         navController.navigate(HapticSamplerDestinations.BOUNCE_ROUTE) {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
+    val navigateToWobble: () -> Unit = {
+        navController.navigate(HapticSamplerDestinations.WOBBLE_ROUTE) {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
             }
@@ -129,6 +142,12 @@ fun HapticSamplerNavGraph(
                 factory = BounceViewModel.provideFactory(application)
             )
             BounceRoute(bounceViewModel)
+        }
+        composable(HapticSamplerDestinations.WOBBLE_ROUTE) {
+            val wobbleViewModel: WobbleViewModel = viewModel(
+                factory = WobbleViewModel.provideFactory(application)
+            )
+            WobbleRoute(wobbleViewModel)
         }
     }
 }
