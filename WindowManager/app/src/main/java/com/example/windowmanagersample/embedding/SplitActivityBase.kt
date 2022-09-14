@@ -36,6 +36,7 @@ import androidx.window.embedding.SplitInfo
 import androidx.window.embedding.SplitPairFilter
 import androidx.window.embedding.SplitPairRule
 import androidx.window.embedding.SplitPlaceholderRule
+import androidx.window.embedding.SplitRule
 import com.example.windowmanagersample.databinding.ActivitySplitActivityLayoutBinding
 
 /**
@@ -104,6 +105,7 @@ open class SplitActivityBase : AppCompatActivity(), CompoundButton.OnCheckedChan
         // activities.
         binding.splitMainCheckBox.setOnCheckedChangeListener(this)
         binding.usePlaceholderCheckBox.setOnCheckedChangeListener(this)
+        binding.useStickyPlaceholderCheckBox.setOnCheckedChangeListener(this)
         binding.splitBCCheckBox.setOnCheckedChangeListener(this)
         binding.finishBCCheckBox.setOnCheckedChangeListener(this)
         binding.fullscreenECheckBox.setOnCheckedChangeListener(this)
@@ -141,6 +143,13 @@ open class SplitActivityBase : AppCompatActivity(), CompoundButton.OnCheckedChan
                 binding.finishBCCheckBox.isEnabled = false
                 binding.finishBCCheckBox.isChecked = false
             }
+        } else if (c.id == binding.usePlaceholderCheckBox.id) {
+            if (isChecked) {
+                binding.useStickyPlaceholderCheckBox.isEnabled = true
+            } else {
+                binding.useStickyPlaceholderCheckBox.isEnabled = false
+                binding.useStickyPlaceholderCheckBox.isChecked = false
+            }
         }
         updateRulesFromCheckboxes()
     }
@@ -151,14 +160,19 @@ open class SplitActivityBase : AppCompatActivity(), CompoundButton.OnCheckedChan
         binding.splitMainCheckBox.isChecked = splitMainConfig != null
         val placeholderForBConfig = getPlaceholderRule(SplitActivityB::class.java)
         binding.usePlaceholderCheckBox.isChecked = placeholderForBConfig != null
+        binding.useStickyPlaceholderCheckBox.isEnabled = placeholderForBConfig != null
+        binding.useStickyPlaceholderCheckBox.isChecked = (
+                placeholderForBConfig != null &&
+                        placeholderForBConfig.isSticky
+                )
         val bAndCPairConfig = getRuleFor(SplitActivityB::class.java, SplitActivityC::class.java)
         binding.splitBCCheckBox.isChecked = bAndCPairConfig != null
         binding.finishBCCheckBox.isEnabled = bAndCPairConfig != null
         binding.finishBCCheckBox.isChecked = (
-            bAndCPairConfig != null &&
-                bAndCPairConfig.finishPrimaryWithSecondary &&
-                bAndCPairConfig.finishSecondaryWithPrimary
-            )
+                bAndCPairConfig != null &&
+                        bAndCPairConfig.finishPrimaryWithSecondary == SplitRule.FINISH_ALWAYS &&
+                        bAndCPairConfig.finishSecondaryWithPrimary == SplitRule.FINISH_ALWAYS
+                )
         val fConfig = getRuleFor(null, SplitActivityF::class.java)
         binding.splitWithFCheckBox.isChecked = fConfig != null
         val configE = getRuleFor(SplitActivityE::class.java)
@@ -179,10 +193,12 @@ open class SplitActivityBase : AppCompatActivity(), CompoundButton.OnCheckedChan
     private fun getPlaceholderRule(a: Class<out Activity?>): SplitPlaceholderRule? {
         val currentRules = splitController.getSplitRules()
         for (rule in currentRules) {
-            if (rule is SplitPlaceholderRule &&
-                (rule.placeholderIntent.component?.className == a.name)
-            ) {
-                return rule
+            if (rule is SplitPlaceholderRule) {
+                for (filter in rule.filters) {
+                    if (filter.componentName.className == a.name) {
+                        return rule
+                    }
+                }
             }
         }
         return null
@@ -247,11 +263,11 @@ open class SplitActivityBase : AppCompatActivity(), CompoundButton.OnCheckedChan
                             secondaryActivityName = componentName("*"), null
                         )
                     ),
-                    finishPrimaryWithSecondary = false,
-                    finishSecondaryWithPrimary = false,
+                    finishPrimaryWithSecondary = SplitRule.FINISH_NEVER,
+                    finishSecondaryWithPrimary = SplitRule.FINISH_NEVER,
                     clearTop = true,
                     minWidth = minSplitWidth,
-                    minSmallestWidth = minSplitWidth,
+                    minSmallestWidth = 0,
                     splitRatio = SPLIT_RATIO,
                     layoutDir = LayoutDirection.LOCALE
                 )
@@ -271,8 +287,10 @@ open class SplitActivityBase : AppCompatActivity(), CompoundButton.OnCheckedChan
                         )
                     ),
                     placeholderIntent = intent,
+                    isSticky = binding.useStickyPlaceholderCheckBox.isChecked,
+                    finishPrimaryWithSecondary = SplitRule.FINISH_ADJACENT,
                     minWidth = minSplitWidth,
-                    minSmallestWidth = minSplitWidth,
+                    minSmallestWidth = 0,
                     splitRatio = SPLIT_RATIO,
                     layoutDirection = LayoutDirection.LOCALE
                 )
@@ -289,8 +307,10 @@ open class SplitActivityBase : AppCompatActivity(), CompoundButton.OnCheckedChan
                             secondaryActivityIntentAction = null
                         )
                     ),
-                    finishPrimaryWithSecondary = binding.finishBCCheckBox.isChecked,
-                    finishSecondaryWithPrimary = binding.finishBCCheckBox.isChecked,
+                    finishPrimaryWithSecondary = if (binding.finishBCCheckBox.isChecked)
+                        SplitRule.FINISH_ALWAYS else SplitRule.FINISH_NEVER,
+                    finishSecondaryWithPrimary = if (binding.finishBCCheckBox.isChecked)
+                        SplitRule.FINISH_ALWAYS else SplitRule.FINISH_NEVER,
                     clearTop = true,
                     minWidth = minSplitWidth,
                     minSmallestWidth = minSplitWidth,
@@ -310,8 +330,8 @@ open class SplitActivityBase : AppCompatActivity(), CompoundButton.OnCheckedChan
                             secondaryActivityIntentAction = null
                         )
                     ),
-                    finishPrimaryWithSecondary = false,
-                    finishSecondaryWithPrimary = false,
+                    finishPrimaryWithSecondary = SplitRule.FINISH_NEVER,
+                    finishSecondaryWithPrimary = SplitRule.FINISH_NEVER,
                     clearTop = true,
                     minWidth = minSplitWidth,
                     minSmallestWidth = minSplitWidth,
