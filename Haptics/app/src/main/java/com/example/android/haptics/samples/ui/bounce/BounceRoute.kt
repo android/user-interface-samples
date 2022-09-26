@@ -47,6 +47,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import com.example.android.haptics.samples.R
 import com.example.android.haptics.samples.ui.components.Screen
 import com.example.android.haptics.samples.ui.modifiers.noRippleClickable
+import com.example.android.haptics.samples.ui.shapes.ElasticTopShape
 import com.example.android.haptics.samples.ui.theme.HapticSamplerTheme
 import kotlin.math.pow
 
@@ -144,23 +146,37 @@ private fun BounceExampleScreen(messageToUser: String) {
                 // Display instructions to reset only when the ball is on floor or resetting.
                 instructionsText = stringResource(R.string.bounce_tap_to_reset)
             }
-            Text(
-                text = instructionsText,
-                modifier = Modifier
-                    .padding(16.dp)
-                    .align(Alignment.BottomCenter)
-                    .offset(y = -(BALL_DROP_HEIGHT_DP + BALL_SIZE + FLOOR_SIZE))
-            )
 
-            Column(
-                modifier = Modifier.align(Alignment.BottomStart),
-                horizontalAlignment = Alignment.CenterHorizontally
+            Box(modifier = Modifier.align(Alignment.BottomCenter).offset(y = -FLOOR_SIZE)) {
+                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = instructionsText,
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .offset(y = -BALL_DROP_HEIGHT_DP)
+                    )
+                    Ball(offsetY = transitionData.ballOffsetY,
+                         displayTouchIndicator = transitionData.isAtStart
+                    )
+                }
+            }
+            Box(
+                modifier = Modifier.align(Alignment.BottomCenter),
             ) {
-                Ball(
-                    offsetY = transitionData.ballOffsetY,
-                    displayTouchIndicator = transitionData.isAtStart
-                )
-                Floor()
+                var elasticTopPercent = 0f
+                // If ballOffsetY is greater than BALL_END_POSITION, ball compresses floor.
+                if (transitionData.ballOffsetY > BALL_END_POSITION) {
+                    elasticTopPercent = transitionData.ballOffsetY / FLOOR_SIZE
+                }
+
+                Box(
+                    modifier = Modifier
+                        .background(Color.Transparent)
+                ) {
+                    Box(modifier = Modifier.align(Alignment.BottomCenter)) {
+                        Floor(elasticTopPercent)
+                    }
+                }
             }
         }
     }
@@ -191,12 +207,14 @@ private fun Ball(offsetY: Dp = 0.dp, displayTouchIndicator: Boolean = false) {
  * Floor the ball impacts against.
  */
 @Composable
-private fun Floor() {
+private fun Floor(elasticTopPercent: Float) {
     Box(
-        Modifier
-            .height(FLOOR_SIZE)
+        modifier = Modifier
             .fillMaxWidth()
+            .height(FLOOR_SIZE * 2)
+            .clip(ElasticTopShape(elasticTopPercent))
             .background(MaterialTheme.colors.primaryVariant)
+            .offset(y = -FLOOR_SIZE)
     )
 }
 
@@ -290,7 +308,7 @@ private fun clickVibration(vibrator: Vibrator) {
 }
 
 /**
- *  An easing function that simulates bouncing.
+ *  An easing function that simulates bouncing on a wobbly surface.
  *
  *  This easing function was adapted from https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/view/animation/BounceInterpolator.java
  *  for more bounces in the same amount of time.
@@ -300,11 +318,11 @@ private class BounceEasing : Easing {
         var t = fraction
         t *= 1.5986f
         return when {
-            t < 0.3535f -> bounce(t)
-            t < 0.8007f -> bounce(t - 0.5771f) + 0.6f
-            t < 1.1169f -> bounce(t - 0.9588f) + 0.8f
-            t < 1.3405f -> bounce(t - 1.2287f) + 0.9f
-            t < 1.4986f -> bounce(t - 1.419557f) + 0.95f
+            t < 0.3535f -> bounce(t) + 0.1f // Final addition is how much to compress floor.
+            t < 0.8007f -> bounce(t - 0.5771f) + 0.6f + 0.08f
+            t < 1.1169f -> bounce(t - 0.9588f) + 0.8f + 0.06f
+            t < 1.3405f -> bounce(t - 1.2287f) + 0.9f + 0.04f
+            t < 1.4986f -> bounce(t - 1.419557f) + 0.95f + 0.02f
             else -> bounce(t - 1.5486f) + 0.98f
         }
     }
