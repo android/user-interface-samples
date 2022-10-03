@@ -18,11 +18,10 @@ package com.example.android.haptics.samples.ui.wobble
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
@@ -56,6 +55,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.example.android.haptics.samples.R
 import com.example.android.haptics.samples.ui.components.Screen
 import com.example.android.haptics.samples.ui.shapes.ElasticTopShape
@@ -77,6 +77,8 @@ private const val SPIN_RANDOM_INTENSITY_WINDOW = 0.1f
 // The total height of the wobble shape, top is ElasticTopShape and the bottom is RectangleShape.
 private val WOBBLE_SHAPE_HEIGHT = 600.dp
 
+private val WOBBLE_INSTRUCTIONS_Y_OFFSET = 200.dp
+
 @Composable
 fun WobbleRoute(viewModel: WobbleViewModel) {
     WobbleScreen(messageToUser = viewModel.messageToUser)
@@ -95,8 +97,8 @@ fun WobbleScreen(messageToUser: String) {
     val dragDistanceAnimated by animateFloatAsState(
         targetValue = if (dragDistance > DRAG_DISTANCE_START) dragDistance else DRAG_DISTANCE_START,
         animationSpec = spring(
-            dampingRatio = Spring.DampingRatioHighBouncy,
-            stiffness = Spring.StiffnessMedium
+            dampingRatio = 0.15f,
+            stiffness = Spring.StiffnessMediumLow
         ),
         finishedListener = {
             if (isWobbling) isWobbling = !isWobbling
@@ -141,10 +143,9 @@ fun WobbleScreen(messageToUser: String) {
                     orientation = Orientation.Vertical,
                     state = rememberDraggableState { delta ->
                         isWobbling = false
-                        dragDistance += delta
                         // Only allow drag down in this example.
-                        if (dragDistance < DRAG_DISTANCE_START) return@rememberDraggableState
-
+                        if (delta < 0 && dragDistance == 0f) return@rememberDraggableState
+                        dragDistance += delta
                         if (dragDistance >= maxDragDistance) {
                             dragDistance = maxDragDistance
                         }
@@ -153,21 +154,33 @@ fun WobbleScreen(messageToUser: String) {
         ) {
             Box(
                 Modifier
-                    .align(Alignment.TopCenter)
-                    .offset(y = 150.dp)
+                    .align(Alignment.BottomCenter)
             ) {
-                androidx.compose.animation.AnimatedVisibility(
-                    enter = fadeIn(),
-                    exit = fadeOut(),
-                    visible = dragDistance === DRAG_DISTANCE_START && !isWobbling
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .zIndex(1f)
                 ) {
-                    WobbleInstructions()
+                    if (!isWobbling) {
+                        Box(modifier = Modifier.offset(y = WOBBLE_INSTRUCTIONS_Y_OFFSET)) {
+                            var additionalSpacing: Dp
+                            with(LocalDensity.current) {
+                                // Don't add as much spacing between text/icon as much as drag.
+                                additionalSpacing = dragDistance.toDp() / 2
+                            }
+                            WobbleInstructions(
+                                additionalSpacingBetweenTextAndIcon = additionalSpacing
+                            )
+                        }
+                    }
+                }
+                Box(modifier = Modifier.align(Alignment.BottomCenter)) {
+                    WobbleShape(
+                        WOBBLE_SHAPE_HEIGHT,
+                        elasticTopPercent = dragDistanceAnimated / maxDragDistance
+                    )
                 }
             }
-            WobbleShape(
-                WOBBLE_SHAPE_HEIGHT,
-                elasticTopPercent = dragDistanceAnimated / maxDragDistance
-            )
         }
     }
 }
@@ -198,12 +211,21 @@ private fun WobbleShape(wobbleShapeHeight: Dp, elasticTopPercent: Float) {
 
 /**
  * Instructions for the user to interact with the WobbleShape.
+ *
+ * @param additionalSpacingBetweenTextAndIcon Add additional spacing between the instruction text
+ *     and the icon, used in the example to allow the arrow to appear to move with drag down.
  */
 @Composable
-private fun WobbleInstructions() {
+private fun WobbleInstructions(additionalSpacingBetweenTextAndIcon: Dp = 0.dp) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(stringResource(R.string.wobble_drag_and_release))
-        Spacer(modifier = Modifier.height(16.dp))
+        Box(Modifier.height(32.dp)) {
+            // As user is dragging down, we add additional spacing between text and icon and
+            // animate text instructions out.
+            this@Column.AnimatedVisibility(visible = additionalSpacingBetweenTextAndIcon < 2.dp) {
+                Text(stringResource(R.string.wobble_drag_and_release))
+            }
+        }
+        Spacer(modifier = Modifier.height(40.dp + additionalSpacingBetweenTextAndIcon))
         Icon(Icons.Rounded.ArrowDownward, null, tint = MaterialTheme.colors.secondaryText)
     }
 }

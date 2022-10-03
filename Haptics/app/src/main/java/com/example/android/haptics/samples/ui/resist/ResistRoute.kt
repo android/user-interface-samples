@@ -153,14 +153,17 @@ fun ResistScreen(isLowTickSupported: Boolean, messageToUser: String = "") {
             Modifier
                 .draggable(
                     orientation = Orientation.Vertical,
-                    onDragStarted = {
-                        isDragging = true
-                    },
                     onDragStopped = {
                         isDragging = false
                     },
                     state = rememberDraggableState { delta ->
                         dragOffset += delta
+                        // Disallow upward drag.
+                        if (dragOffset < 0) {
+                            dragOffset = 0f
+                        } else {
+                            isDragging = true
+                        }
                     }
                 )
                 .fillMaxWidth()
@@ -186,12 +189,7 @@ private fun ResistIndicator(indicator: IndicatorData, dragOffset: DragOffsetData
                 color = MaterialTheme.colors.primaryVariant,
                 strokeWidth = indicator.strokeWidth
             )
-            androidx.compose.animation.AnimatedVisibility(
-                visible = dragOffset.isAtStart(),
-                enter = fadeIn(animationSpec = tween(TIME_TO_ANIMATE_BACK_MS)),
-                exit = fadeOut(),
-
-            ) {
+            if (dragOffset.isAtStart()) {
                 Text(stringResource(R.string.resist_screen_drag_down), Modifier.offset(y = START_SIZE / 2))
             }
         }
@@ -206,7 +204,6 @@ private fun ResistIndicator(indicator: IndicatorData, dragOffset: DragOffsetData
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
-
                 // Indicator that max resistance has been reached.
                 Box(
                     modifier = Modifier
@@ -217,18 +214,14 @@ private fun ResistIndicator(indicator: IndicatorData, dragOffset: DragOffsetData
             }
         }
 
-        Box(modifier = Modifier.align(Alignment.Center)) {
-            androidx.compose.animation.AnimatedVisibility(
-                visible = dragOffset.isAtStart(),
-                enter = fadeIn(animationSpec = tween(TIME_TO_ANIMATE_BACK_MS)),
-                exit = fadeOut()
-            ) {
+        if (dragOffset.isAtStart()) {
+            Box(modifier = Modifier.align(Alignment.Center)) {
                 Icon(
                     Icons.Rounded.ArrowDownward,
                     null,
                     tint = MaterialTheme.colors.onPrimary,
                     modifier = Modifier
-                        .offset(y = -(4.dp))
+                        .offset(y = (-10).dp)
                         .align(Alignment.Center)
                 )
             }

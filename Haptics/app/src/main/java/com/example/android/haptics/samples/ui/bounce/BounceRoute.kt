@@ -155,8 +155,9 @@ private fun BounceExampleScreen(messageToUser: String) {
                             .padding(16.dp)
                             .offset(y = -BALL_DROP_HEIGHT_DP)
                     )
-                    Ball(offsetY = transitionData.ballOffsetY,
-                         displayTouchIndicator = transitionData.isAtStart
+                    Ball(
+                        offsetY = transitionData.ballOffsetY,
+                        displayTouchIndicator = transitionData.isAtStart
                     )
                 }
             }
