@@ -40,7 +40,7 @@ class ConversionFragment : Fragment(R.layout.conversion_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // The ConversionEditText can return multiple search queries as user types.
-        // In this sample, we just we just show the search queries.
+        // In this sample, we just show the search queries.
         binding.edit.doOnSearchQueries { searchQueries ->
             binding.searchQueries.text = searchQueries.joinToString("\n")
         }
