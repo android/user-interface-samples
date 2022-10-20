@@ -10,7 +10,7 @@ Clone the repository, then open the samples as projects in Android Studio.
 
 Stack Overflow: http://stackoverflow.com/questions/tagged/android
 
-If you find an error in the samples, please file an issue at https://github.com/android/user-interface.
+If you find an error in the samples, please file an issue at https://github.com/android/user-interface-samples.
 
 ## Patches and contributions
 
