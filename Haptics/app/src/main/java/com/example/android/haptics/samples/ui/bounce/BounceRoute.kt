@@ -276,12 +276,10 @@ private fun updateCollisionData(transitionData: TransitionData): BallCollisionDa
     val ballOffsetY = transitionData.ballOffsetY
     return BallCollisionData(
         collisionWithFloor = transitionData.isBouncing &&
-            ballOffsetY >
-            -(DISTANCE_FROM_END_POSITION_FOR_COLLISION) && ballOffsetY < BALL_END_POSITION,
+            ballOffsetY > -(DISTANCE_FROM_END_POSITION_FOR_COLLISION),
         collisionWithReset = transitionData.isResetting &&
             ballOffsetY > BALL_START_POSITION &&
             ballOffsetY < (BALL_START_POSITION + DISTANCE_FROM_START_POSITION_FOR_COLLISION)
-
     )
 }
 
