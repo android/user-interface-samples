@@ -1,6 +1,6 @@
 # Android user interface samples
 
-A collection of Android Studio projects to help you start building Android user interface features.
+A collection of Android projects to help you start building Android user interface features.
 
 ## Installation
 
