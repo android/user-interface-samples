@@ -12,5 +12,5 @@ Clone the [user-interface-samples](https://github.com/android/user-interface-sam
 
 Stack Overflow: http://stackoverflow.com/questions/tagged/android
 
-If you find an error in the samples, please file an issue at https://github.com/android/user-interface.
+If you find an error in the samples, please file an issue at https://github.com/android/user-interface-samples.
 
