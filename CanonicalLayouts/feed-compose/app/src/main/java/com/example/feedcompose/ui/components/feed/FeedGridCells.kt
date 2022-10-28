@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      https://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-plugins {
-    id 'com.android.application' version '7.2.2' apply false
-    id 'com.android.library' version '7.2.2' apply false
-    id 'org.jetbrains.kotlin.android' version '1.7.10' apply false
-    id 'com.diffplug.spotless' version '6.9.0'
-}
+package com.example.feedcompose.ui.components.feed
 
-spotless {
-    kotlin {
-        target '**/*.kt'
-        ktlint('0.46.1')
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.ui.unit.Dp
+
+interface FeedGridCells {
+
+    fun toGridCells(): GridCells
+
+    class Fixed(private val count: Int) : FeedGridCells {
+        override fun toGridCells(): GridCells = GridCells.Fixed(count)
     }
-    groovyGradle {
-        target '**/*.gradle'
+
+    class Adaptive(private val minSize: Dp) : FeedGridCells {
+        override fun toGridCells(): GridCells = GridCells.Adaptive(minSize)
     }
 }

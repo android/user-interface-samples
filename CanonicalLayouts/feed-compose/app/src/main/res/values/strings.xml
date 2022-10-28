@@ -15,7 +15,7 @@
 -->
 
 <resources>
-    <string name="app_name">Compose-based Feed Sample</string>
+    <string name="app_name">Sweets feed</string>
 
     <string name="feed_name">Sweets</string>
 
@@ -27,6 +27,12 @@
     <string name="candy_or_pastry">Candy or Pastry</string>
 
     <string name="thumbnail_content_description">A sweets</string>
+
+    <string name="show_details">Show details</string>
+
+    <string name="search_text">Search text</string>
+    <string name="search">Search</string>
+    <string name="back_to_top">Back to top</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

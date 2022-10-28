@@ -17,28 +17,48 @@
 package com.example.feedcompose.ui.screen
 
 import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.rememberTransformableState
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.key.isCtrlPressed
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.pointer.PointerIconDefaults
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.feedcompose.R
 import com.example.feedcompose.data.Sweets
 import com.example.feedcompose.ui.components.TopAppBar
+import kotlin.math.roundToInt
 
 @Composable
 fun SweetsDetails(
@@ -91,7 +111,7 @@ private fun SweetsDetailsVertical(
                 .fillMaxWidth(),
             contentScale = ContentScale.Crop
         )
-        Text(
+        ZoomableText(
             text = stringResource(id = sweets.description),
             modifier = Modifier.padding(32.dp)
         )
@@ -116,7 +136,7 @@ private fun SweetsDetailsHorizontal(
                     .fillMaxSize()
                     .weight(1.0f)
             )
-            Text(
+            ZoomableText(
                 text = stringResource(id = sweets.description),
                 modifier = Modifier
                     .padding(start = 32.dp, end = 32.dp, bottom = 32.dp)
@@ -124,5 +144,57 @@ private fun SweetsDetailsHorizontal(
                     .verticalScroll(scrollState)
             )
         }
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+private fun ZoomableText(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    var scale by remember { mutableStateOf(1.0f) }
+    var offset by remember { mutableStateOf(Offset.Zero) }
+
+    val transformableState = rememberTransformableState { zoomChange, panChange, _ ->
+        scale *= zoomChange
+        offset += panChange
+    }
+
+    var isModifyKeyPressed by remember { mutableStateOf(false) }
+    val scrollableState = rememberScrollableState { delta ->
+        if (isModifyKeyPressed) {
+            scale *= 1 + delta.coerceIn(-10f, 10f) / 100
+            0f
+        } else {
+            delta
+        }
+    }
+
+    SelectableText(
+        text = text,
+        modifier = modifier
+            .onPreviewKeyEvent {
+                isModifyKeyPressed = it.isCtrlPressed
+                false
+            }
+            .scrollable(orientation = Orientation.Vertical, state = scrollableState)
+            .offset { IntOffset(offset.x.roundToInt(), offset.y.roundToInt()) }
+            .transformable(state = transformableState)
+            .graphicsLayer {
+                scaleX = scale
+                scaleY = scale
+            }
+    )
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+private fun SelectableText(text: String, modifier: Modifier = Modifier) {
+    SelectionContainer(modifier = modifier) {
+        Text(
+            text = text,
+            modifier = Modifier.pointerHoverIcon(PointerIconDefaults.Text)
+        )
     }
 }

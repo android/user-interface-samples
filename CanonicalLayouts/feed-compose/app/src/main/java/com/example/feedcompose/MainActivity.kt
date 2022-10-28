@@ -29,6 +29,9 @@ import com.example.feedcompose.ui.FeedSampleApp
 import com.example.feedcompose.ui.theme.FeedComposeTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val hasHardwareKey = false
+
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
