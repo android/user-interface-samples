@@ -37,7 +37,7 @@ fun SupportingPanel(
         strategy = when (windowSizeClass.widthSizeClass) {
             WindowWidthSizeClass.Compact -> VerticalTwoPaneStrategy(0.5f)
             WindowWidthSizeClass.Medium -> HorizontalTwoPaneStrategy(0.5f)
-            else -> HorizontalTwoPaneStrategy(0.3f)
+            else -> HorizontalTwoPaneStrategy(0.7f)
         },
         displayFeatures = displayFeatures
     )

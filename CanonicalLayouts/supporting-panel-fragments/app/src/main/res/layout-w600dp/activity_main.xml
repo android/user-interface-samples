@@ -14,7 +14,6 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -25,7 +24,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_fragment"
         android:name="com.google.supporting.panel.fragments.MainFragment"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         tools:layout="@layout/fragment_main"/>
@@ -33,7 +32,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/support_fragment"
         android:name="com.google.supporting.panel.fragments.SupportFragment"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         tools:layout="@layout/fragment_support"/>
