@@ -57,7 +57,7 @@ private val loremIpsum = """
         |Tempus quam pellentesque nec nam aliquam. Praesent semper feugiat nibh sed. Adipiscing elit duis tristique sollicitudin nibh sit. Netus et malesuada fames ac turpis egestas sed tempus urna. Quis varius quam quisque id diam vel quam. Urna duis convallis convallis tellus id interdum velit laoreet. Id eu nisl nunc mi ipsum. Fermentum dui faucibus in ornare. Nunc lobortis mattis aliquam faucibus. Vulputate mi sit amet mauris commodo quis. Porta nibh venenatis cras sed. Vitae tortor condimentum lacinia quis vel eros donec. Eu non diam phasellus vestibulum.
         """.trimMargin()
 private val sampleWords = listOf(
-    "Apple" to loremIpsum,
+    "Apricot" to loremIpsum,
     "Banana" to loremIpsum,
     "Cherry" to loremIpsum,
     "Date" to loremIpsum,
