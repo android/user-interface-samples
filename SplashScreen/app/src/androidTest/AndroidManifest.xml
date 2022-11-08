@@ -16,7 +16,7 @@
 -->
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.splashscreen.test">
+    >
 
     <!-- Export the activities from AndroidX Testing Library. -->
     <application>
