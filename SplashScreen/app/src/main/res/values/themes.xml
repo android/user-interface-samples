@@ -18,6 +18,7 @@
 
     <style name="Base.Theme.App" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
     </style>
 
     <!--
@@ -60,7 +61,7 @@
         <!-- The background color behind the icon. -->
         <item name="windowSplashScreenIconBackgroundColor">@color/lime_700</item>
         <!-- The background color for the splash screen. -->
-        <item name="windowSplashScreenBackground">@color/lime_500</item>
+        <item name="windowSplashScreenBackground">@color/splash_screen_background</item>
         <!-- The duration, in milliseconds, of the icon animation of the splash screen. -->
         <item name="windowSplashScreenAnimationDuration">1000</item>
         <!-- The 'core-splashscreen' switches the theme back to this after splash screen. -->

@@ -19,4 +19,7 @@
     <color name="lime_700">#AFB42B</color>
     <color name="blue_gray_500">#607D8B</color>
     <color name="blue_gray_700">#455A64</color>
+    <color name="blue_gray_900">#263238</color>
+
+    <color name="splash_screen_background">@color/lime_500</color>
 </resources>
