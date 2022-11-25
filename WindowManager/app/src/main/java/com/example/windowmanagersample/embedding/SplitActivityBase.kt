@@ -162,17 +162,17 @@ open class SplitActivityBase : AppCompatActivity(), CompoundButton.OnCheckedChan
         binding.usePlaceholderCheckBox.isChecked = placeholderForBConfig != null
         binding.useStickyPlaceholderCheckBox.isEnabled = placeholderForBConfig != null
         binding.useStickyPlaceholderCheckBox.isChecked = (
-                placeholderForBConfig != null &&
-                        placeholderForBConfig.isSticky
-                )
+            placeholderForBConfig != null &&
+                placeholderForBConfig.isSticky
+            )
         val bAndCPairConfig = getRuleFor(SplitActivityB::class.java, SplitActivityC::class.java)
         binding.splitBCCheckBox.isChecked = bAndCPairConfig != null
         binding.finishBCCheckBox.isEnabled = bAndCPairConfig != null
         binding.finishBCCheckBox.isChecked = (
-                bAndCPairConfig != null &&
-                        bAndCPairConfig.finishPrimaryWithSecondary == SplitRule.FINISH_ALWAYS &&
-                        bAndCPairConfig.finishSecondaryWithPrimary == SplitRule.FINISH_ALWAYS
-                )
+            bAndCPairConfig != null &&
+                bAndCPairConfig.finishPrimaryWithSecondary == SplitRule.FINISH_ALWAYS &&
+                bAndCPairConfig.finishSecondaryWithPrimary == SplitRule.FINISH_ALWAYS
+            )
         val fConfig = getRuleFor(null, SplitActivityF::class.java)
         binding.splitWithFCheckBox.isChecked = fConfig != null
         val configE = getRuleFor(SplitActivityE::class.java)
