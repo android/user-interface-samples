@@ -18,6 +18,7 @@ package com.example.android.haptics.samples.ui
 import android.app.Application
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -34,6 +35,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -106,8 +108,8 @@ fun HapticSamplerApp(application: Application) {
                     },
                 )
             }
-        ) {
-            Box() {
+        ) { contentPadding ->
+            Box(modifier = Modifier.padding(contentPadding)) {
                 HapticSamplerNavGraph(
                     application = application,
                     navController = navController,
