@@ -8,7 +8,7 @@ For more information see the [Large screen canonical layouts](https://developer.
 
 Clone the [user-interface-samples](https://github.com/android/user-interface-samples) repository, then open the canonical layout samples as projects in Android Studio.
 
-## Available Canonical layouts and related implemtations
+## Available Canonical layouts and related implementations
 - List-Detail
     - [Activities](/list-detail-activity-embedding)
     - [Views and Fragments](/list-detail-sliding-pane)
