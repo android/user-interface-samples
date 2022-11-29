@@ -35,6 +35,14 @@ class PermissionRequest(
     private val permission: String
 ) {
 
+    private val _status = MutableLiveData<PermissionStatus>().also {
+        fragment.lifecycleScope.launchWhenStarted {
+            it.value = fragment.requireActivity().checkPermissionStatus(permission)
+        }
+    }
+
+    val status: LiveData<PermissionStatus> = _status
+
     private val launcher = fragment.registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
@@ -49,14 +57,6 @@ class PermissionRequest(
             )
         }
     }
-
-    private val _status = MutableLiveData<PermissionStatus>().also {
-        fragment.lifecycleScope.launchWhenStarted {
-            it.value = fragment.requireActivity().checkPermissionStatus(permission)
-        }
-    }
-
-    val status: LiveData<PermissionStatus> = _status
 
     fun launch() {
         launcher.launch(permission)
