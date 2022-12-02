@@ -15,17 +15,21 @@
 
 package com.example.android.people.ui.main
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.LocusId
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.android.people.R
 import com.example.android.people.databinding.MainFragmentBinding
 import com.example.android.people.getNavigationController
+import com.example.android.people.ui.chat.PermissionRequest
+import com.example.android.people.ui.chat.PermissionStatus
 import com.example.android.people.ui.viewBindings
 
 /**
@@ -34,6 +38,9 @@ import com.example.android.people.ui.viewBindings
 class MainFragment : Fragment(R.layout.main_fragment) {
 
     private val binding by viewBindings(MainFragmentBinding::bind)
+
+    @SuppressLint("InlinedApi") // POST_NOTIFICATIONS is automatically granted on API<33.
+    private val permissionRequest = PermissionRequest(this, Manifest.permission.POST_NOTIFICATIONS)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,17 +52,35 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         navigationController.updateAppBar(false)
         val viewModel: MainViewModel by viewModels()
 
+        // Show a header message asking the user to grant the notification permission.
+        val headerAdapter = HeaderAdapter { permissionRequest.launch() }
+
+        // Show the contact list.
         val contactAdapter = ContactAdapter { id ->
             navigationController.openChat(id, null)
         }
-        viewModel.contacts.observe(viewLifecycleOwner, Observer { contacts ->
-            contactAdapter.submitList(contacts)
-        })
         binding.contacts.run {
             layoutManager = LinearLayoutManager(view.context)
             setHasFixedSize(true)
             adapter = contactAdapter
         }
+        viewModel.contacts.observe(viewLifecycleOwner) { contacts ->
+            contactAdapter.submitList(contacts)
+        }
+
+        // Deal with updates of the permission status.
+        permissionRequest.status.observe(viewLifecycleOwner) { status ->
+            when (status) {
+                // We have the permission now. Hide the permission header.
+                is PermissionStatus.Granted -> binding.contacts.adapter = contactAdapter
+                // We don't have the permission. Show the permission header.
+                is PermissionStatus.Denied -> {
+                    binding.contacts.adapter = ConcatAdapter(headerAdapter, contactAdapter)
+                    headerAdapter.shouldShowRationale = status.shouldShowRationale
+                }
+            }
+        }
+
         // Differentiate the main view from a chat view (ChatFragment) for  content capture.
         // See https://developer.android.com/reference/androidx/core/content/LocusIdCompat
         requireActivity().setLocusContext(LocusId("mainFragment"), null)
