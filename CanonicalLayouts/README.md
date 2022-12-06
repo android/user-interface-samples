@@ -10,16 +10,16 @@ Clone the [user-interface-samples](https://github.com/android/user-interface-sam
 
 ## Available Canonical layouts and related implementations
 - List-Detail
-    - [Activities](https://github.com/android/user-interface-samples/tree/main/CanonicalLayouts/list-detail-activity-embedding)
-    - [Views and Fragments](https://github.com/android/user-interface-samples/tree/main/CanonicalLayouts/list-detail-sliding-pane)
-    - [Jetpack Compose](https://github.com/android/user-interface-samples/tree/main/CanonicalLayouts/list-detail-compose)
+    - [Activities](./list-detail-activity-embedding)
+    - [Views and Fragments](./list-detail-sliding-pane)
+    - [Jetpack Compose](./list-detail-compose)
 - Feed
-    - [Views and Fragments](https://github.com/android/user-interface-samples/tree/main/CanonicalLayouts/feed-view)
-    - [Jetpack Compose](https://github.com/android/user-interface-samples/tree/main/CanonicalLayouts/feed-compose)
+    - [Views and Fragments](./feed-view)
+    - [Jetpack Compose](./feed-compose)
 - Supporting Panel
-    - [Views](https://github.com/android/user-interface-samples/tree/main/CanonicalLayouts/supporting-panel-views)
-    - [Fragments](https://github.com/android/user-interface-samples/tree/main/CanonicalLayouts/supporting-panel-fragments)
-    - [Jetpack Compose](https://github.com/android/user-interface-samples/tree/main/CanonicalLayouts/supporting-panel-compose)
+    - [Views](./supporting-panel-views)
+    - [Fragments](./supporting-panel-fragments)
+    - [Jetpack Compose](./supporting-panel-compose)
 
 ## Support
 
