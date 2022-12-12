@@ -10,16 +10,16 @@ Clone the [user-interface-samples](https://github.com/android/user-interface-sam
 
 ## Available Canonical layouts and related implementations
 - List-Detail
-    - [Activities](/list-detail-activity-embedding)
-    - [Views and Fragments](/list-detail-sliding-pane)
-    - [Jetpack Compose](/list-detail-compose)
+    - [Activities](./list-detail-activity-embedding)
+    - [Views and Fragments](./list-detail-sliding-pane)
+    - [Jetpack Compose](./list-detail-compose)
 - Feed
-    - [Views and Fragments](/feed-view)
-    - [Jetpack Compose](/feed-compose)
+    - [Views and Fragments](./feed-view)
+    - [Jetpack Compose](./feed-compose)
 - Supporting Panel
-    - [Views](/supporting-panel-views)
-    - [Fragments](/supporting-panel-fragments)
-    - [Jetpack Compose](/supporting-panel-compose)
+    - [Views](./supporting-panel-views)
+    - [Fragments](./supporting-panel-fragments)
+    - [Jetpack Compose](./supporting-panel-compose)
 
 ## Support
 
