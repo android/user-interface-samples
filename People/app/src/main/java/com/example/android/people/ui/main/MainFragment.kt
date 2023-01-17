@@ -75,7 +75,8 @@ class MainFragment : Fragment(R.layout.main_fragment) {
                 is PermissionStatus.Granted -> binding.contacts.adapter = contactAdapter
                 // We don't have the permission. Show the permission header.
                 is PermissionStatus.Denied -> {
-                    binding.contacts.adapter = ConcatAdapter(headerAdapter, contactAdapter)
+                    val config = ConcatAdapter.Config.Builder().setStableIdMode(ConcatAdapter.Config.StableIdMode.SHARED_STABLE_IDS).build()
+                    binding.contacts.adapter = ConcatAdapter(config, headerAdapter, contactAdapter)
                     headerAdapter.shouldShowRationale = status.shouldShowRationale
                 }
             }
