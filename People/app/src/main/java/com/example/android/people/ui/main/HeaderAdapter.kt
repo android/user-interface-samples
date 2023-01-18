@@ -23,6 +23,9 @@ import com.example.android.people.R
 import com.example.android.people.databinding.ContactHeaderBinding
 
 class HeaderAdapter(private val onClick: () -> Unit) : RecyclerView.Adapter<HeaderViewHolder>() {
+    init {
+        setHasStableIds(true)
+    }
 
     private var cachedHolder: HeaderViewHolder? = null
 
