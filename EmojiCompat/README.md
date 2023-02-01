@@ -1,3 +1,7 @@
+⚠️ *Caution*: As of late 2021, the `androidx.emoji:emoji` library is deprecated in favor of `androidx.emoji2:emoji2`, which provides integration into `androidx.appcompat`. Please see the [Support modern emoji](https://developer.android.com/develop/ui/views/text-and-emoji/emoji2) for more information.
+
+
+
 Android EmojiCompat Sample (Kotlin)
 ===================================
 
