@@ -16,7 +16,7 @@
 
 buildscript {
     ext {
-        kotlin_version = '1.6.21'
+        kotlin_version = '1.7.21'
     }
     repositories {
         mavenCentral()
@@ -30,13 +30,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.example.android.emojicompat"
         minSdkVersion 19
-        targetSdkVersion 31
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 33
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -49,15 +48,15 @@ android {
 
 dependencies {
     // Support Libraries
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'androidx.emoji:emoji:1.1.0'
     implementation 'androidx.emoji:emoji-appcompat:1.1.0'
     implementation 'androidx.emoji:emoji-bundled:1.1.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     // Test
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.test.espresso:espresso-intents:3.4.0"
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation "androidx.test.espresso:espresso-intents:3.5.1"
 
     testImplementation 'junit:junit:4.13.2'
 }
