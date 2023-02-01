@@ -31,10 +31,10 @@ class EmojiCompatApplication : Application() {
 
     companion object {
 
-        private val TAG = "EmojiCompatApplication"
+        private const val TAG = "EmojiCompatApplication"
 
         /** Change this to `false` when you want to use the downloadable Emoji font.  */
-        private val USE_BUNDLED_EMOJI = true
+        private const val USE_BUNDLED_EMOJI = true
 
     }
 
