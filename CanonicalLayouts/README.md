@@ -16,10 +16,10 @@ Clone the [user-interface-samples](https://github.com/android/user-interface-sam
 - Feed
     - [Views and Fragments](./feed-view)
     - [Jetpack Compose](./feed-compose)
-- Supporting Panel
-    - [Views](./supporting-panel-views)
-    - [Fragments](./supporting-panel-fragments)
-    - [Jetpack Compose](./supporting-panel-compose)
+- Supporting Pane
+    - [Views](./supporting-pane-views)
+    - [Fragments](./supporting-pane-fragments)
+    - [Jetpack Compose](./supporting-pane-compose)
 
 ## Support
 
