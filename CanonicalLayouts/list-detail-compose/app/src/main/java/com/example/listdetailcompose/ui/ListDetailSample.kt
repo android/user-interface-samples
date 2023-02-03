@@ -95,8 +95,8 @@ fun ListDetailSample(
         setIsDetailOpen = { isDetailOpen = it },
         showListAndDetail =
             when (widthSizeClass) {
-                WindowWidthSizeClass.Compact -> false
-                WindowWidthSizeClass.Medium, WindowWidthSizeClass.Expanded -> true
+                WindowWidthSizeClass.Compact, WindowWidthSizeClass.Medium -> false
+                WindowWidthSizeClass.Expanded -> true
                 else -> true
             },
         detailKey = selectedWordIndex,
