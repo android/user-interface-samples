@@ -30,7 +30,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/detail_container"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="300dp"
+        android:layout_width="560dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         app:defaultNavHost="true"
