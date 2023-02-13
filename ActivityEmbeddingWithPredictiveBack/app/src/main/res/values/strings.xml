@@ -17,4 +17,7 @@
 <resources>
     <string name="app_name">Activity Embedding and Predictive Back</string>
     <string name="title_activity_placeholder">PlaceholderActivity</string>
+    <string name="host_app_message">I\'m the host app!</string>
+    <string name="activity_embedding_message">Launch detail embedded</string>
+    <string name="multi_window_message">Launch detail in multi-window</string>
 </resources>

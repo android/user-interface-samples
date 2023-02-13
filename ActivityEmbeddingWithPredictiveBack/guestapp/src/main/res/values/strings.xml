@@ -16,4 +16,6 @@
 
 <resources>
     <string name="app_name">Guest App</string>
+    <string name="guest_activity_message">I\'m the guest app!</string>
+    <string name="finish_guest_activity_message">Finish guest Activity</string>
 </resources>

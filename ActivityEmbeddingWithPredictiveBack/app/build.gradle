@@ -69,6 +69,7 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.6.1'
 
     implementation "androidx.window:window:1.1.0-alpha04"
+    implementation "androidx.activity:activity:1.6.1"
     implementation "androidx.startup:startup-runtime:1.1.1"
 
     implementation platform('androidx.compose:compose-bom:2022.10.00')

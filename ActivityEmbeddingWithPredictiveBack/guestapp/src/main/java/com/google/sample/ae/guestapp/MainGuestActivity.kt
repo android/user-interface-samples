@@ -32,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.sample.ae.guestapp.ui.theme.ActivityEmbeddingAndPredictiveBackTheme
@@ -67,7 +68,7 @@ fun GuestUi(modifier: Modifier = Modifier, onClick:() -> Unit = {}) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "I'm the guest app!",
+            text = stringResource(R.string.guest_activity_message),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.headlineMedium
         )
@@ -75,7 +76,7 @@ fun GuestUi(modifier: Modifier = Modifier, onClick:() -> Unit = {}) {
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(onClick = onClick){
-            Text(text = "Finish guest Activity")
+            Text(text = stringResource(R.string.finish_guest_activity_message))
         }
     }
 }

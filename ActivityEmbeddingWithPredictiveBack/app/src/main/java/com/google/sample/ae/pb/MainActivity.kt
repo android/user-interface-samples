@@ -34,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.sample.ae.pb.ui.theme.ActivityEmbeddingAndPredictiveBackTheme
@@ -114,7 +115,7 @@ fun HostUi(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "I'm the host app!",
+            text = stringResource(R.string.host_app_message),
             color = MaterialTheme.colorScheme.onSecondary,
             style = MaterialTheme.typography.headlineMedium
         )
@@ -122,18 +123,18 @@ fun HostUi(
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(onClick = activityEmbedding) {
-            Text(text = "Launch detail embedded")
+            Text(text = stringResource(R.string.activity_embedding_message))
         }
 
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(onClick = multiWindow) {
-            Text(text = "Launch detail in multi-window")
+            Text(text = stringResource(R.string.multi_window_message))
         }
     }
 }
 
-@Preview(name = "EXPANDED", showBackground = true, widthDp = 800)
+@Preview(name = "EXPANDED", showBackground = true, widthDp = 840)
 @Preview(name = "COMPACT", showBackground = true, showSystemUi = true)
 annotation class UiPreview
 
