@@ -33,7 +33,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -46,8 +45,10 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.window.layout.DisplayFeature
+import com.example.listdetailcompose.R
 import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
 
 // Create some simple sample data
@@ -81,9 +82,9 @@ fun ListDetailSample(
     val widthSizeClass by rememberUpdatedState(windowSizeClass.widthSizeClass)
 
     /**
-     * The index of the currently selected word.
+     * The index of the currently selected word, or `null` if none is selected
      */
-    var selectedWordIndex by rememberSaveable { mutableStateOf(0) }
+    var selectedWordIndex: Int? by rememberSaveable { mutableStateOf(null) }
 
     /**
      * True if the detail is currently open. This is the primary control for "navigation".
@@ -101,10 +102,11 @@ fun ListDetailSample(
             },
         detailKey = selectedWordIndex,
         list = { isDetailVisible ->
+            val currentSelectedWordIndex = selectedWordIndex
             ListContent(
                 words = sampleWords.map(DefinedWord::word),
-                selectionState = if (isDetailVisible) {
-                    SelectionVisibilityState.ShowSelection(selectedWordIndex)
+                selectionState = if (isDetailVisible && currentSelectedWordIndex != null) {
+                    SelectionVisibilityState.ShowSelection(currentSelectedWordIndex)
                 } else {
                     SelectionVisibilityState.NoSelection
                 },
@@ -123,7 +125,7 @@ fun ListDetailSample(
             )
         },
         detail = { isListVisible ->
-            val definedWord = sampleWords[selectedWordIndex]
+            val definedWord = selectedWordIndex?.let(sampleWords::get)
             DetailContent(
                 definedWord = definedWord,
                 modifier = if (isListVisible) {
@@ -165,7 +167,6 @@ sealed interface SelectionVisibilityState {
 /**
  * The content for the list pane.
  */
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ListContent(
     words: List<String>,
@@ -254,7 +255,7 @@ private fun ListContent(
  */
 @Composable
 private fun DetailContent(
-    definedWord: DefinedWord,
+    definedWord: DefinedWord?,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -262,12 +263,18 @@ private fun DetailContent(
             .verticalScroll(rememberScrollState())
             .padding(vertical = 16.dp)
     ) {
-        Text(
-            text = definedWord.word,
-            style = MaterialTheme.typography.headlineMedium
-        )
-        Text(
-            text = definedWord.definition
-        )
+        if (definedWord != null) {
+            Text(
+                text = definedWord.word,
+                style = MaterialTheme.typography.headlineMedium
+            )
+            Text(
+                text = definedWord.definition
+            )
+        } else {
+            Text(
+                text = stringResource(R.string.placeholder)
+            )
+        }
     }
 }

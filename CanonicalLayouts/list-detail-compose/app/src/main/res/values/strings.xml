@@ -16,4 +16,5 @@
 -->
 <resources>
     <string name="app_name">ListDetailCompose</string>
+    <string name="placeholder">Tap a word to display its definition</string>
 </resources>
