@@ -13,16 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// Top-level build file where you can add configuration :options common to all sub-projects/modules.
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-
+    ext.kotlin_version = '1.4.21'
     repositories {
         google()
         jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -46,6 +47,7 @@ ext {
     minSdkVersion = 15
     targetSdkVersion = 27
     compileSdkVersion = 28
+    buildToolsVersion = '28.0.3'
 
     // App dependencies
     appCompat = '1.0.2'
@@ -57,6 +59,7 @@ ext {
     runnerVersion = '1.1.1'
     rulesVersion = '1.0.1'
     espressoVersion = '3.1.1'
+    androidktx = "1.0.1"
     dexmakerVersion = '1.2'
     dexmakerMockitoVersion = '1.2'
 }

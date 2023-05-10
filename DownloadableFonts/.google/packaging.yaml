@@ -7,9 +7,9 @@
 status:       PUBLISHED
 technologies: [Android]
 categories:   [User Interface]
-languages:    [Java]
+languages:    [Kotlin]
 solutions:    [Mobile]
-github:       android/user-interface
+github:       android/user-interface-samples
 level:        INTERMEDIATE
 icon:         screenshots/icon-web.png
 apiRefs:

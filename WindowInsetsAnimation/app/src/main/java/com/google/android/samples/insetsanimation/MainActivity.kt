@@ -18,6 +18,7 @@ package com.google.android.samples.insetsanimation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import com.google.android.samples.insetsanimation.databinding.ActivityMainBinding
 
 /**
@@ -36,6 +37,6 @@ class MainActivity : AppCompatActivity() {
         // Tell the Window that our app is going to responsible for fitting for any system windows.
         // This is similar to the now deprecated:
         // view.setSystemUiVisibility(LAYOUT_STABLE | LAYOUT_FULLSCREEN | LAYOUT_FULLSCREEN)
-        window.setDecorFitsSystemWindows(false)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
     }
 }

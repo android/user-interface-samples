@@ -19,12 +19,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.android.emojicompat">
 
-    <!-- Adding this meta-data will download the font when application is installed from
-        Google Play Store. This way the font will be downloaded and ready when your app starts
-        for the first time. -->
-    <meta-data android:name="fontProviderRequests" android:value="Noto Color Emoji Compat"/>
-
     <application
+        android:name=".EmojiCompatApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -34,6 +30,7 @@
 
         <activity
             android:name=".MainActivity"
+            android:exported="true"
             android:windowSoftInputMode="stateUnchanged">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

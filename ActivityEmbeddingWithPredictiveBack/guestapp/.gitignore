@@ -1,0 +1,4 @@
+/build
+/src/androidTest/java/com/google/sample/ae/guestapp/ExampleInstrumentedTest.kt
+/src/test/java/com/google/sample/ae/guestapp/ExampleUnitTest.kt
+/debug/

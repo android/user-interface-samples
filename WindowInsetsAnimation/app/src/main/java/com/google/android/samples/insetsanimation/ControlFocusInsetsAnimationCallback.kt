@@ -17,37 +17,38 @@
 package com.google.android.samples.insetsanimation
 
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsets.Type
-import android.view.WindowInsetsAnimation
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsAnimationCompat
+import androidx.core.view.WindowInsetsCompat
 
 /**
- * A [WindowInsetsAnimation.Callback] which will request and clear focus on the given view,
- * depending on the [WindowInsets.Type.ime] visibility state when an IME [WindowInsetsAnimation]
- * has finished.
+ * A [WindowInsetsAnimationCompat.Callback] which will request and clear focus on the given view,
+ * depending on the [WindowInsetsCompat.Type.ime] visibility state when an IME
+ * [WindowInsetsAnimationCompat] has finished.
  *
- * This is primarily used when animating the [WindowInsets.Type.ime], so that the appropriate view
- * is focused for accepting input from the IME.
+ * This is primarily used when animating the [WindowInsetsCompat.Type.ime], so that the
+ * appropriate view is focused for accepting input from the IME.
  *
  * @param view the view to request/clear focus
  * @param dispatchMode The dispatch mode for this callback.
- * See [WindowInsetsAnimation.Callback.getDispatchMode].
+ *
+ * @see WindowInsetsAnimationCompat.Callback.getDispatchMode
  */
 class ControlFocusInsetsAnimationCallback(
     private val view: View,
     dispatchMode: Int = DISPATCH_MODE_STOP
-) : WindowInsetsAnimation.Callback(dispatchMode) {
+) : WindowInsetsAnimationCompat.Callback(dispatchMode) {
 
     override fun onProgress(
-        insets: WindowInsets,
-        runningAnimations: List<WindowInsetsAnimation>
-    ): WindowInsets {
+        insets: WindowInsetsCompat,
+        runningAnimations: List<WindowInsetsAnimationCompat>
+    ): WindowInsetsCompat {
         // no-op and return the insets
         return insets
     }
 
-    override fun onEnd(animation: WindowInsetsAnimation) {
-        if (animation.typeMask and Type.ime() != 0) {
+    override fun onEnd(animation: WindowInsetsAnimationCompat) {
+        if (animation.typeMask and WindowInsetsCompat.Type.ime() != 0) {
             // The animation has now finished, so we can check the view's focus state.
             // We post the check because the rootWindowInsets has not yet been updated, but will
             // be in the next message traversal
@@ -58,7 +59,8 @@ class ControlFocusInsetsAnimationCallback(
     }
 
     private fun checkFocus() {
-        val imeVisible = view.rootWindowInsets.isVisible(Type.ime())
+        val imeVisible = ViewCompat.getRootWindowInsets(view)
+            ?.isVisible(WindowInsetsCompat.Type.ime()) == true
         if (imeVisible && view.rootView.findFocus() == null) {
             // If the IME will be visible, and there is not a currently focused view in
             // the hierarchy, request focus on our view

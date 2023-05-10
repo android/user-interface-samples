@@ -1,0 +1,20 @@
+
+# GOOGLE SAMPLE PACKAGING DATA
+#
+# This file is used by Google as part of our samples packaging process.
+# End users may safely ignore this file. It has no relevance to other systems.
+---
+status:       PUBLISHED
+technologies: [Android, JetpackGlance]
+categories:
+  - UserInterface
+  - JetpackGlance
+  - AppWidgets
+languages:    [Kotlin]
+solutions:    [Mobile]
+github:       android/user-interface-samples
+level:        INTERMEDIATE
+apiRefs:
+    - android:android.appwidget.AppWidgetManager
+    - kotlin:androidx.glance.appwidget.GlanceAppWidget
+license: apache2

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright 2020 The Android Open Source Project
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+       https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="RxActivity">
+
+    <FrameLayout
+        android:id="@+id/feature_container_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/state_update_log"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/state_update_log"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/not_separating_color_image_view"
+        app:layout_constraintTop_toBottomOf="@id/current_state" />
+
+    <TextView
+        android:id="@+id/current_state"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/current_state"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/legend_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/legend"
+        android:layout_marginHorizontal="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/not_separating_color_image_view"/>
+
+    <ImageView
+        android:id="@+id/not_separating_color_image_view"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:foreground="@color/color_feature_not_separating"
+        android:contentDescription="@string/separating_legend_color"
+        app:layout_constraintBottom_toTopOf="@id/separating_color_image_view"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/fold_color_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/not_separating"
+        app:layout_constraintBottom_toTopOf="@id/separating_color_text_view"
+        app:layout_constraintStart_toEndOf="@id/separating_color_image_view" />
+
+    <ImageView
+        android:id="@+id/separating_color_image_view"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:foreground="@color/color_feature_separating"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/hinge_legend_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/unknown_color_image_view" />
+
+    <TextView
+        android:id="@+id/separating_color_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:drawableStart="@color/color_feature_separating"
+        android:text="@string/separating"
+        app:layout_constraintBottom_toTopOf="@id/unknown_color_text_view"
+        app:layout_constraintStart_toEndOf="@id/separating_color_image_view" />
+
+    <ImageView
+        android:id="@+id/unknown_color_image_view"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:foreground="@color/color_feature_unknown"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/unknown_legend_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/unknown_color_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/unknown"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/unknown_color_image_view" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

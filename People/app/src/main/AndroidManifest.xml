@@ -18,6 +18,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.android.people">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -32,6 +34,7 @@
         -->
         <activity
             android:name="com.example.android.people.MainActivity"
+            android:exported="true"
             android:launchMode="singleTop">
             <!--
                 This activity is the one that's shown on the launcher.
@@ -67,13 +70,14 @@
         </activity>
 
         <!--
-            The dummy voice-call screen.
+            The fake voice-call screen.
             This Activity can be launched from inside an expanded Bubble. Since this Activity is
             launched as a new task, it is opened as a full Activity, rather than stacked inside
             the expanded Bubble.
         -->
         <activity
             android:name="com.example.android.people.VoiceCallActivity"
+            android:exported="true"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.People.Voice" />
 
@@ -89,6 +93,7 @@
             android:name="com.example.android.people.BubbleActivity"
             android:allowEmbedded="true"
             android:documentLaunchMode="always"
+            android:exported="true"
             android:resizeableActivity="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

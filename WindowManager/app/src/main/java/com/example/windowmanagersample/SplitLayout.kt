@@ -23,11 +23,9 @@ import android.view.View
 import android.view.View.MeasureSpec.AT_MOST
 import android.view.View.MeasureSpec.EXACTLY
 import android.widget.FrameLayout
-import androidx.window.DisplayFeature
-import androidx.window.FoldingFeature
-import androidx.window.FoldingFeature.TYPE_FOLD
-import androidx.window.FoldingFeature.TYPE_HINGE
-import androidx.window.WindowLayoutInfo
+import androidx.window.layout.DisplayFeature
+import androidx.window.layout.FoldingFeature
+import androidx.window.layout.WindowLayoutInfo
 
 /**
  * An example of split-layout for two views, separated by a display feature that goes across the
@@ -193,9 +191,8 @@ class SplitLayout : FrameLayout {
             childView.measuredHeightAndState and MEASURED_STATE_TOO_SMALL == 0
     }
 
-    private fun isValidFoldFeature(displayFeature: DisplayFeature): Boolean {
-        val feature = displayFeature as? FoldingFeature ?: return false
-        return (feature.type == TYPE_FOLD || feature.type == TYPE_HINGE) &&
+    private fun isValidFoldFeature(displayFeature: DisplayFeature) =
+        (displayFeature as? FoldingFeature)?.let { feature ->
             getFeaturePositionInViewRect(feature, this) != null
-    }
+        } ?: false
 }

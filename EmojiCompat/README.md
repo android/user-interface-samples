@@ -1,6 +1,15 @@
+⚠️ *Caution*: As of late 2021, the `androidx.emoji:emoji` library is deprecated in favor of `androidx.emoji2:emoji2`, which provides integration into `androidx.appcompat`. Please see the [Support modern emoji](https://developer.android.com/develop/ui/views/text-and-emoji/emoji2) for more information.
 
-Android EmojiCompat Sample
+
+
+Android EmojiCompat Sample (Kotlin)
 ===================================
+
+⚠️⚠️⚠️ *Caution*: the `androidx.emoji:emoji` library is deprecated in favor of `androidx.emoji2:emoji2`, which provides integration into `androidx.appcompat`.
+To support modern emoji and simplify backward-compatibility with lower versions of Android, it's recommended that you migrate to the `androidx.emoji2:emoji2` library. 
+For details on how to implement, see [Support modern emoji](https://developer.android.com/develop/ui/views/text-and-emoji/emoji2).
+
+------------
 
 This sample demonstrates usage of EmojiCompat support library. You can use this library
 to prevent your app from showing missing emoji characters in the form of tofu (□). You
@@ -95,14 +104,14 @@ If you want to use EmojiCompat in your custom TextView, you can create an instan
 Pre-requisites
 --------------
 
-- Android SDK 28
-- Android Build Tools v28.0.3
+- Android SDK 25
+- Android Build Tools v25.0.3
 - Android Support Repository
 
 Screenshots
 -------------
 
-<img src="screenshots/1-main.png" height="400" alt="Screenshot"/> 
+<img src="../EmojiCompat/screenshots/1-main.png" height="400" alt="Screenshot"/> 
 
 Getting Started
 ---------------

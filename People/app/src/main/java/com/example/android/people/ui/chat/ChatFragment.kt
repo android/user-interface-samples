@@ -28,7 +28,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.android.people.R
@@ -94,6 +93,7 @@ class ChatFragment : Fragment(R.layout.chat_fragment) {
             if (contact == null) {
                 Toast.makeText(view.context, "Contact not found", Toast.LENGTH_SHORT).show()
                 parentFragmentManager.popBackStack()
+                requireActivity().setLocusContext(null, null)
             } else {
                 requireActivity().setLocusContext(LocusId(contact.shortcutId), null)
                 navigationController.updateAppBar { name, icon ->

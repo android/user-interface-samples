@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -23,10 +23,10 @@
 
     <LinearLayout
         android:id="@+id/textview_area"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_medium" >
+        android:layout_margin="@dimen/margin_medium"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textview"
@@ -43,4 +43,4 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
         android:visibility="gone" />
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,75 @@
+<!--
+  ~ Copyright (C) 2021 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">AppWidget</string>
+    <string name="placeholder_main_activity_pin">Pin an App Widget:</string>
+    <string name="placeholder_main_activity_pin_unavailable">Pinning is not supported in the default launcher</string>
+    <string name="placeholder_main_activity">Sample activity to demonstrate how to get the app\'s appwidgets info and request the user to pin them in the launcher.\n\nTap any of the items below to request the launcher to pin them:</string>
+    <string name="grocery_list">Grocery list</string>
+    <string name="add_button_grocery_list_content_description">Add button for grocery list</string>
+    <string name="app_widget_grocery_list_description">Todo list for groceries</string>
+    <string name="glance_todo_list">Glance todo list</string>
+    <string name="todo_list_number_of_checkboxes_checked_placeholder">0 checkboxes checked</string>
+    <string name="grocery_list_milk">Milk</string>
+    <string name="grocery_list_eggs">Eggs</string>
+    <string name="grocery_list_tomatoes">Tomatoes</string>
+    <string name="grocery_list_bacon">Bacon</string>
+    <string name="grocery_list_butter">Butter</string>
+    <string name="grocery_list_cheese">Cheese</string>
+    <string name="grocery_list_potatoes">Potatoes</string>
+    <string name="grocery_list_broccoli">Broccoli</string>
+    <string name="grocery_list_salmon">Salmon</string>
+    <string name="grocery_list_yogurt">Yogurt</string>
+    <string name="select_list_for_widget">Select list for widgets</string>
+    <string name="plus_three_other_items">+3 other items</string>
+    <string name="todo_list">To-do list</string>
+    <string name="todo_list_clean_kitchen">Clean kitchen</string>
+    <string name="todo_list_buy_groceries">Buy groceries</string>
+    <string name="todo_list_build_widgets">Build widgets</string>
+    <string name="button">Button</string>
+    <string name="radio_button1">Radio Button 1</string>
+    <string name="radio_button2">Radio Button 2</string>
+    <string name="check_box">Check box</string>
+    <string name="switch_element">Switch</string>
+    <string name="buttons_widget_description">Widget for collection of items</string>
+    <string name="buttons_glance_widget_description">Glance Widget of CompoundButtons</string>
+    <string name="buttons_title">Items collection</string>
+    <string name="weather">Weather</string>
+    <string name="glance_weather">Glance Weather</string>
+    <string name="images">Random Images</string>
+    <string name="app_widget_weather_description">Widget for weather forecast</string>
+    <string name="glance_widget_weather_description">Glance Widget for weather forecast</string>
+    <string name="app_widget_image_description">Shows random images for different sizes</string>
+    <string name="icon_for_weather_content_description">Icon for weather</string>
+    <string name="city_tokyo">Tokyo</string>
+    <string name="mostly_cloudy">Mostly cloudy</string>
+    <string name="degree_10">10°</string>
+    <string name="degree_11">11°</string>
+    <string name="degree_12">12°</string>
+    <string name="degree_13">13°</string>
+    <string name="degree_14">14°</string>
+    <string name="degree_15">15°</string>
+    <string name="degree_16">16°</string>
+    <string name="degree_17">17°</string>
+    <string name="pm_4">4pm</string>
+    <string name="pm_5">5pm</string>
+    <string name="pm_6">6pm</string>
+    <string name="pm_7">7pm</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+</resources>

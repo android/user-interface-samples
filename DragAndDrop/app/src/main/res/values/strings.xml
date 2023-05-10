@@ -1,0 +1,26 @@
+<!--
+  ~ Copyright (c) 2021 Google LLC
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+    <string name="app_name">DragAndDropSample</string>
+    <string name="drag_item">Drag me</string>
+    <string name="drag_image">or drag:</string>
+    <string name="drop_target">Drop here</string>
+    <string name="drop_text">Dropped text: \"%1$s\"</string>
+    <string name="drop_image">Dropped image (sampled to %1$d x %2$d)</string>
+    <string name="drop_error">Error: could not load file: %1$s</string>
+    <string name="new_task">New task</string>
+</resources>

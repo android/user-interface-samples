@@ -38,8 +38,9 @@ class ChatViewModel @JvmOverloads constructor(
     private var _photoMimeType: String? = null
 
     /**
-     * We want to dismiss a notification when the corresponding chat screen is open. Setting this
-     * to `true` dismisses the current notification and suppresses further notifications.
+     * We want to update the notification when the corresponding chat screen is open. Setting this
+     * to `true` updates the current notification, removing the unread message(s) badge icon and
+     * suppressing further notifications.
      *
      * We do want to keep on showing and updating the notification when the chat screen is opened
      * as an expanded bubble. [ChatFragment] should set this to false if it is launched in

@@ -123,12 +123,15 @@ class DefaultChatRepository internal constructor(
 
     override fun updateNotification(id: Long) {
         val chat = chats.getValue(id)
-        notificationHelper.showNotification(chat, false)
+        notificationHelper.showNotification(chat, false, true)
     }
 
     override fun activateChat(id: Long) {
+        val chat = chats.getValue(id)
         currentChat = id
-        notificationHelper.dismissNotification(id)
+        val isPrepopulatedMsgs =
+            chat.messages.size == 2 && chat.messages[0] != null && chat.messages[1] != null
+        notificationHelper.updateNotification(chat, id, isPrepopulatedMsgs)
     }
 
     override fun deactivateChat(id: Long) {

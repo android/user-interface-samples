@@ -23,8 +23,8 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/styled_text"
-        android:layout_width="match_parent"
+        android:id="@+id/styledText"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size"
         app:layout_constraintBottom_toBottomOf="parent"

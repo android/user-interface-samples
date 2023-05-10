@@ -21,7 +21,8 @@ import android.view.MotionEvent
 import android.view.VelocityTracker
 import android.view.View
 import android.view.ViewConfiguration
-import android.view.WindowInsets.Type
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
@@ -114,7 +115,11 @@ class InsetsAnimationTouchListener(
                         simpleController.insetBy(dy.roundToInt())
                     } else if (
                         !simpleController.isInsetAnimationRequestPending() &&
-                        shouldStartRequest(dy, v.rootWindowInsets.isVisible(Type.ime()))
+                        shouldStartRequest(
+                            dy = dy,
+                            imeVisible = ViewCompat.getRootWindowInsets(v)
+                                ?.isVisible(WindowInsetsCompat.Type.ime()) == true
+                        )
                     ) {
                         // If we don't currently have control (and a request isn't pending),
                         // the IME is not shown, the user is scrolling up, and the view can't

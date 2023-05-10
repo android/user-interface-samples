@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright (C) 2022 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+-->
+<resources>
+    <string name="app_name">Haptic Sampler</string>
+    <string name="drawer_content_description">Drawer menu</string>
+    <string name="drawer_content_example_effects">Example effects</string>
+    <string name="home_screen_title">Vibration effects</string>
+    <string name="home_screen_predefined_effects">Predefined effects</string>
+    <string name="home_screen_tick">Tick</string>
+    <string name="home_screen_click">Click</string>
+    <string name="home_screen_heavy_click">Heavy click</string>
+    <string name="home_screen_double_click">Double click</string>
+    <string name="home_screen_haptic_feedback_constants">Haptic feedback constants</string>
+    <string name="home_screen_confirm">Confirm</string>
+    <string name="home_screen_reject">Reject</string>
+    <string name="home_screen_composition_primitives">Composition primitives</string>
+    <string name="home_screen_low_tick">Low tick</string>
+    <string name="home_screen_slow_rise">Slow rise</string>
+    <string name="home_screen_quick_rise">Quick rise</string>
+    <string name="home_screen_quick_fall">Quick fall</string>
+    <string name="home_screen_spin">Spin</string>
+    <string name="home_screen_thud">Thud</string>
+    <string name="resist_screen_title">Resist</string>
+    <string name="resist_screen_drag_down">Drag down</string>
+    <string name="resist_screen_and_release">And release</string>
+    <string name="expand_screen_title">Expand</string>
+    <string name="expand_screen_tap_to_expand">Tap to expand</string>
+    <string name="expand_screen_tap_to_minimize">Tap to minimize</string>
+    <string name="bounce">Bounce</string>
+    <string name="bounce_tap_to_reset">Tap to reset</string>
+    <string name="bounce_tap_to_drop">Tap to drop ball</string>
+    <string name="message_degraded_experience">Not fully supported by your current device.</string>
+    <string name="message_not_supported">Not supported by your current device.</string>
+    <string name="wobble">Wobble</string>
+    <string name="wobble_drag_and_release">Drag and release</string>
+
+</resources>

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ Copyright 2018 The Android Open Source Project
   ~
@@ -15,8 +14,8 @@
   ~ limitations under the License.
   -->
 <font-family xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:fontProviderAuthority="com.google.android.gms.fonts"
-        app:fontProviderPackage="com.google.android.gms"
-        app:fontProviderQuery="Inconsolata"
-        app:fontProviderCerts="@array/com_google_android_gms_fonts_certs">
+             app:fontProviderAuthority="com.google.android.gms.fonts"
+             app:fontProviderCerts="@array/com_google_android_gms_fonts_certs"
+             app:fontProviderPackage="com.google.android.gms"
+             app:fontProviderQuery="Inconsolata">
 </font-family>

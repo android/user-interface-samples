@@ -15,14 +15,16 @@
  */
 
 buildscript {
-    ext.kotlin_version = '1.4.21'
+    ext.kotlin_version = '1.6.10'
+    ext.coroutines_version = '1.5.0'
     ext.ktlint_version = '0.40.0'
+    ext.window_version = '1.1.0-alpha03'
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath 'com.android.tools.build:gradle:7.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -34,6 +36,11 @@ plugins {
 subprojects {
     apply plugin: 'com.diffplug.spotless'
     spotless {
+        java {
+            target '**/*.java'
+            googleJavaFormat('1.7').aosp()
+            licenseHeaderFile project.rootProject.file('scripts/copyright')
+        }
         kotlin {
             target '**/*.kt'
             ktlint(ktlint_version).userData(['android': 'true'])
@@ -52,6 +59,6 @@ subprojects {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
