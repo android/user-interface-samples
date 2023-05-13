@@ -18,9 +18,9 @@
 
         android:id="@+id/recycler_view"
 
-        android:layout_width="280dp"
+        android:layout_width="600dp"
 
-        android:layout_height="match_parent"
+        android:layout_height="840"
 
         android:layout_gravity="start" />
 
@@ -30,9 +30,9 @@
 
         android:name="androidx.navigation.fragment.NavHostFragment"
 
-        android:layout_width="300dp"
+        android:layout_width="480dp"
 
-        android:layout_height="match_parent"
+        android:layout_height="900"
 
         android:layout_weight="1"
 
