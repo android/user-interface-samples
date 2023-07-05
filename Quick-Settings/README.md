@@ -1,3 +1,13 @@
+> **Warning**
+> This sample has been migraated to the new [platform-samples repository](https://github.com/android/platform-samples)
+> and will no longer be maintained. 
+> 
+> Please use the following
+>[sample](https://github.com/android/platform-samples/tree/main/samples/user-interface/quicksettings)
+> instead.
+>
+> Thank you for your understanding.
+
 ## Android N Quick Settings Codelab
 
 This folder contains an updated source code for a [Google I/O 2016 codelab on Android N Quick Settings](https://codelabs.developers.google.com/codelabs/android-n-quick-settings/#0). 

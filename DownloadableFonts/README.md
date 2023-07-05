@@ -1,3 +1,13 @@
+> **Warning**
+> This sample has been migraated to the new [platform-samples repository](https://github.com/android/platform-samples)
+> and will no longer be maintained. 
+> 
+> Please use the following
+>[sample](https://github.com/android/platform-samples/tree/main/samples/user-interface/text/src/main/java/com/example/platform/ui/text/DownloadableFonts.kt)
+> instead.
+>
+> Thank you for your understanding.
+
 Android DownloadableFonts Sample (Kotlin)
 ===================================
 
