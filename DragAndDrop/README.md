@@ -1,3 +1,13 @@
+> **Warning**
+> This sample has been migraated to the new [platform-samples repository](https://github.com/android/platform-samples)
+> and will no longer be maintained. 
+> 
+> Please use the following
+>[sample](https://github.com/android/platform-samples/tree/main/samples/user-interface/draganddrop)
+> instead.
+>
+> Thank you for your understanding.
+
 # Drag and Drop Demo
 
 ## This is not an official Google product
