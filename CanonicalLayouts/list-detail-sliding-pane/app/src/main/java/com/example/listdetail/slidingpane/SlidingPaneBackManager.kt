@@ -38,8 +38,8 @@ class SlidingPaneBackManager(private val slidingPaneLayout: SlidingPaneLayout) :
 
     private fun updateEnabledState() {
         // Only intercept the back button when the sliding pane layout is slideable
-        // (in other words, only one of the two panels is visible) and when the sliding pane layout
-        // is open (in other words, when the detail panel is open)
+        // (in other words, only one of the two panes is visible) and when the sliding pane layout
+        // is open (in other words, when the detail pane is open)
         isEnabled = slidingPaneLayout.isSlideable && slidingPaneLayout.isOpen
     }
 

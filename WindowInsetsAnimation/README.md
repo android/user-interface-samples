@@ -1,3 +1,13 @@
+> **Warning**
+> This sample has been migraated to the new [platform-samples repository](https://github.com/android/platform-samples)
+> and will no longer be maintained. 
+> 
+> Please use the following
+>[sample](https://github.com/android/platform-samples/blob/main/samples/user-interface/window-insets/src/main/java/com/example/platform/ui/insets/WindowInsetsAnimation.kt)
+> instead.
+>
+> Thank you for your understanding.
+
 WindowInsetsAnimation sample
 ============
 

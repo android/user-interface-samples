@@ -18,8 +18,11 @@ package com.example.listdetailcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.ui.Modifier
 import com.example.listdetailcompose.ui.ListDetailSample
 import com.example.listdetailcompose.ui.theme.ListDetailComposeTheme
 import com.google.accompanist.adaptive.calculateDisplayFeatures
@@ -30,10 +33,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ListDetailComposeTheme {
-                ListDetailSample(
-                    windowSizeClass = calculateWindowSizeClass(this),
-                    displayFeatures = calculateDisplayFeatures(this)
-                )
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    ListDetailSample(
+                        windowSizeClass = calculateWindowSizeClass(this),
+                        displayFeatures = calculateDisplayFeatures(this)
+                    )
+                }
             }
         }
     }

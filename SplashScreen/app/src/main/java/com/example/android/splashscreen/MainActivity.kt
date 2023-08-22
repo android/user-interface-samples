@@ -50,14 +50,11 @@ abstract class MainActivity : AppCompatActivity() {
 
         // Show the in-app dark theme settings. This is available on API level 31 and above.
         if (Build.VERSION.SDK_INT >= 31) {
-            var previousMode: Int? = null
             viewModel.nightMode.observe(this) { nightMode ->
                 val radioButtonId = radioButtonId(nightMode)
                 if (binding.theme.checkedRadioButtonId != radioButtonId) {
                     binding.theme.check(radioButtonId)
                 }
-                if (previousMode == null) previousMode = nightMode
-                if (previousMode != nightMode) recreate()
             }
             binding.theme.setOnCheckedChangeListener { _, checkedId ->
                 viewModel.updateNightMode(nightMode(checkedId))

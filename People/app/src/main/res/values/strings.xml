@@ -28,4 +28,7 @@
     <string name="channel_new_messages_description">All new incoming messages.</string>
     <string name="chat_with_contact">Chat with %s</string>
     <string name="voice_call_explanation">This is a dummy voice call screen.</string>
+    <string name="permission_message">This app requires the notification permission.</string>
+    <string name="permission_rationale">Please grant the notification permission so that the app can demonstrate usage of the Notification APIs.</string>
+    <string name="permission_grant">GRANT</string>
 </resources>

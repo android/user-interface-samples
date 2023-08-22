@@ -56,7 +56,7 @@ fun ListDetail(
     isDetailOpen: Boolean,
     setIsDetailOpen: (Boolean) -> Unit,
     showListAndDetail: Boolean,
-    detailKey: Any,
+    detailKey: Any?,
     list: @Composable (isDetailVisible: Boolean) -> Unit,
     detail: @Composable (isListVisible: Boolean) -> Unit,
     twoPaneStrategy: TwoPaneStrategy,
@@ -110,7 +110,7 @@ fun ListDetail(
             // state while switching between details.
             // If this behavior isn't desired, this can be replaced with a key on the
             // selectedWordIndex.
-            detailSaveableStateHolder.SaveableStateProvider(currentDetailKey) {
+            detailSaveableStateHolder.SaveableStateProvider(currentDetailKey ?: "null") {
                 Box(
                     modifier = Modifier
                         .userInteractionNotification {
