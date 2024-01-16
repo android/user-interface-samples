@@ -245,16 +245,22 @@ fun ListDetail(
     val minDetailPaneWidth = 300.dp
 
     Box(
-        modifier = modifier.onSizeChanged {
+        modifier = modifier.layout { measurable, constraints ->
+            val placeable = measurable.measure(constraints)
+
             anchoredDraggableState.updateAnchors(
                 newAnchors = DraggableAnchors {
-                    ExpandablePaneState.ListOnly at it.width.toFloat()
-                    ExpandablePaneState.ListAndDetail at it.width.toFloat() / 2f
+                    ExpandablePaneState.ListOnly at placeable.width.toFloat()
+                    ExpandablePaneState.ListAndDetail at placeable.width.toFloat() / 2f
                     ExpandablePaneState.DetailOnly at 0f
                 },
                 // Keep the current target, even if resizing causes the offset to be closer to a different one
                 newTarget = anchoredDraggableState.targetValue
             )
+
+            layout(placeable.width, placeable.height) {
+                placeable.placeRelative(0, 0)
+            }
         }
     ) {
         if (showList && showDetail) {
