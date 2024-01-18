@@ -26,11 +26,6 @@ task clean(type: Delete) {
 }
 
 subprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
     apply plugin: 'com.diffplug.spotless'
     spotless {
         kotlin {
