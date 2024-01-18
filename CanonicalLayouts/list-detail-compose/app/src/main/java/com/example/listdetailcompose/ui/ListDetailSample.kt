@@ -135,9 +135,6 @@ fun ListDetailSample(
                 }
             )
         },
-        twoPaneStrategy = HorizontalTwoPaneStrategy(
-            splitFraction = 1f / 3f,
-        ),
         displayFeatures = displayFeatures,
         modifier = Modifier.padding(horizontal = 16.dp)
     )
