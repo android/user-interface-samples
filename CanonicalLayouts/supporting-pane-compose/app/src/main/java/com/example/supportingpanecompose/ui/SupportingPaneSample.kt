@@ -62,6 +62,10 @@ fun SupportingPaneSample() {
     var selectedTopic: String by rememberSaveable { mutableStateOf(data.keys.first()) }
     val navigator = rememberSupportingPaneScaffoldNavigator()
 
+    BackHandler(enabled = navigator.canNavigateBack()) {
+        navigator.navigateBack()
+    }
+
     SupportingPaneScaffold(
         scaffoldState = navigator.scaffoldState,
         supportingPane = {
@@ -98,10 +102,6 @@ fun SupportingPaneSample() {
                             }
                         }
                     }
-                }
-
-                BackHandler(enabled = navigator.canNavigateBack()) {
-                    navigator.navigateBack()
                 }
             }
         }
