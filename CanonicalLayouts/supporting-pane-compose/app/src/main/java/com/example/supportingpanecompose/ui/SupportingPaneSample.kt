@@ -61,6 +61,7 @@ fun SupportingPaneSample() {
     val navigator = rememberSupportingPaneScaffoldNavigator()
 
     SupportingPaneScaffold(
+        scaffoldState = navigator.scaffoldState,
         supportingPane = {
             AnimatedPane(
                 modifier = Modifier
@@ -106,8 +107,7 @@ fun SupportingPaneSample() {
                     navigator.navigateBack()
                 }
             }
-        },
-        scaffoldState = navigator.scaffoldState
+        }
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
