@@ -66,12 +66,7 @@ fun SupportingPaneSample() {
         scaffoldState = navigator.scaffoldState,
         supportingPane = {
             AnimatedPane(
-                modifier = Modifier
-                    .background(
-                        color = Color.LightGray.copy(alpha = .3f),
-                        shape = RoundedCornerShape(16.dp)
-                    )
-                    .padding(all = 16.dp)
+                modifier = Modifier.padding(all = 16.dp)
             ) {
                 Column {
                     Text(
@@ -115,7 +110,10 @@ fun SupportingPaneSample() {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxSize()
         ) {
-            Text(stringResource(R.string.main_content_label), style = MaterialTheme.typography.titleLarge)
+            Text(
+                stringResource(R.string.main_content_label),
+                style = MaterialTheme.typography.titleLarge
+            )
 
             Box(
                 Modifier
