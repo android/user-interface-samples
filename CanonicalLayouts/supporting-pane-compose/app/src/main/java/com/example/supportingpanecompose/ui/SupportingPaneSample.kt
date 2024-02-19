@@ -16,6 +16,8 @@
 
 package com.example.supportingpanecompose.ui
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,9 +26,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
+import androidx.compose.material3.adaptive.AnimatedPane
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.SupportingPaneScaffold
+import androidx.compose.material3.adaptive.SupportingPaneScaffoldRole
+import androidx.compose.material3.adaptive.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,8 +41,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.window.layout.DisplayFeature
+import com.example.supportingpanecompose.R
 
 // Create some simple sample data
 private val data = mapOf(
@@ -47,53 +56,80 @@ private val data = mapOf(
     "flutter" to listOf("android", "desktop")
 )
 
+@ExperimentalMaterial3AdaptiveApi
 @Composable
-fun SupportingPaneSample(
-    windowSizeClass: WindowSizeClass,
-    displayFeatures: List<DisplayFeature>
-) {
+fun SupportingPaneSample() {
     var selectedTopic: String by rememberSaveable { mutableStateOf(data.keys.first()) }
+    val navigator = rememberSupportingPaneScaffoldNavigator()
 
-    SupportingPane(
-        main = {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.fillMaxSize()
+    BackHandler(enabled = navigator.canNavigateBack()) {
+        navigator.navigateBack()
+    }
+
+    SupportingPaneScaffold(
+        scaffoldState = navigator.scaffoldState,
+        supportingPane = {
+            AnimatedPane(
+                modifier = Modifier.padding(all = 16.dp)
             ) {
-                Text("Main Content", style = MaterialTheme.typography.titleLarge)
-                Text(selectedTopic)
-            }
-        },
-        supporting = {
-            Column(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                Text("Related Content", style = MaterialTheme.typography.titleLarge)
+                Column {
+                    Text(
+                        stringResource(R.string.related_content_label),
+                        modifier = Modifier.padding(vertical = 16.dp),
+                        style = MaterialTheme.typography.titleLarge
+                    )
 
-                LazyColumn {
-                    items(
-                        data.getValue(selectedTopic),
-                        key = { it }
-                    ) { relatedTopic ->
-                        Box(
-                            Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    selectedTopic = relatedTopic
-                                }
-                        ) {
-                            Text(
-                                text = relatedTopic,
-                                modifier = Modifier
-                                    .padding(16.dp)
-
-                            )
+                    LazyColumn {
+                        items(
+                            data.getValue(selectedTopic),
+                            key = { it }
+                        ) { relatedTopic ->
+                            Box(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(all = 4.dp)
+                                    .clickable {
+                                        selectedTopic = relatedTopic
+                                        if (navigator.canNavigateBack()) {
+                                            navigator.navigateBack()
+                                        }
+                                    }
+                            ) {
+                                Text(
+                                    text = relatedTopic,
+                                    modifier = Modifier
+                                )
+                            }
                         }
                     }
                 }
             }
-        },
-        windowSizeClass = windowSizeClass,
-        displayFeatures = displayFeatures
-    )
+        }
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Text(
+                stringResource(R.string.main_content_label),
+                style = MaterialTheme.typography.titleLarge
+            )
+
+            Box(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(all = 8.dp)
+                    .clickable {
+                        navigator.navigateTo(SupportingPaneScaffoldRole.Supporting)
+                    },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = selectedTopic,
+                    modifier = Modifier
+                        .padding(16.dp)
+                )
+            }
+        }
+    }
 }

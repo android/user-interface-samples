@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SupportingPaneCompose</string>
+    <string name="related_content_label">Related Content</string>
+    <string name="main_content_label">Main Content</string>
 </resources>
