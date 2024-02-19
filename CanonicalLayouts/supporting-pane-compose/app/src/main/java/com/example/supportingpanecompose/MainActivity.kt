@@ -19,22 +19,19 @@ package com.example.supportingpanecompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import com.example.supportingpanecompose.ui.SupportingPaneSample
 import com.example.supportingpanecompose.ui.theme.SupportingPaneCompose
-import com.google.accompanist.adaptive.calculateDisplayFeatures
 
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             SupportingPaneCompose {
-                SupportingPaneSample(
-                    windowSizeClass = calculateWindowSizeClass(this),
-                    displayFeatures = calculateDisplayFeatures(this)
-                )
+                SupportingPaneSample()
             }
         }
     }
