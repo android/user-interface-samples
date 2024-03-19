@@ -1,4 +1,4 @@
-> **Warning**
+> [!WARNING]
 > This sample has been migraated to the new [platform-samples repository](https://github.com/android/platform-samples)
 > and will no longer be maintained. 
 > 
