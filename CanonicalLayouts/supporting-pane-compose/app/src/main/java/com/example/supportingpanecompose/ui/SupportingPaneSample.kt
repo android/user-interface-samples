@@ -17,7 +17,6 @@
 package com.example.supportingpanecompose.ui
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,14 +25,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.adaptive.AnimatedPane
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.SupportingPaneScaffold
-import androidx.compose.material3.adaptive.SupportingPaneScaffoldRole
-import androidx.compose.material3.adaptive.rememberSupportingPaneScaffoldNavigator
+import androidx.compose.material3.adaptive.layout.AnimatedPane
+import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
+import androidx.compose.material3.adaptive.layout.SupportingPaneScaffoldRole
+import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,7 +39,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.supportingpanecompose.R
@@ -60,14 +57,15 @@ private val data = mapOf(
 @Composable
 fun SupportingPaneSample() {
     var selectedTopic: String by rememberSaveable { mutableStateOf(data.keys.first()) }
-    val navigator = rememberSupportingPaneScaffoldNavigator()
+    val navigator = rememberSupportingPaneScaffoldNavigator<Nothing>()
 
     BackHandler(enabled = navigator.canNavigateBack()) {
         navigator.navigateBack()
     }
 
     SupportingPaneScaffold(
-        scaffoldState = navigator.scaffoldState,
+        directive = navigator.scaffoldDirective,
+        value = navigator.scaffoldValue,
         supportingPane = {
             AnimatedPane(
                 modifier = Modifier.padding(all = 16.dp)
@@ -104,32 +102,31 @@ fun SupportingPaneSample() {
                     }
                 }
             }
-        }
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Text(
-                stringResource(R.string.main_content_label),
-                style = MaterialTheme.typography.titleLarge
-            )
-
-            Box(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(all = 8.dp)
-                    .clickable {
-                        navigator.navigateTo(SupportingPaneScaffoldRole.Supporting)
-                    },
-                contentAlignment = Alignment.Center
+        }, mainPane = {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
             ) {
                 Text(
-                    text = selectedTopic,
-                    modifier = Modifier
-                        .padding(16.dp)
+                    stringResource(R.string.main_content_label),
+                    style = MaterialTheme.typography.titleLarge
                 )
+
+                Box(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(all = 8.dp)
+                        .clickable {
+                            navigator.navigateTo(SupportingPaneScaffoldRole.Supporting)
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = selectedTopic,
+                        modifier = Modifier
+                            .padding(16.dp)
+                    )
+                }
             }
-        }
-    }
+        })
 }
