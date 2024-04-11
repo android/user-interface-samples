@@ -37,6 +37,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
+import androidx.compose.material3.adaptive.layout.PaneAdaptedValue
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -85,9 +86,12 @@ fun ListDetailSample() {
         value = navigator.scaffoldValue,
         listPane = {
             val currentSelectedWordIndex = selectedWordIndex
+            val isDetailVisible =
+                navigator.scaffoldValue[ListDetailPaneScaffoldRole.Detail] == PaneAdaptedValue.Expanded
+
             ListContent(
                 words = sampleWords.map(DefinedWord::word),
-                selectionState = if (currentSelectedWordIndex != null) {
+                selectionState = if (isDetailVisible && currentSelectedWordIndex != null) {
                     SelectionVisibilityState.ShowSelection(currentSelectedWordIndex)
                 } else {
                     SelectionVisibilityState.NoSelection
@@ -157,6 +161,7 @@ private fun ListContent(
                         onClick = { onIndexClick(index) }
                     )
                 }
+
                 is SelectionVisibilityState.ShowSelection -> {
                     Modifier.selectable(
                         selected = index == selectionState.selectedWordIndex,
@@ -179,6 +184,7 @@ private fun ListContent(
                     1.dp,
                     MaterialTheme.colorScheme.outline
                 )
+
                 is SelectionVisibilityState.ShowSelection ->
                     if (index == selectionState.selectedWordIndex) {
                         null
