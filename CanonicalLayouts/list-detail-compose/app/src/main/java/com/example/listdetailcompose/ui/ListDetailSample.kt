@@ -16,9 +16,9 @@
 
 package com.example.listdetailcompose.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,26 +30,24 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
+import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
+import androidx.compose.material3.adaptive.layout.PaneAdaptedValue
+import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.window.layout.DisplayFeature
 import com.example.listdetailcompose.R
-import com.google.accompanist.adaptive.HorizontalTwoPaneStrategy
 
 // Create some simple sample data
 private val loremIpsum = """
@@ -73,36 +71,24 @@ private data class DefinedWord(
     val definition: String
 )
 
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun ListDetailSample(
-    windowSizeClass: WindowSizeClass,
-    displayFeatures: List<DisplayFeature>
-) {
-    // Query for the current window size class
-    val widthSizeClass by rememberUpdatedState(windowSizeClass.widthSizeClass)
-
-    /**
-     * The index of the currently selected word, or `null` if none is selected
-     */
+fun ListDetailSample() {
     var selectedWordIndex: Int? by rememberSaveable { mutableStateOf(null) }
+    val navigator = rememberListDetailPaneScaffoldNavigator<Nothing>()
 
-    /**
-     * True if the detail is currently open. This is the primary control for "navigation".
-     */
-    var isDetailOpen by rememberSaveable { mutableStateOf(false) }
+    BackHandler(enabled = navigator.canNavigateBack()) {
+        navigator.navigateBack()
+    }
 
-    ListDetail(
-        isDetailOpen = isDetailOpen,
-        setIsDetailOpen = { isDetailOpen = it },
-        showListAndDetail =
-            when (widthSizeClass) {
-                WindowWidthSizeClass.Compact, WindowWidthSizeClass.Medium -> false
-                WindowWidthSizeClass.Expanded -> true
-                else -> true
-            },
-        detailKey = selectedWordIndex,
-        list = { isDetailVisible ->
+    ListDetailPaneScaffold(
+        directive = navigator.scaffoldDirective,
+        value = navigator.scaffoldValue,
+        listPane = {
             val currentSelectedWordIndex = selectedWordIndex
+            val isDetailVisible =
+                navigator.scaffoldValue[ListDetailPaneScaffoldRole.Detail] == PaneAdaptedValue.Expanded
+
             ListContent(
                 words = sampleWords.map(DefinedWord::word),
                 selectionState = if (isDetailVisible && currentSelectedWordIndex != null) {
@@ -112,31 +98,16 @@ fun ListDetailSample(
                 },
                 onIndexClick = { index ->
                     selectedWordIndex = index
-                    // Consider the detail to now be open. This acts like a navigation if
-                    // there isn't room for both list and detail, and also will result
-                    // in the detail remaining open in the case of resize.
-                    isDetailOpen = true
-                },
-                modifier = if (isDetailVisible) {
-                    Modifier.padding(end = 8.dp)
-                } else {
-                    Modifier
+                    navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
                 }
             )
         },
-        detail = { isListVisible ->
+        detailPane = {
             val definedWord = selectedWordIndex?.let(sampleWords::get)
             DetailContent(
-                definedWord = definedWord,
-                modifier = if (isListVisible) {
-                    Modifier.padding(start = 8.dp)
-                } else {
-                    Modifier
-                }
+                definedWord = definedWord
             )
-        },
-        displayFeatures = displayFeatures,
-        modifier = Modifier.padding(horizontal = 16.dp)
+        }
     )
 }
 
@@ -183,21 +154,17 @@ private fun ListContent(
             )
     ) {
         itemsIndexed(words) { index, word ->
-            val interactionSource = remember { MutableInteractionSource() }
 
             val interactionModifier = when (selectionState) {
                 SelectionVisibilityState.NoSelection -> {
                     Modifier.clickable(
-                        interactionSource = interactionSource,
-                        indication = rememberRipple(),
                         onClick = { onIndexClick(index) }
                     )
                 }
+
                 is SelectionVisibilityState.ShowSelection -> {
                     Modifier.selectable(
                         selected = index == selectionState.selectedWordIndex,
-                        interactionSource = interactionSource,
-                        indication = rememberRipple(),
                         onClick = { onIndexClick(index) }
                     )
                 }
@@ -217,6 +184,7 @@ private fun ListContent(
                     1.dp,
                     MaterialTheme.colorScheme.outline
                 )
+
                 is SelectionVisibilityState.ShowSelection ->
                     if (index == selectionState.selectedWordIndex) {
                         null
