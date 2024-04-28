@@ -25,7 +25,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridItemScope
 import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun Feed(
     modifier: Modifier = Modifier,
-    columns: GridCells = GridCells.Fixed(1),
+    columns: FeedGridCells = FeedGridCells.Fixed(1),
     state: LazyGridState = rememberLazyGridState(),
     contentPadding: PaddingValues = PaddingValues(0.dp),
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,
@@ -48,9 +48,9 @@ fun Feed(
     flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
     content: @ExtensionFunctionType FeedScope.() -> Unit
 ) {
-    val feedScope = FeedScopeImpl().apply(content)
+    val feedScope = FeedScopeImpl(columns = columns).apply(content)
     LazyVerticalGrid(
-        columns = columns,
+        columns = columns.toGridCells(),
         modifier = modifier,
         state = state,
         contentPadding = contentPadding,
@@ -71,6 +71,8 @@ fun Feed(
 }
 
 interface FeedScope {
+    val columns: FeedGridCells
+
     fun item(
         key: Any? = null,
         span: (@ExtensionFunctionType LazyGridItemSpanScope.() -> GridItemSpan)? = null,
@@ -179,7 +181,7 @@ inline fun <T> FeedScope.itemsIndexed(
     itemContent(index, items[index])
 }
 
-inline fun FeedScope.row(
+inline fun FeedScope.section(
     key: Any? = null,
     contentType: Any? = null,
     crossinline content: @Composable LazyGridItemScope.() -> Unit
@@ -191,12 +193,11 @@ inline fun FeedScope.row(
     content()
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 inline fun FeedScope.title(
     key: Any? = null,
     contentType: Any? = null,
     crossinline content: @Composable LazyGridItemScope.() -> Unit
-) = row(key = key, contentType = contentType) { content() }
+) = section(key = key, contentType = contentType) { content() }
 
 @OptIn(ExperimentalFoundationApi::class)
 inline fun FeedScope.action(
@@ -204,12 +205,13 @@ inline fun FeedScope.action(
     contentType: Any? = null,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     crossinline content: @Composable RowScope.() -> Unit
-) = row(
+) = section(
     key = key,
     contentType = contentType
 ) {
     Row(
         modifier = Modifier
+            .fillMaxWidth()
             .focusGroup()
             .horizontalScroll(rememberScrollState()),
         horizontalArrangement = horizontalArrangement

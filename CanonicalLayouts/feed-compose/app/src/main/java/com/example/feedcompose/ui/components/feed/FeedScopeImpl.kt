@@ -23,7 +23,7 @@ import androidx.compose.foundation.lazy.grid.LazyGridItemSpanScope
 import androidx.compose.runtime.Composable
 
 @OptIn(ExperimentalFoundationApi::class)
-internal class FeedScopeImpl : FeedScope {
+internal class FeedScopeImpl(override val columns: FeedGridCells) : FeedScope {
     val items = mutableListOf<FeedItem>()
 
     override fun item(
