@@ -20,7 +20,7 @@
     <!-- Automatically split the following activity pairs. -->
     <SplitPairRule
         window:splitRatio="0.3"
-        window:splitMinWidth="840dp"
+        window:splitMinWidthDp="600"
         window:finishPrimaryWithSecondary="adjacent"
         window:finishSecondaryWithPrimary="always">
         <SplitPairFilter
@@ -36,7 +36,7 @@
     <SplitPlaceholderRule
         window:placeholderActivityName=".PlaceholderActivity"
         window:splitRatio="0.3"
-        window:splitMinWidth="840dp">
+        window:splitMinWidthDp="600">
         <ActivityFilter
             window:activityName=".MainActivity"/>
     </SplitPlaceholderRule>

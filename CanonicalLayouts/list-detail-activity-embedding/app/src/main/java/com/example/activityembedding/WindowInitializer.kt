@@ -20,12 +20,14 @@ package com.example.activityembedding
 import android.content.Context
 import androidx.startup.Initializer
 import androidx.window.core.ExperimentalWindowApi
+import androidx.window.embedding.RuleController
 import androidx.window.embedding.SplitController
 
-class WindowInitializer : Initializer<SplitController> {
-    override fun create(context: Context): SplitController {
-        SplitController.initialize(context, R.xml.split_configuration)
-        return SplitController.getInstance()
+class WindowInitializer : Initializer<RuleController> {
+    override fun create(context: Context): RuleController {
+        return RuleController.getInstance(context).apply {
+            setRules(RuleController.parseRules(context, R.xml.split_configuration))
+        }
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> {
