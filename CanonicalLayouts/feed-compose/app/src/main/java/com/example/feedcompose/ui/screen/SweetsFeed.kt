@@ -16,21 +16,23 @@
 
 package com.example.feedcompose.ui.screen
 
-import androidx.compose.foundation.border
+import android.os.Parcelable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,32 +44,40 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIconDefaults
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import com.example.feedcompose.R
 import com.example.feedcompose.data.Category
 import com.example.feedcompose.data.DataProvider
 import com.example.feedcompose.data.DataProvider.chocolates
 import com.example.feedcompose.data.Sweets
+import com.example.feedcompose.ui.components.PortraitSweetsCard
+import com.example.feedcompose.ui.components.SquareSweetsCard
+import com.example.feedcompose.ui.components.TextInput
 import com.example.feedcompose.ui.components.feed.Feed
+import com.example.feedcompose.ui.components.feed.FeedGridCells
 import com.example.feedcompose.ui.components.feed.action
 import com.example.feedcompose.ui.components.feed.footer
 import com.example.feedcompose.ui.components.feed.items
-import com.example.feedcompose.ui.components.feed.row
+import com.example.feedcompose.ui.components.feed.section
 import com.example.feedcompose.ui.components.feed.title
 import kotlinx.coroutines.launch
+import kotlinx.parcelize.Parcelize
 
 @Composable
 internal fun SweetsFeed(windowSizeClass: WindowSizeClass, onSweetsSelected: (Sweets) -> Unit = {}) {
-    val selectedFilter: MutableState<Filter> = remember {
+    val selectedFilter: MutableState<Filter> = rememberSaveable {
         mutableStateOf(Filter.All)
     }
     val sweets = DataProvider.sweets.filter { selectedFilter.value.apply(it) }
@@ -86,13 +96,29 @@ internal fun SweetsFeed(windowSizeClass: WindowSizeClass, onSweetsSelected: (Swe
         title(contentType = "feed-title") {
             FeedTitle(text = stringResource(id = R.string.app_name))
         }
-        items(DataProvider.misc, contentType = { "sweets" }, key = { it.id }) {
-            SquareSweetsCard(sweets = it, onClick = onSweetsSelected)
+        action(
+            contentType = "filter-selector",
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            FilterSelector(selectedFilter = selectedFilter.value) { selectedFilter.value = it }
+            if (windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact) {
+                Spacer(modifier = Modifier.weight(1f))
+                SearchTextInput(modifier = Modifier.defaultMinSize(minWidth = 400.dp))
+            }
+        }
+        if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) {
+            action { SearchTextInput(modifier = Modifier.weight(1f)) }
+        }
+        items(sweets, contentType = { "sweets" }, key = { it.id }) {
+            SquareSweetsCard(
+                sweets = it,
+                onClick = onSweetsSelected
+            )
         }
         title(contentType = "section-title") {
             SectionTitle(text = stringResource(id = R.string.chocolate))
         }
-        row(contentType = "chocolate-list") {
+        section(contentType = "chocolate-list") {
             HorizontalSweetsList(
                 sweets = chocolates,
                 cardWidth = if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Expanded) {
@@ -103,16 +129,7 @@ internal fun SweetsFeed(windowSizeClass: WindowSizeClass, onSweetsSelected: (Swe
                 onSweetsSelected = onSweetsSelected
             )
         }
-        title(contentType = "section-title") {
-            SectionTitle(text = stringResource(id = R.string.candy_or_pastry))
-        }
-        action(
-            contentType = "filter-selector",
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            FilterSelector(selectedFilter = selectedFilter.value) { selectedFilter.value = it }
-        }
-        items(sweets, contentType = { "sweets" }, key = { it.id }) {
+        items(DataProvider.misc, contentType = { "sweets" }, key = { it.id }) {
             SquareSweetsCard(sweets = it, onClick = onSweetsSelected)
         }
         footer {
@@ -128,9 +145,9 @@ internal fun SweetsFeed(windowSizeClass: WindowSizeClass, onSweetsSelected: (Swe
 @Composable
 private fun rememberColumns(windowSizeClass: WindowSizeClass) = remember(windowSizeClass) {
     when (windowSizeClass.widthSizeClass) {
-        WindowWidthSizeClass.Compact -> GridCells.Fixed(1)
-        WindowWidthSizeClass.Medium -> GridCells.Fixed(2)
-        else -> GridCells.Adaptive(240.dp)
+        WindowWidthSizeClass.Compact -> FeedGridCells.Fixed(1)
+        WindowWidthSizeClass.Medium -> FeedGridCells.Fixed(2)
+        else -> FeedGridCells.Adaptive(240.dp)
     }
 }
 
@@ -172,7 +189,7 @@ private fun HorizontalSweetsList(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 private fun FilterSelector(selectedFilter: Filter, onFilterSelected: (Filter) -> Unit) {
     val filters = listOf(
@@ -182,8 +199,20 @@ private fun FilterSelector(selectedFilter: Filter, onFilterSelected: (Filter) ->
     )
     filters.forEach { (filter, labelId) ->
         val selected = selectedFilter == filter
+        val interactionSource = remember {
+            MutableInteractionSource()
+        }
+        val isFocused by interactionSource.collectIsFocusedAsState()
+        val borderColor = if (isFocused) {
+            MaterialTheme.colorScheme.outline
+        } else {
+            Color.Transparent
+        }
         FilterChip(
+            modifier = Modifier
+                .pointerHoverIcon(PointerIconDefaults.Hand),
             selected = selected,
+            border = FilterChipDefaults.filterChipBorder(borderColor = borderColor),
             onClick = { onFilterSelected(filter) },
             label = { Text(text = stringResource(id = labelId)) },
             leadingIcon = {
@@ -193,82 +222,14 @@ private fun FilterSelector(selectedFilter: Filter, onFilterSelected: (Filter) ->
                         contentDescription = null
                     )
                 }
-            }
+            },
+            interactionSource = interactionSource
         )
     }
 }
 
-@Composable
-private fun BackToTopButton(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
-    Box(contentAlignment = Alignment.Center) {
-        Button(onClick = onClick, modifier = modifier) {
-            Icon(painter = painterResource(id = R.drawable.ic_baseline_arrow_upward_24), null)
-            Text(text = "Back to top")
-        }
-    }
-}
-
-@Composable
-private fun SquareSweetsCard(
-    sweets: Sweets,
-    modifier: Modifier = Modifier,
-    onClick: (Sweets) -> Unit = {}
-) {
-    SweetsCard(
-        sweets = sweets,
-        modifier = modifier.aspectRatio(1.0f),
-        onClick = onClick
-    )
-}
-
-@Composable
-private fun PortraitSweetsCard(
-    sweets: Sweets,
-    modifier: Modifier = Modifier,
-    onClick: (Sweets) -> Unit = {}
-) {
-    SweetsCard(
-        sweets = sweets,
-        modifier = modifier.aspectRatio(0.707f),
-        onClick = onClick
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SweetsCard(
-    sweets: Sweets,
-    modifier: Modifier = Modifier,
-    onClick: (Sweets) -> Unit = {}
-) {
-    var isFocused by remember {
-        mutableStateOf(false)
-    }
-    val outlineColor = if (isFocused) {
-        MaterialTheme.colorScheme.outline
-    } else {
-        MaterialTheme.colorScheme.background
-    }
-
-    Card(
-        modifier = modifier
-            .onFocusChanged {
-                isFocused = it.isFocused
-            }
-            .border(width = 2.dp, color = outlineColor),
-        onClick = { onClick(sweets) }
-    ) {
-        AsyncImage(
-            modifier = Modifier.fillMaxSize(),
-            model = sweets.imageUrl,
-            contentDescription = stringResource(id = R.string.thumbnail_content_description),
-            placeholder = painterResource(id = R.drawable.placeholder_sweets),
-            contentScale = ContentScale.Crop
-        )
-    }
-}
-
-sealed class Filter(private val categories: List<Category>) {
+@Parcelize
+sealed class Filter(private val categories: List<Category>) : Parcelable {
     fun apply(sweets: Sweets): Boolean = categories.indexOf(sweets.category) != -1
 
     object All : Filter(listOf(Category.Candy, Category.Pastry))
@@ -276,4 +237,33 @@ sealed class Filter(private val categories: List<Category>) {
     object Candy : Filter(listOf(Category.Candy))
 
     object Pastry : Filter(listOf(Category.Pastry))
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+private fun BackToTopButton(modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
+    Box(contentAlignment = Alignment.Center) {
+        Button(onClick = onClick, modifier = modifier.pointerHoverIcon(PointerIconDefaults.Hand)) {
+            Icon(painter = painterResource(id = R.drawable.ic_baseline_arrow_upward_24), null)
+            Text(text = stringResource(id = R.string.back_to_top))
+        }
+    }
+}
+
+@Composable
+private fun SearchTextInput(modifier: Modifier = Modifier) {
+    TextInput(
+        placeholderText = stringResource(id = R.string.search_text),
+        leadingIcon = {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_baseline_search_24),
+                contentDescription = stringResource(id = R.string.search)
+            )
+        },
+        modifier = modifier,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Go
+        )
+    )
 }
