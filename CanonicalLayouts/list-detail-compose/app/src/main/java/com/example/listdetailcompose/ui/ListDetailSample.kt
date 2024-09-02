@@ -21,6 +21,7 @@ package com.example.listdetailcompose.ui
 import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
@@ -103,54 +104,54 @@ fun ListDetailSample() {
     }
 
     SharedTransitionLayout {
-//        AnimatedContent(targetState = isCompact, label = "simple sample") {
-        ListDetailPaneScaffold(
-            directive = navigator.scaffoldDirective,
-            value = navigator.scaffoldValue,
-            listPane = {
-                val currentSelectedWordIndex = selectedWordIndex
-                val isDetailVisible =
-                    navigator.scaffoldValue[ListDetailPaneScaffoldRole.Detail] == PaneAdaptedValue.Expanded
-                AnimatedPane {
-                    ListContent(
-                        words = sampleWords,
-                        selectionState = if (isDetailVisible && currentSelectedWordIndex != null) {
-                            SelectionVisibilityState.ShowSelection(currentSelectedWordIndex)
-                        } else {
-                            SelectionVisibilityState.NoSelection
-                        },
-                        onIndexClick = { index ->
-                            selectedWordIndex = index
-                            navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
-                        },
-                        isCompact = isCompact,
-                        isDetailVisible = isDetailVisible,
-                        animatedVisibilityScope = this@AnimatedPane,
-                        sharedTransitionScope = this@SharedTransitionLayout
-                    )
+        AnimatedContent(targetState = isCompact, label = "simple sample") {
+            ListDetailPaneScaffold(
+                directive = navigator.scaffoldDirective,
+                value = navigator.scaffoldValue,
+                listPane = {
+                    val currentSelectedWordIndex = selectedWordIndex
+                    val isDetailVisible =
+                        navigator.scaffoldValue[ListDetailPaneScaffoldRole.Detail] == PaneAdaptedValue.Expanded
+                    AnimatedPane {
+                        ListContent(
+                            words = sampleWords,
+                            selectionState = if (isDetailVisible && currentSelectedWordIndex != null) {
+                                SelectionVisibilityState.ShowSelection(currentSelectedWordIndex)
+                            } else {
+                                SelectionVisibilityState.NoSelection
+                            },
+                            onIndexClick = { index ->
+                                selectedWordIndex = index
+                                navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+                            },
+                            isCompact = isCompact,
+                            isDetailVisible = isDetailVisible,
+                            animatedVisibilityScope = this@AnimatedPane,
+                            sharedTransitionScope = this@SharedTransitionLayout
+                        )
+                    }
+                },
+                detailPane = {
+                    val definedWord = selectedWordIndex?.let(sampleWords::get)
+                    val isDetailVisible =
+                        navigator.scaffoldValue[ListDetailPaneScaffoldRole.Detail] == PaneAdaptedValue.Expanded
+                    AnimatedPane {
+                        DetailContent(
+                            definedWord = definedWord,
+                            isCompact = isCompact,
+                            isDetailVisible = isDetailVisible,
+                            animatedVisibilityScope = this@AnimatedPane,
+                            sharedTransitionScope = this@SharedTransitionLayout
+                        )
+                    }
+                },
+                paneExpansionState = rememberPaneExpansionState(navigator.scaffoldValue),
+                paneExpansionDragHandle = { state ->
+                    PaneExpansionDragHandle(state, Color.Red)
                 }
-            },
-            detailPane = {
-                val definedWord = selectedWordIndex?.let(sampleWords::get)
-                val isDetailVisible =
-                    navigator.scaffoldValue[ListDetailPaneScaffoldRole.Detail] == PaneAdaptedValue.Expanded
-                AnimatedPane {
-                    DetailContent(
-                        definedWord = definedWord,
-                        isCompact = isCompact,
-                        isDetailVisible = isDetailVisible,
-                        animatedVisibilityScope = this@AnimatedPane,
-                        sharedTransitionScope = this@SharedTransitionLayout
-                    )
-                }
-            },
-            paneExpansionState = rememberPaneExpansionState(navigator.scaffoldValue),
-            paneExpansionDragHandle = { state ->
-                PaneExpansionDragHandle(state, Color.Red)
-            }
-        )
+            )
+        }
     }
-//    }
 }
 
 /**
