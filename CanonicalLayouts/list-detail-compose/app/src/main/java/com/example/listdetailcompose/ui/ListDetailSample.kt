@@ -14,14 +14,24 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.example.listdetailcompose.ui
 
+import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
+import androidx.annotation.DrawableRes
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -35,9 +45,13 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.layout.PaneAdaptedValue
+import androidx.compose.material3.adaptive.layout.PaneExpansionDragHandle
+import androidx.compose.material3.adaptive.layout.rememberPaneExpansionState
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,8 +59,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.window.core.layout.WindowWidthSizeClass
 import com.example.listdetailcompose.R
 
 // Create some simple sample data
@@ -56,59 +73,84 @@ private val loremIpsum = """
         |Tempus quam pellentesque nec nam aliquam. Praesent semper feugiat nibh sed. Adipiscing elit duis tristique sollicitudin nibh sit. Netus et malesuada fames ac turpis egestas sed tempus urna. Quis varius quam quisque id diam vel quam. Urna duis convallis convallis tellus id interdum velit laoreet. Id eu nisl nunc mi ipsum. Fermentum dui faucibus in ornare. Nunc lobortis mattis aliquam faucibus. Vulputate mi sit amet mauris commodo quis. Porta nibh venenatis cras sed. Vitae tortor condimentum lacinia quis vel eros donec. Eu non diam phasellus vestibulum.
         """.trimMargin()
 private val sampleWords = listOf(
-    "Apple" to loremIpsum,
-    "Banana" to loremIpsum,
-    "Cherry" to loremIpsum,
-    "Date" to loremIpsum,
-    "Elderberry" to loremIpsum,
-    "Fig" to loremIpsum,
-    "Grape" to loremIpsum,
-    "Honeydew" to loremIpsum,
-).map { (word, definition) -> DefinedWord(word, definition) }
+    "Apple" to R.drawable.ic_food,
+    "Banana" to R.drawable.ic_no_food,
+    "Cherry" to R.drawable.ic_food,
+    "Date" to R.drawable.ic_no_food,
+    "Elderberry" to R.drawable.ic_food,
+    "Fig" to R.drawable.ic_no_food,
+    "Grape" to R.drawable.ic_food,
+    "Honeydew" to R.drawable.ic_no_food,
+).map { (word, icon) -> DefinedWord(word, icon) }
 
 private data class DefinedWord(
     val word: String,
-    val definition: String
+    @DrawableRes val icon: Int,
+    val definition: String = loremIpsum
 )
 
+@SuppressLint("UnusedContentLambdaTargetStateParameter")
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun ListDetailSample() {
     var selectedWordIndex: Int? by rememberSaveable { mutableStateOf(null) }
     val navigator = rememberListDetailPaneScaffoldNavigator<Nothing>()
+    val isCompact =
+        currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass != WindowWidthSizeClass.EXPANDED
 
     BackHandler(enabled = navigator.canNavigateBack()) {
         navigator.navigateBack()
     }
 
-    ListDetailPaneScaffold(
-        directive = navigator.scaffoldDirective,
-        value = navigator.scaffoldValue,
-        listPane = {
-            val currentSelectedWordIndex = selectedWordIndex
-            val isDetailVisible =
-                navigator.scaffoldValue[ListDetailPaneScaffoldRole.Detail] == PaneAdaptedValue.Expanded
-
-            ListContent(
-                words = sampleWords.map(DefinedWord::word),
-                selectionState = if (isDetailVisible && currentSelectedWordIndex != null) {
-                    SelectionVisibilityState.ShowSelection(currentSelectedWordIndex)
-                } else {
-                    SelectionVisibilityState.NoSelection
-                },
-                onIndexClick = { index ->
-                    selectedWordIndex = index
-                    navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+    SharedTransitionLayout {
+//        AnimatedContent(targetState = isCompact, label = "simple sample") {
+        ListDetailPaneScaffold(
+            directive = navigator.scaffoldDirective,
+            value = navigator.scaffoldValue,
+            listPane = {
+                val currentSelectedWordIndex = selectedWordIndex
+                val isDetailVisible =
+                    navigator.scaffoldValue[ListDetailPaneScaffoldRole.Detail] == PaneAdaptedValue.Expanded
+                AnimatedPane {
+                    ListContent(
+                        words = sampleWords,
+                        selectionState = if (isDetailVisible && currentSelectedWordIndex != null) {
+                            SelectionVisibilityState.ShowSelection(currentSelectedWordIndex)
+                        } else {
+                            SelectionVisibilityState.NoSelection
+                        },
+                        onIndexClick = { index ->
+                            selectedWordIndex = index
+                            navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
+                        },
+                        isCompact = isCompact,
+                        isDetailVisible = isDetailVisible,
+                        animatedVisibilityScope = this@AnimatedPane,
+                        sharedTransitionScope = this@SharedTransitionLayout
+                    )
                 }
-            )
-        },
-        detailPane = {
-            val definedWord = selectedWordIndex?.let(sampleWords::get)
-            DetailContent(
-                definedWord = definedWord
-            )
-        }
-    )
+            },
+            detailPane = {
+                val definedWord = selectedWordIndex?.let(sampleWords::get)
+                val isDetailVisible =
+                    navigator.scaffoldValue[ListDetailPaneScaffoldRole.Detail] == PaneAdaptedValue.Expanded
+                AnimatedPane {
+                    DetailContent(
+                        definedWord = definedWord,
+                        isCompact = isCompact,
+                        isDetailVisible = isDetailVisible,
+                        animatedVisibilityScope = this@AnimatedPane,
+                        sharedTransitionScope = this@SharedTransitionLayout
+                    )
+                }
+            },
+            paneExpansionState = rememberPaneExpansionState(navigator.scaffoldValue),
+            paneExpansionDragHandle = { state ->
+                PaneExpansionDragHandle(state, Color.Red)
+            }
+        )
+    }
+//    }
 }
 
 /**
@@ -137,10 +179,14 @@ sealed interface SelectionVisibilityState {
  */
 @Composable
 private fun ListContent(
-    words: List<String>,
+    words: List<DefinedWord>,
     selectionState: SelectionVisibilityState,
     onIndexClick: (index: Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isCompact: Boolean,
+    isDetailVisible: Boolean,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedVisibilityScope: AnimatedVisibilityScope
 ) {
     LazyColumn(
         contentPadding = PaddingValues(vertical = 16.dp),
@@ -204,12 +250,40 @@ private fun ListContent(
                     .then(interactionModifier)
                     .fillMaxWidth()
             ) {
-                Text(
-                    text = word,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                )
+                Row {
+                    if (isCompact && !isDetailVisible) {
+                        with(sharedTransitionScope) {
+                            val state = rememberSharedContentState(key = word.word)
+
+                            println("list-" + word.word + "-" + state.isMatchFound)
+
+                            Image(
+                                painter = painterResource(id = word.icon),
+                                contentDescription = word.word,
+                                modifier = Modifier
+                                    .padding(horizontal = 8.dp)
+                                    .sharedElement(
+                                        state,
+                                        animatedVisibilityScope = animatedVisibilityScope
+                                    )
+                            )
+                        }
+                    } else {
+                        Image(
+                            painter = painterResource(id = word.icon),
+                            contentDescription = word.word,
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                        )
+                    }
+                    Text(
+                        text = word.word,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                    )
+                }
+
             }
         }
     }
@@ -222,6 +296,10 @@ private fun ListContent(
 private fun DetailContent(
     definedWord: DefinedWord?,
     modifier: Modifier = Modifier,
+    isCompact: Boolean,
+    isDetailVisible: Boolean,
+    sharedTransitionScope: SharedTransitionScope,
+    animatedVisibilityScope: AnimatedVisibilityScope
 ) {
     Column(
         modifier = modifier
@@ -229,6 +307,32 @@ private fun DetailContent(
             .padding(vertical = 16.dp)
     ) {
         if (definedWord != null) {
+
+            if (isCompact && isDetailVisible) {
+                with(sharedTransitionScope) {
+                    val state = rememberSharedContentState(key = definedWord.word)
+
+                    println("detail-" + definedWord.word + "-" + state.isMatchFound)
+
+                    Image(
+                        painter = painterResource(id = definedWord.icon),
+                        contentDescription = definedWord.word,
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .sharedElement(
+                                state,
+                                animatedVisibilityScope = animatedVisibilityScope
+                            )
+                    )
+                }
+            } else {
+                Image(
+                    painter = painterResource(id = definedWord.icon),
+                    contentDescription = definedWord.word,
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                )
+            }
             Text(
                 text = definedWord.word,
                 style = MaterialTheme.typography.headlineMedium
