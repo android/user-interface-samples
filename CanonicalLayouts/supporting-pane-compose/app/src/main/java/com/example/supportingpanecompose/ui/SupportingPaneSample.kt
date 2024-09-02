@@ -29,8 +29,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
+import androidx.compose.material3.adaptive.layout.PaneExpansionDragHandle
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffoldRole
+import androidx.compose.material3.adaptive.layout.rememberPaneExpansionState
 import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,6 +41,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.supportingpanecompose.R
@@ -57,7 +60,7 @@ private val data = mapOf(
 @Composable
 fun SupportingPaneSample() {
     var selectedTopic: String by rememberSaveable { mutableStateOf(data.keys.first()) }
-    val navigator = rememberSupportingPaneScaffoldNavigator<Nothing>()
+    val navigator = rememberSupportingPaneScaffoldNavigator()
 
     BackHandler(enabled = navigator.canNavigateBack()) {
         navigator.navigateBack()
@@ -128,5 +131,9 @@ fun SupportingPaneSample() {
                     )
                 }
             }
+        },
+        paneExpansionState = rememberPaneExpansionState(navigator.scaffoldValue),
+        paneExpansionDragHandle = { state ->
+            PaneExpansionDragHandle(state, Color.Red)
         })
 }
