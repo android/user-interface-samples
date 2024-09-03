@@ -16,8 +16,8 @@
 
 package com.google.supporting.pane.views
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private val viewModel = ContentViewModel()
-    private var binding : ActivityMainBinding? = null
+    private var binding: ActivityMainBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +41,10 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { label ->
-                    binding?.mainView?.setText(label)
-                }
-            }
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.supportingState.collect { items ->
-                    binding?.supportingView?.updateItems(items)
+                viewModel.state.collect { state ->
+                    println("Add main content")
+                    binding?.mainView?.setText(state.key)
+                    binding?.supportingView?.updateItems(state.items)
                 }
             }
         }
