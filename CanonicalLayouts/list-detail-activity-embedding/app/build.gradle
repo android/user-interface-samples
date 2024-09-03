@@ -19,12 +19,12 @@ plugins {
 }
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.example.activityembedding"
         minSdk 31
-        targetSdk 34
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -73,5 +73,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-device:1.0.1'
     androidTestImplementation("androidx.test.ext:junit-ktx:1.2.1")
     androidTestImplementation("androidx.test.ext:truth:1.6.0")
-    androidTestImplementation("androidx.test:runner:1.6.1")
+    androidTestImplementation("androidx.test:runner:1.6.2")
 }
