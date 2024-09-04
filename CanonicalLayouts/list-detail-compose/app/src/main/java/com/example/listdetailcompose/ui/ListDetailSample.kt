@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalSharedTransitionApi::class)
+@file:OptIn(ExperimentalSharedTransitionApi::class, ExperimentalSharedTransitionApi::class)
 
 package com.example.listdetailcompose.ui
 
@@ -96,7 +96,7 @@ private data class DefinedWord(
 fun ListDetailSample() {
     var selectedWordIndex: Int? by rememberSaveable { mutableStateOf(null) }
     val navigator = rememberListDetailPaneScaffoldNavigator<Nothing>()
-    val isCompact =
+    val isSmallerThanExpanded =
         currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass != WindowWidthSizeClass.EXPANDED
 
     BackHandler(enabled = navigator.canNavigateBack()) {
@@ -104,7 +104,7 @@ fun ListDetailSample() {
     }
 
     SharedTransitionLayout {
-        AnimatedContent(targetState = isCompact, label = "simple sample") {
+        AnimatedContent(targetState = isSmallerThanExpanded, label = "simple sample") {
             ListDetailPaneScaffold(
                 directive = navigator.scaffoldDirective,
                 value = navigator.scaffoldValue,
@@ -124,7 +124,7 @@ fun ListDetailSample() {
                                 selectedWordIndex = index
                                 navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
                             },
-                            isCompact = isCompact,
+                            isSmallerThanExpanded = isSmallerThanExpanded,
                             isDetailVisible = isDetailVisible,
                             animatedVisibilityScope = this@AnimatedPane,
                             sharedTransitionScope = this@SharedTransitionLayout
@@ -138,7 +138,7 @@ fun ListDetailSample() {
                     AnimatedPane {
                         DetailContent(
                             definedWord = definedWord,
-                            isCompact = isCompact,
+                            isSmallerThanExpanded = isSmallerThanExpanded,
                             isDetailVisible = isDetailVisible,
                             animatedVisibilityScope = this@AnimatedPane,
                             sharedTransitionScope = this@SharedTransitionLayout
@@ -184,7 +184,7 @@ private fun ListContent(
     selectionState: SelectionVisibilityState,
     onIndexClick: (index: Int) -> Unit,
     modifier: Modifier = Modifier,
-    isCompact: Boolean,
+    isSmallerThanExpanded: Boolean,
     isDetailVisible: Boolean,
     sharedTransitionScope: SharedTransitionScope,
     animatedVisibilityScope: AnimatedVisibilityScope
@@ -252,31 +252,27 @@ private fun ListContent(
                     .fillMaxWidth()
             ) {
                 Row {
-                    if (isCompact && !isDetailVisible) {
-                        with(sharedTransitionScope) {
-                            val state = rememberSharedContentState(key = word.word)
-
-                            println("list-" + word.word + "-" + state.isMatchFound)
-
-                            Image(
-                                painter = painterResource(id = word.icon),
-                                contentDescription = word.word,
-                                modifier = Modifier
+                    val imageModifier =
+                        if (isSmallerThanExpanded && !isDetailVisible) {
+                            with(sharedTransitionScope) {
+                                val state = rememberSharedContentState(key = word.word)
+                                Modifier
                                     .padding(horizontal = 8.dp)
                                     .sharedElement(
                                         state,
                                         animatedVisibilityScope = animatedVisibilityScope
                                     )
-                            )
+
+                            }
+                        } else {
+                            Modifier.padding(horizontal = 8.dp)
                         }
-                    } else {
-                        Image(
-                            painter = painterResource(id = word.icon),
-                            contentDescription = word.word,
-                            modifier = Modifier
-                                .padding(horizontal = 8.dp)
-                        )
-                    }
+
+                    Image(
+                        painter = painterResource(id = word.icon),
+                        contentDescription = word.word,
+                        modifier = imageModifier
+                    )
                     Text(
                         text = word.word,
                         modifier = Modifier
@@ -297,7 +293,7 @@ private fun ListContent(
 private fun DetailContent(
     definedWord: DefinedWord?,
     modifier: Modifier = Modifier,
-    isCompact: Boolean,
+    isSmallerThanExpanded: Boolean,
     isDetailVisible: Boolean,
     sharedTransitionScope: SharedTransitionScope,
     animatedVisibilityScope: AnimatedVisibilityScope
@@ -309,31 +305,25 @@ private fun DetailContent(
     ) {
         if (definedWord != null) {
 
-            if (isCompact && isDetailVisible) {
+            val imageModifier = if (isSmallerThanExpanded && isDetailVisible) {
                 with(sharedTransitionScope) {
                     val state = rememberSharedContentState(key = definedWord.word)
-
-                    println("detail-" + definedWord.word + "-" + state.isMatchFound)
-
-                    Image(
-                        painter = painterResource(id = definedWord.icon),
-                        contentDescription = definedWord.word,
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .sharedElement(
-                                state,
-                                animatedVisibilityScope = animatedVisibilityScope
-                            )
-                    )
+                    Modifier
+                        .padding(horizontal = 8.dp)
+                        .sharedElement(
+                            state,
+                            animatedVisibilityScope = animatedVisibilityScope
+                        )
                 }
             } else {
-                Image(
-                    painter = painterResource(id = definedWord.icon),
-                    contentDescription = definedWord.word,
-                    modifier = Modifier
-                        .padding(horizontal = 8.dp)
-                )
+                Modifier.padding(horizontal = 8.dp)
             }
+
+            Image(
+                painter = painterResource(id = definedWord.icon),
+                contentDescription = definedWord.word,
+                modifier = imageModifier
+            )
             Text(
                 text = definedWord.word,
                 style = MaterialTheme.typography.headlineMedium
