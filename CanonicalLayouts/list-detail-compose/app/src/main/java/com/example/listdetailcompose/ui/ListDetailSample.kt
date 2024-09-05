@@ -252,21 +252,18 @@ private fun ListContent(
                     .fillMaxWidth()
             ) {
                 Row {
-                    val imageModifier =
-                        if (isSmallerThanExpanded && !isDetailVisible) {
-                            with(sharedTransitionScope) {
-                                val state = rememberSharedContentState(key = word.word)
-                                Modifier
-                                    .padding(horizontal = 8.dp)
-                                    .sharedElement(
-                                        state,
-                                        animatedVisibilityScope = animatedVisibilityScope
-                                    )
-
-                            }
-                        } else {
-                            Modifier.padding(horizontal = 8.dp)
+                    val imageModifier = Modifier.padding(horizontal = 8.dp)
+                    if (isSmallerThanExpanded && !isDetailVisible) {
+                        with(sharedTransitionScope) {
+                            val state = rememberSharedContentState(key = word.word)
+                            imageModifier.then(
+                                Modifier.sharedElement(
+                                    state,
+                                    animatedVisibilityScope = animatedVisibilityScope
+                                )
+                            )
                         }
+                    }
 
                     Image(
                         painter = painterResource(id = word.icon),
@@ -305,18 +302,17 @@ private fun DetailContent(
     ) {
         if (definedWord != null) {
 
-            val imageModifier = if (isSmallerThanExpanded && isDetailVisible) {
+            val imageModifier = Modifier.padding(horizontal = 8.dp)
+            if (isSmallerThanExpanded && isDetailVisible) {
                 with(sharedTransitionScope) {
                     val state = rememberSharedContentState(key = definedWord.word)
-                    Modifier
-                        .padding(horizontal = 8.dp)
-                        .sharedElement(
+                    imageModifier.then(
+                        Modifier.sharedElement(
                             state,
                             animatedVisibilityScope = animatedVisibilityScope
                         )
+                    )
                 }
-            } else {
-                Modifier.padding(horizontal = 8.dp)
             }
 
             Image(
