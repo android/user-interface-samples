@@ -302,18 +302,21 @@ private fun DetailContent(
     ) {
         if (definedWord != null) {
 
-            val imageModifier = Modifier.padding(horizontal = 8.dp)
-            if (!isListAndDetailVisible && isDetailVisible) {
-                with(sharedTransitionScope) {
-                    val state = rememberSharedContentState(key = definedWord.word)
-                    imageModifier.then(
-                        Modifier.sharedElement(
-                            state,
-                            animatedVisibilityScope = animatedVisibilityScope
-                        )
-                    )
-                }
-            }
+            val imageModifier = Modifier
+                .padding(horizontal = 8.dp)
+                .then(
+                    if (!isListAndDetailVisible && isDetailVisible) {
+                        with(sharedTransitionScope) {
+                            val state = rememberSharedContentState(key = definedWord.word)
+                            Modifier.sharedElement(
+                                state,
+                                animatedVisibilityScope = animatedVisibilityScope
+                            )
+                         }
+                    } else {
+                        Modifier
+                    }
+                )
 
             Image(
                 painter = painterResource(id = definedWord.icon),
