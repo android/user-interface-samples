@@ -96,15 +96,15 @@ private data class DefinedWord(
 fun ListDetailSample() {
     var selectedWordIndex: Int? by rememberSaveable { mutableStateOf(null) }
     val navigator = rememberListDetailPaneScaffoldNavigator<Nothing>()
-    val isSmallerThanExpanded =
-        currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass != WindowWidthSizeClass.EXPANDED
+    val isListAndDetailVisible =
+        currentWindowAdaptiveInfo().windowSizeClass.windowWidthSizeClass == WindowWidthSizeClass.EXPANDED
 
     BackHandler(enabled = navigator.canNavigateBack()) {
         navigator.navigateBack()
     }
 
     SharedTransitionLayout {
-        AnimatedContent(targetState = isSmallerThanExpanded, label = "simple sample") {
+        AnimatedContent(targetState = isListAndDetailVisible, label = "simple sample") {
             ListDetailPaneScaffold(
                 directive = navigator.scaffoldDirective,
                 value = navigator.scaffoldValue,
@@ -124,8 +124,8 @@ fun ListDetailSample() {
                                 selectedWordIndex = index
                                 navigator.navigateTo(ListDetailPaneScaffoldRole.Detail)
                             },
-                            isSmallerThanExpanded = isSmallerThanExpanded,
-                            isDetailVisible = isDetailVisible,
+                            isListAndDetailVisible = isListAndDetailVisible,
+                            isListVisible = !isDetailVisible,
                             animatedVisibilityScope = this@AnimatedPane,
                             sharedTransitionScope = this@SharedTransitionLayout
                         )
@@ -138,7 +138,7 @@ fun ListDetailSample() {
                     AnimatedPane {
                         DetailContent(
                             definedWord = definedWord,
-                            isSmallerThanExpanded = isSmallerThanExpanded,
+                            isListAndDetailVisible = isListAndDetailVisible,
                             isDetailVisible = isDetailVisible,
                             animatedVisibilityScope = this@AnimatedPane,
                             sharedTransitionScope = this@SharedTransitionLayout
@@ -184,8 +184,8 @@ private fun ListContent(
     selectionState: SelectionVisibilityState,
     onIndexClick: (index: Int) -> Unit,
     modifier: Modifier = Modifier,
-    isSmallerThanExpanded: Boolean,
-    isDetailVisible: Boolean,
+    isListAndDetailVisible: Boolean,
+    isListVisible: Boolean,
     sharedTransitionScope: SharedTransitionScope,
     animatedVisibilityScope: AnimatedVisibilityScope
 ) {
@@ -253,7 +253,7 @@ private fun ListContent(
             ) {
                 Row {
                     val imageModifier = Modifier.padding(horizontal = 8.dp)
-                    if (isSmallerThanExpanded && !isDetailVisible) {
+                    if (!isListAndDetailVisible && isListVisible) {
                         with(sharedTransitionScope) {
                             val state = rememberSharedContentState(key = word.word)
                             imageModifier.then(
@@ -290,7 +290,7 @@ private fun ListContent(
 private fun DetailContent(
     definedWord: DefinedWord?,
     modifier: Modifier = Modifier,
-    isSmallerThanExpanded: Boolean,
+    isListAndDetailVisible: Boolean,
     isDetailVisible: Boolean,
     sharedTransitionScope: SharedTransitionScope,
     animatedVisibilityScope: AnimatedVisibilityScope
@@ -303,7 +303,7 @@ private fun DetailContent(
         if (definedWord != null) {
 
             val imageModifier = Modifier.padding(horizontal = 8.dp)
-            if (isSmallerThanExpanded && isDetailVisible) {
+            if (!isListAndDetailVisible && isDetailVisible) {
                 with(sharedTransitionScope) {
                     val state = rememberSharedContentState(key = definedWord.word)
                     imageModifier.then(
