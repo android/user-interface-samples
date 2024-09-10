@@ -53,7 +53,8 @@ jobs:
         run: zip -r assemble.zip . -i '**/build/*.apk' '**/build/*.aab' '**/build/*.aar' '**/build/*.so'
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
-          name: assemble
+          pattern: assemble-*
+          merge-multiple: true
           path: assemble.zip
