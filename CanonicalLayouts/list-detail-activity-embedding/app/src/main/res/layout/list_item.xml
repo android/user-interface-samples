@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  Copyright 2022 The Android Open Source Project
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,28 +14,26 @@
  limitations under the License.
 -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
-    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    app:cardCornerRadius="12dp"
+    android:layout_height="wrap_content"
     android:layout_margin="4dp"
-    app:cardPreventCornerOverlap="true"
     android:clickable="true"
     app:cardBackgroundColor="@color/design_default_color_surface"
-    >
+    app:cardCornerRadius="12dp"
+    app:cardPreventCornerOverlap="true">
 
     <TextView
         android:id="@+id/textView"
-        android:layout_margin="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_margin="8dp"
         android:background="?selectableItemBackground"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
-
-        >
+        android:textColor="@color/design_default_color_primary"
+        tools:text="TextView">
 
     </TextView>
 </androidx.cardview.widget.CardView>

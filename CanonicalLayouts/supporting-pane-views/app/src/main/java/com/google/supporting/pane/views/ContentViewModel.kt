@@ -21,11 +21,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class ContentViewModel : ViewModel() {
 
-    val state = MutableStateFlow(data.keys.first())
-    val supportingState = MutableStateFlow(data[state.value].orEmpty())
+    val state = MutableStateFlow(State())
 
     fun selectFromSupportingPane(key: String) {
-        state.value = key
-        supportingState.value = data[key].orEmpty()
+        val newState = State(key = key, items = data[key].orEmpty())
+        state.value = newState
     }
 }
