@@ -24,3 +24,5 @@ val data = mapOf(
     "java" to listOf("backend", "android", "desktop"),
     "flutter" to listOf("android", "desktop")
 )
+
+data class State(val key: String = data.keys.first(), val items: List<String> = data.values.first())
