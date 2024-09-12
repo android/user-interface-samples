@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.feedcompose.R
 import com.example.feedcompose.data.Sweets
-import com.example.feedcompose.ui.components.TopAppBar
+import com.example.feedcompose.ui.components.SweetTopAppBar
 
 @Composable
 fun SweetsDetails(
@@ -53,11 +53,13 @@ fun SweetsDetails(
             scrollState = scrollState,
             onBackPressed = onBackPressed
         )
+
         WindowWidthSizeClass.Compact -> SweetsDetailsVertical(
             sweets = sweets,
             scrollState = scrollState,
             onBackPressed = onBackPressed
         )
+
         else -> {
             when (windowSizeClass.heightSizeClass) {
                 WindowHeightSizeClass.Expanded -> SweetsDetailsVertical(
@@ -65,6 +67,7 @@ fun SweetsDetails(
                     scrollState = scrollState,
                     onBackPressed = onBackPressed
                 )
+
                 else -> SweetsDetailsHorizontal(
                     sweets = sweets,
                     scrollState = scrollState,
@@ -82,7 +85,7 @@ private fun SweetsDetailsVertical(
     onBackPressed: () -> Unit
 ) {
     Column(modifier = Modifier.verticalScroll(scrollState)) {
-        TopAppBar(onBackPressed = onBackPressed)
+        SweetTopAppBar(onBackPressed = onBackPressed)
         AsyncImage(
             model = sweets.imageUrl,
             contentDescription = stringResource(id = R.string.thumbnail_content_description),
@@ -105,7 +108,7 @@ private fun SweetsDetailsHorizontal(
     onBackPressed: () -> Unit
 ) {
     Column {
-        TopAppBar(onBackPressed = onBackPressed)
+        SweetTopAppBar(onBackPressed = onBackPressed)
         Row {
             AsyncImage(
                 model = sweets.imageUrl,
