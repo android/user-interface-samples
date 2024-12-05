@@ -18,6 +18,7 @@ package com.example.supportingpanecompose.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,11 +26,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDragHandle
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
-import androidx.compose.material3.adaptive.layout.PaneExpansionDragHandle
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffold
 import androidx.compose.material3.adaptive.layout.SupportingPaneScaffoldRole
 import androidx.compose.material3.adaptive.layout.rememberPaneExpansionState
@@ -37,14 +39,16 @@ import androidx.compose.material3.adaptive.navigation.rememberSupportingPaneScaf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.supportingpanecompose.R
+import kotlinx.coroutines.launch
 
 // Create some simple sample data
 private val data = mapOf(
@@ -61,9 +65,12 @@ private val data = mapOf(
 fun SupportingPaneSample() {
     var selectedTopic: String by rememberSaveable { mutableStateOf(data.keys.first()) }
     val navigator = rememberSupportingPaneScaffoldNavigator()
+    val scope = rememberCoroutineScope()
 
     BackHandler(enabled = navigator.canNavigateBack()) {
-        navigator.navigateBack()
+        scope.launch {
+            navigator.navigateBack()
+        }
     }
 
     SupportingPaneScaffold(
@@ -92,7 +99,9 @@ fun SupportingPaneSample() {
                                     .clickable {
                                         selectedTopic = relatedTopic
                                         if (navigator.canNavigateBack()) {
-                                            navigator.navigateBack()
+                                            scope.launch {
+                                                navigator.navigateBack()
+                                            }
                                         }
                                     }
                             ) {
@@ -120,7 +129,9 @@ fun SupportingPaneSample() {
                         .fillMaxWidth()
                         .padding(all = 8.dp)
                         .clickable {
-                            navigator.navigateTo(SupportingPaneScaffoldRole.Supporting)
+                            scope.launch {
+                                navigator.navigateTo(SupportingPaneScaffoldRole.Supporting)
+                            }
                         },
                     contentAlignment = Alignment.Center
                 ) {
@@ -134,6 +145,15 @@ fun SupportingPaneSample() {
         },
         paneExpansionState = rememberPaneExpansionState(navigator.scaffoldValue),
         paneExpansionDragHandle = { state ->
-            PaneExpansionDragHandle(state, Color.Red)
+            val interactionSource =
+                remember { MutableInteractionSource() }
+            VerticalDragHandle(
+                modifier =
+                Modifier.paneExpansionDraggable(
+                    state,
+                    LocalMinimumInteractiveComponentSize.current,
+                    interactionSource
+                ), interactionSource = interactionSource
+            )
         })
 }
