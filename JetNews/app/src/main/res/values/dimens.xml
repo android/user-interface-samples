@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2023 The Android Open Source Project
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+
+    <!-- image grid (sizes to have approximately 4x3 default drop size,
+    2x2 as minimum resize size and 4x4 as maximum resize size) -->
+    <integer name="sample_image_grid_target_cell_width">4</integer>
+    <integer name="sample_image_grid_target_cell_height">3</integer>
+    <dimen name="sample_image_grid_widget_min_width">256dp</dimen>
+    <dimen name="sample_image_grid_widget_min_height">185dp</dimen>
+    <dimen name="sample_image_grid_widget_min_resize_width">120dp</dimen>
+    <dimen name="sample_image_grid_widget_min_resize_height">115dp</dimen>
+    <dimen name="sample_image_grid_widget_max_resize_width">624dp</dimen>
+    <dimen name="sample_image_grid_widget_max_resize_height">422dp</dimen>
+
+    <!-- other sizes go here -->
+</resources>

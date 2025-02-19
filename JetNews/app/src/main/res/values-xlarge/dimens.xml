@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- image grid (sizes to have approximately 3x3 default drop size,
+  2x2 as minimum resize size and 3x4 as maximum resize size) -->
+  <integer name="sample_image_grid_target_cell_width">4</integer>
+  <integer name="sample_image_grid_target_cell_height">3</integer>
+  <dimen name="sample_image_grid_widget_min_width">298dp</dimen>
+  <dimen name="sample_image_grid_widget_min_height">304dp</dimen>
+  <dimen name="sample_image_grid_widget_min_resize_width">180dp</dimen>
+  <dimen name="sample_image_grid_widget_min_resize_height">184dp</dimen>
+  <dimen name="sample_image_grid_widget_max_resize_width">488dp</dimen>
+  <dimen name="sample_image_grid_widget_max_resize_height">672dp</dimen>
+
+</resources>

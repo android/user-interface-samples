@@ -4,7 +4,7 @@
 #####
 [versions]
 accompanist = "0.37.0"
-androidGradlePlugin = "8.8.0"
+androidGradlePlugin = "8.8.1"
 androidx-activity-compose = "1.10.0"
 androidx-appcompat = "1.7.0"
 androidx-compose-bom = "2025.01.01"
@@ -92,6 +92,9 @@ androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-splashscreen" }
 androidx-glance = { module = "androidx.glance:glance", version.ref = "androidx-glance" }
 androidx-glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "androidx-glance" }
+androidx-glance-preview = { module = "androidx.glance:glance-preview", version.ref = "androidx-glance" }
+androidx-glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "androidx-glance" }
+
 androidx-glance-material3 = { module = "androidx.glance:glance-material3", version.ref = "androidx-glance" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle-compose" }
